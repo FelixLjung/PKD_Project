@@ -14,16 +14,21 @@ let map = [
 // TJenare alfred
 //Tjo Baby
 
-function print_board(board) {
-    for (let i = 0; i < board.length; i++){
-        console.log(board[i]);
-    }
+import { type MatrixGraph } from '../lib/graphs';
+
+
+const I = true;
+const O = false;
+const mormors_kudde: MatrixGraph = {
+    size: 5,
+    adj:
+
+        [
+        [O, I, I, I, O, O, O], //0. from A 
+        [O, O, O, O, O, O, O], //1. from B
+        [I, O, O, O, O, O, I], //2. from C
+        [O, O, O, O, O, O, O], //3. from D
+        [O, O, O, I, O, O, O], //4. from E
+        ] 
+
 }
-
-print_board(map);
-    
-
-
-import { type MatrixGraph } from './lib/graphs';
-
-//const mormorskudde: MatrixGraph
