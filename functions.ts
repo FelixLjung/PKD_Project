@@ -1,11 +1,10 @@
 import { List, Pair , list} from "./lib/list";
-
-
-
 import { Queue } from "./lib/queue_array";
-
-import { type List, Pair , list} from "./lib/list";
 import { type MatrixGraph } from './lib/graphs';
+
+
+
+
 //Types
 const prompt1 = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
 
