@@ -1,3 +1,7 @@
+import {
+    type List, list, pair
+} from './lib/list'
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
