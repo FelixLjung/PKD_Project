@@ -4,7 +4,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 
-let w_names: Queue<string> = [1, 2, ["Eva Darulova",    // Current: 18 warrrior-names
+let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names
                                  "Jingwei",
                                 "Johannes Borgström",
                                 "Carl Erik IV", 
@@ -42,7 +42,7 @@ type Warrior = {
 };
 
 type Castle = {
-    hp: Army<warrior>,
+    hp: Army,
     name: string
     owner: string
 }
@@ -124,6 +124,7 @@ export function turn(player: Player) {
 
 export function create_army(): Army {
 
+    return;
 }
 
 export function create_warrior(): Warrior {
