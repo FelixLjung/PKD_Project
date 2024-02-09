@@ -29,8 +29,8 @@ const graph1_mg: MatrixGraph = {
 }
 
 // 7 rader
-console.log("[O, O, O, I, O, O, O]");
 console.log("[O, O, O, O, O, O, O]");
-console.log("[I, O, O, O, O, O, I]");
+console.log("[O, O, O, O, O, O, O]");
+console.log("[O, -  -  O,  -  - O]");
 console.log("[O, O, O, O, O, O, O]");
 console.log("[O, O, O, I, O, O, O]");
