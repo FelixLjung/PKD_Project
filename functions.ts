@@ -40,3 +40,15 @@ function attack() {
 function print_board(){
 
 }
+
+function move (){
+
+}
+
+function castle_owner() {
+
+}
+
+function turn() {
+    
+}
