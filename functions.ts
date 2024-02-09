@@ -6,7 +6,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 //Types
-const prompt1 = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
+const prompt = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
 
 type Army<warrior> = Array<warrior>
 
@@ -52,7 +52,7 @@ export function getRandomInt(min: number, max: number): number {
 
 export function attack(player: Player, A_Army: Queue<warrior>): Boolean {
     
-    
+    return false; // temp return
 }
 
 /**
@@ -73,7 +73,7 @@ export function print_board(board){
  * @param Soldiers - The army being moved from one castle to another
  * @returns void
  */
-export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : Void {
+export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : void {
 
 }
 
@@ -84,6 +84,12 @@ export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) 
  */
 export function castle_owner(Board: MatrixGraph) : MatrixGraph {
 
+
+    
+    return {
+        adj : [[false]]
+        ,size : 3
+    };
 }
 
 /**
@@ -98,7 +104,7 @@ export function turn(player: Player) {
 
 export function setup() {
     const name_player1 = prompt("Enter player 1 name: ");
-    const player1 : Player =  [name_player1, list()];
+    const player1 : Player =  [name_player1!, list()];
 
     return list(player1);
 }

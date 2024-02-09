@@ -12,7 +12,7 @@ let map = [["","","", "0","","",""],
 ["","","'s'", "l","'/'","",""],
 ["","","", "0","","",""]];
 
-let game_running = true
+let game_running = false;
 
 print_board(map);
 
@@ -35,7 +35,9 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
+const player_list = setup();
 
+console.log(player_list);
 // The game loop
 while(game_running){
     continue

@@ -22,8 +22,9 @@ var mormors_kudde = {
         [O, I, I, I, O], //4. from E
     ]
 };
+var player_list = (0, functions_1.setup)();
+console.log(player_list);
 // The game loop
 while (game_running) {
     continue;
 }
-console.log(mormors_kudde);
