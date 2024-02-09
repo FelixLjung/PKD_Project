@@ -14,6 +14,15 @@ let map = [
 
 //for(let i = 0; i < )
 
+/**
+ * Prints the board to the console
+ * 
+ */
+
+function print_board(board) {
+    console.log(board);
+}
+
 
 // TJenare alfred
 //Tjo Baby
