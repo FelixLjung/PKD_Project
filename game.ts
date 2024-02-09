@@ -26,9 +26,9 @@ const mormors_kudde: MatrixGraph = {
         [
         [O, I, I, I, O], //0. from A 
         [I, O, I, O, I], //1. from B
-        [I, O, O, O, O], //2. from C
-        [O, O, O, O, O], //3. from D
-        [O, O, O, I, O], //4. from E
+        [I, I, O, I, I], //2. from C
+        [I, O, O, I, I], //3. from D
+        [O, I, I, I, O], //4. from E
         ] 
 
 }
