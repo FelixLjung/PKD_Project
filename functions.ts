@@ -21,7 +21,8 @@ let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-
                                 "Fred von Pickelroy",
                                 "Björn Olmedo",
                                 "Jimmy Viking",
-                                "Thom Surströmming"]];
+                                "Thom Surströmming",
+                                "Dadel kungen"]];
 
 //Types
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
