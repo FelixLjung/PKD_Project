@@ -5,7 +5,7 @@ type Castle = {
     hp: number,
     name: string
     owner: string
-};
+}
 
 
 // Functions
