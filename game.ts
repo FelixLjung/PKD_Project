@@ -11,6 +11,10 @@ let map = [
 ];
 
 
+
+//for(let i = 0; i < )
+
+
 // TJenare alfred
 //Tjo Baby
 
