@@ -3,7 +3,7 @@ import { type Queue, head, dequeue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 
-
+// Constants
 let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names
                                  "Jingwei",
                                 "Johannes Borgström",
@@ -23,9 +23,10 @@ let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-
                                 "Jimmy Viking",
                                 "Thom Surströmming"]];
 
-//Types
+
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
 
+//Types
 type Army = Array<Warrior>;
 
 type attack_army = Queue<Warrior>;
