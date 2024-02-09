@@ -52,7 +52,7 @@ export function getRandomInt(min: number, max: number): number {
 
 export function attack(player: Player, A_Army: Queue<warrior>): Boolean {
     
-    
+    return false; // temp return
 }
 
 /**
@@ -73,7 +73,7 @@ export function print_board(board){
  * @param Soldiers - The army being moved from one castle to another
  * @returns void
  */
-export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : Void {
+export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : void {
 
 }
 
@@ -84,6 +84,12 @@ export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) 
  */
 export function castle_owner(Board: MatrixGraph) : MatrixGraph {
 
+
+    
+    return {
+        adj : [[false]]
+        ,size : 3
+    };
 }
 
 /**
