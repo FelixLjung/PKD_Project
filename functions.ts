@@ -1,4 +1,4 @@
-import { List, Pair , list} from "./lib/list";
+import { type List, type Pair , list} from "./lib/list";
 import { Queue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
@@ -91,7 +91,10 @@ export function turn() {
 }
 
 export function setup() {
+    const name_player1 = prompt("Enter player 1 name: ");
+    const player1 : Player =  [name_player1, list()];
 
+    return list(player1);
 }
 
 /**
@@ -99,10 +102,7 @@ export function setup() {
  * @param Board - The new game board
  */
 export function spawn(Board: MatrixGraph) {
-    const name_player1 = prompt("Enter player 1 name: ");
-    const player1 : Player =  [name_player1, list()];
 
-    return list(player1);
     
 }
 
