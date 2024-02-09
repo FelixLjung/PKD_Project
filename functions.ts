@@ -14,8 +14,7 @@ type Castle = {
     name: string
     owner: string
 }
-
-owner: 
+ 
 
 
 // Functions
