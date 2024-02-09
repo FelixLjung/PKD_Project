@@ -4,24 +4,24 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 
-let w_names: Queue<string> = [1, 2, ["Eva Darulova",
-    "Jingwei",
-    "Johannes Borgström",
-    "Carl Erik IV",
-    "Runar Stenbock",
-    "Sigvard Bjelkengren",
-    "Ernst Greve",
-    "Hjalmar Storfot",
-    "Lillemor Hoppetoss",
-    "Gustav Backlund",
-    "Hans Hansson III",
-    "Frans Storm",
-    "Berit Storm",
-    "Tor Hoppetoss II",
-    "Fred von Pickelroy",
-    "Björn Olmedo",
-    "Jimmy Viking",
-    "Thom Surströmming"]];
+let w_names: Queue<string> = [1, 2, ["Eva Darulova",    // Current: 18 warrrior-names
+                                 "Jingwei",
+                                "Johannes Borgström",
+                                "Carl Erik IV", 
+                                "Runar Stenbock",
+                                "Sigvard Bjelkengren",
+                                "Ernst Greve",
+                                "Hjalmar Storfot",
+                                "Lillemor Hoppetoss",
+                                "Gustav Backlund",
+                                "Hans Hansson III",
+                                "Frans Storm",
+                                "Berit Storm",
+                                "Tor Hoppetoss II",
+                                "Fred von Pickelroy",
+                                "Björn Olmedo",
+                                "Jimmy Viking",
+                                "Thom Surströmming"]];
 
 //Types
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå

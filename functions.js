@@ -54,10 +54,13 @@ exports.move = move;
  * @returns The updated board with the correct castle owners
  */
 function castle_owner(Board) {
+<<<<<<< HEAD
     return {
         adj: [[false]],
         size: 3
     };
+=======
+>>>>>>> c4b5c2b3c3fe6ce387fe9912c43fbffb9c6b10b5
 }
 exports.castle_owner = castle_owner;
 /**
