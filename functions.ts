@@ -2,13 +2,10 @@
 
     
 type Castle = {
-    size: number,
+    hp: number,
     name: string
+    owner: string
 };
-
-
-
-
 
 
 // Functions
