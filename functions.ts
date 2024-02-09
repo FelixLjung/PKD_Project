@@ -129,8 +129,8 @@ export function create_warrior() : warrior {
 }
 
 function get_name() {
-    return top(names);
-    
+    return head(names);
+
 }
 
 export function setup() {
