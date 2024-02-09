@@ -40,3 +40,4 @@ const mormors_kudde: MatrixGraph = {
 while(game_running){
     continue
 }
+console.log(mormors_kudde);
