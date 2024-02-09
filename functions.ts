@@ -20,7 +20,8 @@ let w_names: Queue<string> = [1, 2, ["Eva Darulova",
                                 "Tor Hoppetoss II",
                                 "Fred von Pickelroy",
                                 "Björn Olmedo",
-                                "Jimmy Viking"]];
+                                "Jimmy Viking",
+                                "Thom Surströmming"]];
 
 //Types
 const prompt = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
