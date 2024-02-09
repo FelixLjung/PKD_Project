@@ -12,32 +12,25 @@ var name1 = prompt1("Vem du är? ");
 
 console.log("no way...", name1, "du är typ " + getRandomInt(1,10) + " år gammal");
 
-
 const I = true;
 const O = false;
 const graph1_mg: MatrixGraph = {
-    size: 8,
+    size: 5,
     adj:
 
-        [[O, I, O, I, O, O, O, O], //from A
-        [O, O, I, O, O, I, O, O], //from B
-        [O, O, O, O, O, O, O, O], //from C
-        [O, O, I, I, I, O, O, O], //from D
-        [O, O, O, O, O, I, O, O], //from E
-        [O, O, O, O, I, O, O, I], //from F
-        [O, O, O, O, O, O, O, O], //from G
-        [O, O, O, O, O, O, I, O]] //from H
+        [
+        [O, I, I, I, O, O, O], //0. from A 
+        [O, O, O, O, O, O, O], //1. from B
+        [I, O, O, O, O, O, I], //2. from C
+        [O, O, O, O, O, O, O], //3. from D
+        [O, O, O, I, O, O, O], //4. from E
+        ] 
 
 }
 
-const ex_graph: ListGraph = {
-    size: 6,
-    adj:
-        [list(1, 2),   // From 1  index 0
-        list(3, 5),    // From 2  index 1
-        list(3, 4),    // From 3  index 2
-        list(4),       // From 4  index 3
-        list(5),       // From 5  index 4
-        list()         // From 6  index 5
-        ]
-}
+// 7 rader
+console.log("[O, O, O, I, O, O, O]");
+console.log("[O, O, O, O, O, O, O]");
+console.log("[I, O, O, O, O, O, I]");
+console.log("[O, O, O, O, O, O, O]");
+console.log("[O, O, O, I, O, O, O]");
