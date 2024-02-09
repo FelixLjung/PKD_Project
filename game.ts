@@ -1,6 +1,6 @@
 import { type MatrixGraph } from './lib/graphs';
 
-import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, spawn} from './functions'
+import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, spawn, create_warrior} from './functions'
 
 
 
@@ -38,6 +38,16 @@ const mormors_kudde: MatrixGraph = {
 const player_list = setup();
 
 console.log(player_list);
+
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
+console.log(create_warrior());
 // The game loop
 while(game_running){
     continue
