@@ -3,7 +3,7 @@ import { List, Pair , list} from "./lib/list";
 
 type Army<warrior> = Array<warrior>
 
-type Player <H, T>= [H, T] | null
+type Player <H, T>= [string, List<Castle>]
 
 type warrior = {
     attack : number
