@@ -27,28 +27,30 @@ type Castle = {
  * @param max is a {number}. Represents the hightes number on the die
  * @returns a random number / integer.
  */
-function getRandomInt(min: number, max: number) {
+export function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
 
-function attack() {
+
+
+export function attack() {
     
 }
 
 
-function print_board(){
+export function print_board(){
 
 }
 
-function move (){
+export function move (){
 
 }
 
-function castle_owner() {
+export function castle_owner() {
 
 }
 
-function turn() {
-    
+export function turn() {
+
 }
