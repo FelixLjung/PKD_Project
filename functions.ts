@@ -53,3 +53,11 @@ export function castle_owner() {
 export function turn() {
 
 }
+
+export function setup() {
+
+}
+
+export function spawn() {
+    
+}
