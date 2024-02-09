@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.spawn = exports.setup = exports.turn = exports.castle_owner = exports.move = exports.print_board = exports.attack = exports.getRandomInt = void 0;
 var list_1 = require("./lib/list");
 //Types
-var prompt1 = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
+var prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
 // Functions
 /**
  * Chooses a random number between [min] and [max].
@@ -24,6 +24,7 @@ exports.getRandomInt = getRandomInt;
  *
  */
 function attack(player, A_Army) {
+    return false; // temp return
 }
 exports.attack = attack;
 /**
@@ -37,26 +38,51 @@ function print_board(board) {
     }
 }
 exports.print_board = print_board;
-function move() {
+/**
+ * Moves an army from one castle to another, attacking if it is an enemy castle
+ * @param Move_from - The castle the army is being moved from
+ * @param Move_to - The castle the army is being moved to
+ * @param Soldiers - The army being moved from one castle to another
+ * @returns void
+ */
+function move(Move_from, Move_to, Soldiers) {
 }
 exports.move = move;
-function castle_owner() {
+/**
+ * Changes the owner of a castle
+ * @param Board - The game board where you can find the owner of the castle
+ * @returns The updated board with the correct castle owners
+ */
+function castle_owner(Board) {
+    return {
+        adj: [[false]],
+        size: 3
+    };
 }
 exports.castle_owner = castle_owner;
-function turn() {
+/**
+ * A players turn in game. Should be able to call multiple actions
+ * Move and Attack.
+ * Should Call other functions.
+ * @param player is a pair(string, List)
+ */
+function turn(player) {
 }
 exports.turn = turn;
-/**
- * reads all the player names and creates players
- * @params no arguments
- * @returns does not return
- */
 function setup() {
     var name_player1 = prompt("Enter player 1 name: ");
+    var name_player2 = prompt("Enter player 2 name: ");
+    var name_player3 = prompt("Enter player 3 name: ");
     var player1 = [name_player1, (0, list_1.list)()];
-    return (0, list_1.list)(player1);
+    var player2 = [name_player2, (0, list_1.list)()];
+    var player3 = [name_player3, (0, list_1.list)()];
+    return (0, list_1.list)(player1, player2, player3);
 }
 exports.setup = setup;
-function spawn() {
+/**
+ * Places soldiers in the starting castles
+ * @param Board - The new game board
+ */
+function spawn(Board) {
 }
 exports.spawn = spawn;
