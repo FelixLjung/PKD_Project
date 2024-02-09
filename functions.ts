@@ -29,4 +29,11 @@ function getRandomInt(min: number, max: number) {
 }
 
 
-function attack
+function attack() {
+    
+}
+
+
+function print_board(){
+
+}
