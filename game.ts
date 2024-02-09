@@ -14,7 +14,7 @@ let map = [["","","", "0","","",""],
 
 /**
  * Prints the board to the console
- * @param [<Array>] 2d array of the map
+ * @param Array 2d array of the map
  * 
  */
 
@@ -23,6 +23,8 @@ function print_board(board) {
         console.log(board[i].toString());
     }
 }
+
+
 
 print_board(map);
 
