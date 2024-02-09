@@ -150,7 +150,7 @@ export function create_warrior(): Warrior {
     return warrior;
 }
 
-function get_name() {
+
 /**
  * Warrior gets a name from queue       Funkar?
  * @returns string
