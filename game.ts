@@ -12,7 +12,7 @@ let map = [["","","", "0","","",""],
 ["","","'s'", "l","'/'","",""],
 ["","","", "0","","",""]];
 
-let game_running = true
+let game_running = false;
 
 print_board(map);
 

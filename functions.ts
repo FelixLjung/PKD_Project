@@ -6,7 +6,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 //Types
-const prompt1 = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
+const prompt = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
 
 type Army<warrior> = Array<warrior>
 
