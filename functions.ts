@@ -103,9 +103,6 @@ export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army):
  * @returns The updated board with the correct castle owners
  */
 export function castle_owner(Board: MatrixGraph): MatrixGraph {
-
-
-
     return {
         adj: [[false]]
         , size: 3
@@ -119,7 +116,14 @@ export function castle_owner(Board: MatrixGraph): MatrixGraph {
  * @param player is a pair(string, List)
  */
 export function turn(player: Player) {
+    console.log("What is your command, king ", player[0], "..?");
+    const choice = prompt("1 : Move Army  \n  2: Train Army ");
 
+    if (choice === "1"){
+        console.log("You are moving");
+    } else if (choice === "2") {
+        console.log("You are training");
+    }
 }
 
 export function create_castle(army : Army, owner : string, position : number) : Castle {
@@ -163,6 +167,6 @@ export function setup() : Array<Player> {
  * @param Board - The new game board
  */
 export function spawn(Board: MatrixGraph) {
-    
+    // denna kanske inte behövs
 
 }
