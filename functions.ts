@@ -3,8 +3,8 @@ import { type Queue, head, dequeue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 
-// Constants
-let w_names: Queue<string> = [0, 18, ["Eva Darulova",    // Current: 18 warrrior-names
+
+let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names
                                  "Jingwei",
                                 "Johannes Borgström",
                                 "Carl Erik IV", 
@@ -23,10 +23,9 @@ let w_names: Queue<string> = [0, 18, ["Eva Darulova",    // Current: 18 warrrior
                                 "Jimmy Viking",
                                 "Thom Surströmming"]];
 
-
+//Types
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
 
-//Types
 type Army = Array<Warrior>;
 
 type attack_army = Queue<Warrior>;
@@ -44,8 +43,8 @@ type Warrior = {
 
 type Castle = {
     hp: Army,
-    name: string
     owner: string
+    position: number
 }
 
 
@@ -103,7 +102,7 @@ export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army):
  * @param Board - The game board where you can find the owner of the castle
  * @returns The updated board with the correct castle owners
  */
-export function castle_owner(Board: MatrixGraph, castle: Castle): MatrixGraph {
+export function castle_owner(Board: MatrixGraph): MatrixGraph {
 
 
 
@@ -123,11 +122,12 @@ export function turn(player: Player) {
 
 }
 
-/**
- * Creates a an array of warriors
- *
- * @returns 
- */
+export function create_castle(army : Army, owner : string, position : number) : Castle {
+    let castle = {hp : army, owner : owner, position : position};
+    
+    return castle;
+}
+
 export function create_army(): Army {
     let army : Army = [create_warrior()];
 
@@ -140,26 +140,22 @@ export function create_warrior(): Warrior {
     return warrior;
 }
 
-/**
- * 
- * @returns 
- */
-function get_name(): string {
+function get_name() {
     let name = head(w_names);
     dequeue(w_names);
     return name;
 
 }
 
-export function setup() {
+export function setup() : Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
-    const player1: Player = [name_player1!,list()];
-    const player2: Player = [name_player2!, list()];
-    const player3: Player = [name_player3!, list()];
+    const player1: Player = [name_player1!,list(create_castle(create_army(),name_player1,0))];
+    const player2: Player = [name_player2!, list(create_castle(create_army(),name_player2,1))];
+    const player3: Player = [name_player3!, list(create_castle(create_army(),name_player3,2))];
 
-    return list(player1, player2, player3);
+    return [player1, player2, player3];
 }
 
 /**
