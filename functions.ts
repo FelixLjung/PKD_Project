@@ -1,10 +1,10 @@
-import { List, Pair , list} from "./lib/list";
+import { type List, Pair , list} from "./lib/list";
 import { type MatrixGraph } from './lib/graphs';
 //Types
 
 type Army<warrior> = Array<warrior>
 
-type Player <H, T>= [string, List<Castle>]
+type Player = [string, List<Castle>]
 
 type warrior = {
     attack : number
@@ -73,11 +73,7 @@ export function turn() {
 
 }
 
-/**
- * Sets up a players name and their starting army
- * @returns A player
- */
-export function setup() : List<Player> {
+export function setup() {
 
 }
 
