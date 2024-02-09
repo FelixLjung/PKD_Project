@@ -97,7 +97,10 @@ export function turn(player: Player) {
 }
 
 export function setup() {
+    const name_player1 = prompt("Enter player 1 name: ");
+    const player1 : Player =  [name_player1, list()];
 
+    return list(player1);
 }
 
 /**
@@ -105,9 +108,6 @@ export function setup() {
  * @param Board - The new game board
  */
 export function spawn(Board: MatrixGraph) {
-    const name_player1 = prompt("Enter player 1 name: ");
-    const player1 : Player =  [name_player1, list()];
 
-    return list(player1);
     
 }
