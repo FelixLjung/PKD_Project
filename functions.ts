@@ -31,17 +31,12 @@ function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-/**
- * 
- * @param Vem 
- * @param Vad 
- * @param Army<Warrior> 
- * @returns Boolean - If the castle is taken the
- */
-function attack(Vem: string, Vad: string, Army: Army<warrior>){
 
+function attack() {
+    
 }
 
 
+function print_board(){
 
-function move(Vem: string, Vart:, army: Army<warrior>)'
+}
