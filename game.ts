@@ -5,8 +5,8 @@ let map = [
 ["","","", "l","","",""],
 ["","","", "l","","",""],
 ["0","-","-", "0","-","-","0"],
-["","'\'","", "l","","'/'",""],
-["","","'\'", "l","'/'","",""],
+["","'s'","", "l","","'/'",""],
+["","","'s'", "l","'/'","",""],
 ["","","", "0","","",""]
 ];
 
@@ -14,6 +14,16 @@ let map = [
 // TJenare alfred
 //Tjo Baby
 
-import { type MatrixGraph } from '../../lib/graphs';
+function print_board(board) {
+    for (let i = 0; i < board.length; i++){
+        console.log(board[i]);
+    }
+}
 
-const mormorskudde: MatrixGraph
+print_board(map);
+    
+
+
+import { type MatrixGraph } from './lib/graphs';
+
+//const mormorskudde: MatrixGraph
