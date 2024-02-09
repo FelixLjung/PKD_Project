@@ -1,7 +1,16 @@
+import { Pair } from "./lib/list";
 //Types
 
-
-
+type Army<warrior> = Array<warrior>
+type warrior = {
+    attack : number
+    health : number
+    name: string
+}
+type hero = {
+    name: 
+     
+}
 
 
 
