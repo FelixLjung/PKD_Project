@@ -1,9 +1,10 @@
 import { List, Pair , list} from "./lib/list";
+
 //Types
 
 type Army<warrior> = Array<warrior>
 
-type Player <H, T>= [string, List<Castle>]
+type Player = [string, List<Castle>]
 
 type warrior = {
     attack : number
