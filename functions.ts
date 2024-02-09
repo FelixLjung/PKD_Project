@@ -28,13 +28,9 @@ let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
 
 type Army = Array<Warrior>;
-
 type attack_army = Queue<Warrior>;
-
 type Player = [string, List<Castle>];
-
 type Board = Array<Array<string>>;
-
 type Warrior = {
     attack: number
     health: number
