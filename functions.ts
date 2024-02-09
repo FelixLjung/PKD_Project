@@ -56,5 +56,9 @@ export function turn() {
 }
 
 export function setup() {
+
+}
+
+export function spawn() {
     
 }
