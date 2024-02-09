@@ -42,7 +42,7 @@ type Warrior = {
 };
 
 type Castle = {
-    hp: Army<warrior>,
+    hp: Army,
     name: string
     owner: string
 }
@@ -123,12 +123,14 @@ export function turn(player: Player) {
 }
 
 export function create_army(): Army {
+    let army : Army = [create_warrior()];
 
+    return army;
 }
 
 export function create_warrior(): Warrior {
     let name = get_name();
-    const warrior = { attack: 5, health: 10, name: "Peter" };
+    const warrior = { attack: 5, health: 10, name: name };
     return warrior;
 }
 
@@ -143,7 +145,7 @@ export function setup() {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
-    const player1: Player = [name_player1!,];
+    const player1: Player = [name_player1!,list()];
     const player2: Player = [name_player2!, list()];
     const player3: Player = [name_player3!, list()];
 
@@ -155,6 +157,6 @@ export function setup() {
  * @param Board - The new game board
  */
 export function spawn(Board: MatrixGraph) {
-
+    
 
 }
