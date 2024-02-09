@@ -1,7 +1,6 @@
 import { List, Pair , list} from "./lib/list";
 
 
-
 import { Queue } from "./lib/queue_array";
 
 import { type List, Pair , list} from "./lib/list";
@@ -85,8 +84,9 @@ export function turn() {
  */
 
 export function setup() {
-    const name_player1 = prompt("Enter player 1 name: ");
-    const player1 : Player =  [name_player1, list()];
+    let name_player1 = prompt("Enter player 1 name: ");
+    
+    const player1 : Player =  [name_player1!, list()];
 
     return list(player1);
     
