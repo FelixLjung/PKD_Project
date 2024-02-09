@@ -37,26 +37,43 @@ function print_board(board) {
     }
 }
 exports.print_board = print_board;
-function move() {
+/**
+ * Moves an army from one castle to another, attacking if it is an enemy castle
+ * @param Move_from - The castle the army is being moved from
+ * @param Move_to - The castle the army is being moved to
+ * @param Soldiers - The army being moved from one castle to another
+ * @returns void
+ */
+function move(Move_from, Move_to, Soldiers) {
 }
 exports.move = move;
-function castle_owner() {
+/**
+ * Changes the owner of a castle
+ * @param Board - The game board where you can find the owner of the castle
+ * @returns The updated board with the correct castle owners
+ */
+function castle_owner(Board) {
 }
 exports.castle_owner = castle_owner;
-function turn() {
+/**
+ * A players turn in game. Should be able to call multiple actions
+ * Move and Attack.
+ * Should Call other functions.
+ * @param player is a pair(string, List)
+ */
+function turn(player) {
 }
 exports.turn = turn;
-/**
- * reads all the player names and creates players
- * @params no arguments
- * @returns does not return
- */
 function setup() {
     var name_player1 = prompt("Enter player 1 name: ");
     var player1 = [name_player1, (0, list_1.list)()];
     return (0, list_1.list)(player1);
 }
 exports.setup = setup;
-function spawn() {
+/**
+ * Places soldiers in the starting castles
+ * @param Board - The new game board
+ */
+function spawn(Board) {
 }
 exports.spawn = spawn;

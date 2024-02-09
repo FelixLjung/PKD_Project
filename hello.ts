@@ -2,7 +2,7 @@ import { ListGraph, MatrixGraph } from "../lib/graphs";
 import { list } from "../lib/list";}
 
 
-function getRandomInt(min, max) {
+function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 

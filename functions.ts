@@ -4,7 +4,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 
-let w_names: Queue<string> = [1, 2, ["Eva Darulova",
+let w_names: Queue<string> = [1, 2, ["Eva Darulova",    // Current: 18 warrrior-names
                                  "Jingwei",
                                 "Johannes Borgström",
                                 "Carl Erik IV", 
