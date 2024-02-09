@@ -1,4 +1,5 @@
 import { List, Pair , list} from "./lib/list";
+import { type MatrixGraph } from './lib/graphs';
 //Types
 
 type Army<warrior> = Array<warrior>
@@ -48,11 +49,23 @@ export function print_board(board){
     }
 }
 
-export function move (){
+/**
+ * Moves an army from one castle to another, attacking if it is an enemy castle
+ * @param Move_from - The castle the army is being moved from
+ * @param Move_to - The castle the army is being moved to
+ * @param Soldiers - The army being moved from one castle to another
+ * @returns void
+ */
+export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : Void {
 
 }
 
-export function castle_owner() {
+/**
+ * Changes the owner of a castle
+ * @param Board - The game board where you can find the owner of the castle
+ * @returns The updated board with the correct castle owners
+ */
+export function castle_owner(Board: MatrixGraph) : MatrixGraph {
 
 }
 
@@ -60,10 +73,18 @@ export function turn() {
 
 }
 
-export function setup() {
+/**
+ * Sets up a players name and their starting army
+ * @returns A player
+ */
+export function setup() : List<Player> {
 
 }
 
-export function spawn() {
+/**
+ * Places soldiers in the starting castles
+ * @param Board - The new game board
+ */
+export function spawn(Board: MatrixGraph) {
 
 }
