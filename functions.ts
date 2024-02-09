@@ -1,5 +1,6 @@
 import { type List, Pair , list} from "./lib/list";
 //Types
+const prompt1 = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
 
 type Army<warrior> = Array<warrior>
 
@@ -67,7 +68,11 @@ export function turn() {
  */
 
 export function setup() {
-    const player1 : Player<string, List<warrior>> = 
+    const name_player1 = prompt("Enter player 1 name: ");
+    const player1 : Player =  [name_player1, list()];
+
+    return list(player1);
+    
 }
 
 export function spawn() {
