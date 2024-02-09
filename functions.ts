@@ -103,7 +103,7 @@ export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army):
  * @param Board - The game board where you can find the owner of the castle
  * @returns The updated board with the correct castle owners
  */
-export function castle_owner(Board: MatrixGraph): MatrixGraph {
+export function castle_owner(Board: MatrixGraph, castle: Castle): MatrixGraph {
 
 
 
@@ -140,7 +140,11 @@ export function create_warrior(): Warrior {
     return warrior;
 }
 
-function get_name() {
+/**
+ * 
+ * @returns 
+ */
+function get_name(): string {
     let name = head(w_names);
     dequeue(w_names);
     return name;
