@@ -1,5 +1,5 @@
 import { type List, type Pair , list} from "./lib/list";
-import { Queue } from "./lib/queue_array";
+import { type Queue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 
@@ -86,7 +86,11 @@ export function castle_owner(Board: MatrixGraph) : MatrixGraph {
 
 }
 
-export function turn() {
+/**
+ * 
+ * @param player 
+ */
+export function turn(player: Player) {
 
 }
 
@@ -104,8 +108,4 @@ export function setup() {
 export function spawn(Board: MatrixGraph) {
 
     
-}
-
-export function spawn() {
-
 }
