@@ -1,9 +1,10 @@
 import { List, Pair , list} from "./lib/list";
-
-
 import { Queue } from "./lib/queue_array";
+import { type MatrixGraph } from './lib/graphs';
 
-import { type List, Pair , list} from "./lib/list";
+
+
+
 //Types
 const prompt1 = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
 
@@ -65,11 +66,23 @@ export function print_board(board){
     }
 }
 
-export function move (){
+/**
+ * Moves an army from one castle to another, attacking if it is an enemy castle
+ * @param Move_from - The castle the army is being moved from
+ * @param Move_to - The castle the army is being moved to
+ * @param Soldiers - The army being moved from one castle to another
+ * @returns void
+ */
+export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : Void {
 
 }
 
-export function castle_owner() {
+/**
+ * Changes the owner of a castle
+ * @param Board - The game board where you can find the owner of the castle
+ * @returns The updated board with the correct castle owners
+ */
+export function castle_owner(Board: MatrixGraph) : MatrixGraph {
 
 }
 
@@ -77,16 +90,17 @@ export function turn() {
 
 }
 
-/**
- * reads all the player names and creates players
- * @params no arguments
- * @returns does not return
- */
-
 export function setup() {
-    let name_player1 = prompt("Enter player 1 name: ");
-    
-    const player1 : Player =  [name_player1!, list()];
+
+}
+
+/**
+ * Places soldiers in the starting castles
+ * @param Board - The new game board
+ */
+export function spawn(Board: MatrixGraph) {
+    const name_player1 = prompt("Enter player 1 name: ");
+    const player1 : Player =  [name_player1, list()];
 
     return list(player1);
     
