@@ -9,3 +9,10 @@ let map = [
 ["","","", "0","","",""],
 ["","","", "0","","",""]
 ];
+
+
+
+
+import { type MatrixGraph } from '../../lib/graphs';
+
+const mormorskudde: MatrixGraph
