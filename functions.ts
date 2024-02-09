@@ -165,7 +165,7 @@ function get_name(): string {
  * Player Creation
  * @returns 
  */
-export function setup(): List<Player> : Array<Player> {
+export function setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
