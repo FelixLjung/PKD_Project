@@ -1,14 +1,12 @@
 
 
-let map = [
-["","","", "0","","",""],
+let map = [["","","", "0","","",""],
 ["","","", "l","","",""],
 ["","","", "l","","",""],
 ["0","-","-", "0","-","-","0"],
 ["","'s'","", "l","","'/'",""],
 ["","","'s'", "l","'/'","",""],
-["","","", "0","","",""]
-];
+["","","", "0","","",""]];
 
 
 
@@ -16,12 +14,17 @@ let map = [
 
 /**
  * Prints the board to the console
+ * @param [<Array>] 2d array of the map
  * 
  */
 
 function print_board(board) {
-    console.log(board);
+    for (let i = 0; i < board.length; i ++){
+        console.log(board[i].toString());
+    }
 }
+
+print_board(map);
 
 
 // TJenare alfred
