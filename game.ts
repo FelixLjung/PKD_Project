@@ -1,4 +1,4 @@
-
+import { type MatrixGraph } from './lib/graphs';
 
 let map = [["","","", "0","","",""],
 ["","","", "l","","",""],
@@ -8,6 +8,7 @@ let map = [["","","", "0","","",""],
 ["","","'s'", "l","'/'","",""],
 ["","","", "0","","",""]];
 
+let game_running = true
 
 
 //for(let i = 0; i < )
@@ -15,7 +16,7 @@ let map = [["","","", "0","","",""],
 /**
  * Prints the board to the console
  * @param Array 2d array of the map
- * 
+ * @return Does not return
  */
 
 function print_board(board) {
@@ -29,7 +30,7 @@ function print_board(board) {
 print_board(map);
 
 
-import { type MatrixGraph } from './lib/graphs';
+
 
 
 const I = true;
@@ -37,7 +38,6 @@ const O = false;
 const mormors_kudde: MatrixGraph = {
     size: 5,
     adj:
-
         [
         [O, I, I, I, O], //0. from A 
         [I, O, I, O, I], //1. from B
@@ -46,4 +46,10 @@ const mormors_kudde: MatrixGraph = {
         [O, I, I, I, O], //4. from E
         ] 
 
+}
+
+
+// The game loop
+while(game_running){
+    continue
 }
