@@ -124,7 +124,7 @@ export function turn(player: Player) {
 }
 
 /**
- * Creates a an array of warriors
+ * Creates a an array of warriors       Funkar?
  *
  * @returns 
  */
@@ -134,6 +134,11 @@ export function create_army(): Army {
     return army;
 }
 
+
+/**
+ * Creates a warrior (dictionary) with name, attack damage and health   Funkar?
+ * @returns a Warrior
+ */
 export function create_warrior(): Warrior {
     let name = get_name();
     const warrior = { attack: 5, health: 10, name: name };
@@ -141,17 +146,20 @@ export function create_warrior(): Warrior {
 }
 
 /**
- * 
- * @returns 
+ * Warrior gets a name from queue       Funkar?
+ * @returns string
  */
 function get_name(): string {
     let name = head(w_names);
     dequeue(w_names);
     return name;
-
 }
 
-export function setup() {
+/**
+ * Player Creation
+ * @returns 
+ */
+export function setup(): List<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
@@ -164,9 +172,11 @@ export function setup() {
 
 /**
  * Places soldiers in the starting castles
- * @param Board - The new game board
+ * @param board - The new game board
+ * @param position - The index of the castle
+ * 
  */
-export function spawn(Board: MatrixGraph) {
+export function spawn(board: MatrixGraph, Castle: Castle) {
     
 
 }
