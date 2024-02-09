@@ -1,42 +1,42 @@
-import { type List, type Pair , list} from "./lib/list";
-import { type Queue } from "./lib/queue_array";
+import { type List, type Pair, list } from "./lib/list";
+import { type Queue, head, dequeue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 
 
 let w_names: Queue<string> = [1, 2, ["Eva Darulova",
-                                 "Jingwei",
-                                "Johannes Borgström",
-                                "Carl Erik IV", 
-                                "Runar Stenbock",
-                                "Sigvard Bjelkengren",
-                                "Ernst Greve",
-                                "Hjalmar Storfot",
-                                "Lillemor Hoppetoss",
-                                "Gustav Backlund",
-                                "Hans Hansson III",
-                                "Frans Storm",
-                                "Berit Storm",
-                                "Tor Hoppetoss II",
-                                "Fred von Pickelroy",
-                                "Björn Olmedo",
-                                "Jimmy Viking",
-                                "Thom Surströmming"]];
+    "Jingwei",
+    "Johannes Borgström",
+    "Carl Erik IV",
+    "Runar Stenbock",
+    "Sigvard Bjelkengren",
+    "Ernst Greve",
+    "Hjalmar Storfot",
+    "Lillemor Hoppetoss",
+    "Gustav Backlund",
+    "Hans Hansson III",
+    "Frans Storm",
+    "Berit Storm",
+    "Tor Hoppetoss II",
+    "Fred von Pickelroy",
+    "Björn Olmedo",
+    "Jimmy Viking",
+    "Thom Surströmming"]];
 
 //Types
-const prompt = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
+const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
 
-type Army<warrior> = Array<warrior>
+type Army = Array<Warrior>;
 
-type attack_army = Queue<warrior>
+type attack_army = Queue<Warrior>;
 
-type Player = [string, List<Castle>]
+type Player = [string, List<Castle>];
 
-type Board = Array<Array<string>>
+type Board = Array<Array<string>>;
 
-type warrior = {
-    attack : number
-    health : number
+type Warrior = {
+    attack: number
+    health: number
     name: string
 
 };
@@ -46,7 +46,7 @@ type Castle = {
     name: string
     owner: string
 }
- 
+
 
 
 // Functions
@@ -70,8 +70,8 @@ export function getRandomInt(min: number, max: number): number {
  * 
  */
 
-export function attack(player: Player, A_Army: Queue<warrior>): Boolean {
-    
+export function attack(player: Player, A_Army: Queue<Warrior>): Boolean {
+
     return false; // temp return
 }
 
@@ -80,8 +80,8 @@ export function attack(player: Player, A_Army: Queue<warrior>): Boolean {
  * @param Array 2d array of the map
  * @return Does not return
  */
-export function print_board(board: Board){
-    for (let i = 0; i < board.length; i ++){ // funkar dåligt
+export function print_board(board: Board) {
+    for (let i = 0; i < board.length; i++) { // funkar dåligt
         console.log(board[i].toString());
     }
 }
@@ -93,7 +93,7 @@ export function print_board(board: Board){
  * @param Soldiers - The army being moved from one castle to another
  * @returns void
  */
-export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) : void {
+export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army): void {
 
 }
 
@@ -102,13 +102,13 @@ export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army) 
  * @param Board - The game board where you can find the owner of the castle
  * @returns The updated board with the correct castle owners
  */
-export function castle_owner(Board: MatrixGraph) : MatrixGraph {
+export function castle_owner(Board: MatrixGraph): MatrixGraph {
 
 
-    
+
     return {
-        adj : [[false]]
-        ,size : 3
+        adj: [[false]]
+        , size: 3
     };
 }
 
@@ -122,14 +122,20 @@ export function turn(player: Player) {
 
 }
 
-export function create_warrior() : warrior {
+export function create_army(): Army {
+
+}
+
+export function create_warrior(): Warrior {
     let name = get_name();
-    const warrior = {attack : 5, health : 10, name : "Peter"};
+    const warrior = { attack: 5, health: 10, name: "Peter" };
     return warrior;
 }
 
 function get_name() {
-    return head(names);
+    let name = head(w_names);
+    dequeue(w_names);
+    return name;
 
 }
 
@@ -137,9 +143,9 @@ export function setup() {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
-    const player1 : Player =  [name_player1!, list()];
-    const player2 : Player = [name_player2!, list()];
-    const player3 : Player = [name_player3!, list()];
+    const player1: Player = [name_player1!,];
+    const player2: Player = [name_player2!, list()];
+    const player3: Player = [name_player3!, list()];
 
     return list(player1, player2, player3);
 }
@@ -150,5 +156,5 @@ export function setup() {
  */
 export function spawn(Board: MatrixGraph) {
 
-    
+
 }
