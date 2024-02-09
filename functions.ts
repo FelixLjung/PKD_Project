@@ -1,6 +1,10 @@
 //Types
 
-
+    
+type Castle = {
+    size: number,
+    name: string
+};
 
 
 
