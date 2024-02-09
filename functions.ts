@@ -1,8 +1,16 @@
+import { List, Pair , list} from "./lib/list";
+
+
+
+import { Queue } from "./lib/queue_array";
+
 import { type List, Pair , list} from "./lib/list";
 //Types
 const prompt1 = require('prompt-sync')({sigint: true}); // Denna påstår att det är error men det funkar ändå
 
 type Army<warrior> = Array<warrior>
+
+type attack_army = Queue<warrior>
 
 type Player = [string, List<Castle>]
 
@@ -14,7 +22,7 @@ type warrior = {
 };
 
 type Castle = {
-    hp: number,
+    hp: Army<warrior>,
     name: string
     owner: string
 }
@@ -28,13 +36,22 @@ type Castle = {
  * @param max is a {number}. Represents the hightes number on the die
  * @returns a random number / integer.
  */
-export function getRandomInt(min: number, max: number) {
+export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
 
+/**
+ * Take a player and an Attack Army, and if the 
+ * @param player is a pair(name:string, List<castle>)
+ * @param army 
+ * 
+ * @returns Boolean, if you won the castle or not
+ * 
+ */
 
-export function attack() {
+export function attack(player: Player, A_Army: Queue<warrior>): Boolean {
+    
     
 }
 
