@@ -87,8 +87,10 @@ export function castle_owner(Board: MatrixGraph) : MatrixGraph {
 }
 
 /**
- * 
- * @param player 
+ * A players turn in game. Should be able to call multiple actions
+ * Move and Attack.
+ * Should Call other functions.
+ * @param player is a pair(string, List)
  */
 export function turn(player: Player) {
 
