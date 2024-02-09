@@ -35,7 +35,9 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
+const player_list = setup();
 
+console.log(player_list);
 // The game loop
 while(game_running){
     continue
