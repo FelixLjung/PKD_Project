@@ -33,14 +33,19 @@ export function getRandomInt(min: number, max: number) {
 
 
 
-
 export function attack() {
     
 }
 
-
-export function print_board(){
-
+/**
+ * Prints the board to the console
+ * @param Array 2d array of the map
+ * @return Does not return
+ */
+export function print_board(board){
+    for (let i = 0; i < board.length; i ++){ // funkar dåligt
+        console.log(board[i].toString());
+    }
 }
 
 export function move (){
@@ -60,5 +65,5 @@ export function setup() {
 }
 
 export function spawn() {
-    
+
 }
