@@ -4,7 +4,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 // Constants
-let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names
+let w_names: Queue<string> = [0, 18, ["Eva Darulova",    // Current: 18 warrrior-names
                                  "Jingwei",
                                 "Johannes Borgström",
                                 "Carl Erik IV", 
@@ -123,6 +123,11 @@ export function turn(player: Player) {
 
 }
 
+/**
+ * Creates a an array of warriors
+ *
+ * @returns 
+ */
 export function create_army(): Army {
     let army : Army = [create_warrior()];
 
