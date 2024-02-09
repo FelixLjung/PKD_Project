@@ -1,4 +1,4 @@
-import { List, Pair , list} from "./lib/list";
+import { type List, Pair , list} from "./lib/list";
 //Types
 
 type Army<warrior> = Array<warrior>
@@ -60,8 +60,14 @@ export function turn() {
 
 }
 
-export function setup() {
+/**
+ * reads all the player names and creates players
+ * @params no arguments
+ * @returns does not return
+ */
 
+export function setup() {
+    const player1 : Player<string, List<warrior>> = 
 }
 
 export function spawn() {
