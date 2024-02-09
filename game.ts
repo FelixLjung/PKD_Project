@@ -2,6 +2,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, spawn, create_warrior} from './functions'
 
+import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
 
 let map = [["","","", "0","","",""],
@@ -37,8 +38,11 @@ const mormors_kudde: MatrixGraph = {
 
 const player_list = setup();
 
+const player1 = player_list[0];
+
 console.log(player_list);
 
+/* 
 console.log(create_warrior());
 console.log(create_warrior());
 console.log(create_warrior());
@@ -48,8 +52,13 @@ console.log(create_warrior());
 console.log(create_warrior());
 console.log(create_warrior());
 console.log(create_warrior());
+*/
 // The game loop
 while(game_running){
-    continue
+    for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
+        
+    } 
+
+
 }
-console.log(mormors_kudde);
+//console.log(mormors_kudde);
