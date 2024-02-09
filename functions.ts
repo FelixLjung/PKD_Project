@@ -1,7 +1,10 @@
-import { Pair } from "./lib/list";
+import { List, Pair , list} from "./lib/list";
 //Types
 
 type Army<warrior> = Array<warrior>
+
+type Player <H, T>= [H, T, List<H, T>] | null
+
 type warrior = {
     attack : number
     health : number
@@ -28,5 +31,17 @@ function getRandomInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+/**
+ * 
+ * @param Vem 
+ * @param Vad 
+ * @param Army<Warrior> 
+ * @returns Boolean - If the castle is taken the
+ */
+function attack(Vem: string, Vad: string, Army: Army<warrior>){
 
-function attack
+}
+
+
+
+function move(Vem: string, Vart:, army: Army<warrior>)'
