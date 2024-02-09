@@ -14,6 +14,8 @@ type attack_army = Queue<warrior>
 
 type Player = [string, List<Castle>]
 
+type Board = Array<Array<string>>
+
 type warrior = {
     attack : number
     health : number
@@ -60,7 +62,7 @@ export function attack(player: Player, A_Army: Queue<warrior>): Boolean {
  * @param Array 2d array of the map
  * @return Does not return
  */
-export function print_board(board){
+export function print_board(board: Board){
     for (let i = 0; i < board.length; i ++){ // funkar dåligt
         console.log(board[i].toString());
     }

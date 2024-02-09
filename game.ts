@@ -42,3 +42,4 @@ console.log(player_list);
 while(game_running){
     continue
 }
+console.log(mormors_kudde);
