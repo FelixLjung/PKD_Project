@@ -78,9 +78,22 @@ export function attack(player: Player, A_Army: Queue<Warrior>): Boolean {
  * @return Does not return
  */
 export function print_board(board: Board) {
-    for (let i = 0; i < board.length; i++) { // funkar dåligt
-        console.log(board[i].toString());
+    for(let i = 0; i < board.length; i++) {
+        console.log('\x1b[36m%s\x1b[0m', helper(board[i])); // black magic 
     }
+
+    function helper(line) {
+        let str = "";
+
+        for(let j = 0; j < line.length; j++) {
+            str += line[j];
+        }
+        return str;
+    }
+}
+
+export function check_paths(){
+    
 }
 
 /**
