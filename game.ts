@@ -5,17 +5,25 @@ import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, spaw
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
 
-let map = [["","","", "0","","",""],
-["","","", "l","","",""],
-["","","", "l","","",""],
-["0","-","-", "0","-","-","0"],
-["","'s'","", "l","","'/'",""],
-["","","'s'", "l","'/'","",""],
-["","","", "0","","",""]];
+let node1 = "A";
+let node2 = "B";
+let node3 = "C";
+let node4 = "X"
+
+
 
 let game_running = false;
-
-print_board(map);
+/*
+let map = [
+    [" "," "," "," ", node1," "," "," "," "],
+    [" "," ","/"," ", "|"," ","\\"," "],
+    [" ","/"," "," ", "|"," "," ","\\"],
+    [node2,"-","-", "-", node4,"-","-","-",node4],
+    [" ","\\"," "," ", "|"," "," ","/"," "],
+    [" "," ","\\"," ", "|"," ","/",""," "],
+    [" "," "," "," ", node3," "," "," "," "]
+];
+*/
 
 
 
@@ -38,9 +46,24 @@ const mormors_kudde: MatrixGraph = {
 
 const player_list = setup();
 
-const player1 = player_list[0];
+node1 = player_list[0][0][0];
+node2 = player_list[1][0][0];
+node3 = player_list[2][0][0];
 
-console.log(player_list);
+
+
+let map = [
+    [" "," "," "," ", node1," "," "," "," "],
+    [" "," ","/"," ", "|"," ","\\"," "],
+    [" ","/"," "," ", "|"," "," ","\\"],
+    [node2,"-","-", "-", node4,"-","-","-",node4],
+    [" ","\\"," "," ", "|"," "," ","/"," "],
+    [" "," ","\\"," ", "|"," ","/",""," "],
+    [" "," "," "," ", node3," "," "," "," "]
+];
+//const player1 = player_list[0];
+//print_board(map);
+//console.log(player_list);
 
 /* 
 console.log(create_warrior());
