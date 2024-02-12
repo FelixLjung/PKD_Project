@@ -25,7 +25,7 @@ let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-
                                 "Dadel kungen"]];
 
 //Types
-const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
+const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
 
 type Army = Array<Warrior>;
 type attack_army = Queue<Warrior>;
@@ -92,8 +92,17 @@ export function print_board(board: Board) {
     }
 }
 
-export function check_paths(){
-    
+
+
+export function get_castles(player : Player){
+    return player[1];
+}
+
+export function finds_paths(castle : Castle){ 
+    let position = castle.position;
+
+
+
 }
 
 /**
@@ -126,11 +135,13 @@ export function castle_owner(Board: MatrixGraph): MatrixGraph {
  * @param player is a pair(string, List)
  */
 export function turn(player: Player) {
+    console.log("You rule over the following castles: ", player[1])
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army ");
 
     if (choice === "1"){
         console.log("You are moving");
+        //finds_paths();
     } else if (choice === "2") {
         console.log("You are training");
     }
