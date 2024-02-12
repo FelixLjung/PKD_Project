@@ -26,16 +26,16 @@ let board1 = [
 
 function print_to_board(board) {
     for (let i = 0; i < board.length; i++){
-        console.log(helper(board[i]));
+        console.log('\x1b[36m%s\x1b[0m',helper(board[i]));
 
     }
 
     function helper(line) {
-        let str = "%c";
+        let str = "";
         for(let j = 0; j < line.length; j++){
             str += line[j];
         }
-        return str, outputColor;
+        return str
     }
 }
 
@@ -43,5 +43,4 @@ function print_to_board(board) {
 
 print_to_board(board1);
 
-
-//console.log(str);
+console.log('\x1b[36m%s\x1b[0m',  " Kung Felix "); 
