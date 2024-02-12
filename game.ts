@@ -65,6 +65,8 @@ let map = [
 //print_board(map);
 //console.log(player_list);
 
+game_running = true;
+
 /* 
 console.log(create_warrior());
 console.log(create_warrior());
@@ -79,8 +81,11 @@ console.log(create_warrior());
 // The game loop
 while(game_running){
     for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
-        
+        turn(player_list[i]);
     } 
+
+    
+    break;
 
 
 }
