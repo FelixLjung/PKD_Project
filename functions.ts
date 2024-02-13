@@ -82,7 +82,7 @@ export function print_board(board: Board) {
         console.log('\x1b[36m%s\x1b[0m', helper(board[i])); // black magic 
     }
 
-    function helper(line) {
+    function helper(line : Array<string>) {
         let str = "";
 
         for(let j = 0; j < line.length; j++) {
@@ -115,7 +115,7 @@ export function get_castles(player : Player){
 export function finds_paths(castle : Castle){ 
     let position = castle.position;
 
-
+    
 
 }
 
@@ -126,14 +126,14 @@ export function finds_paths(castle : Castle){
  * @param Soldiers - The army being moved from one castle to another
  * @returns void
  */
-export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army): void {
-    /*
-    if(){
-        
+export function move(move_from: Castle, move_to: Castle, Soldiers: attack_army): void {
+    const player_from = move_from.owner;
+    const player_to = move_to.owner
+    if (player_from !== player_to){
+        console.log("War...");
     }
-    console.log("Where would you like to move?");
-    const choice = prompt("")
-    */
+
+    
 }
 
 /**
@@ -160,9 +160,11 @@ export function turn(player: Player) {
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
     if (choice === "1"){
+        let paths = finds_paths(player[1][0]); // Första castle
         console.log("You are moving");
-        //finds_paths();
+        
     } else if (choice === "2") {
+        
         console.log("You are training");
     }
 }
