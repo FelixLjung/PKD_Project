@@ -89,4 +89,4 @@ while(game_running){
 
 
 }
-//console.log(mormors_kudde);
+console.log(mormors_kudde);
