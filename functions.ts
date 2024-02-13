@@ -29,7 +29,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår iblan
 
 type Army = Array<Warrior>;
 type attack_army = Queue<Warrior>;
-type Player = [string, List<Castle>];
+type Player = [string, Array<Castle>];
 type Board = Array<Array<string>>;
 type Warrior = {
     attack: number
@@ -92,11 +92,25 @@ export function print_board(board: Board) {
     }
 }
 
-
+/**
+ * Gets an array of all the castles the player currently control.
+ * @param player the player in question.
+ * @returns Array<string> of the castles 
+ * 
+ */
 
 export function get_castles(player : Player){
-    return player[1];
+    let castle_list : Array<string> = [];
+    for(let i = 0; i < player[1].length; i++){
+        castle_list[i] = player[1][i].position + player[0][0];
+    }
+    return castle_list;
 }
+
+/**
+ * Finds all possible paths from a castle
+ * @param castle 
+ */
 
 export function finds_paths(castle : Castle){ 
     let position = castle.position;
@@ -135,9 +149,9 @@ export function castle_owner(Board: MatrixGraph): MatrixGraph {
  * @param player is a pair(string, List)
  */
 export function turn(player: Player) {
-    console.log("You rule over the following castles: ", player[1])
+    console.log("You rule over the following castles: ", get_castles(player));
     console.log("What is your command, king ", player[0], "..?");
-    const choice = prompt("1 : Move Army  \n  2: Train Army ");
+    const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
     if (choice === "1"){
         console.log("You are moving");
@@ -194,9 +208,9 @@ export function setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
-    const player1: Player = [name_player1!,list(create_castle(create_army(),name_player1,0))];
-    const player2: Player = [name_player2!, list(create_castle(create_army(),name_player2,1))];
-    const player3: Player = [name_player3!, list(create_castle(create_army(),name_player3,2))];
+    const player1: Player = [name_player1!,[(create_castle(create_army(),name_player1,1))]];
+    const player2: Player = [name_player2!, [(create_castle(create_army(),name_player2,2))]];
+    const player3: Player = [name_player3!, [(create_castle(create_army(),name_player3,5))]];
 
     return [player1, player2, player3];
 }
