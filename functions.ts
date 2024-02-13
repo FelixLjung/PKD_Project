@@ -44,6 +44,22 @@ type Castle = {
     position: number
 }
 
+let I = true;
+let O = false;
+
+const mormors_kudde: MatrixGraph = {
+    size: 5,
+    adj:
+        [
+        [O, I, I, I, O], //0. from A 
+        [I, O, I, O, I], //1. from B
+        [I, I, O, I, I], //2. from C
+        [I, O, I, O, I], //3. from D
+        [O, I, I, I, O], //4. from E
+        ] 
+
+}
+
 
 
 // Functions
@@ -121,7 +137,7 @@ export function get_castles(player: Player) {
  */
 
 export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> { 
-    let position = castle.position;
+    let position = castle.position - 1;
     let paths: Array<number> = [];
     let spot: number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
@@ -174,8 +190,8 @@ export function turn(player: Player) {
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
     if (choice === "1"){
-        let paths = finds_paths(player[1][0]); // Första castle
-        console.log("You are moving");
+        let paths = finds_paths(player[1][0], mormors_kudde); // Första castle
+        console.log("You can move to the following castles: ", paths);
         
     } else if (choice === "2") {
         
