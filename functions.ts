@@ -177,7 +177,7 @@ export function turn(player: Player) {
         console.log("You are moving");
         //finds_paths();
     } else if (choice === "2") {
-        console.log("You are training");
+        console.log("You are training...");
         train_warrior(player[1][0].hp)
         console.log(player[1][0].hp)
         return {}
