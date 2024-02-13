@@ -126,6 +126,9 @@ export function print_board(board: Board) {
  */
 
 function get_castle(index : number) : Castle {
+
+    return castles[index-1];    
+
     
 }
 
@@ -159,20 +162,18 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * Moves an army from one castle to another, attacking if it is an enemy castle
  * @param Move_from - The castle the army is being moved from
  * @param Move_to - The castle the army is being moved to
- * @param Soldiers - The army being moved from one castle to another
+ * @param Soldiers - The army being moved from one castle to another // tror inte denna behövs
  * @returns void
  */
-export function move(move_from: Castle, move_to: Castle, soldiers: attack_army): void {
+export function move(move_from: Castle, move_to: Castle): void {
     const player_from = move_from.owner;
     const player_to = move_to.owner;
+    const army = move_from.hp;
     
-    /*
-    if(){
-        
+    if (player_from !== player_to) {
+        console.log("war...");
     }
-    console.log("Where would you like to move?");
-    const choice = prompt("")
-    */
+
 }
 
 /**
@@ -205,9 +206,10 @@ export function turn(player: Player) {
         console.log("You can move to the following castles: ", paths);
         let choice : number = prompt("Choose your destination: ") as number;
 
-        //let castle_to = 
+        let castle_to = get_castle[choice];
 
-        //move(player[1][0],)
+
+        move(player[1][0], castle_to);
         
     } else if (choice === "2") {
         console.log("You are training: ", player[1][0].hp);
@@ -268,7 +270,12 @@ export function setup(): Array<Player> {
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
-    
+    castles[0] = player1[1][0];
+    castles[1] = player2[1][0];
+    castles[2] = player3[1][0];
+    castles[3] = create_castle(create_army(),"AI", 3);
+    castles[4] = create_castle(create_army(),"AI", 4);
+
 
     return [player1, player2, player3];
 }
