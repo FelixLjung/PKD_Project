@@ -5,7 +5,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 
-let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names
+let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names OK
     "Jingwei Hu",
     "Johannes Borgström",
     "Carl Erik IV",
@@ -25,9 +25,10 @@ let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-
     "Thom Surströmming",
     "Dadel kungen"]];
 
-//Types
+
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
 
+//Types
 type Army = Array<Warrior>;
 type attack_army = Queue<Warrior>;
 type Player = [string, Array<Castle>];
@@ -44,6 +45,8 @@ type Castle = {
     owner: string
     position: number
 }
+
+// Variables
 
 let I = true;
 let O = false;
@@ -87,13 +90,8 @@ let map = [
 
 
 
-
-
-
-
-
-
 // Functions
+
 /**
  * Chooses a random number between [min] and [max].
  * @param min is a number. Represents the lowest number on the die
@@ -138,11 +136,16 @@ export function enqueue_army(army: Army): Queue<Warrior> {
 }
 
 //get random int (för)
-
+/**
+ * 
+ * @param attacker is a {Warrior}
+ * @param defender is a {Warrior}
+ * @returns 
+ */
 export function fight(attacker: Warrior, defender: Warrior): boolean {
     while (true) {
         attacker.health -= defender.attack * getRandomInt(0, 4);
-        console.log(defender,"VS", attacker);
+        console.log(defender, "VS", attacker);
         if (attacker.health <= 0) {
             return true
         }
@@ -178,7 +181,7 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
         if (def_win === true) {
             dequeue(Attackers);
         }
-        else if (def_win === false){
+        else if (def_win === false) {
             dequeue(Defenders);
         }
         if (Attackers[2].length === 0) {          // If Attackers army is depleted:
@@ -218,26 +221,38 @@ function get_castle(index: number): Castle {
 
 
 }
+
 /**
  * Gets an array of all the castles the player currently control.
  * @param player the player in question.
  * @returns Array<string> of the castles 
  * 
  */
-export function get_castles(player: Player) : Queue<Castle> {
-    let castle_queue : Queue<Castle> = empty();
+export function get_castles(player: Player): Queue<Castle> {
+    let castle_queue: Queue<Castle> = empty();
     if (tail(player).length > 1) {
-        const cstl = prompt("Which castle would you like to start with? ");
+        const cstl: number = prompt("Which castle would you like to start with? ") as number;
         for (let i = 0; i < tail(player).length; i = i + 1) {
-            if (i === cstl - 1) {
-                enqueue(cstl, castle_queue);
+            const lst_castle = tail(player)[i].position
+            if (lst_castle === cstl - 1) {
+                enqueue(tail(player)[i], castle_queue);
+            }
+            else {
+                console.log("You don't own this Castle");
+                get_castles(player);                // Ifall fel, måste man välja från början,
+                // kan vara bra att fixa en hjälpfunktion.
             }
         }
         for (let l = 0; l < tail(player).length; l = l + 1) {
             const cstl2 = prompt("Which castle would you like to operate from after")
             for (let i = 0; i < tail(player).length; i = i + 1) {
-                if (i === cstl2 - 1) {
-                    enqueue(cstl2, castle_queue);
+                if (tail(player)[i].position === cstl2 - 1) {
+                    enqueue(tail(player)[i], castle_queue);
+                }
+                else {
+                    console.log("You don't own this Castle");
+                    get_castles(player);                // Ifall fel, måste man välja från början,
+                    // kan vara bra att fixa en hjälpfunktion.
                 }
             }
         }
@@ -255,8 +270,8 @@ export function get_castles(player: Player) : Queue<Castle> {
 
 export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
     let position = castle.position - 1;
-    let paths : Array<number> = [];
-    let spot : number = 0;
+    let paths: Array<number> = [];
+    let spot: number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
         if (map.adj[position][i] === true) {
             paths[spot] = i + 1;
@@ -283,7 +298,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
     if (player_from !== player_to) {
         console.log("war...");
-        attack(army,move_to);
+        attack(army, move_to);
     }
 
 
@@ -296,9 +311,9 @@ export function move(move_from: Castle, move_to: Castle): void {
  * @param player - the new owner of the castle
  * @returns The updated board with the correct castle owners
  */
-export function castle_owner(Board: MatrixGraph, castle : Castle, player : Player): MatrixGraph {
+export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
     tail(player)[tail(player).length] = castle;
-    
+
 }
 
 /**
@@ -312,9 +327,10 @@ export function turn(player: Player) {
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
+    // Någonstans ska vi föra in get_castles funktionen (väljer vilket slott man vill börja med)
     if (choice === "1") {
         //console.clear();
-
+        
         let paths = finds_paths(player[1][0], mormors_kudde); // Första castle
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
@@ -348,7 +364,7 @@ export function create_castle(army: Army, owner: string, position: number): Cast
 }
 
 /**
- * Creates a an array of warriors       Funkar?
+ * Creates a an array of warriors
  *
  * @returns 
  */
@@ -360,7 +376,7 @@ export function create_army(): Army {
 
 
 /**
- * Creates a warrior (dictionary) with name, attack damage and health   Funkar?
+ * Creates a warrior (dictionary) with name, attack damage and health
  * @returns a Warrior
  */
 export function create_warrior(): Warrior {
@@ -371,7 +387,7 @@ export function create_warrior(): Warrior {
 
 
 /**
- * Warrior gets a name from queue       Funkar?
+ * Warrior gets a name from queue
  * @returns string
  */
 function get_name(): string {
@@ -381,8 +397,8 @@ function get_name(): string {
 }
 
 /**
- * Player Creation
- * @returns 
+ * Pick your King, and creates your army
+ * @returns A complete setup of the game
  */
 export function setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
