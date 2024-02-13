@@ -124,9 +124,9 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
     let position = castle.position;
     let paths: Array<number> = [];
     let spot: number = 0;
-    for (let i = 0; i < map[position].length; i = i + 1) {
-        if (map[i] === I) {
-            paths[spot] = i;
+    for (let i = 0; i < map.adj[position].length; i = i + 1) {
+        if (map.adj[position][i] === true) {
+            paths[spot] = i + 1;
             spot = spot + 1;
         }
     }
@@ -179,6 +179,8 @@ export function turn(player: Player) {
     } else if (choice === "2") {
         console.log("You are training");
         train_warrior(player[1][0].hp)
+        console.log(player[1][0].hp)
+        return {}
     }
 }
 
