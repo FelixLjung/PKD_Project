@@ -172,6 +172,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     
     if (player_from !== player_to) {
         console.log("war...");
+        //attack(army,move_to);
     }
 
 }
