@@ -126,7 +126,7 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
     let spot: number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
         if (map.adj[position][i] === true) {
-            paths[spot] = i;
+            paths[spot] = i + 1;
             spot = spot + 1;
         }
     }
