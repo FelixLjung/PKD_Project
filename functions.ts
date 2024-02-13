@@ -60,6 +60,8 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
+let castles : Array<Castle> = [];
+
 
 
 // Functions
@@ -74,10 +76,11 @@ export function getRandomInt(min: number, max: number): number {
 }
 
 export function train_warrior(army:Army): void {
-    for(let w = 0; w < army.length; w = w + 0){
+    for(let w = 0; w < army.length; w = w + 1){
+        console.log(w);
         let cur_war = army[w];
-        cur_war.attack = cur_war.attack + 5
-        cur_war.health = cur_war.health + 5
+        cur_war.attack = cur_war.attack + 5;
+        cur_war.health = cur_war.health + 5;
     }
 }
 
@@ -123,6 +126,10 @@ export function print_board(board: Board) {
  * 
  */
 
+function get_castle(index : number) : Castle {
+    
+}
+
 export function get_castles(player: Player) {
     let castle_list: Array<string> = [];
     for (let i = 0; i < player[1].length; i++) {
@@ -156,7 +163,10 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * @param Soldiers - The army being moved from one castle to another
  * @returns void
  */
-export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army): void {
+export function move(move_from: Castle, move_to: Castle, soldiers: attack_army): void {
+    const player_from = move_from.owner;
+    const player_to = move_to.owner;
+    
     /*
     if(){
         
@@ -190,14 +200,21 @@ export function turn(player: Player) {
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
     if (choice === "1"){
+        //console.clear();
+        
         let paths = finds_paths(player[1][0], mormors_kudde); // Första castle
         console.log("You can move to the following castles: ", paths);
+        let choice : number = prompt("Choose your destination: ") as number;
+
+        //let castle_to = 
+
+        //move(player[1][0],)
         
     } else if (choice === "2") {
-        console.log("You are training...");
+        console.log("You are training: ", player[1][0].hp);
         train_warrior(player[1][0].hp)
         console.log(player[1][0].hp)
-        return {}
+        
     }
 }
 
@@ -251,6 +268,8 @@ export function setup(): Array<Player> {
     const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
+
+    
 
     return [player1, player2, player3];
 }
