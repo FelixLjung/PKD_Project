@@ -240,7 +240,7 @@ export function get_castles(player: Player): Queue<Castle> {
             else {
                 console.log("You don't own this Castle");
                 get_castles(player);                // Ifall fel, måste man välja från början,
-                // kan vara bra att fixa en hjälpfunktion.
+                                                    // kan vara bra att fixa en hjälpfunktion.
             }
         }
         for (let l = 0; l < tail(player).length; l = l + 1) {
@@ -252,7 +252,7 @@ export function get_castles(player: Player): Queue<Castle> {
                 else {
                     console.log("You don't own this Castle");
                     get_castles(player);                // Ifall fel, måste man välja från början,
-                    // kan vara bra att fixa en hjälpfunktion.
+                                                        // kan vara bra att fixa en hjälpfunktion.
                 }
             }
         }
