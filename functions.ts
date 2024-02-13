@@ -64,6 +64,34 @@ const mormors_kudde: MatrixGraph = {
 let castles : Array<Castle> = [];
 
 
+// board
+
+// start nodes
+let node1 = "1";
+let node2 = "2";
+let node5 = "5";
+
+//unclaimed nodes
+let node3 = "3x"
+let node4 = "4x";
+
+let map = [
+    [" "," "," "," ", node1," "," "," "," "],
+    [" "," ","/"," ", "|"," ","\\"," "],
+    [" ","/"," "," ", "|"," "," ","\\"],
+    [node2,"-", "-", node3,"-","-",node4],
+    [" ","\\"," "," ", "|"," "," ","/"," "],
+    [" "," ","\\"," ", "|"," ","/",""," "],
+    [" "," "," "," ", node5," "," "," "," "]
+];
+
+
+
+
+
+
+
+
 
 // Functions
 /**
@@ -74,6 +102,18 @@ let castles : Array<Castle> = [];
  */
 export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
+}
+
+export function refresh_board(){
+    map = map = [
+        [" "," "," "," ", node1," "," "," "," "],
+        [" "," ","/"," ", "|"," ","\\"," "],
+        [" ","/"," "," ", "|"," "," ","\\"],
+        [node2,"-", "-", node3,"-","-",node4],
+        [" ","\\"," "," ", "|"," "," ","/"," "],
+        [" "," ","\\"," ", "|"," ","/",""," "],
+        [" "," "," "," ", node5," "," "," "," "]
+    ];
 }
 
 export function train_warrior(army:Army): void {
@@ -129,9 +169,10 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
  * @param Array 2d array of the map
  * @return Does not return
  */
-export function print_board(board: Board) {
-    for (let i = 0; i < board.length; i++) {
-        console.log('\x1b[36m%s\x1b[0m', helper(board[i])); // black magic 
+
+export function print_board() {
+    for (let i = 0; i < map.length; i++) {
+        console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic 
     }
 
     function helper(line: Array<string>) {
@@ -153,7 +194,7 @@ export function print_board(board: Board) {
 
 function get_castle(index : number) : Castle {
 
-    return castles[index-1];    
+    return castles[index];    
 
     
 }
@@ -196,14 +237,14 @@ export function move(move_from: Castle, move_to: Castle): void {
     console.log(move_from);
     console.log(move_to);
 
-    //const player_to : string = move_to.owner;
+    const player_to : string = move_to.owner;
     const army = move_from.hp;
-    /*
+    
     if (player_from !== player_to) {
         console.log("war...");
         //attack(army,move_to);
     }
-    */
+    
 
 }
 
@@ -237,8 +278,7 @@ export function turn(player: Player) {
         console.log("You can move to the following castles: ", paths);
         let choice : number = prompt("Choose your destination: ") as number;
 
-        let castle_to : Castle = get_castle[choice];
-
+        let castle_to : Castle = castles[choice];
 
         move(player[1][0], castle_to);
         
@@ -258,7 +298,7 @@ export function turn(player: Player) {
  */
         
     }
-}
+
 
 export function create_castle(army: Army, owner: string, position: number): Castle {
     let castle = { hp: army, owner: owner, position: position };
@@ -307,9 +347,14 @@ export function setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
+
     const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
+
+    node1 += player1[0][0];
+    node2 += player2[0][0];
+    node5 += player3[0][0];
 
     castles[0] = player1[1][0];
     castles[1] = player2[1][0];
