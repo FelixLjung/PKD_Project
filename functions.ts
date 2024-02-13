@@ -1,6 +1,7 @@
 import { type List, type Pair, list } from "./lib/list";
-import { type Queue, head, dequeue } from "./lib/queue_array";
+import { type Queue, head, dequeue, enqueue, empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
+
 
 
 
@@ -65,6 +66,18 @@ export function train_warrior(army:Army): void {
     }
 }
 
+/**
+ * 
+ * @param army 
+ * @returns A queue of warriors (used to attack / defend)
+ */
+export function enqueue_army(army: Army): Queue<Warrior> {
+    const queue_army = empty<Warrior>()
+    for(let a = 0; a <= army.length; a = a + 1){
+        enqueue(army[a], queue_army);
+    }
+    return queue_army;
+}
 
 /**
  * Take a player and an Attack Army, and if the 
@@ -75,9 +88,18 @@ export function train_warrior(army:Army): void {
  * 
  */
 
-export function attack(player: Player, A_Army: Queue<Warrior>): Boolean {
+export function attack(Attacking_army: Army, castle: Castle): Boolean {
+    let bool = false;
+    let defense_army = castle.hp;
+    const Attack = enqueue_army(Attacking_army);
+    const Defense = enqueue_army(defense_army);
+    while(bool !== true){
 
-    return false; // temp return
+    }if(Attack[2].length === 0){      // If length of warrior queue is 0:
+        return true; // temp return
+    }else if(Defense[2].length === 0){
+    //    return false; // temp return
+    //}
 }
 
 /**
@@ -181,9 +203,15 @@ export function turn(player: Player) {
         train_warrior(player[1][0].hp)
         console.log(player[1][0].hp)
         return {}
-    }
 }
 
+/**
+ * Creates a castle in setup phase
+ * @param army 
+ * @param owner 
+ * @param position 
+ * @returns A castle
+ */
 export function create_castle(army: Army, owner: string, position: number): Castle {
     let castle = { hp: army, owner: owner, position: position };
 
