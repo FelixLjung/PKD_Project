@@ -52,16 +52,16 @@ const mormors_kudde: MatrixGraph = {
     size: 5,
     adj:
         [
-        [O, I, I, I, O], //0. from A 
-        [I, O, I, O, I], //1. from B
-        [I, I, O, I, I], //2. from C
-        [I, O, I, O, I], //3. from D
-        [O, I, I, I, O], //4. from E
-        ] 
+            [O, I, I, I, O], //0. from A 
+            [I, O, I, O, I], //1. from B
+            [I, I, O, I, I], //2. from C
+            [I, O, I, O, I], //3. from D
+            [O, I, I, I, O], //4. from E
+        ]
 
 }
 
-let castles : Array<Castle> = [];
+let castles: Array<Castle> = [];
 
 
 // board
@@ -76,13 +76,13 @@ let node3 = "3x"
 let node4 = "4x";
 
 let map = [
-    [" "," "," "," ", node1," "," "," "," "],
-    [" "," ","/"," ", "|"," ","\\"," "],
-    [" ","/"," "," ", "|"," "," ","\\"],
-    [node2,"-", "-", node3,"-","-",node4],
-    [" ","\\"," "," ", "|"," "," ","/"," "],
-    [" "," ","\\"," ", "|"," ","/",""," "],
-    [" "," "," "," ", node5," "," "," "," "]
+    [" ", " ", " ", " ", node1, " ", " ", " ", " "],
+    [" ", " ", "/", " ", "|", " ", "\\", " "],
+    [" ", "/", " ", " ", "|", " ", " ", "\\"],
+    [node2, "-", "-", node3, "-", "-", node4],
+    [" ", "\\", " ", " ", "|", " ", " ", "/", " "],
+    [" ", " ", "\\", " ", "|", " ", "/", "", " "],
+    [" ", " ", " ", " ", node5, " ", " ", " ", " "]
 ];
 
 
@@ -104,20 +104,20 @@ export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-export function refresh_board(){
+export function refresh_board() {
     map = map = [
-        [" "," "," "," ", node1," "," "," "," "],
-        [" "," ","/"," ", "|"," ","\\"," "],
-        [" ","/"," "," ", "|"," "," ","\\"],
-        [node2,"-", "-", node3,"-","-",node4],
-        [" ","\\"," "," ", "|"," "," ","/"," "],
-        [" "," ","\\"," ", "|"," ","/",""," "],
-        [" "," "," "," ", node5," "," "," "," "]
+        [" ", " ", " ", " ", node1, " ", " ", " ", " "],
+        [" ", " ", "/", " ", "|", " ", "\\", " "],
+        [" ", "/", " ", " ", "|", " ", " ", "\\"],
+        [node2, "-", "-", node3, "-", "-", node4],
+        [" ", "\\", " ", " ", "|", " ", " ", "/", " "],
+        [" ", " ", "\\", " ", "|", " ", "/", "", " "],
+        [" ", " ", " ", " ", node5, " ", " ", " ", " "]
     ];
 }
 
-export function train_warrior(army:Army): void {
-    for(let w = 0; w < army.length; w = w + 1){
+export function train_warrior(army: Army): void {
+    for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
         cur_war.attack = cur_war.attack + 5;
         cur_war.health = cur_war.health + 5;
@@ -131,11 +131,30 @@ export function train_warrior(army:Army): void {
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>()
-    for(let a = 0; a <= army.length; a = a + 1){
+    for (let a = 0; a <= army.length; a = a + 1) {
         enqueue(army[a], queue_army);
     }
     return queue_army;
 }
+
+//get random int (för)
+
+export function fight(attacker: Warrior, defender: Warrior): boolean {
+    while (true) {
+        attacker.health -= defender.attack * getRandomInt(0, 4);
+        console.log(defender,"VS", attacker);
+        if (attacker.health <= 0) {
+            return true
+        }
+        defender.health -= attacker.attack * getRandomInt(0, 4);
+        console.log(attacker, "VS", defender);
+        if (defender.health <= 0) {
+            return false
+        }
+    }
+
+}
+
 
 /**
  * Take a player and an Attack Army, and if the 
@@ -151,17 +170,24 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     let defense_army = castle.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
-    while(bool === false){
+    while (bool === false) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
-        if(Attackers[2].length === 0){          // If Attackers army is depleted:
+        let def_win = fight(curr_attacker, curr_defender);
+
+        if (def_win === true) {
+            dequeue(Attackers);
+        }
+        else if (def_win === false){
+            dequeue(Defenders);
+        }
+        if (Attackers[2].length === 0) {          // If Attackers army is depleted:
             return bool = true; // temp return
-        }else if(Defenders[2].length === 0){    // If defenders army is depleted:
-           return bool = true; // temp return
+        } else if (Defenders[2].length === 0) {    // If defenders army is depleted:
+            return bool = true; // temp return
         }
     }
-
-    return bool;
+    return false;
 }
 
 /**
@@ -192,11 +218,11 @@ export function print_board() {
  * 
  */
 
-function get_castle(index : number) : Castle {
+function get_castle(index: number): Castle {
 
-    return castles[index];    
+    return castles[index];
 
-    
+
 }
 
 export function get_castles(player: Player) {
@@ -212,7 +238,7 @@ export function get_castles(player: Player) {
  * @param castle 
  */
 
-export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> { 
+export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
     let position = castle.position - 1;
     let paths: Array<number> = [];
     let spot: number = 0;
@@ -233,18 +259,18 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * @returns void
  */
 export function move(move_from: Castle, move_to: Castle): void {
-    const player_from : string = move_from.owner;
+    const player_from: string = move_from.owner;
     console.log(move_from);
     console.log(move_to);
 
-    const player_to : string = move_to.owner;
+    const player_to: string = move_to.owner;
     const army = move_from.hp;
-    
+
     if (player_from !== player_to) {
         console.log("war...");
-        //attack(army,move_to);
+        attack(army,move_to);
     }
-    
+
 
 }
 
@@ -271,33 +297,33 @@ export function turn(player: Player) {
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
-    if (choice === "1"){
+    if (choice === "1") {
         //console.clear();
-        
+
         let paths = finds_paths(player[1][0], mormors_kudde); // Första castle
         console.log("You can move to the following castles: ", paths);
-        let choice : number = prompt("Choose your destination: ") as number;
+        let choice: number = prompt("Choose your destination: ") as number;
 
-        let castle_to : Castle = castles[choice];
+        let castle_to: Castle = castles[choice];
 
         move(player[1][0], castle_to);
-        
+
     } else if (choice === "2") {
         console.log("You are training: ", player[1][0].hp);
         train_warrior(player[1][0].hp)
         console.log(player[1][0].hp)
         return {}
-}
-
-/**
- * Creates a castle in setup phase
- * @param army 
- * @param owner 
- * @param position 
- * @returns A castle
- */
-        
     }
+
+    /**
+     * Creates a castle in setup phase
+     * @param army 
+     * @param owner 
+     * @param position 
+     * @returns A castle
+     */
+
+}
 
 
 export function create_castle(army: Army, owner: string, position: number): Castle {
@@ -324,7 +350,7 @@ export function create_army(): Army {
  */
 export function create_warrior(): Warrior {
     let name = get_name();
-    const warrior = { attack: 5, health: 10, name: name };
+    const warrior = { attack: 5, health: 100, name: name };
     return warrior;
 }
 
@@ -359,8 +385,8 @@ export function setup(): Array<Player> {
     castles[0] = player1[1][0];
     castles[1] = player2[1][0];
     castles[2] = player3[1][0];
-    castles[3] = create_castle(create_army(),"AI", 3);
-    castles[4] = create_castle(create_army(),"AI", 4);
+    castles[3] = create_castle(create_army(), "AI", 3);
+    castles[4] = create_castle(create_army(), "AI", 4);
 
 
     return [player1, player2, player3];
