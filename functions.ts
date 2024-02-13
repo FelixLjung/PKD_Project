@@ -91,7 +91,11 @@ export function print_board(board: Board) {
  * @returns void
  */
 export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army): void {
-
+    if(){
+        
+    }
+    console.log("Where would you like to move?");
+    const choice = prompt("")
 }
 
 /**
