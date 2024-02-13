@@ -1,5 +1,5 @@
 import { type List, type Pair, list } from "./lib/list";
-import { type Queue, head, dequeue, enqueue } from "./lib/queue_array";
+import { type Queue, head, dequeue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 
@@ -106,7 +106,7 @@ export function print_board(board: Board) {
         console.log('\x1b[36m%s\x1b[0m', helper(board[i])); // black magic 
     }
 
-    function helper(line : Array<string>) {
+    function helper(line: Array<string>) {
         let str = "";
 
         for (let j = 0; j < line.length; j++) {
@@ -156,14 +156,14 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * @param Soldiers - The army being moved from one castle to another
  * @returns void
  */
-export function move(move_from: Castle, move_to: Castle, Soldiers: attack_army): void {
-    const player_from = move_from.owner;
-    const player_to = move_to.owner
-    if (player_from !== player_to){
-        console.log("War...");
+export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army): void {
+    /*
+    if(){
+        
     }
-
-    
+    console.log("Where would you like to move?");
+    const choice = prompt("")
+    */
 }
 
 /**
@@ -194,9 +194,10 @@ export function turn(player: Player) {
         console.log("You can move to the following castles: ", paths);
         
     } else if (choice === "2") {
-        
-        console.log("You are training");
+        console.log("You are training...");
         train_warrior(player[1][0].hp)
+        console.log(player[1][0].hp)
+        return {}
     }
 }
 

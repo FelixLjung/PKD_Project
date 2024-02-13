@@ -90,4 +90,4 @@ while(game_running){
 
 
 }
-console.log(mormors_kudde);
+
