@@ -81,11 +81,13 @@ console.log(create_warrior());
 while(game_running){
     print_board(map);
     for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
+        console.log(player_list[i][1][0].hp);
         turn(player_list[i]);
+
     } 
 
     
-    break;
+    
 
 
 }
