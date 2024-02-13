@@ -120,12 +120,12 @@ export function get_castles(player: Player) {
  * @param castle 
  */
 
-export function finds_paths(castle : Castle, map : Board) : Array<number> { 
+export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> { 
     let position = castle.position;
     let paths: Array<number> = [];
     let spot: number = 0;
-    for (let i = 0; i < map[position].length; i = i + 1) {
-        if (map[i] === I) {
+    for (let i = 0; i < map.adj[position].length; i = i + 1) {
+        if (map.adj[position][i] === true) {
             paths[spot] = i;
             spot = spot + 1;
         }
