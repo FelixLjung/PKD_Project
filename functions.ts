@@ -172,6 +172,7 @@ export function turn(player: Player) {
         //finds_paths();
     } else if (choice === "2") {
         console.log("You are training");
+        train_warrior(player[1][0].hp)
     }
 }
 
