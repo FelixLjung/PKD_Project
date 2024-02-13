@@ -185,12 +185,6 @@ export function print_board() {
     }
 }
 
-/**
- * Gets an array of all the castles the player currently control.
- * @param player the player in question.
- * @returns Array<string> of the castles 
- * 
- */
 
 function get_castle(index : number) : Castle {
 
@@ -198,6 +192,14 @@ function get_castle(index : number) : Castle {
 
     
 }
+/**
+ * Gets an array of all the castles the player currently control.
+ * @param player the player in question.
+ * @returns Array<string> of the castles 
+ * 
+ */
+
+
 
 export function get_castles(player: Player) {
     let castle_list: Array<string> = [];
@@ -242,7 +244,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     
     if (player_from !== player_to) {
         console.log("war...");
-        //attack(army,move_to);
+        attack(army,move_to);
     }
     
 
