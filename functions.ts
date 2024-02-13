@@ -1,5 +1,5 @@
 import { type List, type Pair, list } from "./lib/list";
-import { type Queue, head, dequeue } from "./lib/queue_array";
+import { type Queue, head, dequeue, enqueue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 
@@ -112,11 +112,17 @@ export function get_castles(player : Player){
  * @param castle 
  */
 
-export function finds_paths(castle : Castle){ 
+export function finds_paths(castle : Castle, map : Board) : Array<number> { 
     let position = castle.position;
-
-
-
+    let paths: Array<number> = [];
+    let spot: number = 0;
+    for (let i = 0; i < map[position].length; i = i + 1) {
+        if (map[i] === I) {
+            paths[spot] = i;
+            spot = spot + 1;
+        }
+    }
+    return paths;
 }
 
 /**
