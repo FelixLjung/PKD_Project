@@ -152,10 +152,10 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
     while(bool === false){
-        let A_warr: Warrior = head(Attackers)
-        let D_warr: Warrior = head(Defenders)
+        let curr_attacker: Warrior = head(Attackers)
+        let curr_defender: Warrior = head(Defenders)
         if(Attackers[2].length === 0){          // If Attackers army is depleted:
-            return bool = false; // temp return
+            return bool = true; // temp return
         }else if(Defenders[2].length === 0){    // If defenders army is depleted:
            return bool = true; // temp return
         }
