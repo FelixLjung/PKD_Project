@@ -1,4 +1,4 @@
-import { type List, type Pair, list } from "./lib/list";
+import { type List, type Pair, list, tail } from "./lib/list";
 import { type Queue, head, dequeue } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
@@ -124,18 +124,19 @@ export function print_board(board: Board) {
  * @returns Array<string> of the castles 
  * 
  */
+export function get_castles(player: Player) : List<string> {
+    let castle_queue : Queue<Castle> = empty();
+    if (tail(player).length > 1) {
+    const cstl = prompt("Which castle would you like to start with? ");
+        for (let i = 0; i < tail(player).length; i = i + 1) {
+            if (i === cstl) {
 
-function get_castle(index : number) : Castle {
-    
-}
-
-export function get_castles(player: Player) {
-    let castle_list: Array<string> = [];
-    for (let i = 0; i < player[1].length; i++) {
-        castle_list[i] = player[1][i].position + player[0][0];
+            }
+        }
     }
-    return castle_list;
+    let castle_list: Queue<Castle> = 
 }
+
 
 /**
  * Finds all possible paths from a castle
@@ -144,8 +145,8 @@ export function get_castles(player: Player) {
 
 export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> { 
     let position = castle.position - 1;
-    let paths: Array<number> = [];
-    let spot: number = 0;
+    let paths : Array<number> = [];
+    let spot : number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
         if (map.adj[position][i] === true) {
             paths[spot] = i + 1;
@@ -178,13 +179,13 @@ export function move(move_from: Castle, move_to: Castle, soldiers: attack_army):
 /**
  * Changes the owner of a castle
  * @param Board - The game board where you can find the owner of the castle
+ * @param castle - the castle that is changing owner
+ * @param player - the new owner of the castle
  * @returns The updated board with the correct castle owners
  */
-export function castle_owner(Board: MatrixGraph): MatrixGraph {
-    return {
-        adj: [[false]]
-        , size: 3
-    };
+export function castle_owner(Board: MatrixGraph, castle : Castle, player : Player): MatrixGraph {
+    tail(player)[tail(player).length] = castle;
+    
 }
 
 /**
