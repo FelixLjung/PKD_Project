@@ -198,17 +198,27 @@ function get_castle(index : number) : Castle {
  * @returns Array<string> of the castles 
  * 
  */
-export function get_castles(player: Player) : List<string> {
+export function get_castles(player: Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     if (tail(player).length > 1) {
-    const cstl = prompt("Which castle would you like to start with? ");
+        const cstl = prompt("Which castle would you like to start with? ");
         for (let i = 0; i < tail(player).length; i = i + 1) {
-            if (i === cstl) {
-
+            if (i === cstl - 1) {
+                enqueue(cstl, castle_queue);
             }
         }
+        for (let l = 0; l < tail(player).length; l = l + 1) {
+            const cstl2 = prompt("Which castle would you like to operate from after")
+            for (let i = 0; i < tail(player).length; i = i + 1) {
+                if (i === cstl2 - 1) {
+                    enqueue(cstl2, castle_queue);
+                }
+            }
+        }
+    } else if (tail(player).length === 1) {
+        enqueue(tail(player)[0], castle_queue);
     }
-    let castle_list: Queue<Castle> = 
+    return castle_queue;
 }
 
 
