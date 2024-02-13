@@ -45,6 +45,24 @@ type Castle = {
     position: number
 }
 
+let I = true;
+let O = false;
+
+const mormors_kudde: MatrixGraph = {
+    size: 5,
+    adj:
+        [
+        [O, I, I, I, O], //0. from A 
+        [I, O, I, O, I], //1. from B
+        [I, I, O, I, I], //2. from C
+        [I, O, I, O, I], //3. from D
+        [O, I, I, I, O], //4. from E
+        ] 
+
+}
+
+let castles : Array<Castle> = [];
+
 
 
 // Functions
@@ -61,8 +79,8 @@ export function getRandomInt(min: number, max: number): number {
 export function train_warrior(army:Army): void {
     for(let w = 0; w < army.length; w = w + 1){
         let cur_war = army[w];
-        cur_war.attack = cur_war.attack + 5
-        cur_war.health = cur_war.health + 5
+        cur_war.attack = cur_war.attack + 5;
+        cur_war.health = cur_war.health + 5;
     }
 }
 
@@ -129,6 +147,13 @@ export function print_board(board: Board) {
  * 
  */
 
+function get_castle(index : number) : Castle {
+
+    return castles[index-1];    
+
+    
+}
+
 export function get_castles(player: Player) {
     let castle_list: Array<string> = [];
     for (let i = 0; i < player[1].length; i++) {
@@ -143,7 +168,7 @@ export function get_castles(player: Player) {
  */
 
 export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> { 
-    let position = castle.position;
+    let position = castle.position - 1;
     let paths: Array<number> = [];
     let spot: number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
@@ -159,17 +184,23 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * Moves an army from one castle to another, attacking if it is an enemy castle
  * @param Move_from - The castle the army is being moved from
  * @param Move_to - The castle the army is being moved to
- * @param Soldiers - The army being moved from one castle to another
+ * @param Soldiers - The army being moved from one castle to another // tror inte denna behövs
  * @returns void
  */
-export function move(Move_from: Castle, Move_to: Castle, Soldiers: attack_army): void {
+export function move(move_from: Castle, move_to: Castle): void {
+    const player_from : string = move_from.owner;
+    console.log(move_from);
+    console.log(move_to);
+
+    //const player_to : string = move_to.owner;
+    const army = move_from.hp;
     /*
-    if(){
-        
+    if (player_from !== player_to) {
+        console.log("war...");
+        //attack(army,move_to);
     }
-    console.log("Where would you like to move?");
-    const choice = prompt("")
     */
+
 }
 
 /**
@@ -195,11 +226,20 @@ export function turn(player: Player) {
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
-    if (choice === "1") {
-        console.log("You are moving");
-        //finds_paths();
+    if (choice === "1"){
+        //console.clear();
+        
+        let paths = finds_paths(player[1][0], mormors_kudde); // Första castle
+        console.log("You can move to the following castles: ", paths);
+        let choice : number = prompt("Choose your destination: ") as number;
+
+        let castle_to : Castle = get_castle[choice];
+
+
+        move(player[1][0], castle_to);
+        
     } else if (choice === "2") {
-        console.log("You are training...");
+        console.log("You are training: ", player[1][0].hp);
         train_warrior(player[1][0].hp)
         console.log(player[1][0].hp)
         return {}
@@ -212,6 +252,10 @@ export function turn(player: Player) {
  * @param position 
  * @returns A castle
  */
+        
+    }
+}
+
 export function create_castle(army: Army, owner: string, position: number): Castle {
     let castle = { hp: army, owner: owner, position: position };
 
@@ -262,6 +306,13 @@ export function setup(): Array<Player> {
     const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
+
+    castles[0] = player1[1][0];
+    castles[1] = player2[1][0];
+    castles[2] = player3[1][0];
+    castles[3] = create_castle(create_army(),"AI", 3);
+    castles[4] = create_castle(create_army(),"AI", 4);
+
 
     return [player1, player2, player3];
 }
