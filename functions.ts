@@ -166,14 +166,18 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * @returns void
  */
 export function move(move_from: Castle, move_to: Castle): void {
-    const player_from = move_from.owner;
-    const player_to = move_to.owner;
+    const player_from : string = move_from.owner;
+    console.log(move_from);
+    console.log(move_to);
+
+    //const player_to : string = move_to.owner;
     const army = move_from.hp;
-    
+    /*
     if (player_from !== player_to) {
         console.log("war...");
         //attack(army,move_to);
     }
+    */
 
 }
 
@@ -207,7 +211,7 @@ export function turn(player: Player) {
         console.log("You can move to the following castles: ", paths);
         let choice : number = prompt("Choose your destination: ") as number;
 
-        let castle_to = get_castle[choice];
+        let castle_to : Castle = get_castle[choice];
 
 
         move(player[1][0], castle_to);

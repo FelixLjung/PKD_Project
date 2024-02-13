@@ -32,7 +32,7 @@ const I = true;
 const O = false;
 const mormors_kudde: MatrixGraph = {
     size: 5,
-    adj:
+    adj:[
         [O, I, I, I, O], //0. from A 
         [I, O, I, O, I], //1. from B
         [I, I, O, I, I], //2. from C
@@ -80,8 +80,12 @@ console.log(create_warrior());
 while(game_running){
     print_board(map);
     for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
-        console.log(player_list[i][1][0].hp);
+        //console.log(player_list[i][1][0].hp);
+        print_board(map);
         turn(player_list[i]);
+
+        //console.clear();
+        console.log("------------------------------------------");
 
     } 
 
