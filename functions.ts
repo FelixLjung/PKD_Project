@@ -25,7 +25,7 @@ let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-
                                 "Dadel kungen"]];
 
 //Types
-const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår att det är error men det funkar ändå
+const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
 
 type Army = Array<Warrior>;
 type attack_army = Queue<Warrior>;
@@ -78,9 +78,31 @@ export function attack(player: Player, A_Army: Queue<Warrior>): Boolean {
  * @return Does not return
  */
 export function print_board(board: Board) {
-    for (let i = 0; i < board.length; i++) { // funkar dåligt
-        console.log(board[i].toString());
+    for(let i = 0; i < board.length; i++) {
+        console.log('\x1b[36m%s\x1b[0m', helper(board[i])); // black magic 
     }
+
+    function helper(line) {
+        let str = "";
+
+        for(let j = 0; j < line.length; j++) {
+            str += line[j];
+        }
+        return str;
+    }
+}
+
+
+
+export function get_castles(player : Player){
+    return player[1];
+}
+
+export function finds_paths(castle : Castle){ 
+    let position = castle.position;
+
+
+
 }
 
 /**
@@ -117,11 +139,13 @@ export function castle_owner(Board: MatrixGraph): MatrixGraph {
  * @param player is a pair(string, List)
  */
 export function turn(player: Player) {
+    console.log("You rule over the following castles: ", player[1])
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army ");
 
     if (choice === "1"){
         console.log("You are moving");
+        //finds_paths();
     } else if (choice === "2") {
         console.log("You are training");
     }
