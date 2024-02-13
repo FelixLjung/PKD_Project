@@ -5,24 +5,24 @@ import { type MatrixGraph } from './lib/graphs';
 
 
 let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names
-                                 "Jingwei",
-                                "Johannes Borgström",
-                                "Carl Erik IV", 
-                                "Runar Stenbock",
-                                "Sigvard Bjelkengren",
-                                "Ernst Greve",
-                                "Hjalmar Storfot",
-                                "Lillemor Hoppetoss",
-                                "Gustav Backlund",
-                                "Hans Hansson III",
-                                "Frans Storm",
-                                "Berit Storm",
-                                "Tor Hoppetoss II",
-                                "Fred von Pickelroy",
-                                "Björn Olmedo",
-                                "Jimmy Viking",
-                                "Thom Surströmming",
-                                "Dadel kungen"]];
+    "Jingwei Hu",
+    "Johannes Borgström",
+    "Carl Erik IV",
+    "Runar Stenbock",
+    "Sigvard Bjelkengren",
+    "Ernst Greve",
+    "Hjalmar Storfot",
+    "Lillemor Hoppetoss",
+    "Gustav Backlund",
+    "Hans Hansson III",
+    "Frans Storm",
+    "Berit Storm",
+    "Tor Hoppetoss II",
+    "Fred von Pickelroy",
+    "Björn Olmedo",
+    "Jimmy Viking",
+    "Thom Surströmming",
+    "Dadel kungen"]];
 
 //Types
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
@@ -57,6 +57,14 @@ export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+export function train_warrior(army:Army): void {
+    for(let w = 0; w < army.length; w = w + 0){
+        let cur_war = army[w];
+        cur_war.attack = cur_war.attack + 5
+        cur_war.health = cur_war.health + 5
+    }
+}
+
 
 /**
  * Take a player and an Attack Army, and if the 
@@ -78,14 +86,14 @@ export function attack(player: Player, A_Army: Queue<Warrior>): Boolean {
  * @return Does not return
  */
 export function print_board(board: Board) {
-    for(let i = 0; i < board.length; i++) {
+    for (let i = 0; i < board.length; i++) {
         console.log('\x1b[36m%s\x1b[0m', helper(board[i])); // black magic 
     }
 
     function helper(line : Array<string>) {
         let str = "";
 
-        for(let j = 0; j < line.length; j++) {
+        for (let j = 0; j < line.length; j++) {
             str += line[j];
         }
         return str;
@@ -99,9 +107,9 @@ export function print_board(board: Board) {
  * 
  */
 
-export function get_castles(player : Player){
-    let castle_list : Array<string> = [];
-    for(let i = 0; i < player[1].length; i++){
+export function get_castles(player: Player) {
+    let castle_list: Array<string> = [];
+    for (let i = 0; i < player[1].length; i++) {
         castle_list[i] = player[1][i].position + player[0][0];
     }
     return castle_list;
@@ -112,7 +120,7 @@ export function get_castles(player : Player){
  * @param castle 
  */
 
-export function finds_paths(castle : Castle){ 
+export function finds_paths(castle: Castle) {
     let position = castle.position;
 
     
@@ -169,9 +177,9 @@ export function turn(player: Player) {
     }
 }
 
-export function create_castle(army : Army, owner : string, position : number) : Castle {
-    let castle = {hp : army, owner : owner, position : position};
-    
+export function create_castle(army: Army, owner: string, position: number): Castle {
+    let castle = { hp: army, owner: owner, position: position };
+
     return castle;
 }
 
@@ -181,7 +189,7 @@ export function create_castle(army : Army, owner : string, position : number) : 
  * @returns 
  */
 export function create_army(): Army {
-    let army : Army = [create_warrior()];
+    let army: Army = [create_warrior()];
 
     return army;
 }
@@ -216,9 +224,9 @@ export function setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
-    const player1: Player = [name_player1!,[(create_castle(create_army(),name_player1,1))]];
-    const player2: Player = [name_player2!, [(create_castle(create_army(),name_player2,2))]];
-    const player3: Player = [name_player3!, [(create_castle(create_army(),name_player3,5))]];
+    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1))]];
+    const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
+    const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
     return [player1, player2, player3];
 }
