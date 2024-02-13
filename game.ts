@@ -33,7 +33,6 @@ const O = false;
 const mormors_kudde: MatrixGraph = {
     size: 5,
     adj:
-        [
         [O, I, I, I, O], //0. from A 
         [I, O, I, O, I], //1. from B
         [I, I, O, I, I], //2. from C
