@@ -58,7 +58,7 @@ export function getRandomInt(min: number, max: number): number {
 }
 
 export function train_warrior(army:Army): void {
-    for(let w = 0; w < army.length; w = w + 0){
+    for(let w = 0; w < army.length; w = w + 1){
         let cur_war = army[w];
         cur_war.attack = cur_war.attack + 5
         cur_war.health = cur_war.health + 5
