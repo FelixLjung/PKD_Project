@@ -311,6 +311,9 @@ export function move(move_from: Castle, move_to: Castle): void {
  * @param player - the new owner of the castle
  * @returns The updated board with the correct castle owners
  */
+
+//ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
+// Ska även ta bort från förra ägaren
 export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
     tail(player)[tail(player).length] = castle;
 
