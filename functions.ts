@@ -1,6 +1,7 @@
 import { type List, type Pair, list, tail } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
+import { create } from "domain";
 
 export function death_text(dead: Warrior, killer: Warrior) {
     const strings: Array<string> = ["has been slain by", 
@@ -251,7 +252,7 @@ export function print_board() {
  * @returns Array<castle | undefined> of the castles
  */
 function get_castle(player: Player) {
-    console.log("You rule over the following castles: ", tail(player).position);
+    console.log("You rule over the following castles: ", tail(player));
 }
 
 /**
@@ -259,47 +260,48 @@ function get_castle(player: Player) {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_castles(player : Player) : Queue<Castle> {
+export function get_castles(player : Player){
     let castle_queue : Queue<Castle> = empty();
-    let player_castles : Array<Castle | undefined> = tail(player);
+    const player_castles : Array<Castle | undefined> = tail(player);
+
+    function includes(Castles : Array<Castle | undefined>, index : number ) : Boolean {
+        for (let i = 0; i < Castles.length; i = i + 1) {
+            if (Castles[i]!.position == index) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function get_position(castles : Array<Castle | undefined>, index : number) : Castle | undefined {
+        for(let i = 0; i < castles.length; i = i + 1) {
+            if (castles[i] !== undefined) {
+                if (castles[i]!.position == index) {
+                    return castles[i];
+                }
+            }
+        }
+        return undefined;
+    }
 
     function helper(player_castles : Array<Castle | undefined>) : Queue<Castle> {
         if (player_castles.length > 1) {
-            get_castle(player);
-            const cstl : number = prompt("Which castle would you like to start with? ");
-
-            for (let i = 0; i < player_castles.length; i = i + 1) {
-                if (player_castles[i] !== undefined) {
-                    if (player_castles[i]!.position === cstl - 1) {
-                        enqueue(player_castles[i], castle_queue);
-                        player_castles[i] = undefined;
-                    } else {
-                        console.log("You don't own this Castle");
-                        helper(player_castles);
-                    }
-                }
-            }
-
-            for (let l = 0; l < player_castles.length; l = l + 1) {
+            while (castle_queue[1] != tail(player).length) {
                 get_castle(player);
-                const cstl2 = prompt("Which castle would you like to operate from after")
-                for (let i = 0; i < player_castles.length; i = i + 1) {
-                    if (player_castles[i]!.position === cstl2 - 1 && player_castles[i] !== undefined) {
-                        enqueue(player_castles[i], castle_queue);
-                    }
-                    else {
-                        console.log("You don't own this Castle");
-                        helper(player_castles);
-                    }
+                const cstl : number = prompt("Which castle would you like to operate from? ") as number
+                if (includes(player_castles, cstl)) {
+                    enqueue(get_position(player_castles, cstl), castle_queue);
+                } else {
+                    console.log("You don't own this Castle");
                 }
             }
 
-        } else if (player_castles.length === 1) {
+        } else if (player_castles.length == 1) {
             enqueue(player_castles[0], castle_queue);
         }
         return castle_queue;
     }
-    return helper(player_castles);
+    return(helper(player_castles));
 }
 
 /**
@@ -455,8 +457,8 @@ export function setup(): Array<Player> {
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
 
-    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1))]];
-    const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
+    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 2)), (create_castle(create_army(), name_player1, 3))]];
+    const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 1))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
     node1 += name_player1[0];
@@ -467,7 +469,7 @@ export function setup(): Array<Player> {
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
     castles[2] = player3[1][0]!;
-    castles[3] = create_castle(create_army(), "AI", 3);
+    //castles[3] = create_castle(create_army(), "AI", 3);
     castles[4] = create_castle(create_army(), "AI", 4);
 
 
