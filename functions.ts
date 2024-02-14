@@ -369,6 +369,13 @@ export function move(move_from: Castle, move_to: Castle): void {
 //ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
 // Ska även ta bort från förra ägaren
 export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
+
+    castle.owner = player[0];
+    player[1]
+    
+    
+
+
     tail(player)[tail(player).length] = castle;
 
     let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
@@ -469,8 +476,8 @@ export function setup(): Array<Player> {
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
 
-    const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
-    //const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
+    //const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
+    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
@@ -482,7 +489,7 @@ export function setup(): Array<Player> {
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
     castles[2] = player3[1][0]!;
-    castles[3] = create_castle(create_army(), "AI", 3);
+    //castles[3] = create_castle(create_army(), "AI", 3);
     castles[4] = create_castle(create_army(), "AI", 4);
 
 
@@ -499,3 +506,4 @@ export function spawn(Board: MatrixGraph) {
     // denna kanske inte behövs
 
 }
+
