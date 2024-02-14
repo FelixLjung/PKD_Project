@@ -259,7 +259,17 @@ export function print_board() {
  * @returns Array<castle | undefined> of the castles
  */
 function get_castle(player: Player) {
-    console.log("You rule over the following castles: ", tail(player).position);
+
+    let castles = player[1];
+    let print = "";
+
+
+    for(let i = 0; i < castles.length; i = i + 1 ){
+        print += castles[i]?.position;
+        print += " "
+    }
+
+    console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", '\x1b[35m\x1b', print, '\x1b[37m\x1b');
 }
 
 /**
@@ -463,7 +473,7 @@ export function setup(): Array<Player> {
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
 
-    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1))]];
+    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
