@@ -190,7 +190,7 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
         let curr_defender: Warrior = head(Defenders)
         let def_win = fight(curr_attacker, curr_defender);
 
-        if (def_win === true) {
+        if (def_win === true) { 
             dequeue(Attackers);
         }
         else if (def_win === false) {
