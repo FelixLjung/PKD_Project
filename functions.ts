@@ -92,7 +92,7 @@ let node2 = "2";
 let node5 = "5";
 
 //unclaimed nodes
-let node3 = "3x"
+let node3 = "3x";
 let node4 = "4x";
 
 let map = [
@@ -131,6 +131,11 @@ export function refresh_board() {
     ];
 }
 
+/**
+ * Improves every warrior in an armys stats 
+ * @param army The army that gets trained
+ */
+
 export function train_warrior(army: Army): void {
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
@@ -152,7 +157,6 @@ export function enqueue_army(army: Army): Queue<Warrior> {
     return queue_army;
 }
 
-
 /**
  * 
  * @param attacker is a {Warrior}
@@ -166,10 +170,8 @@ export function fight(attacker: Warrior, defender: Warrior): boolean {
     else if(defender === undefined){
         return false;
     }
-    let i = 0; // denna är till för debug
+    
     while (true) {
-        i++;
-        console.log(i);
         attacker.health -= defender.attack * getRandomInt(0, 4);
         console.log(defender, "VS", attacker);
         if (attacker.health <= 0) {
@@ -205,13 +207,7 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     while (head(Attackers) !== undefined || head(Defenders) !== undefined) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
-
-        console.log("-------------");
-        console.log(curr_attacker);
-        console.log(curr_defender);
-        console.log("-------------");
         
-
         let def_win = fight(curr_attacker, curr_defender);
 
         if (def_win === true) { 
@@ -473,7 +469,8 @@ export function setup(): Array<Player> {
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
 
-    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
+    const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
+    //const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
