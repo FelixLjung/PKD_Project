@@ -188,7 +188,8 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     let defense_army = castle.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
-    while (bool === false || is_empty(Attackers) || is_empty(Defenders)) {
+    console.log(is_empty(Attackers));
+    while (!is_empty(Attackers) && !is_empty(Defenders)) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
         let def_win = fight(curr_attacker, curr_defender);
