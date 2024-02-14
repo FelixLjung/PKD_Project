@@ -1,29 +1,39 @@
 import { type List, type Pair, list, tail } from "./lib/list";
-import { type Queue, head, dequeue, enqueue, empty } from "./lib/queue_array";
+import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
+export function death_text(dead: Warrior, killer: Warrior) {
+    const strings: Array<string> = ["has been slain by", 
+                                "Got skewered by",
+                                "was defeated by", 
+                                "Got stabbed by"];
+
+    let curr_event = strings[getRandomInt(0, 3)];
+    return console.log(dead, curr_event, killer);
+}
 
 
-
-let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names OK
-    "Jingwei Hu",
-    "Johannes Borgström",
-    "Carl Erik IV",
-    "Runar Stenbock",
-    "Sigvard Bjelkengren",
-    "Ernst Greve",
-    "Hjalmar Storfot",
-    "Lillemor Hoppetoss",
-    "Gustav Backlund",
-    "Hans Hansson III",
-    "Frans Storm",
-    "Berit Storm",
-    "Tor Hoppetoss II",
-    "Fred von Pickelroy",
-    "Björn Olmedo",
-    "Jimmy Viking",
-    "Thom Surströmming",
-    "Dadel kungen"]];
+let w_names: Queue<string> = [0,
+         2,
+         ["Eva Darulova",    // Current: 18 warrrior-names OK
+        "Jingwei Hu",
+        "Johannes Borgström",
+        "Carl Erik IV",
+        "Runar Stenbock",
+        "Sigvard Bjelkengren",
+        "Ernst Greve",
+        "Hjalmar Storfot",
+        "Lillemor Hoppetoss",
+        "Gustav Backlund",
+        "Hans Hansson III",
+        "Frans Storm",
+        "Berit Storm",
+        "Tor Hoppetoss II",
+        "Fred von Pickelroy",
+        "Björn Olmedo",
+        "Jimmy Viking",
+        "Thom Surströmming",
+        "Dadel kungen"]];
 
 
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
@@ -143,15 +153,20 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @returns 
  */
 export function fight(attacker: Warrior, defender: Warrior): boolean {
+    let i = 0; // denna är till för debug
     while (true) {
+        i++;
+        console.log(i);
         attacker.health -= defender.attack * getRandomInt(0, 4);
         console.log(defender, "VS", attacker);
         if (attacker.health <= 0) {
+            death_text(attacker, defender);
             return true
         }
         defender.health -= attacker.attack * getRandomInt(0, 4);
         console.log(attacker, "VS", defender);
         if (defender.health <= 0) {
+            death_text(defender, attacker);
             return false
         }
     }
@@ -173,23 +188,24 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     let defense_army = castle.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
-    while (bool === false) {
+    while (bool === false || is_empty(Attackers) || is_empty(Defenders)) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
         let def_win = fight(curr_attacker, curr_defender);
 
-        if (def_win === true) {
+        if (def_win === true) { 
             dequeue(Attackers);
         }
         else if (def_win === false) {
             dequeue(Defenders);
         }
-        if (Attackers[2].length === 0) {          // If Attackers army is depleted:
+        if (is_empty(Attackers)) {          // If Attackers army is depleted:
             return bool = true; // temp return
-        } else if (Defenders[2].length === 0) {    // If defenders army is depleted:
+        } else if (is_empty(Defenders)) {    // If defenders army is depleted:
             return bool = true; // temp return
         }
     }
+
     return false;
 }
 
@@ -306,7 +322,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     const army = move_from.hp;
 
     if (player_from !== player_to) {
-        console.log("war...");
+        console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(army, move_to);
     }
 
@@ -320,8 +336,17 @@ export function move(move_from: Castle, move_to: Castle): void {
  * @param player - the new owner of the castle
  * @returns The updated board with the correct castle owners
  */
+
+//ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
+// Ska även ta bort från förra ägaren
 export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
     tail(player)[tail(player).length] = castle;
+
+    let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
+        adj: [[false]],
+        size: 3
+    }
+    return temp_mtrx;
 
 }
 
@@ -344,7 +369,7 @@ export function turn(player: Player) {
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
 
-        let castle_to: Castle = castles[choice];
+        let castle_to: Castle = castles[choice-1];
 
         move(player[1][0]!, castle_to);
 
@@ -390,6 +415,7 @@ export function create_army(): Army {
  */
 export function create_warrior(): Warrior {
     let name = get_name();
+
     const warrior = { attack: 5, health: 100, name: name };
     return warrior;
 }
@@ -418,9 +444,10 @@ export function setup(): Array<Player> {
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
-    node1 += player1[0][0];
-    node2 += player2[0][0];
-    node5 += player3[0][0];
+    node1 += name_player1[0];
+    node2 += name_player2[0];
+    node5 += name_player3[0];
+    
 
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
