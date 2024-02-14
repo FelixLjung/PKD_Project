@@ -189,7 +189,7 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
     console.log(is_empty(Attackers));
-    while (!is_empty(Attackers) && !is_empty(Defenders)) {
+    while (Attackers[2][0] !== undefined && Defenders[2][0] !== undefined) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
         let def_win = fight(curr_attacker, curr_defender);
