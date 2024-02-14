@@ -257,7 +257,7 @@ export function print_board() {
  * @returns Array<castle | undefined> of the castles
  */
 function get_castle(player: Player) {
-    console.log("You rule over the following castles: ", tail(player));
+    console.log("You rule over the following castles: ", tail(player).position);
 }
 
 /**
@@ -308,16 +308,16 @@ export function get_castles(player : Player) : Queue<Castle> {
     return helper(player_castles);
 }
 
-
 /**
  * Finds all possible paths from a castle
- * @param castle 
+ * @param castle - the castle the player wants to move from
+ * @returns paths - and array of all castles a player can move to
  */
 
-export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
+export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> {
     let position = castle.position - 1;
-    let paths: Array<number> = [];
-    let spot: number = 0;
+    let paths : Array<number> = [];
+    let spot : number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
         if (map.adj[position][i] === true) {
             paths[spot] = i + 1;
