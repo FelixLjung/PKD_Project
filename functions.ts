@@ -237,8 +237,9 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
  */
 
 export function print_board() {
+    console.log("-------------------------------------------");
     for (let i = 0; i < map.length; i++) {
-        console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic 
+        console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic, Cyan Color
     }
 
     function helper(line: Array<string>) {
@@ -249,6 +250,7 @@ export function print_board() {
         }
         return str;
     }
+    console.log("-------------------------------------------");
 }
 
 /**
