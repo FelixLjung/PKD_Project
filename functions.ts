@@ -2,7 +2,14 @@ import { type List, type Pair, list, tail } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
-
+export function death_text(killer: Warrior, dead: Warrior) {
+const strings: Array<string> = ["has been slain", 
+                                "Got skewered",
+                                "got pummeled by a shoe", 
+                                "Got stabbed by a sharp object"];
+let curr_event = strings[getRandomInt(0, 3)]
+console.log(dead, curr_event)
+}
 
 
 let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names OK
