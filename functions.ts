@@ -1,6 +1,7 @@
 import { type List, type Pair, list, tail } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
+import { create } from "domain";
 
 export function death_text(dead: Warrior, killer: Warrior) {
     const strings: Array<string> = ["has been slain by", 
@@ -273,47 +274,48 @@ function get_castle(player: Player) {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_castles(player : Player) : Queue<Castle> {
+export function get_castles(player : Player){
     let castle_queue : Queue<Castle> = empty();
-    let player_castles : Array<Castle | undefined> = tail(player);
+    const player_castles : Array<Castle | undefined> = tail(player);
+
+    function includes(Castles : Array<Castle | undefined>, index : number ) : Boolean {
+        for (let i = 0; i < Castles.length; i = i + 1) {
+            if (Castles[i]!.position == index) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function get_position(castles : Array<Castle | undefined>, index : number) : Castle | undefined {
+        for(let i = 0; i < castles.length; i = i + 1) {
+            if (castles[i] !== undefined) {
+                if (castles[i]!.position == index) {
+                    return castles[i];
+                }
+            }
+        }
+        return undefined;
+    }
 
     function helper(player_castles : Array<Castle | undefined>) : Queue<Castle> {
         if (player_castles.length > 1) {
-            get_castle(player);
-            const cstl : number = prompt("Which castle would you like to start with? ");
-
-            for (let i = 0; i < player_castles.length; i = i + 1) {
-                if (player_castles[i] !== undefined) {
-                    if (player_castles[i]!.position === cstl - 1) {
-                        enqueue(player_castles[i], castle_queue);
-                        player_castles[i] = undefined;
-                    } else {
-                        console.log("You don't own this Castle");
-                        helper(player_castles);
-                    }
-                }
-            }
-
-            for (let l = 0; l < player_castles.length; l = l + 1) {
+            while (castle_queue[1] != tail(player).length) {
                 get_castle(player);
-                const cstl2 = prompt("Which castle would you like to operate from after")
-                for (let i = 0; i < player_castles.length; i = i + 1) {
-                    if (player_castles[i]!.position === cstl2 - 1 && player_castles[i] !== undefined) {
-                        enqueue(player_castles[i], castle_queue);
-                    }
-                    else {
-                        console.log("You don't own this Castle");
-                        helper(player_castles);
-                    }
+                const cstl : number = prompt("Which castle would you like to operate from? ") as number
+                if (includes(player_castles, cstl)) {
+                    enqueue(get_position(player_castles, cstl), castle_queue);
+                } else {
+                    console.log("You don't own this Castle");
                 }
             }
 
-        } else if (player_castles.length === 1) {
+        } else if (player_castles.length == 1) {
             enqueue(player_castles[0], castle_queue);
         }
         return castle_queue;
     }
-    return helper(player_castles);
+    return(helper(player_castles));
 }
 
 /**
