@@ -1,5 +1,5 @@
 import { type List, type Pair, list, tail } from "./lib/list";
-import { type Queue, head, dequeue, enqueue, empty } from "./lib/queue_array";
+import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
 export function death_text(dead: Warrior, killer: Warrior) {
@@ -196,9 +196,9 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
         else if (def_win === false) {
             dequeue(Defenders);
         }
-        if (Attackers[2].length === 0) {          // If Attackers army is depleted:
+        if (is_empty(Attackers)) {          // If Attackers army is depleted:
             return bool = true; // temp return
-        } else if (Defenders[2].length === 0) {    // If defenders army is depleted:
+        } else if (is_empty(Defenders)) {    // If defenders army is depleted:
             return bool = true; // temp return
         }
     }
