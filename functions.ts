@@ -192,6 +192,13 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     while (!is_empty(Attackers) && !is_empty(Defenders)) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
+
+        console.log("-------------");
+        console.log(curr_attacker);
+        console.log(curr_defender);
+        console.log("-------------");
+        
+
         let def_win = fight(curr_attacker, curr_defender);
 
         if (def_win === true) { 
