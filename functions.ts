@@ -380,6 +380,13 @@ export function move(move_from: Castle, move_to: Castle): void {
 //ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
 // Ska även ta bort från förra ägaren
 export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
+
+    castle.owner = player[0];
+    player[1]
+    
+    
+
+
     tail(player)[tail(player).length] = castle;
 
     let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
@@ -510,3 +517,4 @@ export function spawn(Board: MatrixGraph) {
     // denna kanske inte behövs
 
 }
+
