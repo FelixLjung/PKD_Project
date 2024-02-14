@@ -4,9 +4,9 @@ import { type MatrixGraph } from './lib/graphs';
 
 export function death_text(dead: Warrior, killer: Warrior) {
     const strings: Array<string> = ["has been slain by", 
-                                "Got skewered by",
+                                "got skewered by",
                                 "was defeated by", 
-                                "Got stabbed by"];
+                                "got stabbed by"];
 
     let curr_event = strings[getRandomInt(0, 3)];
     console.log();
@@ -152,7 +152,7 @@ export function enqueue_army(army: Army): Queue<Warrior> {
     return queue_army;
 }
 
-//get random int (för)
+
 /**
  * 
  * @param attacker is a {Warrior}
