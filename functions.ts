@@ -9,7 +9,14 @@ export function death_text(dead: Warrior, killer: Warrior) {
                                 "Got stabbed by"];
 
     let curr_event = strings[getRandomInt(0, 3)];
-    return console.log(dead, curr_event, killer);
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+    console.log(dead.name, curr_event, killer.name);
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+
 }
 
 
@@ -194,7 +201,6 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     let defense_army = castle.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
-    console.log(is_empty(Attackers));
     
     while (head(Attackers) !== undefined || head(Defenders) !== undefined) {
         let curr_attacker: Warrior = head(Attackers)
