@@ -2,35 +2,38 @@ import { type List, type Pair, list, tail } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 
-export function death_text(killer: Warrior, dead: Warrior) {
-const strings: Array<string> = ["has been slain", 
-                                "Got skewered",
-                                "got pummeled by a shoe", 
-                                "Got stabbed by a sharp object"];
-let curr_event = strings[getRandomInt(0, 3)]
-console.log(dead, curr_event)
+export function death_text(dead: Warrior, killer: Warrior) {
+    const strings: Array<string> = ["has been slain by", 
+                                "Got skewered by",
+                                "was defeated by", 
+                                "Got stabbed by"];
+
+    let curr_event = strings[getRandomInt(0, 3)];
+    return console.log(dead, curr_event, killer);
 }
 
 
-let w_names: Queue<string> = [0, 2, ["Eva Darulova",    // Current: 18 warrrior-names OK
-    "Jingwei Hu",
-    "Johannes Borgström",
-    "Carl Erik IV",
-    "Runar Stenbock",
-    "Sigvard Bjelkengren",
-    "Ernst Greve",
-    "Hjalmar Storfot",
-    "Lillemor Hoppetoss",
-    "Gustav Backlund",
-    "Hans Hansson III",
-    "Frans Storm",
-    "Berit Storm",
-    "Tor Hoppetoss II",
-    "Fred von Pickelroy",
-    "Björn Olmedo",
-    "Jimmy Viking",
-    "Thom Surströmming",
-    "Dadel kungen"]];
+let w_names: Queue<string> = [0,
+         2,
+         ["Eva Darulova",    // Current: 18 warrrior-names OK
+        "Jingwei Hu",
+        "Johannes Borgström",
+        "Carl Erik IV",
+        "Runar Stenbock",
+        "Sigvard Bjelkengren",
+        "Ernst Greve",
+        "Hjalmar Storfot",
+        "Lillemor Hoppetoss",
+        "Gustav Backlund",
+        "Hans Hansson III",
+        "Frans Storm",
+        "Berit Storm",
+        "Tor Hoppetoss II",
+        "Fred von Pickelroy",
+        "Björn Olmedo",
+        "Jimmy Viking",
+        "Thom Surströmming",
+        "Dadel kungen"]];
 
 
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
@@ -154,11 +157,13 @@ export function fight(attacker: Warrior, defender: Warrior): boolean {
         attacker.health -= defender.attack * getRandomInt(0, 4);
         console.log(defender, "VS", attacker);
         if (attacker.health <= 0) {
+            death_text(attacker, defender);
             return true
         }
         defender.health -= attacker.attack * getRandomInt(0, 4);
         console.log(attacker, "VS", defender);
         if (defender.health <= 0) {
+            death_text(defender, attacker);
             return false
         }
     }
