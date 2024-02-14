@@ -153,7 +153,10 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @returns 
  */
 export function fight(attacker: Warrior, defender: Warrior): boolean {
+    let i = 0; // denna är till för debug
     while (true) {
+        i++;
+        console.log(i);
         attacker.health -= defender.attack * getRandomInt(0, 4);
         console.log(defender, "VS", attacker);
         if (attacker.health <= 0) {
@@ -202,6 +205,7 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
             return bool = true; // temp return
         }
     }
+
     return false;
 }
 
@@ -309,7 +313,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     const army = move_from.hp;
 
     if (player_from !== player_to) {
-        console.log("war...");
+        console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(army, move_to);
     }
 
@@ -329,6 +333,12 @@ export function move(move_from: Castle, move_to: Castle): void {
 export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
     tail(player)[tail(player).length] = castle;
 
+    let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
+        adj: [[false]],
+        size: 3
+    }
+    return temp_mtrx;
+
 }
 
 /**
@@ -339,7 +349,7 @@ export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player)
  */
 export function turn(player: Player) {
     console.log("You rule over the following castles: ", get_castles(player));
-    console.log("What is your command, king ", player[0], "..?");
+    console.log("What is your command, king", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
     // Någonstans ska vi föra in get_castles funktionen (väljer vilket slott man vill börja med)
@@ -350,7 +360,7 @@ export function turn(player: Player) {
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
 
-        let castle_to: Castle = castles[choice];
+        let castle_to: Castle = castles[choice-1];
 
         move(player[1][0], castle_to);
 
@@ -396,6 +406,7 @@ export function create_army(): Army {
  */
 export function create_warrior(): Warrior {
     let name = get_name();
+
     const warrior = { attack: 5, health: 100, name: name };
     return warrior;
 }
@@ -424,9 +435,10 @@ export function setup(): Array<Player> {
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
-    node1 += player1[0][0];
-    node2 += player2[0][0];
-    node5 += player3[0][0];
+    node1 += name_player1[0];
+    node2 += name_player2[0];
+    node5 += name_player3[0];
+    
 
     castles[0] = player1[1][0];
     castles[1] = player2[1][0];
