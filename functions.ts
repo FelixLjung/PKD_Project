@@ -153,6 +153,12 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @returns 
  */
 export function fight(attacker: Warrior, defender: Warrior): boolean {
+    if(attacker === undefined){
+        return true;
+    }
+    else if(defender === undefined){
+        return false;
+    }
     let i = 0; // denna är till för debug
     while (true) {
         i++;
@@ -189,9 +195,17 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
     console.log(is_empty(Attackers));
-    while (!is_empty(Attackers) && !is_empty(Defenders)) {
+    
+    while (head(Attackers) !== undefined || head(Defenders) !== undefined) {
         let curr_attacker: Warrior = head(Attackers)
         let curr_defender: Warrior = head(Defenders)
+
+        console.log("-------------");
+        console.log(curr_attacker);
+        console.log(curr_defender);
+        console.log("-------------");
+        
+
         let def_win = fight(curr_attacker, curr_defender);
 
         if (def_win === true) { 
