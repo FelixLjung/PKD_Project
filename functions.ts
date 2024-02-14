@@ -39,9 +39,9 @@ let w_names: Queue<string> = [0,
 const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår ibland att det är error men det funkar ändå
 
 //Types
-type Army = Array<Warrior>;
+type Army = Array<Warrior | undefined>;
 type attack_army = Queue<Warrior>;
-type Player = [string, Array<Castle>];
+type Player = [string, Array<Castle | undefined >];
 type Board = Array<Array<string>>;
 type Warrior = {
     attack: number
@@ -127,8 +127,8 @@ export function refresh_board() {
 export function train_warrior(army: Army): void {
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
-        cur_war.attack = cur_war.attack + 5;
-        cur_war.health = cur_war.health + 5;
+        cur_war!.attack = cur_war!.attack + 5;
+        cur_war!.health = cur_war!.health + 5;
     }
 }
 
@@ -231,52 +231,61 @@ export function print_board() {
     }
 }
 
-
-function get_castle(index: number): Castle {
-
-    return castles[index];
-
-
-}
-
 /**
  * Gets an array of all the castles the player currently control.
  * @param player the player in question.
- * @returns Array<string> of the castles 
- * 
+ * @returns Array<castle | undefined> of the castles
  */
-export function get_castles(player: Player): Queue<Castle> {
-    let castle_queue: Queue<Castle> = empty();
-    if (tail(player).length > 1) {
-        const cstl: number = prompt("Which castle would you like to start with? ") as number;
-        for (let i = 0; i < tail(player).length; i = i + 1) {
-            const lst_castle = tail(player)[i].position
-            if (lst_castle === cstl - 1) {
-                enqueue(tail(player)[i], castle_queue);
-            }
-            else {
-                console.log("You don't own this Castle");
-                get_castles(player);                // Ifall fel, måste man välja från början,
-                                                    // kan vara bra att fixa en hjälpfunktion.
-            }
-        }
-        for (let l = 0; l < tail(player).length; l = l + 1) {
-            const cstl2 = prompt("Which castle would you like to operate from after")
-            for (let i = 0; i < tail(player).length; i = i + 1) {
-                if (tail(player)[i].position === cstl2 - 1) {
-                    enqueue(tail(player)[i], castle_queue);
+function get_castle(player: Player) {
+    console.log("You rule over the following castles: ", tail(player));
+}
+
+/**
+ * The player defermins the order in which they want to make their moves from their castles.
+ * @param player the player in question.
+ * @returns Array<string> of the castles
+ */
+export function get_castles(player : Player) : Queue<Castle> {
+    let castle_queue : Queue<Castle> = empty();
+    let player_castles : Array<Castle | undefined> = tail(player);
+
+    function helper(player_castles : Array<Castle | undefined>) : Queue<Castle> {
+        if (player_castles.length > 1) {
+            get_castle(player);
+            const cstl : number = prompt("Which castle would you like to start with? ");
+
+            for (let i = 0; i < player_castles.length; i = i + 1) {
+                if (player_castles[i] !== undefined) {
+                    if (player_castles[i]!.position === cstl - 1) {
+                        enqueue(player_castles[i], castle_queue);
+                        player_castles[i] = undefined;
+                    } else {
+                        console.log("You don't own this Castle");
+                        helper(player_castles);
+                    }
                 }
-                else {
-                    console.log("You don't own this Castle");
-                    get_castles(player);                // Ifall fel, måste man välja från början,
-                                                        // kan vara bra att fixa en hjälpfunktion.
+            }
+
+            for (let l = 0; l < player_castles.length; l = l + 1) {
+                get_castle(player);
+                const cstl2 = prompt("Which castle would you like to operate from after")
+                for (let i = 0; i < player_castles.length; i = i + 1) {
+                    if (player_castles[i]!.position === cstl2 - 1 && player_castles[i] !== undefined) {
+                        enqueue(player_castles[i], castle_queue);
+                    }
+                    else {
+                        console.log("You don't own this Castle");
+                        helper(player_castles);
+                    }
                 }
             }
+
+        } else if (player_castles.length === 1) {
+            enqueue(player_castles[0], castle_queue);
         }
-    } else if (tail(player).length === 1) {
-        enqueue(tail(player)[0], castle_queue);
+        return castle_queue;
     }
-    return castle_queue;
+    return helper(player_castles);
 }
 
 
@@ -349,26 +358,26 @@ export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player)
  * @param player is a pair(string, List)
  */
 export function turn(player: Player) {
-    console.log("You rule over the following castles: ", get_castles(player));
-    console.log("What is your command, king", player[0], "..?");
+    get_castles(player);
+    console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
     // Någonstans ska vi föra in get_castles funktionen (väljer vilket slott man vill börja med)
     if (choice === "1") {
         //console.clear();
         
-        let paths = finds_paths(player[1][0], mormors_kudde); // Första castle
+        let paths = finds_paths(player[1][0]!, mormors_kudde); // Första castle
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
 
         let castle_to: Castle = castles[choice-1];
 
-        move(player[1][0], castle_to);
+        move(player[1][0]!, castle_to);
 
     } else if (choice === "2") {
-        console.log("You are training: ", player[1][0].hp);
-        train_warrior(player[1][0].hp)
-        console.log(player[1][0].hp)
+        console.log("You are training: ", player[1][0]!.hp);
+        train_warrior(player[1][0]!.hp)
+        console.log(player[1][0]!.hp)
         return {}
     }
 
@@ -441,9 +450,9 @@ export function setup(): Array<Player> {
     node5 += name_player3[0];
     
 
-    castles[0] = player1[1][0];
-    castles[1] = player2[1][0];
-    castles[2] = player3[1][0];
+    castles[0] = player1[1][0]!;
+    castles[1] = player2[1][0]!;
+    castles[2] = player3[1][0]!;
     castles[3] = create_castle(create_army(), "AI", 3);
     castles[4] = create_castle(create_army(), "AI", 4);
 
