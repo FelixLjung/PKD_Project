@@ -1,4 +1,4 @@
-import { type List, type Pair, list, tail } from "./lib/list";
+import { type List, type Pair, list, tail, is_null } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 import { create } from "domain";
@@ -417,6 +417,19 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(old_player)[i] = undefined;
         } else {
         }
+    }
+}
+
+/**
+ * checks if an army is empty
+ * @param army - the army that might be empty
+ * @returns Boolean - whether the army is empty or not
+ */
+export function is_army_empty(army : Queue<Warrior>) : Boolean {
+    if (head(army) == undefined) {
+        return true;
+    } else {
+        return false;
     }
 }
 
