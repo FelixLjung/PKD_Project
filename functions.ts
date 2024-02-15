@@ -175,7 +175,6 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  */
 
 export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
-    let bool = false;
     let defense_army = castle_army.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
