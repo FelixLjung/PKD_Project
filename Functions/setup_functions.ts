@@ -1,6 +1,7 @@
 import {type Army, type Castle, type Warrior, type Player} from '../types';
 import { MatrixGraph } from '../lib/graphs';
 import {get_name} from './general_functions'
+import { print_castles } from '../functions';
 
 // Variables
 
@@ -86,6 +87,10 @@ export function create_army(): Army {
     let army: Army = [create_warrior()];
 
     return army;
+}
+
+export function get_castle_array(): Array<Castle> {
+    return castles
 }
 
 

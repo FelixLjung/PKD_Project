@@ -53,24 +53,57 @@ export function train_warrior(army: Army) {
     }
 }
 
-/**
- * Gets an array of all the castles the player currently control.
- * @param player the player in question.
- * @returns Array<castle | undefined> of the castles
- */
-export function get_castle(player: Player) {
+export function get_castles(player : Player) : Queue<Castle> {
+    let castle_queue : Queue<Castle> = empty();
+    const player_castles : Array<Castle | undefined> = tail(player);
 
-    let castles = player[1];
-    let print = "";
-
-
-    for(let i = 0; i < castles.length; i = i + 1 ){
-        print += castles[i]?.position;
-        print += " "
-
+    function includes(Castles : Array<Castle | undefined>, index : number ) : Boolean {
+        for (let i = 0; i < Castles.length; i = i + 1) {
+            if (Castles[i]!.position == index) {
+                return true;
+            }
+        }
+        return false;
     }
-    console.log(print);
-    console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b');
+
+    function in_q(castle_queue : Queue<Castle>, castle : Castle | undefined) : Boolean {
+        for (let i = 0; i < castle_queue[2].length; i = i + 1) {
+            if (castle_queue[2][i] == castle) {
+                return true;
+            } else {
+
+            }
+        }
+        return false;
+    }
+
+    function get_position(castles : Array<Castle | undefined>, index : number) : Castle | undefined {
+        for(let i = 0; i < castles.length; i = i + 1) {
+            if (castles[i] !== undefined) {
+                if (castles[i]!.position == index) {
+                    return castles[i];
+                }
+            }
+        }
+        return undefined;
+    }
+
+    if (player_castles.length > 1) {
+        while (castle_queue[1] != tail(player).length) {
+            print_castle(player);
+            const cstl : number = prompt(" Which castle would you like to operate from? ") as number
+            if (in_q(castle_queue, get_position(player_castles, cstl))) {
+                console.log("You can't choose the same castle twice!")
+            } else if (includes(player_castles, cstl)) {
+                enqueue(get_position(player_castles, cstl), castle_queue);
+            } else {
+                console.log("You don't own this Castle");
+            }
+        }
+    } else if (player_castles.length == 1) {
+        enqueue(player_castles[0], castle_queue);
+    }
+    return(castle_queue);
 }
 
 /**
@@ -128,7 +161,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
 export function turn(player : Player){
 
-    let castle_queue = print_castles(player);
+    let castle_queue = get_castles(player);
 
     for(let i = 0; i < castle_queue[1]; i++){
         

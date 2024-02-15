@@ -3,6 +3,8 @@ import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
 import { getRandomInt } from "./general_functions";
 
+//Attack functions
+
 /**
  * Changes an army from an array to a queue
  * @param army 
