@@ -1,6 +1,6 @@
 import { type MatrixGraph } from './lib/graphs';
 
-import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, spawn, create_warrior, refresh_board} from './functions';
+import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, spawn, create_warrior, refresh_board, castle_turn} from './functions';
 
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 

@@ -121,6 +121,9 @@ export function getRandomInt(min: number, max: number): number {
 }
 
 export function refresh_board() {
+    
+
+
     map = map = [
         [" ", " ", " ", " ", node1, " ", " ", " ", " "],
         [" ", " ", "/", " ", "|", " ", "\\", " "],
@@ -399,14 +402,26 @@ export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player)
 
 }
 
+export function turn(player : Player){
+
+    let castle_queue = get_castles(player);
+
+    for(let i = 0; i < castle_queue[1]; i++){
+        console.log("length of queue: ",castle_queue[1]);
+        castle_turn(player, head(castle_queue));
+        dequeue(castle_queue);
+    }
+    
+}
+
 /**
  * A players turn in game. Should be able to call multiple actions
  * Move and Attack.
  * Should Call other functions.
  * @param player is a pair(string, List)
  */
-export function turn(player: Player) {
-    get_castles(player);
+export function castle_turn(player: Player, castle : Castle) {
+    
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
@@ -414,18 +429,18 @@ export function turn(player: Player) {
     if (choice === "1") {
         //console.clear();
         
-        let paths = finds_paths(player[1][0]!, mormors_kudde); // Första castle
+        let paths = finds_paths(castle!, mormors_kudde); // Första castle
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
 
         let castle_to: Castle = castles[choice-1];
 
-        move(player[1][0]!, castle_to);
+        move(castle!, castle_to);
 
     } else if (choice === "2") {
         console.log("You are training: ", player[1][0]!.hp);
-        train_warrior(player[1][0]!.hp)
-        console.log(player[1][0]!.hp)
+        train_warrior(castle.hp);
+        console.log(castle.hp);
         return {}
     }
 
