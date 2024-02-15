@@ -371,14 +371,11 @@ export function move(move_from: Castle, move_to: Castle): void {
 
 /**
  * Changes the owner of a castle
- * @param Board - The game board where you can find the owner of the castle
  * @param castle - the castle that is changing owner
- * @param player - the new owner of the castle
- * @returns The updated board with the correct castle owners
+ * @param new_player - the new owner of the castle
+ * @param old_player - the player who previously owned the castle
+ * @param army - the army that now is in the castle
  */
-
-//ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
-// Ska även ta bort från förra ägaren
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
     castle.owner = new_player[0];
     castle.hp = army;
