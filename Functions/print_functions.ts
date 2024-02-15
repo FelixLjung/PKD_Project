@@ -2,6 +2,8 @@ import{
     type Player
 } from '../types';
 
+import { get_castle_array } from './setup_functions';
+
 
 // Print functions 
 
@@ -30,9 +32,10 @@ let map = [
 export function refresh_board() {
     
     function get_castle_owners(){
+        let castles = get_castle_array();
         for (let i = 0; i < nodes.length; i++ ){
             //print(nodes[0])
-            nodes[i] = castles[i].position + castles[i].owner[0]; // fixa funktion för git castles
+            nodes[i] = castles[i].position + castles[i].owner[0];
         }
 
         
