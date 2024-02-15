@@ -65,6 +65,10 @@ let map = [
 
 game_running = true;
 
+export function get_player_list() {
+    return player_list;
+}
+
 /* 
 console.log(create_warrior());
 console.log(create_warrior());
