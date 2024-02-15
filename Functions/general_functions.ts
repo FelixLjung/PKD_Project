@@ -24,7 +24,7 @@ import {
 } from './print_functions'
 
 import {
-    mormorskudde
+    mormors_kudde
 } from './setup_functions'
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
