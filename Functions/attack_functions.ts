@@ -1,7 +1,7 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { get_random_int } from "./general_functions"
+import { getRandomInt } from "./general_functions";
 
 /**
  * Changes an army from an array to a queue
