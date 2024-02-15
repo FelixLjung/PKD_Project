@@ -4,25 +4,6 @@ import { type MatrixGraph } from './lib/graphs';
 import { create } from "domain";
 import { get_player_list } from "./game";
 
-export function death_text(dead: Warrior, killer: Warrior) {
-    const strings: Array<string> = ["has been slain by", 
-                                "got skewered by",
-                                "was defeated by", 
-                                "got stabbed by",
-                                "got schooled by",
-                                "got gob smacked by",
-                                "got his manhood fried by"];
-
-    let curr_event = strings[getRandomInt(0, 3)];
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-    console.log(dead.name, curr_event, killer.name);
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-
-}
 
 
 let w_names: Queue<string> = [0,
@@ -157,6 +138,26 @@ export function refresh_board() {
         [" ", " ", "\\", " ", "|", " ", "/", "", " "],
         [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
     ];
+}
+
+export function death_text(dead: Warrior, killer: Warrior) {
+    const strings: Array<string> = ["has been slain by", 
+                                "got skewered by",
+                                "was defeated by", 
+                                "got stabbed by",
+                                "got schooled by",
+                                "got gob smacked by",
+                                "got his manhood fried by"];
+
+    let curr_event = strings[getRandomInt(0, 3)];
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+    console.log(dead.name, curr_event, killer.name);
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+
 }
 
 /**
@@ -332,7 +333,7 @@ export function get_castle(player: Player) {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_castles(player : Player) : Queue<Castle> {
+export function print_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     const player_castles : Array<Castle | undefined> = tail(player);
 
@@ -481,7 +482,7 @@ export function is_army_empty(army : Queue<Warrior>) : Boolean {
 
 export function turn(player : Player){
 
-    let castle_queue = get_castles(player);
+    let castle_queue = print_castles(player);
 
     for(let i = 0; i < castle_queue[1]; i++){
         
@@ -502,7 +503,7 @@ export function castle_turn(player: Player, castle : Castle) {
     console.log("What is your command, king ", player[0], "..?");
     const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
-    // Någonstans ska vi föra in get_castles funktionen (väljer vilket slott man vill börja med)
+    // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
     if (choice === "1") {
         //console.clear();
         
@@ -520,18 +521,15 @@ export function castle_turn(player: Player, castle : Castle) {
         console.log(castle.hp);
         return {}
     }
+}
 
-    /**
+/**
      * Creates a castle in setup phase
      * @param army 
      * @param owner 
      * @param position 
      * @returns A castle
      */
-
-}
-
-
 export function create_castle(army: Army, owner: string, position: number): Castle {
     let castle = { hp: army, owner: owner, position: position };
 
@@ -619,7 +617,7 @@ export function setup(): Array<Player> {
  * @param position - The index of the castle
  * 
  */
-export function spawn(Board: MatrixGraph) {
+export function recruit_warrior(Board: MatrixGraph) {
     // denna kanske inte behövs
 
 }

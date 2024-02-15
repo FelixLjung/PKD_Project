@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.get_player_list = void 0;
 var functions_1 = require("./functions");
 // start nodes
 var node1 = "1";
@@ -49,6 +50,10 @@ var map = [
 //print_board(map);
 //console.log(player_list);
 game_running = true;
+function get_player_list() {
+    return player_list;
+}
+exports.get_player_list = get_player_list;
 /*
 console.log(create_warrior());
 console.log(create_warrior());
