@@ -313,7 +313,7 @@ export function print_board() {
  * @param player the player in question.
  * @returns Array<castle | undefined> of the castles
  */
-export function get_castle(player: Player) {
+export function print_castle(player: Player) {
 
     let castles = player[1];
     let print = "";
@@ -333,7 +333,7 @@ export function get_castle(player: Player) {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function print_castles(player : Player) : Queue<Castle> {
+export function get_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     const player_castles : Array<Castle | undefined> = tail(player);
 
@@ -370,7 +370,7 @@ export function print_castles(player : Player) : Queue<Castle> {
 
     if (player_castles.length > 1) {
         while (castle_queue[1] != tail(player).length) {
-            get_castle(player);
+            print_castle(player);
             const cstl : number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!")
@@ -482,7 +482,7 @@ export function is_army_empty(army : Queue<Warrior>) : Boolean {
 
 export function turn(player : Player){
 
-    let castle_queue = print_castles(player);
+    let castle_queue = get_castles(player);
 
     for(let i = 0; i < castle_queue[1]; i++){
         
