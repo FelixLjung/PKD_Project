@@ -4,6 +4,8 @@ import {get_name} from './general_functions'
 
 // Variables
 
+const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
 let I = true;
 let O = false;
 
