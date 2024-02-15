@@ -367,8 +367,6 @@ export function move(move_from: Castle, move_to: Castle): void {
         console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(army, move_to);
     }
-
-
 }
 
 /**
@@ -381,22 +379,26 @@ export function move(move_from: Castle, move_to: Castle): void {
 
 //ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
 // Ska även ta bort från förra ägaren
-export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
+export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
+    castle.owner = new_player[0];
+    castle.hp = army;
 
-    castle.owner = player[0];
-    player[1]
-    
-    
-
-
-    tail(player)[tail(player).length] = castle;
-
-    let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
-        adj: [[false]],
-        size: 3
+    for (let i = 0; i < tail(new_player)!.length; i = i + 1) {
+        if(tail(new_player)[i] == undefined) {
+            tail(new_player)[i] = castle;
+            break;
+        } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
+            tail(new_player)[tail(new_player).length] = castle;
+        } else {
+        }
     }
-    return temp_mtrx;
 
+    for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
+        if(tail(old_player)[i] == castle) {
+            tail(old_player)[i] = undefined;
+        } else {
+        }
+    }
 }
 
 /**
