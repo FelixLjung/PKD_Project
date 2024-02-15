@@ -1,7 +1,8 @@
-import { type List, type Pair, list, tail, is_null } from "./lib/list";
+import { type List, type Pair, list, tail, is_null, pair } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 import { create } from "domain";
+import { get_player_list } from "./game";
 
 
 
@@ -191,39 +192,47 @@ export function enqueue_army(army: Army): Queue<Warrior> {
     return queue_army;
 }
 
-
 /**
- * Take a player and an Attack Army, and if the 
- * @param player is a pair(name:string, List<castle>)
- * @param army 
- * 
- * @returns Boolean, if you won the castle or not
- * 
+ * Changes owner of the castle if neseccary after a battle has taken place
+ * @param castle - the castle where the battle takes place
+ * @param attacking_player - the player attacking the castle
+ * @param defending_player - the player that defending the castle
+ * @param army - the attacking army
  */
-
-export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
-    let defense_army = castle_army.hp;
-    const Attackers = enqueue_army(Attacking_army);
-    const Defenders = enqueue_army(defense_army);
-    
-    while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
-        let curr_attacker: Warrior = head(Attackers);
-        let curr_defender: Warrior = head(Defenders);
+export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) {
+    function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Array<Warrior | undefined>> {
+        let defense_army = castle_army.hp;
+        const Attackers = enqueue_army(Attacking_army);
+        const Defenders = enqueue_army(defense_army);
         
-        let def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
-
-        if (def_win === true) { 
-            dequeue(Attackers);
+        while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
+            let curr_attacker: Warrior = head(Attackers);
+            let curr_defender: Warrior = head(Defenders);
+            
+            let def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
+    
+            if (def_win === true) { 
+                dequeue(Attackers);
+            }
+            else if (def_win === false) {
+                dequeue(Defenders);
+            }
         }
-        else if (def_win === false) {
-            dequeue(Defenders);
+    
+        if (is_army_empty(Defenders)) {
+            return pair(true, Attackers[2]);
+        } else {
+            return pair(false, Defenders[2]);
         }
     }
 
-    if (is_army_empty(Defenders)) {
-        return true;
-    } else {
-        return false;
+    const winner : Pair<Boolean, Array<Warrior | undefined>> = helper(army, castle);
+    if (winner[0]) {
+        console.log("You have won the battle my liege! Congratulations, the castle is yours!");
+        castle_owner(castle, attacking_player, defending_player, army);
+    } else if (winner[0] == false) {
+        console.log("Our army is dead! The battle is lost!");
+        castle.hp = winner[1];
     }
 }
 
@@ -362,7 +371,7 @@ export function get_castles(player : Player) : Queue<Castle> {
     if (player_castles.length > 1) {
         while (castle_queue[1] != tail(player).length) {
             get_castle(player);
-            const cstl : number = prompt("Which castle would you like to operate from? ") as number
+            const cstl : number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!")
             } else if (includes(player_castles, cstl)) {
@@ -412,9 +421,20 @@ export function move(move_from: Castle, move_to: Castle): void {
     const player_to: string = move_to.owner;
     const army = move_from.hp;
 
+    let attacking_player : Player | undefined = undefined;
+    let defending_player : Player | undefined = undefined;
+    const player_list : Array<Player> = get_player_list();
+    for (let i = 0; i < player_list.length; i = i + 1) {
+        if (player_list[i][0] == move_from.owner) {
+            attacking_player = player_list[i];
+        } else if (player_list[i][0] == move_to.owner) {
+            defending_player = player_list[i];
+        }
+    }
+
     if (player_from !== player_to) {
         console.log(move_from.owner,"has declared war against", move_to.owner);
-        attack(army, move_to);
+        attack(move_to, attacking_player!, defending_player!, army);
     }
 }
 
