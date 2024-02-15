@@ -99,14 +99,16 @@ let node5 = "5";
 let node3 = "3x";
 let node4 = "4x";
 
+let nodes = [node1,node2,node3,node4,node5];
+
 let map = [
-    [" ", " ", " ", " ", node1, " ", " ", " ", " "],
+    [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
     [" ", " ", "/", " ", "|", " ", "\\", " "],
     [" ", "/", " ", " ", "|", " ", " ", "\\"],
-    [node2, "-", "-", node3, "-", "-", node4],
+    [nodes[1], "-", "-", nodes[2], "-", "-", nodes[3]],
     [" ", "\\", " ", " ", "|", " ", " ", "/", " "],
     [" ", " ", "\\", " ", "|", " ", "/", "", " "],
-    [" ", " ", " ", " ", node5, " ", " ", " ", " "]
+    [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
 ];
 
 
@@ -125,16 +127,34 @@ export function getRandomInt(min: number, max: number): number {
 
 export function refresh_board() {
     
+    function get_castle_owners(){
+        for (let i = 0; i < nodes.length; i++ ){
+            //print(nodes[0])
+            nodes[i] = castles[i].position + castles[i].owner[0];
+        }
 
+        
+    }
 
-    map = map = [
-        [" ", " ", " ", " ", node1, " ", " ", " ", " "],
+    /*
+    node1 = ((castles[0].position) as number) + castles[0].owner[0];
+    node1 = ((castles[0].position) as number) + castles[0].owner[0];
+    node1 = ((castles[0].position) as number) + castles[0].owner[0];
+    node1 = ((castles[0].position) as number) + castles[0].owner[0];
+    node1 = ((castles[0].position) as number) + castles[0].owner[0];
+    */
+
+    get_castle_owners();
+        
+
+    map = [
+        [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
         [" ", " ", "/", " ", "|", " ", "\\", " "],
         [" ", "/", " ", " ", "|", " ", " ", "\\"],
-        [node2, "-", "-", node3, "-", "-", node4],
+        [nodes[1], "-", "-", nodes[2], "-", "-", nodes[3]],
         [" ", "\\", " ", " ", "|", " ", " ", "/", " "],
         [" ", " ", "\\", " ", "|", " ", "/", "", " "],
-        [" ", " ", " ", " ", node5, " ", " ", " ", " "]
+        [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
     ];
 }
 
@@ -255,6 +275,7 @@ function remove_dead_warrior(dead: Warrior, army: Army){
  */
 
 export function print_board() {
+    refresh_board();
     console.log("-------------------------------------------");
     for (let i = 0; i < map.length; i++) {
         console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic, Cyan Color
@@ -352,7 +373,7 @@ export function get_castles(player : Player) : Queue<Castle> {
 /**
  * Finds all possible paths from a castle
  * @param castle - the castle the player wants to move from
- * @param map - the map currently in play
+ * @param map - the map currently in playgit
  * @returns paths - and array of all castles a player can move to
  */
 
@@ -542,24 +563,29 @@ export function setup(): Array<Player> {
     const AI1 : Player = ["AI1",[create_castle(create_army(), "AI1", 4)]]
 
 
-    node1 += name_player1[0];
-    node2 += name_player2[0];
-    node5 += name_player3[0];
-    
+    nodes[0] += name_player1[0];
+    nodes[1] += name_player2[0];
+    nodes[4] += name_player3[0];
 
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
-    castles[2] = player3[1][0]!;
-    castles[3] = player1[1][1]!;
-    castles[4] = AI1[1][0]!;
+    castles[4] = player3[1][0]!;
+    castles[2] = player1[1][1]!;
+    castles[3] = AI1[1][0]!;
+
+
+
+
     //castles[3] = create_castle(create_army(), "AI", 3);
     
     //const AI2 : Player = ["AI2",[create_castle(create_army(), "AI2", 3)]]
     
 
-
     return [player1, player2, player3];
 }
+
+
+
 
 /**
  * Places soldiers in the starting castles
@@ -571,4 +597,7 @@ export function spawn(Board: MatrixGraph) {
     // denna kanske inte behövs
 
 }
+
+
+
 
