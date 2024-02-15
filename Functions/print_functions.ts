@@ -1,4 +1,6 @@
-
+import{
+    type Player
+} from '../types';
 
 
 // Print functions 
