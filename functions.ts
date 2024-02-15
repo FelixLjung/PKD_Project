@@ -49,7 +49,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Denna påstår iblan
 //Types
 type Army = Array<Warrior | undefined>;
 type attack_army = Queue<Warrior>;
-type Player = [string, Array<Castle | undefined >];
+export type Player = [string, Array<Castle | undefined >];
 type Board = Array<Array<string>>;
 type Warrior = {
     attack: number
@@ -255,7 +255,7 @@ export function print_board() {
  * @param player the player in question.
  * @returns Array<castle | undefined> of the castles
  */
-function get_castle(player: Player) {
+export function get_castle(player: Player) {
 
     let castles = player[1];
     let print = "";
@@ -264,9 +264,10 @@ function get_castle(player: Player) {
     for(let i = 0; i < castles.length; i = i + 1 ){
         print += castles[i]?.position;
         print += " "
-    }
 
-    console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", '\x1b[35m\x1b', print, '\x1b[37m\x1b');
+    }
+    console.log(print);
+    console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b');
 }
 
 /**
