@@ -1,10 +1,11 @@
 
 import{
-    type Queue, dequeue, head 
+    type Queue, dequeue, head, enqueue, empty
 } from '../lib/queue_array'
 
 import { type MatrixGraph } from '../lib/graphs';
 
+import { tail } from '../lib/list'
 
 import{
     type Warrior, type Army, type Player, type Castle
@@ -19,8 +20,10 @@ import {
 } from './attack_functions'
 
 import {
-    print_castles
+    print_castle
 } from './print_functions'
+
+const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 // General Functions
 
@@ -53,6 +56,11 @@ export function train_warrior(army: Army) {
     }
 }
 
+/**
+ * The player defermins the order in which they want to make their moves from their castles.
+ * @param player the player in question.
+ * @returns Array<string> of the castles
+ */
 export function get_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     const player_castles : Array<Castle | undefined> = tail(player);
