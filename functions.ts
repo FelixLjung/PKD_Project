@@ -143,11 +143,17 @@ export function refresh_board() {
  * @param army The army that gets trained
  */
 
-export function train_warrior(army: Army): void {
+export function train_warrior(army: Army) {
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
-        cur_war!.attack = cur_war!.attack + 5;
-        cur_war!.health = cur_war!.health + 5;
+        if(cur_war == undefined){
+            continue;
+        }
+        
+        else{
+            cur_war!.attack = cur_war!.attack + 5;
+            cur_war!.health = cur_war!.health + 5;
+        }
     }
 }
 
