@@ -3,25 +3,6 @@ import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue
 import { type MatrixGraph } from './lib/graphs';
 import { create } from "domain";
 
-export function death_text(dead: Warrior, killer: Warrior) {
-    const strings: Array<string> = ["has been slain by", 
-                                "got skewered by",
-                                "was defeated by", 
-                                "got stabbed by",
-                                "got schooled by",
-                                "got gob smacked by",
-                                "got his manhood fried by"];
-
-    let curr_event = strings[getRandomInt(0, 3)];
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-    console.log(dead.name, curr_event, killer.name);
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-
-}
 
 
 let w_names: Queue<string> = [0,
@@ -156,6 +137,26 @@ export function refresh_board() {
         [" ", " ", "\\", " ", "|", " ", "/", "", " "],
         [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
     ];
+}
+
+export function death_text(dead: Warrior, killer: Warrior) {
+    const strings: Array<string> = ["has been slain by", 
+                                "got skewered by",
+                                "was defeated by", 
+                                "got stabbed by",
+                                "got schooled by",
+                                "got gob smacked by",
+                                "got his manhood fried by"];
+
+    let curr_event = strings[getRandomInt(0, 3)];
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+    console.log(dead.name, curr_event, killer.name);
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+
 }
 
 /**
