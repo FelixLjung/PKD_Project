@@ -1,4 +1,14 @@
 
+import{
+    type Queue, dequeue, head 
+} from '../lib/queue_array'
+
+import { type MatrixGraph } from '../lib/graphs';
+
+
+import{
+    type Warrior, type Army, type Player, type Castle
+} from '../types'
 
 // General Functions
 
@@ -163,9 +173,17 @@ export function army_size(){
 }
 
 export function remove_player(){
-    
+
 }
 
-
+/**
+ * Warrior gets a name from queue
+ * @returns string
+ */
+export function get_name(): string {
+    let name = head(w_names);
+    dequeue(w_names);
+    return name;
+}
 
 
