@@ -11,6 +11,18 @@ import{
     type Warrior, type Army, type Player, type Castle
 } from '../types'
 
+import {
+    get_player_list
+} from '../game';
+
+import {
+    attack
+} from './attack_functions'
+
+import {
+    print_castles
+} from './print_functions'
+
 import { print_castle } from './print_functions'
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
@@ -188,7 +200,7 @@ export function castle_turn(player: Player, castle : Castle) {
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
 
-        let castle_to: Castle = castles[choice-1];
+        let castle_to: Castle = castles[choice-1]; // fixa get funktions
         //console.log(castle_to);
         move(castle!, castle_to);
 
