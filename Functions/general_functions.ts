@@ -20,7 +20,7 @@ import {
 } from './attack_functions'
 
 import {
-    print_castles
+    print_castle
 } from './print_functions'
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
