@@ -1,4 +1,4 @@
-import { type List, type Pair, list, tail } from "./lib/list";
+import { type List, type Pair, list, tail, is_null } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 import { create } from "domain";
@@ -7,7 +7,10 @@ export function death_text(dead: Warrior, killer: Warrior) {
     const strings: Array<string> = ["has been slain by", 
                                 "got skewered by",
                                 "was defeated by", 
-                                "got stabbed by"];
+                                "got stabbed by",
+                                "got schooled by",
+                                "got gob smacked by",
+                                "got his manhood fried by"];
 
     let curr_event = strings[getRandomInt(0, 3)];
     console.log();
@@ -172,12 +175,11 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  */
 
 export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
-    let bool = false;
     let defense_army = castle_army.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
     
-    while (head(Attackers) !== undefined || head(Defenders) !== undefined) {
+    while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
         let curr_attacker: Warrior = head(Attackers);
         let curr_defender: Warrior = head(Defenders);
         
@@ -189,14 +191,13 @@ export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
         else if (def_win === false) {
             dequeue(Defenders);
         }
-        if (is_empty(Attackers)) {          // If Attackers army is depleted:
-            return bool = true; // temp return
-        } else if (is_empty(Defenders)) {    // If defenders army is depleted:
-            return bool = true; // temp return
-        }
     }
 
-    return false;
+    if (is_army_empty(Defenders)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
@@ -415,6 +416,19 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(old_player)[i] = undefined;
         } else {
         }
+    }
+}
+
+/**
+ * checks if an army is empty
+ * @param army - the army that might be empty
+ * @returns Boolean - whether the army is empty or not
+ */
+export function is_army_empty(army : Queue<Warrior>) : Boolean {
+    if (head(army) == undefined) {
+        return true;
+    } else {
+        return false;
     }
 }
 
