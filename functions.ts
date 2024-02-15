@@ -348,6 +348,7 @@ export function get_castles(player : Player) : Queue<Castle> {
 /**
  * Finds all possible paths from a castle
  * @param castle - the castle the player wants to move from
+ * @param map - the map currently in play
  * @returns paths - and array of all castles a player can move to
  */
 
@@ -383,36 +384,35 @@ export function move(move_from: Castle, move_to: Castle): void {
         console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(army, move_to);
     }
-
-
 }
 
 /**
  * Changes the owner of a castle
- * @param Board - The game board where you can find the owner of the castle
  * @param castle - the castle that is changing owner
- * @param player - the new owner of the castle
- * @returns The updated board with the correct castle owners
+ * @param new_player - the new owner of the castle
+ * @param old_player - the player who previously owned the castle
+ * @param army - the army that now is in the castle
  */
+export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
+    castle.owner = new_player[0];
+    castle.hp = army;
 
-//ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
-// Ska även ta bort från förra ägaren
-export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
-
-    castle.owner = player[0];
-    player[1]
-    
-    
-
-
-    tail(player)[tail(player).length] = castle;
-
-    let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
-        adj: [[false]],
-        size: 3
+    for (let i = 0; i < tail(new_player)!.length; i = i + 1) {
+        if(tail(new_player)[i] == undefined) {
+            tail(new_player)[i] = castle;
+            break;
+        } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
+            tail(new_player)[tail(new_player).length] = castle;
+        } else {
+        }
     }
-    return temp_mtrx;
 
+    for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
+        if(tail(old_player)[i] == castle) {
+            tail(old_player)[i] = undefined;
+        } else {
+        }
+    }
 }
 
 /**
