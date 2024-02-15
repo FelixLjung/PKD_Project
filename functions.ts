@@ -330,6 +330,7 @@ export function get_castles(player : Player) : Queue<Castle> {
 /**
  * Finds all possible paths from a castle
  * @param castle - the castle the player wants to move from
+ * @param map - the map currently in play
  * @returns paths - and array of all castles a player can move to
  */
 
