@@ -10,7 +10,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 let I = true;
 let O = false;
 
-const mormors_kudde: MatrixGraph = {
+export const mormors_kudde: MatrixGraph = {
     size: 5,
     adj:
         [
