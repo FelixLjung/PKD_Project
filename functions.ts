@@ -275,7 +275,7 @@ export function get_castle(player: Player) {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_castles(player : Player){
+export function get_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     const player_castles : Array<Castle | undefined> = tail(player);
 
@@ -283,6 +283,17 @@ export function get_castles(player : Player){
         for (let i = 0; i < Castles.length; i = i + 1) {
             if (Castles[i]!.position == index) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    function in_q(castle_queue : Queue<Castle>, castle : Castle | undefined) : Boolean {
+        for (let i = 0; i < castle_queue[2].length; i = i + 1) {
+            if (castle_queue[2][i] == castle) {
+                return true;
+            } else {
+
             }
         }
         return false;
@@ -299,24 +310,22 @@ export function get_castles(player : Player){
         return undefined;
     }
 
-    function helper(player_castles : Array<Castle | undefined>) : Queue<Castle> {
-        if (player_castles.length > 1) {
-            while (castle_queue[1] != tail(player).length) {
-                get_castle(player);
-                const cstl : number = prompt("Which castle would you like to operate from? ") as number
-                if (includes(player_castles, cstl)) {
-                    enqueue(get_position(player_castles, cstl), castle_queue);
-                } else {
-                    console.log("You don't own this Castle");
-                }
+    if (player_castles.length > 1) {
+        while (castle_queue[1] != tail(player).length) {
+            get_castle(player);
+            const cstl : number = prompt("Which castle would you like to operate from? ") as number
+            if (in_q(castle_queue, get_position(player_castles, cstl))) {
+                console.log("You can't choose the same castle twice!")
+            } else if (includes(player_castles, cstl)) {
+                enqueue(get_position(player_castles, cstl), castle_queue);
+            } else {
+                console.log("You don't own this Castle");
             }
-
-        } else if (player_castles.length == 1) {
-            enqueue(player_castles[0], castle_queue);
         }
-        return castle_queue;
+    } else if (player_castles.length == 1) {
+        enqueue(player_castles[0], castle_queue);
     }
-    return(helper(player_castles));
+    return(castle_queue);
 }
 
 /**
