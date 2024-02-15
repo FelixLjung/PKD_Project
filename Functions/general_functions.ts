@@ -23,6 +23,10 @@ import {
     print_castle
 } from './print_functions'
 
+import {
+    mormorskudde
+} from './setup_functions'
+
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 // General Functions
