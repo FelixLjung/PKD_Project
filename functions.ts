@@ -566,7 +566,7 @@ export function setup(): Array<Player> {
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
-    const AI1 : Player = ["AI1",[create_castle(create_army(), "AI1", 4)]]
+    const AI1 : Player = ["CPU1",[create_castle(create_army(), "CPU1", 4)]]
 
 
     nodes[0] += name_player1[0];
