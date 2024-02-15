@@ -161,37 +161,6 @@ export function enqueue_army(army: Army): Queue<Warrior> {
     return queue_army;
 }
 
-/**
- * 
- * @param attacker is a {Warrior}
- * @param defender is a {Warrior}
- * @returns 
- */
-export function fight(attacker: Warrior, defender: Warrior): boolean {
-    if(attacker === undefined){
-        return true;
-    }
-    else if(defender === undefined){
-        return false;
-    }
-    
-    while (true) {
-        attacker.health -= defender.attack * getRandomInt(0, 4);
-        console.log(defender, "VS", attacker);
-        if (attacker.health <= 0) {
-            death_text(attacker, defender);
-            return true
-        }
-        defender.health -= attacker.attack * getRandomInt(0, 4);
-        console.log(attacker, "VS", defender);
-        if (defender.health <= 0) {
-            death_text(defender, attacker);
-            return false
-        }
-    }
-
-}
-
 
 /**
  * Take a player and an Attack Army, and if the 
@@ -202,17 +171,17 @@ export function fight(attacker: Warrior, defender: Warrior): boolean {
  * 
  */
 
-export function attack(Attacking_army: Army, castle: Castle): Boolean {
+export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
     let bool = false;
-    let defense_army = castle.hp;
+    let defense_army = castle_army.hp;
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
     
     while (head(Attackers) !== undefined || head(Defenders) !== undefined) {
-        let curr_attacker: Warrior = head(Attackers)
-        let curr_defender: Warrior = head(Defenders)
+        let curr_attacker: Warrior = head(Attackers);
+        let curr_defender: Warrior = head(Defenders);
         
-        let def_win = fight(curr_attacker, curr_defender);
+        let def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
 
         if (def_win === true) { 
             dequeue(Attackers);
@@ -228,6 +197,54 @@ export function attack(Attacking_army: Army, castle: Castle): Boolean {
     }
 
     return false;
+}
+
+/**
+ * 
+ * @param attacker is a {Warrior}
+ * @param defender is a {Warrior}
+ * @returns 
+ */
+export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_army: Castle): boolean {
+    if(attacker === undefined){
+        return true;
+    }
+    else if(defender === undefined){
+        return false;
+    }
+    
+    while (true) {
+        attacker.health -= defender.attack * getRandomInt(0, 4);
+        console.log(defender, "VS", attacker);
+        if (attacker.health <= 0) {
+            death_text(attacker, defender);
+            remove_dead_warrior(attacker, army);
+            return true;
+        }
+        defender.health -= attacker.attack * getRandomInt(0, 4);
+        console.log(attacker, "VS", defender);
+        if (defender.health <= 0) {
+            death_text(defender, attacker);
+            remove_dead_warrior(defender, castle_army.hp);
+            return false;
+        }
+    }
+
+}
+
+/**
+ * A helper function that removes dead warriors from the players "Army" (Array)
+ * @param dead is a {Warrior}
+ * @param army is a {Army}
+ * @returns Void
+ */
+function remove_dead_warrior(dead: Warrior, army: Army){
+    for(let i = 0; i < army.length; i++){
+        if(army[i]?.name == dead.name){
+            army[i] = undefined;
+        }
+        else{}
+    }
 }
 
 /**
@@ -370,36 +387,35 @@ export function move(move_from: Castle, move_to: Castle): void {
         console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(army, move_to);
     }
-
-
 }
 
 /**
  * Changes the owner of a castle
- * @param Board - The game board where you can find the owner of the castle
  * @param castle - the castle that is changing owner
- * @param player - the new owner of the castle
- * @returns The updated board with the correct castle owners
+ * @param new_player - the new owner of the castle
+ * @param old_player - the player who previously owned the castle
+ * @param army - the army that now is in the castle
  */
+export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
+    castle.owner = new_player[0];
+    castle.hp = army;
 
-//ska lägga till castle i list of castles hos player, kolla om array of castles har undefined innan
-// Ska även ta bort från förra ägaren
-export function castle_owner(Board: MatrixGraph, castle: Castle, player: Player): MatrixGraph {
-
-    castle.owner = player[0];
-    player[1]
-    
-    
-
-
-    tail(player)[tail(player).length] = castle;
-
-    let temp_mtrx : MatrixGraph= { // temporär return så vi kan runna
-        adj: [[false]],
-        size: 3
+    for (let i = 0; i < tail(new_player)!.length; i = i + 1) {
+        if(tail(new_player)[i] == undefined) {
+            tail(new_player)[i] = castle;
+            break;
+        } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
+            tail(new_player)[tail(new_player).length] = castle;
+        } else {
+        }
     }
-    return temp_mtrx;
 
+    for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
+        if(tail(old_player)[i] == castle) {
+            tail(old_player)[i] = undefined;
+        } else {
+        }
+    }
 }
 
 export function turn(player : Player){
