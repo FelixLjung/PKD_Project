@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.get_player_list = void 0;
 var functions_1 = require("./functions");
 // start nodes
 var node1 = "1";
@@ -49,6 +50,10 @@ var map = [
 //print_board(map);
 //console.log(player_list);
 game_running = true;
+function get_player_list() {
+    return player_list;
+}
+exports.get_player_list = get_player_list;
 /*
 console.log(create_warrior());
 console.log(create_warrior());
@@ -62,10 +67,13 @@ console.log(create_warrior());
 */
 // The game loop
 while (game_running) {
-    (0, functions_1.print_board)(map);
+    //print_board();
+    (0, functions_1.refresh_board)();
     for (var i = 0; i < player_list.length; i++) { // ger en turn åt varje spelare
-        console.log(player_list[i][1][0].hp);
+        //console.log(player_list[i][1][0].hp);
+        (0, functions_1.print_board)();
         (0, functions_1.turn)(player_list[i]);
+        //console.clear();
+        console.log("------------------------------------------");
     }
 }
-
