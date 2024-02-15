@@ -92,7 +92,7 @@ export function print_board() {
  * @param player the player in question.
  * @returns Array<castle | undefined> of the castles
  */
-export function get_castle(player: Player) {
+export function print_castle(player: Player) {
 
     let castles = player[1];
     let print = "";

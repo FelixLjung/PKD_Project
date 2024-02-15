@@ -23,8 +23,6 @@ import {
     print_castles
 } from './print_functions'
 
-import { print_castle } from './print_functions'
-
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 // General Functions
