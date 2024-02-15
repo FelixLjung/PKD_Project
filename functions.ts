@@ -1,7 +1,8 @@
-import { type List, type Pair, list, tail, is_null } from "./lib/list";
+import { type List, type Pair, list, tail, is_null, pair } from "./lib/list";
 import { type Queue, head, dequeue, enqueue, empty, is_empty } from "./lib/queue_array";
 import { type MatrixGraph } from './lib/graphs';
 import { create } from "domain";
+import { get_player_list } from "./game";
 
 export function death_text(dead: Warrior, killer: Warrior) {
     const strings: Array<string> = ["has been slain by", 
@@ -174,7 +175,7 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * 
  */
 
-export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
+export function attack(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Array<Warrior | undefined>> {
     let bool = false;
     let defense_army = castle_army.hp;
     const Attackers = enqueue_army(Attacking_army);
@@ -195,9 +196,27 @@ export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
     }
 
     if (is_army_empty(Defenders)) {
-        return true;
+        return pair(true, Attackers[2]);
     } else {
-        return false;
+        return pair(false, Defenders[2]);
+    }
+}
+
+/**
+ * Changes owner of the castle if neseccary after a battle has taken place
+ * @param castle - the castle where the battle takes place
+ * @param attacking_player - the player attacking the castle
+ * @param defending_player - the player that defending the castle
+ * @param army - the attacking army
+ */
+export function after_attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) {
+    const winner : Pair<Boolean, Array<Warrior | undefined>> = attack(army, castle);
+    if (winner[0]) {
+        console.log("You have won the battle my liege! Congratulations, the castle is yours!");
+        castle_owner(castle, attacking_player, defending_player, army);
+    } else if (winner[0] == false) {
+        console.log("Our army is dead! The battle is lost!");
+        castle.hp = winner[1];
     }
 }
 
@@ -335,7 +354,7 @@ export function get_castles(player : Player) : Queue<Castle> {
     if (player_castles.length > 1) {
         while (castle_queue[1] != tail(player).length) {
             get_castle(player);
-            const cstl : number = prompt("Which castle would you like to operate from? ") as number
+            const cstl : number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!")
             } else if (includes(player_castles, cstl)) {
@@ -387,7 +406,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
     if (player_from !== player_to) {
         console.log(move_from.owner,"has declared war against", move_to.owner);
-        attack(army, move_to);
+        after_attack(move_to, , , army);
     }
 }
 
