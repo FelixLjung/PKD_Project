@@ -180,7 +180,7 @@ export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
     const Attackers = enqueue_army(Attacking_army);
     const Defenders = enqueue_army(defense_army);
     
-    while (head(Attackers) !== undefined || head(Defenders) !== undefined) {
+    while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
         let curr_attacker: Warrior = head(Attackers);
         let curr_defender: Warrior = head(Defenders);
         
@@ -192,14 +192,13 @@ export function attack(Attacking_army: Army, castle_army: Castle): Boolean {
         else if (def_win === false) {
             dequeue(Defenders);
         }
-        if (is_empty(Attackers)) {          // If Attackers army is depleted:
-            return bool = true; // temp return
-        } else if (is_empty(Defenders)) {    // If defenders army is depleted:
-            return bool = true; // temp return
-        }
     }
 
-    return false;
+    if (is_army_empty(Defenders)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /**
