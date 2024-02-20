@@ -39,7 +39,8 @@ describe('is_army_empty', () => {
     });
     
     it('Returns true for an empty army', () => {
-        expect(is_army_empty(empty_army).toEqual(true));
+        expect(is_army_empty(empty_army)).toEqual(true);
     });
 
 });
+
