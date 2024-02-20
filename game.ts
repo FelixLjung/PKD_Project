@@ -1,9 +1,12 @@
 import { type MatrixGraph } from './lib/graphs';
 
-import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, create_warrior, refresh_board, castle_turn} from './functions';
+//import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, create_warrior, refresh_board, castle_turn} from './functions';
 
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
+import { getRandomInt, turn } from './Functions/general_functions';
+import {setup} from './Functions/setup_functions'
+import { refresh_board, print_board } from './Functions/print_functions';
 // start nodes
 let node1 = "1";
 let node2 = "2";
@@ -93,10 +96,6 @@ while(game_running){
         console.log("------------------------------------------");
 
     } 
-
-    
-    
-
 
 }
 
