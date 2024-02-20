@@ -100,7 +100,7 @@ export function get_castle_array(): Array<Castle> {
  */
 
 
-export function setup(): Array<Player> {
+export function game_setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");

@@ -5,7 +5,7 @@ import { type MatrixGraph } from './lib/graphs';
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
 import { getRandomInt, turn } from './Functions/general_functions';
-import {setup} from './Functions/setup_functions'
+import {game_setup} from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
 // start nodes
 let node1 = "1";
@@ -45,7 +45,7 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
-const player_list = setup();
+const player_list = game_setup();
 
 node1 += player_list[0][0][0];
 node2 += player_list[1][0][0];
