@@ -2,7 +2,7 @@ import { is_army_empty, enqueue_army } from '../Functions/attack_functions'
 import { empty, enqueue } from '../lib/queue_array'
 import { type Army, type Warrior } from '../types'
 
-/*describe('enqueue_army', () => {
+describe('enqueue_army', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred'};
     const wrr2 : Warrior = {attack : 3, health : 15, name : 'David'};
@@ -18,11 +18,11 @@ import { type Army, type Warrior } from '../types'
     });
 
     it('Changes empty army to an empty  queue', () => {
-        expect(enqueue_army(ex_army3)).toEqual(empty());
+        expect(enqueue_army(ex_army3)).toEqual(empty<Warrior>());
     });
 
 });
-*/
+
 describe('is_army_empty', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred'};
