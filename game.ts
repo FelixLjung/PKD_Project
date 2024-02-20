@@ -7,6 +7,8 @@ import {type List, type Pair, list, head, tail, pair} from './lib/list';
 import { getRandomInt, turn } from './Functions/general_functions';
 import {game_setup} from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
+import {type Player } from './types'; 
+import { kill } from 'process';
 
 
 // start nodes
@@ -47,13 +49,24 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
-const player_list = game_setup();
+let player_list = game_setup();
 export function get_player_list() {
     console.log("in game.ts inside get_player_list");
     node1 += player_list[0][0][0];
     node2 += player_list[1][0][0];
     node5 += player_list[2][0][0];
     return player_list;
+}
+
+export function kill_player(player : Player ) {
+    console.log("!");
+    for (let i = 0; i < player_list.length; i++){
+        if (player_list[i][0] == player[0]){
+            player_list[i][0] = "UNDEFINED";
+        }
+    }
+
+    
 }
 
 
@@ -94,9 +107,10 @@ function game(){
     for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
         //console.log(player_list[i][1][0].hp);
         print_board();
-        if (player_list[i][1] == undefined){
+        if (player_list[i][0] == "UNDEFINED"){
             continue;
         }
+        console.log(player_list[i][0]);
         turn(player_list[i]);
 
             //console.clear();

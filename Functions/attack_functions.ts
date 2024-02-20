@@ -3,6 +3,7 @@ import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
 import { getRandomInt, get_order_castles} from "./general_functions";
 import { get_castle_array } from "./setup_functions";
+import { kill_player } from "../game";
 
 //Attack functions
 
@@ -84,6 +85,12 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(old_player)[i] = undefined;
             console.log(get_order_castles(old_player)[2]);
                 
+            if (get_order_castles(old_player)[2] == undefined) {
+
+                kill_player(old_player);
+                console.log(old_player[0], " has fallen");
+                old_player[0]="UNDEFINED";
+            }
             
         } else {
         }
