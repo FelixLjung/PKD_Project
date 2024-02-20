@@ -1,26 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.spawn = exports.setup = exports.create_warrior = exports.create_army = exports.create_castle = exports.castle_turn = exports.turn = exports.is_army_empty = exports.castle_owner = exports.move = exports.finds_paths = exports.get_castles = exports.get_castle = exports.print_board = exports.fight = exports.attack = exports.enqueue_army = exports.train_warrior = exports.refresh_board = exports.getRandomInt = exports.death_text = void 0;
+exports.recruit_warrior = exports.setup = exports.create_warrior = exports.create_army = exports.create_castle = exports.castle_turn = exports.turn = exports.is_army_empty = exports.castle_owner = exports.move = exports.finds_paths = exports.get_castles = exports.print_castle = exports.print_board = exports.fight = exports.attack = exports.enqueue_army = exports.train_warrior = exports.death_text = exports.refresh_board = exports.getRandomInt = void 0;
 var list_1 = require("./lib/list");
 var queue_array_1 = require("./lib/queue_array");
-function death_text(dead, killer) {
-    var strings = ["has been slain by",
-        "got skewered by",
-        "was defeated by",
-        "got stabbed by",
-        "got schooled by",
-        "got gob smacked by",
-        "got his manhood fried by"];
-    var curr_event = strings[getRandomInt(0, 3)];
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-    console.log(dead.name, curr_event, killer.name);
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-}
-exports.death_text = death_text;
+var game_1 = require("./game");
 var w_names = [0,
     2,
     ["Eva Darulova", // Current: 18 warrrior-names OK
@@ -112,6 +95,24 @@ function refresh_board() {
     ];
 }
 exports.refresh_board = refresh_board;
+function death_text(dead, killer) {
+    var strings = ["has been slain by",
+        "got skewered by",
+        "was defeated by",
+        "got stabbed by",
+        "got schooled by",
+        "got gob smacked by",
+        "got his manhood fried by"];
+    var curr_event = strings[getRandomInt(0, 3)];
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+    console.log(dead.name, curr_event, killer.name);
+    console.log();
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log();
+}
+exports.death_text = death_text;
 /**
  * Improves every warrior in an armys stats
  * @param army The army that gets trained
@@ -143,33 +144,43 @@ function enqueue_army(army) {
 }
 exports.enqueue_army = enqueue_army;
 /**
- * Take a player and an Attack Army, and if the
- * @param player is a pair(name:string, List<castle>)
- * @param army
- *
- * @returns Boolean, if you won the castle or not
- *
+ * Changes owner of the castle if neseccary after a battle has taken place
+ * @param castle - the castle where the battle takes place
+ * @param attacking_player - the player attacking the castle
+ * @param defending_player - the player that defending the castle
+ * @param army - the attacking army
  */
-function attack(Attacking_army, castle_army) {
-    var defense_army = castle_army.hp;
-    var Attackers = enqueue_army(Attacking_army);
-    var Defenders = enqueue_army(defense_army);
-    while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
-        var curr_attacker = (0, queue_array_1.head)(Attackers);
-        var curr_defender = (0, queue_array_1.head)(Defenders);
-        var def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
-        if (def_win === true) {
-            (0, queue_array_1.dequeue)(Attackers);
+function attack(castle, attacking_player, defending_player, army) {
+    function helper(Attacking_army, castle_army) {
+        var defense_army = castle_army.hp;
+        var Attackers = enqueue_army(Attacking_army);
+        var Defenders = enqueue_army(defense_army);
+        while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
+            var curr_attacker = (0, queue_array_1.head)(Attackers);
+            var curr_defender = (0, queue_array_1.head)(Defenders);
+            var def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
+            if (def_win === true) {
+                (0, queue_array_1.dequeue)(Attackers);
+            }
+            else if (def_win === false) {
+                (0, queue_array_1.dequeue)(Defenders);
+            }
         }
-        else if (def_win === false) {
-            (0, queue_array_1.dequeue)(Defenders);
+        if (is_army_empty(Defenders)) {
+            return (0, list_1.pair)(true, Attackers[2]);
+        }
+        else {
+            return (0, list_1.pair)(false, Defenders[2]);
         }
     }
-    if (is_army_empty(Defenders)) {
-        return true;
+    var winner = helper(army, castle);
+    if (winner[0]) {
+        console.log("You have won the battle my liege! Congratulations, the castle is yours!");
+        castle_owner(castle, attacking_player, defending_player, army);
     }
-    else {
-        return false;
+    else if (winner[0] == false) {
+        console.log("Our army is dead! The battle is lost!");
+        castle.hp = winner[1];
     }
 }
 exports.attack = attack;
@@ -245,7 +256,7 @@ exports.print_board = print_board;
  * @param player the player in question.
  * @returns Array<castle | undefined> of the castles
  */
-function get_castle(player) {
+function print_castle(player) {
     var _a;
     var castles = player[1];
     var print = "";
@@ -256,7 +267,7 @@ function get_castle(player) {
     console.log(print);
     console.log('\x1b[36m%s\x1b[0m', "You rule over the following castles: ", print, '\x1b[37m\x1b');
 }
-exports.get_castle = get_castle;
+exports.print_castle = print_castle;
 /**
  * The player defermins the order in which they want to make their moves from their castles.
  * @param player the player in question.
@@ -295,8 +306,8 @@ function get_castles(player) {
     }
     if (player_castles.length > 1) {
         while (castle_queue[1] != (0, list_1.tail)(player).length) {
-            get_castle(player);
-            var cstl = prompt("Which castle would you like to operate from? ");
+            print_castle(player);
+            var cstl = prompt(" Which castle would you like to operate from? ");
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!");
             }
@@ -346,9 +357,20 @@ function move(move_from, move_to) {
     console.log(move_to);
     var player_to = move_to.owner;
     var army = move_from.hp;
+    var attacking_player = undefined;
+    var defending_player = undefined;
+    var player_list = (0, game_1.get_player_list)();
+    for (var i = 0; i < player_list.length; i = i + 1) {
+        if (player_list[i][0] == move_from.owner) {
+            attacking_player = player_list[i];
+        }
+        else if (player_list[i][0] == move_to.owner) {
+            defending_player = player_list[i];
+        }
+    }
     if (player_from !== player_to) {
         console.log(move_from.owner, "has declared war against", move_to.owner);
-        attack(army, move_to);
+        attack(move_to, attacking_player, defending_player, army);
     }
 }
 exports.move = move;
@@ -413,7 +435,7 @@ exports.turn = turn;
 function castle_turn(player, castle) {
     console.log("What is your command, king ", player[0], "..?");
     var choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
-    // Någonstans ska vi föra in get_castles funktionen (väljer vilket slott man vill börja med)
+    // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
     if (choice === "1") {
         //console.clear();
         var paths = finds_paths(castle, mormors_kudde); // Första castle
@@ -429,15 +451,15 @@ function castle_turn(player, castle) {
         console.log(castle.hp);
         return {};
     }
-    /**
+}
+exports.castle_turn = castle_turn;
+/**
      * Creates a castle in setup phase
      * @param army
      * @param owner
      * @param position
      * @returns A castle
      */
-}
-exports.castle_turn = castle_turn;
 function create_castle(army, owner, position) {
     var castle = { hp: army, owner: owner, position: position };
     return castle;
@@ -484,7 +506,7 @@ function setup() {
     var player1 = [name_player1, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
     var player2 = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
     var player3 = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
-    var AI1 = ["AI1", [create_castle(create_army(), "AI1", 4)]];
+    var AI1 = ["CPU1", [create_castle(create_army(), "CPU1", 4)]];
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
     nodes[4] += name_player3[0];
@@ -504,7 +526,7 @@ exports.setup = setup;
  * @param position - The index of the castle
  *
  */
-function spawn(Board) {
+function recruit_warrior(Board) {
     // denna kanske inte behövs
 }
-exports.spawn = spawn;
+exports.recruit_warrior = recruit_warrior;
