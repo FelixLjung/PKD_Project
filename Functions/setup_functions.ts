@@ -99,8 +99,9 @@ export function get_castle_array(): Array<Castle> {
  * @returns A complete setup of the game
  */
 
-
+console.log("Before game_setup");
 export function game_setup(): Array<Player> {
+    console.log("Inside game_setup");
     const name_player1 = prompt("Enter player 1 name: ");
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
