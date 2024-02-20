@@ -8,21 +8,7 @@ import { get_name } from '../Functions/general_functions';
     
     // const warrior = { attack: 5, health: 100, name: name };
     // return warrior;
-    
 
-    
-
-describe('create_warrior', () => {
-    it('creates a base warrior', () => {
-        const name = "Erik Testsson";
-        const warrior = create_warrior();
-        
-        expect(warrior).toEqual({attack: 5,
-                                 health: 100,
-                                 name: 'Eva Darulova'});
-    });
-
-});
 
 test('create_warrior', () => {
     const warrior: Warrior = create_warrior();
