@@ -24,10 +24,35 @@ import {
 } from './print_functions'
 
 import {
+    get_castle_array,
     mormors_kudde
 } from './setup_functions'
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
+let w_names: Queue<string> = [0,
+    2,
+    ["Eva Darulova",    // Current: 18 warrrior-names OK
+   "Jingwei Hu",
+   "Johannes Borgström",
+   "Carl Erik IV",
+   "Runar Stenbock",
+   "Sigvard Bjelkengren",
+   "Ernst Greve",
+   "Hjalmar Storfot",
+   "Lillemor Hoppetoss",
+   "Gustav Backlund",
+   "Hans Hansson III",
+   "Frans Storm",
+   "Berit Storm",
+   "Tor Hoppetoss II",
+   "Fred von Pickelroy",
+   "Björn Olmedo",
+   "Jimmy Viking",
+   "Thom Surströmming",
+   "Dadel kungen"]];
+
+
 
 // General Functions
 
@@ -183,6 +208,11 @@ export function turn(player : Player){
     
 }
 
+
+
+
+
+
 /**
  * A players turn in game. Should be able to call multiple actions
  * Move and Attack.
@@ -202,7 +232,7 @@ export function castle_turn(player: Player, castle : Castle) {
         console.log("You can move to the following castles: ", paths);
         let choice: number = prompt("Choose your destination: ") as number;
 
-        let castle_to: Castle = castles[choice-1]; // fixa get funktions
+        let castle_to: Castle = get_castle_array()[choice-1]; // fixa get funktions
         //console.log(castle_to);
         move(castle!, castle_to);
 
@@ -242,5 +272,3 @@ export function get_name(): string {
     dequeue(w_names);
     return name;
 }
-
-
