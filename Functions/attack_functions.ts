@@ -73,7 +73,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(new_player)[i] = castle;
             break;
         } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
-            tail(new_player)[tail(new_player).length] = castle;
+            tail(new_player)[tail(new_player).length-1] = castle; // 
         } else {
         }
     }
@@ -177,9 +177,11 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     const winner : Pair<Boolean, Array<Warrior | undefined>> = helper(army, castle);
     if (winner[0]) {
+        //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         castle_owner(castle, attacking_player, defending_player, army);
-    } else if (winner[0] == false) {
+        console.log("V vann");
+    } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];
     }
