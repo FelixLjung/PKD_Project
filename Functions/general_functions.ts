@@ -20,6 +20,7 @@ import {
 } from './attack_functions'
 
 import {
+    print_board,
     print_castle
 } from './print_functions'
 
@@ -171,13 +172,15 @@ export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> 
  * @returns void
  */
 export function move(move_from: Castle, move_to: Castle): void {
+    print_board();
+
     const player_from: string = move_from.owner;
     console.log(move_from);
     console.log(move_to);
 
     const player_to: string = move_to.owner;
     const army = move_from.hp;
-
+   
     let attacking_player : Player | undefined = undefined;
     let defending_player : Player | undefined = undefined;
     const player_list : Array<Player> = get_player_list();
@@ -193,6 +196,10 @@ export function move(move_from: Castle, move_to: Castle): void {
         console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(move_to, attacking_player!, defending_player!, army);
     }
+
+    console.log("VI är i move");
+    
+    
 }
 
 
@@ -235,6 +242,7 @@ export function castle_turn(player: Player, castle : Castle) {
         let castle_to: Castle = get_castle_array()[choice-1]; // fixa get funktions
         //console.log(castle_to);
         move(castle!, castle_to);
+        console.log("wtf");
 
     } else if (choice === "2") {
         console.log("You are training: ", player[1][0]!.hp);

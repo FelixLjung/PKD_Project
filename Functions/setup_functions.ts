@@ -105,13 +105,14 @@ export function game_setup(): Array<Player> {
     const name_player2 = prompt("Enter player 2 name: ");
     const name_player3 = prompt("Enter player 3 name: ");
 
-    //const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
-    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
+    const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
+    //const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
     const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
 
     const AI1 : Player = ["CPU1",[create_castle(create_army(), "CPU1", 4)]]
-
+    
+    const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
 
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
@@ -120,15 +121,15 @@ export function game_setup(): Array<Player> {
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
     castles[4] = player3[1][0]!;
-    castles[2] = player1[1][1]!;
+    //castles[2] = player1[1][1]!;
+    castles[2] = AI2[1][0]!;
     castles[3] = AI1[1][0]!;
 
 
 
 
     //castles[3] = create_castle(create_army(), "AI", 3);
-    
-    //const AI2 : Player = ["AI2",[create_castle(create_army(), "AI2", 3)]]
+
     
 
     return [player1, player2, player3];

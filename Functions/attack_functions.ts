@@ -1,7 +1,8 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { getRandomInt } from "./general_functions";
+import { getRandomInt, get_castles } from "./general_functions";
+import { get_castle_array } from "./setup_functions";
 
 //Attack functions
 
@@ -73,7 +74,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(new_player)[i] = castle;
             break;
         } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
-            tail(new_player)[tail(new_player).length-1] = castle; // 
+            tail(new_player)[tail(new_player).length-1] = castle;
         } else {
         }
     }
@@ -81,6 +82,9 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
         if(tail(old_player)[i] == castle) {
             tail(old_player)[i] = undefined;
+            console.log(get_castles(old_player)[2]);
+                
+            
         } else {
         }
     }
