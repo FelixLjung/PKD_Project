@@ -87,11 +87,11 @@ export function train_warrior(army: Army) {
 }
 
 /**
- * The player defermins the order in which they want to make their moves from their castles.
+ * The player determines the order in which they want to make their moves from their castles.
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_castles(player : Player) : Queue<Castle> {
+export function get_order_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     const player_castles : Array<Castle | undefined> = tail(player);
 
@@ -205,7 +205,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
 export function turn(player : Player){
 
-    let castle_queue = get_castles(player);
+    let castle_queue = get_order_castles(player);
 
     for(let i = 0; i < castle_queue[1]; i++){
         

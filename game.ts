@@ -7,6 +7,8 @@ import {type List, type Pair, list, head, tail, pair} from './lib/list';
 import { getRandomInt, turn } from './Functions/general_functions';
 import {game_setup} from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
+
+
 // start nodes
 let node1 = "1";
 let node2 = "2";
@@ -46,11 +48,13 @@ const mormors_kudde: MatrixGraph = {
 }
 
 const player_list = game_setup();
-
-node1 += player_list[0][0][0];
-node2 += player_list[1][0][0];
-node5 += player_list[2][0][0];
-
+export function get_player_list() {
+    console.log("in game.ts inside get_player_list");
+    node1 += player_list[0][0][0];
+    node2 += player_list[1][0][0];
+    node5 += player_list[2][0][0];
+    return player_list;
+}
 
 
 let map = [
@@ -68,9 +72,7 @@ let map = [
 
 game_running = true;
 
-export function get_player_list() {
-    return player_list;
-}
+
 
 /* 
 console.log(create_warrior());
@@ -84,7 +86,9 @@ console.log(create_warrior());
 console.log(create_warrior());
 */
 // The game loop
-while(game_running){
+function game(){
+    console.log("Wtf i game");
+    while(game_running){
     //print_board();
     refresh_board();
     for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
@@ -95,10 +99,10 @@ while(game_running){
         }
         turn(player_list[i]);
 
-        //console.clear();
-        console.log("------------------------------------------");
+            //console.clear();
+            console.log("------------------------------------------");
 
     } 
 
-}
-
+}}
+game();
