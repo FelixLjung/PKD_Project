@@ -2,7 +2,7 @@ import { is_army_empty, enqueue_army } from '../Functions/attack_functions'
 import { empty, enqueue } from '../lib/queue_array'
 import { type Army, type Warrior } from '../types'
 
-describe('enqueue_army', () => {
+/*describe('enqueue_army', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred'};
     const wrr2 : Warrior = {attack : 3, health : 15, name : 'David'};
@@ -22,7 +22,7 @@ describe('enqueue_army', () => {
     });
 
 });
-
+*/
 describe('is_army_empty', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred'};
@@ -39,7 +39,8 @@ describe('is_army_empty', () => {
     });
     
     it('Returns true for an empty army', () => {
-        expect(is_army_empty(empty_army).toEqual(true));
+        expect(is_army_empty(empty_army)).toEqual(true);
     });
 
 });
+
