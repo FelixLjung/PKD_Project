@@ -107,9 +107,11 @@ export function retreat(army : Queue<Warrior>, your_castle : Castle) {
 }
 
 /**
- * 
- * @param attacker is a {Warrior}
- * @param defender is a {Warrior}
+ * returns true if the defender wins the battle and false if the attacker wins
+ * @param attacker - attacking warrior
+ * @param defender - defending warrior
+ * @param army - the attacking army
+ * @param castle_army - the defending castle
  * @returns 
  */
 export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_army: Castle): boolean {
