@@ -1,45 +1,32 @@
-import {type Army, type Castle, type Warrior, type Player} from '../types';
-import { MatrixGraph } from '../lib/graphs';
-import {get_name} from './general_functions'
-
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.get_castle_array = exports.create_army = exports.create_warrior = exports.create_castle = exports.mormors_kudde = void 0;
+var general_functions_1 = require("./general_functions");
 // Variables
-
-const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-
-let I = true;
-let O = false;
-
-export const mormors_kudde: MatrixGraph = {
+var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+var I = true;
+var O = false;
+exports.mormors_kudde = {
     size: 5,
-    adj:
-        [
-            [O, I, I, I, O], //0. from A 
-            [I, O, I, O, I], //1. from B
-            [I, I, O, I, I], //2. from C
-            [I, O, I, O, I], //3. from D
-            [O, I, I, I, O], //4. from E
-        ]
-
-}
-
-let castles: Array<Castle> = [];
-
-
+    adj: [
+        [O, I, I, I, O], //0. from A 
+        [I, O, I, O, I], //1. from B
+        [I, I, O, I, I], //2. from C
+        [I, O, I, O, I], //3. from D
+        [O, I, I, I, O], //4. from E
+    ]
+};
+var castles = [];
 // board
-
 // start nodes
-let node1 = "1";
-let node2 = "2";
-let node5 = "5";
-
+var node1 = "1";
+var node2 = "2";
+var node5 = "5";
 //unclaimed nodes
-let node3 = "3x";
-let node4 = "4x";
-
-let nodes = [node1,node2,node3,node4,node5];
-
-let map = [
+var node3 = "3x";
+var node4 = "4x";
+var nodes = [node1, node2, node3, node4, node5];
+var map = [
     [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
     [" ", " ", "/", " ", "|", " ", "\\", " "],
     [" ", "/", " ", " ", "|", " ", " ", "\\"],
@@ -48,57 +35,47 @@ let map = [
     [" ", " ", "\\", " ", "|", " ", "/", "", " "],
     [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
 ];
-
-
-
 // Functions
-
 /**
      * Creates a castle in setup phase
-     * @param army 
-     * @param owner 
-     * @param position 
+     * @param army
+     * @param owner
+     * @param position
      * @returns A castle
      */
-export function create_castle(army: Army, owner: string, position: number): Castle {
-    let castle = { hp: army, owner: owner, position: position };
-
+function create_castle(army, owner, position) {
+    var castle = { hp: army, owner: owner, position: position };
     return castle;
 }
-
-
+exports.create_castle = create_castle;
 /**
  * Creates a warrior (dictionary) with name, attack damage and health
  * @returns a Warrior
  */
-export function create_warrior(): Warrior {
-    let name = get_name();
-
-    const warrior = { attack: 5, health: 100, name: name };
+function create_warrior() {
+    var name = (0, general_functions_1.get_name)();
+    var warrior = { attack: 5, health: 100, name: name };
     return warrior;
 }
-
+exports.create_warrior = create_warrior;
 /**
  * Creates a an array of warriors
  *
- * @returns 
+ * @returns
  */
-export function create_army(): Army {
-    let army: Army = [create_warrior()];
-
+function create_army() {
+    var army = [create_warrior()];
     return army;
 }
-
-export function get_castle_array(): Array<Castle> {
+exports.create_army = create_army;
+function get_castle_array() {
     return castles;
 }
-
-
+exports.get_castle_array = get_castle_array;
 /**
  * Pick your King, and creates your army
  * @returns A complete setup of the game
  */
-
 /*
 export function setup(): Array<Player> {
     const name_player1 = prompt("Enter player 1 name: ");
