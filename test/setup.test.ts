@@ -20,13 +20,10 @@ describe('', () => {
 
 describe('create_warrior', () => {
     it('creates a warrior', () => {
-        const name_test = "Erik Testsson"
-        let get_name = 
-
         }
-        }
+        
 
-        expect(create_warrior(, 10, 100)).toEqual();
+        expect(create_warrior()).toStrictEqual({attack: 5, health: 100, name: 'Eva Darulova'});
     });
 
 
