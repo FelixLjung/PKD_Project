@@ -13,7 +13,7 @@ describe('enqueue_army', () => {
     const empty_army = empty<Warrior>();
 
     it('Changes armies with soldiers in to queues', () => {
-        expect(enqueue_army(ex_army1)).toEqual(enqueue(wrr1, empty_army));
+        expect(enqueue_army(ex_army1)).toEqual([0, 1, [wrr1]]);
         expect(enqueue_army(ex_army2)).toEqual([0, 3, [wrr1, wrr2, wrr3]]);
     });
 
