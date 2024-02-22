@@ -49,6 +49,27 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
+let player_list = game_setup();
+
+
+export function get_player_list() {
+    console.log("in game.ts inside get_player_list");
+    node1 += player_list[0][0][0];
+    node2 += player_list[1][0][0];
+    node5 += player_list[2][0][0];
+    return player_list;
+}
+
+export function kill_player(player : Player ) {
+    console.log("!");
+    for (let i = 0; i < player_list.length; i++){
+        if (player_list[i][0] == player[0]){
+            player_list[i][0] = "UNDEFINED";
+        }
+    }
+
+    
+}
 
 let map = [
     [" "," "," "," ", node1," "," "," "," "],
@@ -80,7 +101,7 @@ console.log(create_warrior());
 */
 // The game loop
 function game(){
-    let player_list = game_setup();
+    
     console.log("Wtf i game");
     while(game_running){
     //print_board();
