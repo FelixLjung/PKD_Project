@@ -97,6 +97,7 @@ export function print_castle(player: Player) {
     let castles = player[1];
     let print = "";
 
+    console.log(castles);
 
     for(let i = 0; i < castles.length; i = i + 1 ){
         if (castles[i] != undefined) {

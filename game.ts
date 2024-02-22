@@ -7,10 +7,8 @@ import {type List, type Pair, list, head, tail, pair} from './lib/list';
 import { getRandomInt, turn, count_castles } from './Functions/general_functions';
 import {game_setup} from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
-import {type Player } from './types'; 
-import { kill } from 'process';
 
-
+console.log("GAME.ts")
 // start nodes
 let node1 = "1";
 let node2 = "2";
@@ -49,9 +47,7 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
-let player_list = game_setup();
-
-
+const player_list = game_setup();
 export function get_player_list() {
     console.log("in game.ts inside get_player_list");
     node1 += player_list[0][0][0];
@@ -60,16 +56,6 @@ export function get_player_list() {
     return player_list;
 }
 
-export function kill_player(player : Player ) {
-    console.log("!");
-    for (let i = 0; i < player_list.length; i++){
-        if (player_list[i][0] == player[0]){
-            player_list[i][0] = "UNDEFINED";
-        }
-    }
-
-    
-}
 
 let map = [
     [" "," "," "," ", node1," "," "," "," "],
@@ -101,7 +87,6 @@ console.log(create_warrior());
 */
 // The game loop
 function game(){
-    
     console.log("Wtf i game");
     while(game_running){
     //print_board();
@@ -126,5 +111,4 @@ function game(){
     } 
 
 }}
-
-game();
+game()
