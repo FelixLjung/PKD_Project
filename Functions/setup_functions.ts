@@ -73,10 +73,10 @@ export function create_castle(army: Army, owner: string, position: number): Cast
  * Creates a warrior (dictionary) with name, attack damage and health
  * @returns a Warrior
  */
-export function create_warrior(): Warrior {
+export function create_warrior(attack: number, health: number): Warrior {
     let name = get_name();
-    const warrior = { attack: 5, health: 100, name: name, alive : true };
-    
+    const warrior = { attack: attack, health: health, name: name, alive : true };
+
     return warrior;
 }
 
@@ -86,7 +86,7 @@ export function create_warrior(): Warrior {
  * @returns 
  */
 export function create_army(): Army {
-    let army: Army = [create_warrior()];
+    let army: Army = [create_warrior(5, 100)];
 
     return army;
 }

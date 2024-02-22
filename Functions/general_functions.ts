@@ -25,33 +25,34 @@ import {
 } from './print_functions'
 
 import {
+    create_warrior,
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-let w_names: Queue<string> = [0,
+export let w_names: Queue<string> = [0,
     2,
-    ["Eva Darulova",    // Current: 18 warrrior-names OK
+    ["Eva Darulova",    // Current: 18 warrrior-names
    "Jingwei Hu",
    "Johannes Borgström",
-   "Carl Erik IV",
+   "Carl Erik",
    "Runar Stenbock",
    "Sigvard Bjelkengren",
    "Ernst Greve",
    "Hjalmar Storfot",
    "Lillemor Hoppetoss",
    "Gustav Backlund",
-   "Hans Hansson III",
+   "Hans Hansson",
    "Frans Storm",
    "Berit Storm",
-   "Tor Hoppetoss II",
+   "Tor Hoppetoss",
    "Fred von Pickelroy",
    "Björn Olmedo",
    "Jimmy Viking",
    "Thom Surströmming",
-   "Dadel kungen"]];
+   "Blåtand"]];
 
 
 
@@ -283,14 +284,8 @@ export function castle_turn(player: Player, castle : Castle) {
     
 }
 
-/**
- * Places soldiers in the starting castles
- * @param board - The new game board
- * @param position - The index of the castle
- * 
- */
-export function recruit_warrior(Board: MatrixGraph) {
-    // denna kanske inte behövs
+export function recruit_warrior(castle: Castle){
+    let new_warrior = create_warrior()
 
 }
 
