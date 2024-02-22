@@ -13,9 +13,11 @@ import { kill_player } from "../game";
  * @returns A queue of warriors (used to attack / defend)
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
-    const queue_army = empty<Warrior>()
+    const queue_army = empty<Warrior>();
     for (let a = 0; a < army.length; a = a + 1) {
+        if (army[a] != undefined) {
         enqueue(army[a], queue_army);
+        }
     }
     return queue_army;
 }
