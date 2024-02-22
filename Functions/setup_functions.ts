@@ -102,15 +102,15 @@ function amount_of_players(): number{
     return num_players as number;
 }
 
-//function read_player_names(num: number){
-//    const player_lst = list();
-//    if(1 <= num && num <= 3){
-//        for(let n = 1; n < num; n++){
-//            const name_player = prompt("Name: ");
-//            
-//        }
-//    }
-//}
+function read_player_names(num: number){
+    const player_lst = list();
+    if(1 <= num && num <= 3){
+        for(let n = 1; n < num; n++){
+            const name_player = prompt("Name: ");
+            
+        }
+    }
+}
 
 
 /**
@@ -118,14 +118,14 @@ function amount_of_players(): number{
  * @returns A complete setup of the game
  */
 
-console.log("Before game_setup");
+
 export function game_setup(): Array<Player> {
     let name_player1 = "David"
     let name_player2 = "Felix"
     let name_player3 = "Alfred"
     
     //const player1 : Player = [name_player1 , [(create_castle(create_army(), name_player1, 1))]];
-    const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
+    const player1: Player = [name_player1, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
     const player2: Player = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
 
