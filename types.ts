@@ -1,11 +1,11 @@
 import { Queue } from "./lib/queue_array";
 
 
-export type Army = Array<Warrior | undefined>;
+export type Army = Array<Warrior>;
 
 export type attack_army = Queue<Warrior>;
 
-export type Player = [string, Array<Castle | undefined>];
+export type Player = [string, Array<Castle>];
 
 export type Board = Array<Array<string>>;
 
@@ -13,6 +13,7 @@ export type Warrior = {
     attack: number
     health: number
     name: string
+    alive : boolean
 };
 
 export type Castle = {
