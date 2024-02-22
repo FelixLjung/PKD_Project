@@ -138,12 +138,14 @@ export function get_order_castles(player : Player) : Queue<Castle> {
     //if (player_castles.length > 1)
     //if (count_castles(list<Castle|undefined>(player_castles),0)! > 0)
 
-    console.log(list(player_castles));
+    //console.log(list(player_castles));
 
-    if (player_castles.length > 1)
+    if (count_castles(player_castles) > 0  )
     {
         while (castle_queue[1] != tail(player).length) {
+
             print_castle(player);
+            //console.log(player_castles);
             const cstl : number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!")
