@@ -95,9 +95,9 @@ export function get_order_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
     const player_castles : Array<Castle | undefined> = tail(player);
 
-    function includes(Castles : Array<Castle | undefined>, index : number ) : Boolean {
+    function includes(Castles : Array<Castle | undefined>, index : number, player : Player ) : Boolean {
         for (let i = 0; i < Castles.length; i = i + 1) {
-            if (Castles[i]!.position == index) {
+            if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
                 return true;
             }
         }
@@ -149,7 +149,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
             const cstl : number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!")
-            } else if (includes(player_castles, cstl)) {
+            } else if (includes(player_castles, cstl, player)) {
                 enqueue(get_position(player_castles, cstl), castle_queue);
             } else {
                 console.log("You don't own this Castle");
