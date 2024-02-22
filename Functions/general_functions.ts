@@ -140,7 +140,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
 
     //console.log(list(player_castles));
 
-    if (count_castles(player_castles) > 0  )
+    if (count_castles(player_castles) > 1  )
     {
         while (castle_queue[1] != tail(player).length) {
 
@@ -300,7 +300,8 @@ export function get_name(): string {
 
 export function count_castles(castle_arr : Array<Castle | undefined>) {
     let count = 0;
-    for (let i = 0 ; i < castle_arr.length; i ++){
+    for (let i = 0 ; i < castle_arr.length; i++){
+        console.log(castle_arr[i]);
         if (castle_arr[i] != undefined){
             count++
         }
