@@ -32,7 +32,7 @@ import {
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-let w_names: Queue<string> = [0,
+export let w_names: Queue<string> = [0,
     2,
     ["Eva Darulova",    // Current: 18 warrrior-names
    "Jingwei Hu",
@@ -286,29 +286,6 @@ export function castle_turn(player: Player, castle : Castle) {
 
 export function recruit_warrior(castle: Castle){
     let new_warrior = create_warrior()
-
-}
-
-/**
- * When a warrior dies, it's child gets sent to the possible Warrior names.
- * @param army 
- */
-export function remake_warrior(army: Army) {
-    for(let x = 0; x < army.length; x++){
-        if(army[x] == undefined){
-            continue;
-        }
-        else if(army[x]?.alive == false){
-            if(){
-                
-            }
-                let new_name = army[x]?.name + "I";
-            enqueue(new_name, w_names); 
-        }
-        else{
-            continue;
-        }
-    }
 
 }
 

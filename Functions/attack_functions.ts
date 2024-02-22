@@ -4,6 +4,7 @@ import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
 import { getRandomInt, get_order_castles} from "./general_functions";
 import { get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
+import { w_names } from "./general_functions";
 
 //Attack functions
 
@@ -33,10 +34,23 @@ function remove_dead_warrior(dead: Warrior, army: Army){
     for(let i = 0; i < army.length; i++){
         if(army[i]?.name == dead.name){
             army[i]!.alive = false; // denna är fugged
+            remake_warrior(dead, army);
         }
         else{}
     }
 }
+
+/**
+ * When a warrior dies, it's child gets sent to the possible Warrior names.
+ * @param army 
+ */
+export function remake_warrior(dead: Warrior, army: Army) {
+        if(dead.alive == false){
+            let new_name = dead.name + "I";
+            enqueue(new_name, w_names); 
+        }
+    }
+
 
 /**
  * displays the death message when a soldier dies
