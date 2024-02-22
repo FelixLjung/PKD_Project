@@ -85,6 +85,8 @@ export function death_text(dead: Warrior, killer: Warrior) {
  */
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
 
+    console.log(old_player[0]);
+
     // ändra castles owner 
     // ändra castles army
     // lägg till castle i nya spelarens array av castles
@@ -109,7 +111,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     */
 
 
-    
+
 
 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {

@@ -208,12 +208,17 @@ export function move(move_from: Castle, move_to: Castle): void {
     let attacking_player : Player | undefined = undefined;
     let defending_player : Player | undefined = undefined;
     const player_list : Array<Player> = get_player_list();
-    for (let i = 0; i < player_list.length; i = i + 1) {
-        if (player_list[i][0] == move_from.owner) {
+    for (let i = 0; i < player_list.length; i = i + 1) { // detta är fugded, botarna finns inte med i player_list
+        if (player_list[i][0] == move_from.owner) { // detta borde abstraktas tll en ny fuktion då
             attacking_player = player_list[i];
         } else if (player_list[i][0] == move_to.owner) {
-            defending_player = player_list[i];
+            defending_player = player_list[i]; 
         }
+    }
+
+
+    function get_player_from_castle(castle : Castle ) {
+        
     }
 
     if (player_from !== player_to) {
@@ -289,7 +294,7 @@ export function castle_turn(player: Player, castle : Castle) {
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    castle.hp[castle.hp.length] = create_warrior();
+    castle.hp[castle.hp.length] = create_warrior(5,100);
 }
 
 /**
@@ -302,11 +307,13 @@ export function remake_warrior(army: Army) {
             continue;
         }
         else if(army[x]?.alive == false){
+            /*
             if(){
                 
             }
                 let new_name = army[x]?.name + "I";
             enqueue(new_name, w_names); 
+            */
         }
         else{
             continue;
