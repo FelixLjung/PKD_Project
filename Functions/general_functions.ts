@@ -93,7 +93,13 @@ export function train_warrior(army: Army) {
  */
 export function get_order_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
-    const player_castles : Array<Castle | undefined> = tail(player);
+    const player_castles : Array<Castle | undefined> = [];
+
+    for (let i = 0; i < tail(player).length; i = i + 1) {
+        if (tail(player)[i] != undefined) {
+            player_castles[player_castles.length] = tail(player)[i];
+        }
+    }
 
     function includes(Castles : Array<Castle | undefined>, index : number, player : Player ) : Boolean {
         for (let i = 0; i < Castles.length; i = i + 1) {
@@ -140,7 +146,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
 
     //console.log(list(player_castles));
 
-    if (count_castles(player_castles) > 0  )
+    if (count_castles(player_castles) > 1  )
     {
         while (castle_queue[1] != tail(player).length) {
 
@@ -318,7 +324,8 @@ export function get_name(): string {
 
 export function count_castles(castle_arr : Array<Castle | undefined>) {
     let count = 0;
-    for (let i = 0 ; i < castle_arr.length; i ++){
+    for (let i = 0 ; i < castle_arr.length; i++){
+        console.log(castle_arr[i]);
         if (castle_arr[i] != undefined){
             count++
         }
