@@ -5,7 +5,7 @@ export type Army = Array<Warrior>;
 
 export type attack_army = Queue<Warrior>;
 
-export type Player = [string, Array<Castle>];
+export type Player = [string, Array<Castle | undefined> ];
 
 export type Board = Array<Array<string>>;
 
