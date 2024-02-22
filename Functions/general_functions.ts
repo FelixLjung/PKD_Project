@@ -93,7 +93,13 @@ export function train_warrior(army: Army) {
  */
 export function get_order_castles(player : Player) : Queue<Castle> {
     let castle_queue : Queue<Castle> = empty();
-    const player_castles : Array<Castle | undefined> = tail(player);
+    const player_castles : Array<Castle | undefined> = [];
+
+    for (let i = 0; i < tail(player).length; i = i + 1) {
+        if (tail(player)[i] != undefined) {
+            player_castles[player_castles.length] = tail(player)[i];
+        }
+    }
 
     function includes(Castles : Array<Castle | undefined>, index : number, player : Player ) : Boolean {
         for (let i = 0; i < Castles.length; i = i + 1) {
