@@ -277,14 +277,24 @@ export function castle_turn(player: Player, castle : Castle) {
     
 }
 
+
 /**
- * Places soldiers in the starting castles
- * @param board - The new game board
- * @param position - The index of the castle
- * 
+ * When a warrior dies, it's child gets sent to the possible Warrior names.
+ * @param army 
  */
-export function recruit_warrior(Board: MatrixGraph) {
-    // denna kanske inte behövs
+export function remake_warrior(army: Army) {
+    for(let x = 0; x < army.length; x++){
+        if(army[x] == undefined){
+            continue;
+        }
+        else if(army[x]?.alive == false){
+            let new_name = army[x]?.name + "I";
+            enqueue(new_name, w_names); 
+        }
+        else{
+            continue;
+        }
+    }
 
 }
 
