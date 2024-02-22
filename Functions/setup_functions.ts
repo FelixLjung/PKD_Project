@@ -74,10 +74,9 @@ export function create_castle(army: Army, owner: string, position: number): Cast
  * @returns a Warrior
  */
 export function create_warrior(): Warrior {
-   // let name = get_name();
-   let name = "Eva Darulova"
-
+    let name = get_name();
     const warrior = { attack: 5, health: 100, name: name, alive : true };
+    
     return warrior;
 }
 
