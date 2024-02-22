@@ -99,8 +99,10 @@ export function print_castle(player: Player) {
 
 
     for(let i = 0; i < castles.length; i = i + 1 ){
-        print += castles[i]?.position;
-        print += " "
+        if (castles[i] != undefined) {
+            print += castles[i]?.position;
+            print += " "
+        }
 
     }
     console.log(print);

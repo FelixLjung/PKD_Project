@@ -4,6 +4,7 @@ exports.attack = exports.fight = exports.retreat = exports.is_army_empty = expor
 var list_1 = require("../lib/list");
 var queue_array_1 = require("../lib/queue_array");
 var general_functions_1 = require("./general_functions");
+var game_1 = require("../game");
 //Attack functions
 /**
  * Changes an army from an array to a queue
@@ -12,8 +13,10 @@ var general_functions_1 = require("./general_functions");
  */
 function enqueue_army(army) {
     var queue_army = (0, queue_array_1.empty)();
-    for (var a = 0; a <= army.length; a = a + 1) {
-        (0, queue_array_1.enqueue)(army[a], queue_army);
+    for (var a = 0; a < army.length; a = a + 1) {
+        if (army[a] != undefined && army[a].alive == true) {
+            (0, queue_array_1.enqueue)(army[a], queue_army);
+        }
     }
     return queue_army;
 }
@@ -26,9 +29,10 @@ exports.enqueue_army = enqueue_army;
  */
 function remove_dead_warrior(dead, army) {
     var _a;
+    // denna är mega fudge in the membraine
     for (var i = 0; i < army.length; i++) {
         if (((_a = army[i]) === null || _a === void 0 ? void 0 : _a.name) == dead.name) {
-            army[i] = undefined;
+            army[i].alive = false; // denna är fugged
         }
         else { }
     }
@@ -71,8 +75,8 @@ function castle_owner(castle, new_player, old_player, army) {
             (0, list_1.tail)(new_player)[i] = castle;
             break;
         }
-        else if (i == (0, list_1.tail)(new_player).length - 1 && (0, list_1.tail)(new_player)[i] != undefined) {
-            (0, list_1.tail)(new_player)[(0, list_1.tail)(new_player).length] = castle;
+        else if (i == (0, list_1.tail)(new_player).length && (0, list_1.tail)(new_player)[i] != undefined) {
+            (0, list_1.tail)(new_player)[i] = castle;
         }
         else {
         }
@@ -80,6 +84,12 @@ function castle_owner(castle, new_player, old_player, army) {
     for (var i = 0; i < (0, list_1.tail)(old_player).length; i = i + 1) {
         if ((0, list_1.tail)(old_player)[i] == castle) {
             (0, list_1.tail)(old_player)[i] = undefined;
+            console.log((0, general_functions_1.get_order_castles)(old_player)[2]);
+            if ((0, general_functions_1.get_order_castles)(old_player)[2] == undefined) {
+                (0, game_1.kill_player)(old_player);
+                console.log(old_player[0], " has fallen");
+                old_player[0] = "UNDEFINED";
+            }
         }
         else {
         }
@@ -150,32 +160,34 @@ exports.fight = fight;
 function attack(castle, attacking_player, defending_player, army) {
     function helper(Attacking_army, castle_army) {
         var defense_army = castle_army.hp;
-        var Attackers = enqueue_army(Attacking_army);
-        var Defenders = enqueue_army(defense_army);
-        while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
-            var curr_attacker = (0, queue_array_1.head)(Attackers);
-            var curr_defender = (0, queue_array_1.head)(Defenders);
+        var attackers = enqueue_army(Attacking_army);
+        var defenders = enqueue_army(defense_army);
+        while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
+            var curr_attacker = (0, queue_array_1.head)(attackers);
+            var curr_defender = (0, queue_array_1.head)(defenders);
             var def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
             if (def_win === true) {
-                (0, queue_array_1.dequeue)(Attackers);
+                (0, queue_array_1.dequeue)(attackers);
             }
             else if (def_win === false) {
-                (0, queue_array_1.dequeue)(Defenders);
+                (0, queue_array_1.dequeue)(defenders);
             }
         }
-        if (is_army_empty(Defenders)) {
-            return (0, list_1.pair)(true, Attackers[2]);
+        if (is_army_empty(defenders)) {
+            return (0, list_1.pair)(true, attackers[2]);
         }
         else {
-            return (0, list_1.pair)(false, Defenders[2]);
+            return (0, list_1.pair)(false, defenders[2]);
         }
     }
     var winner = helper(army, castle);
     if (winner[0]) {
+        //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-        castle_owner(castle, attacking_player, defending_player, army);
+        castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med 
+        //console.log("V vann");
     }
-    else if (winner[0] == false) {
+    else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];
     }

@@ -77,8 +77,8 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
         if(tail(new_player)[i] == undefined) {
             tail(new_player)[i] = castle;
             break;
-        } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
-            tail(new_player)[tail(new_player).length-1] = castle;
+        } else if (i == tail(new_player).length && tail(new_player)[i] != undefined) {
+            tail(new_player)[i] = castle;
         } else {
         }
     }
@@ -92,7 +92,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
 
                 kill_player(old_player);
                 console.log(old_player[0], " has fallen");
-                old_player[0]="UNDEFINED";
+                old_player[0] = "UNDEFINED";
             }
             
         } else {
