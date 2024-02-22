@@ -107,7 +107,7 @@ function game(){
     for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
         //console.log(player_list[i][1][0].hp);
         print_board();
-        if (player_list[i][0] == "UNDEFINED"){
+        if (player_list[i][1][0] == undefined ){
             continue;
         }
         console.log(player_list[i][0]);
