@@ -296,7 +296,7 @@ export function get_name(): string {
     return name;
 }
 
-export function count_castles(castle_arr : Castle[]) {
+export function count_castles(castle_arr : Array<Castle | undefined>) {
     let count = 0;
     for (let i = 0 ; i < castle_arr.length; i ++){
         if (castle_arr[i] != undefined){
