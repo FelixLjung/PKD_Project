@@ -244,29 +244,37 @@ export function turn(player : Player){
  * @param player is a pair(string, List)
  */
 export function castle_turn(player: Player, castle : Castle) {
+    let bool = true;
+    while(bool){
+        console.log("What is your command, king ", player[0], "..?");
+        const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
+        
+        // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
+        if (choice === "1") {
+            //console.clear();
+            
+            let paths = finds_paths(castle!, mormors_kudde); // Första castle
+            console.log("You can move to the following castles: ", paths);
+            let choice: number = prompt("Choose your destination: ") as number;
     
-    console.log("What is your command, king ", player[0], "..?");
-    const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
-
-    // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
-    if (choice === "1") {
-        //console.clear();
-        
-        let paths = finds_paths(castle!, mormors_kudde); // Första castle
-        console.log("You can move to the following castles: ", paths);
-        let choice: number = prompt("Choose your destination: ") as number;
-
-        let castle_to: Castle = get_castle_array()[choice-1]; // fixa get funktions
-        //console.log(castle_to);
-        move(castle!, castle_to);
-        
-
-    } else if (choice === "2") {
-        console.log("You are training: ", player[1][0]!.hp);
-        train_warrior(castle.hp);
-        console.log(castle.hp);
-        return {}
+            let castle_to: Castle = get_castle_array()[choice-1]; // fixa get funktions
+            //console.log(castle_to);
+            bool = false;
+            move(castle!, castle_to);
+            
+    
+        } else if (choice === "2") {
+            console.log("You are training: ", player[1][0]!.hp);
+            train_warrior(castle.hp);
+            console.log(castle.hp);
+            bool = false;
+            //return {}
+        }
+        else{
+            console.log("Input is not valid, try again!");
+        }
     }
+    
 }
 
 /**
