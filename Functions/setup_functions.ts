@@ -1,6 +1,8 @@
 import {type Army, type Castle, type Warrior, type Player} from '../types';
 import { MatrixGraph } from '../lib/graphs';
 import {get_name} from './general_functions'
+import { read } from 'fs';
+import {type List, head, tail, list, append } from '../lib/list';
 
 
 // Variables
@@ -72,7 +74,8 @@ export function create_castle(army: Army, owner: string, position: number): Cast
  * @returns a Warrior
  */
 export function create_warrior(): Warrior {
-    let name = get_name();
+   // let name = get_name();
+   let name = "Eva Darulova"
 
     const warrior = { attack: 5, health: 100, name: name, alive : true };
     return warrior;
@@ -94,6 +97,22 @@ export function get_castle_array(): Array<Castle> {
 }
 
 
+function amount_of_players(): number{
+    const num_players = prompt("How many are playing?: ");
+    return num_players as number;
+}
+
+//function read_player_names(num: number){
+//    const player_lst = list();
+//    if(1 <= num && num <= 3){
+//        for(let n = 1; n < num; n++){
+//            const name_player = prompt("Name: ");
+//            
+//        }
+//    }
+//}
+
+
 /**
  * Pick your King, and creates your army
  * @returns A complete setup of the game
@@ -101,15 +120,14 @@ export function get_castle_array(): Array<Castle> {
 
 console.log("Before game_setup");
 export function game_setup(): Array<Player> {
-    console.log("Inside game_setup");
-    const name_player1 = prompt("Enter player 1 name: ");
-    const name_player2 = prompt("Enter player 2 name: ");
-    const name_player3 = prompt("Enter player 3 name: ");
-
-    //const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
+    let name_player1 = "David"
+    let name_player2 = "Felix"
+    let name_player3 = "Alfred"
+    
+    //const player1 : Player = [name_player1 , [(create_castle(create_army(), name_player1, 1))]];
     const player1: Player = [name_player1!, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
-    const player2: Player = [name_player2!, [(create_castle(create_army(), name_player2, 2))]];
-    const player3: Player = [name_player3!, [(create_castle(create_army(), name_player3, 5))]];
+    const player2: Player = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
+    const player3: Player = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
 
     const AI1 : Player = ["CPU1",[create_castle(create_army(), "CPU1", 4)]]
     

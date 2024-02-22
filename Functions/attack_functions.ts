@@ -15,7 +15,7 @@ import { kill_player } from "../game";
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
     for (let a = 0; a < army.length; a = a + 1) {
-        if (army[a] != undefined) {
+        if (army[a] != undefined && army[a]!.alive == true) {
         enqueue(army[a], queue_army);
         }
     }
@@ -165,27 +165,27 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
 export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) {
     function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Array<Warrior | undefined>> {
         let defense_army = castle_army.hp;
-        const Attackers = enqueue_army(Attacking_army);
-        const Defenders = enqueue_army(defense_army);
+        const attackers = enqueue_army(Attacking_army);
+        const defenders = enqueue_army(defense_army);
         
-        while (is_army_empty(Attackers) == false && is_army_empty(Defenders) == false) {
-            let curr_attacker: Warrior = head(Attackers);
-            let curr_defender: Warrior = head(Defenders);
+        while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
+            let curr_attacker: Warrior = head(attackers);
+            let curr_defender: Warrior = head(defenders);
             
             let def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
     
             if (def_win === true) { 
-                dequeue(Attackers);
+                dequeue(attackers);
             }
             else if (def_win === false) {
-                dequeue(Defenders);
+                dequeue(defenders);
             }
         }
     
-        if (is_army_empty(Defenders)) {
-            return pair(true, Attackers[2]);
+        if (is_army_empty(defenders)) {
+            return pair(true, attackers[2]);
         } else {
-            return pair(false, Defenders[2]);
+            return pair(false, defenders[2]);
         }
     }
 
