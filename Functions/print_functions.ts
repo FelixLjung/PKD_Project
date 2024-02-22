@@ -97,14 +97,14 @@ export function print_castle(player: Player) {
     let castles = player[1];
     let print = "";
 
-    console.log(castles);
+    //console.log(castles);
 
     for(let i = 0; i < castles.length; i = i + 1 ){
         if (castles[i] != undefined) {
             print += castles[i]?.position;
             print += " "
         }
-
+        
     }
     console.log(print);
     console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b');

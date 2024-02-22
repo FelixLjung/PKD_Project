@@ -110,7 +110,13 @@ function game(){
             continue;
         }
         console.log(player_list[i][0]);
-        turn(player_list[i]);
+
+        if (player_list[i][0] == "CPU"){
+            
+        } else {
+            turn(player_list[i]);
+        }
+        
         if (count_castles(player_list[i][1]) == 5) {
             console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
             game_running = false;

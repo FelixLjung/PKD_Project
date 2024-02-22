@@ -152,6 +152,6 @@ export function game_setup(): Array<Player> {
 
     
 
-    return [player1, player2, player3];
+    return [player1, player2, player3,AI1];
 }
 

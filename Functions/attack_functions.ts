@@ -6,6 +6,8 @@ import { get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
 
+const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
 //Attack functions
 
 /**
@@ -224,11 +226,13 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     if (winner[0]) {
         //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-
-        castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med 
+        console.log(defending_player[0]);
+        castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med botar
         //console.log("V vann");
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];
+
+        prompt();
     }
 }
