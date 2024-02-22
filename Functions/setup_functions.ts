@@ -1,6 +1,6 @@
 import {type Army, type Castle, type Warrior, type Player} from '../types';
 import { MatrixGraph } from '../lib/graphs';
-import {get_name} from './general_functions'
+import {getRandomInt, get_name} from './general_functions'
 import { read } from 'fs';
 import {type List, head, tail, list, append } from '../lib/list';
 
@@ -86,7 +86,7 @@ export function create_warrior(attack: number, health: number): Warrior {
  * @returns 
  */
 export function create_army(): Army {
-    let army: Army = [create_warrior(5, 100)];
+    let army: Army = [create_warrior(getRandomInt(1,5), getRandomInt(50, 100))];
 
     return army;
 }
