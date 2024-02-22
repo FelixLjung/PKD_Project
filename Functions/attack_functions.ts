@@ -84,9 +84,19 @@ export function death_text(dead: Warrior, killer: Warrior) {
  * @param army - the army that now is in the castle
  */
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
+
+    // ändra castles owner 
+    // ändra castles army
+    // lägg till castle i nya spelarens array av castles
+    // ta bort castle från gamla spelarens array av castles
+
     castle.owner = new_player[0];
     castle.hp = army;
 
+    let last_pos = new_player[1].length;
+    new_player[1][last_pos] = castle;
+
+    /*
     for (let i = 0; i < tail(new_player)!.length; i = i + 1) {
         if(tail(new_player)[i] == undefined) {
             tail(new_player)[i] = castle;
@@ -96,6 +106,11 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
         } else {
         }
     }
+    */
+
+
+    
+
 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
         if(tail(old_player)[i] == castle) {
