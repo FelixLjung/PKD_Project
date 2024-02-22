@@ -14,7 +14,8 @@ import { kill_player } from "../game";
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>()
-    for (let a = 0; a <= army.length; a = a + 1) {
+    for (let a = 0; a < army.length; a = a + 1) {
+
         enqueue(army[a], queue_army);
     }
     return queue_army;
@@ -27,9 +28,10 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @returns Void
  */
 function remove_dead_warrior(dead: Warrior, army: Army){
+    // denna är mega fudge in the membraine
     for(let i = 0; i < army.length; i++){
         if(army[i]?.name == dead.name){
-            army[i] = undefined;
+            army[i]!.alive = false; // denna är fugged
         }
         else{}
     }

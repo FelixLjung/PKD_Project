@@ -1,7 +1,7 @@
 import { Queue } from "./lib/queue_array";
 
 
-export type Army = Array<Warrior>;
+export type Army = Array<Warrior | undefined>;
 
 export type attack_army = Queue<Warrior>;
 
