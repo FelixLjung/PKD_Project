@@ -11,9 +11,10 @@ import { get_name } from '../Functions/general_functions';
 
 
 test('create_warrior', () => {
-    const warrior: Warrior = create_warrior();
+    let n_head = get_name()
+    const warrior: Warrior = create_warrior(5, 100);
     expect(warrior).toEqual({attack: 5,
         health: 100,
-        name: 'Eva Darulova'});
+        name: n_head, alive: true});
 
 });
