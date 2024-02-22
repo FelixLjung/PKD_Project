@@ -285,7 +285,7 @@ export function castle_turn(player: Player, castle : Castle) {
 }
 
 export function recruit_warrior(castle: Castle){
-    let new_warrior = create_warrior()
+    let new_warrior = create_warrior(5, 100);
 
 }
 
