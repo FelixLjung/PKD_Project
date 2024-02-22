@@ -198,8 +198,8 @@ export function move(move_from: Castle, move_to: Castle): void {
     print_board();
 
     const player_from: string = move_from.owner;
-    console.log(move_from);
-    console.log(move_to);
+    //console.log(move_from);
+    //console.log(move_to);
 
     const player_to: string = move_to.owner;
     const army = move_from.hp;
@@ -220,7 +220,7 @@ export function move(move_from: Castle, move_to: Castle): void {
         attack(move_to, attacking_player!, defending_player!, army);
     }
 
-    console.log("VI är i move");
+    //console.log("VI är i move");
     
     
 }
@@ -315,7 +315,7 @@ export function get_name(): string {
 export function count_castles(castle_arr : Array<Castle | undefined>) {
     let count = 0;
     for (let i = 0 ; i < castle_arr.length; i++){
-        console.log(castle_arr[i]);
+        //console.log(castle_arr[i]);
         if (castle_arr[i] != undefined){
             count++
         }
