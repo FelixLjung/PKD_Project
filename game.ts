@@ -4,8 +4,8 @@ import { type MatrixGraph } from './lib/graphs';
 
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
-import { getRandomInt, turn, count_castles } from './Functions/general_functions';
-import {game_setup} from './Functions/setup_functions'
+import { getRandomInt, turn, count_castles, recruit_warrior } from './Functions/general_functions';
+import {game_setup, get_castle_array } from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
 
 import { type Player } from './types';
@@ -118,7 +118,12 @@ function game(){
 
             //console.clear();
             console.log("------------------------------------------");
-
+        for (let i = 0; i < get_castle_array().length; i++){
+            if (get_castle_array()[i].owner != 'CPU1') {
+            recruit_warrior(get_castle_array()[i]);
+            }
+        }    
+        
 
     } 
 

@@ -284,9 +284,12 @@ export function castle_turn(player: Player, castle : Castle) {
     
 }
 
-export function recruit_warrior(castle: Castle){
-    let new_warrior = create_warrior()
-
+/**
+ * Recruits a new warrior to a castle
+ * @param castle - the castle which is recruiting the new warrior
+ */
+export function recruit_warrior(castle: Castle) {
+    castle.hp[castle.hp.length] = create_warrior();
 }
 
 /**
