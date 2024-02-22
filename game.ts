@@ -4,7 +4,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
-import { getRandomInt, turn } from './Functions/general_functions';
+import { getRandomInt, turn, count_castles } from './Functions/general_functions';
 import {game_setup} from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
 
@@ -102,14 +102,23 @@ function game(){
     //console.log("Wtf i game");
     while(game_running){
     //print_board();
-        refresh_board();
-        for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
-            //console.log(player_list[i][1][0].hp);
-            print_board();
-            turn(player_list[i]);
+    refresh_board();
+    for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
+        //console.log(player_list[i][1][0].hp);
+        print_board();
+        if (count_castles(player_list[i][1]) == 0 ){
+            continue;
+        }
+        console.log(player_list[i][0]);
+        turn(player_list[i]);
+        if (count_castles(player_list[i][1]) == 5) {
+            console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
+            game_running = false;
+        }
 
             //console.clear();
             console.log("------------------------------------------");
+
 
     } 
 
