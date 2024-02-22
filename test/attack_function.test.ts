@@ -4,9 +4,9 @@ import { type Army, type Warrior } from '../types'
 
 describe('enqueue_army', () => {
 
-    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred'};
-    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David'};
-    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix'};
+    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
+    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
+    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr1, wrr2, wrr3];
     const ex_army3 : Army = [];
@@ -25,9 +25,9 @@ describe('enqueue_army', () => {
 
 describe('is_army_empty', () => {
 
-    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred'};
-    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David'};
-    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix'};
+    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
+    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
+    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr1, wrr2, wrr3];
     const ex_army3 : Army = [];
