@@ -193,8 +193,9 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     if (winner[0]) {
         //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-        castle_owner(castle, attacking_player, defending_player, army);
-        console.log("V vann");
+
+        castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med 
+        //console.log("V vann");
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];

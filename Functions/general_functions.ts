@@ -5,7 +5,7 @@ import{
 
 import { type MatrixGraph } from '../lib/graphs';
 
-import { tail } from '../lib/list'
+import {type List, tail, is_null, head as l_head } from '../lib/list'
 
 import{
     type Warrior, type Army, type Player, type Castle
@@ -126,6 +126,13 @@ export function get_order_castles(player : Player) : Queue<Castle> {
         return undefined;
     }
 
+    function count_castles(castle_list: List<Castle>, count : Number) : Number | undefined {
+        return is_null(tail(castle_list)) ? count 
+                                         : count_castles(castle_list, count + 1);
+                                          
+
+    }
+
     if (player_castles.length > 1) {
         while (castle_queue[1] != tail(player).length) {
             print_castle(player);
@@ -242,7 +249,7 @@ export function castle_turn(player: Player, castle : Castle) {
         let castle_to: Castle = get_castle_array()[choice-1]; // fixa get funktions
         //console.log(castle_to);
         move(castle!, castle_to);
-        console.log("wtf");
+        
 
     } else if (choice === "2") {
         console.log("You are training: ", player[1][0]!.hp);
