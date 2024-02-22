@@ -5,7 +5,7 @@ import{
 
 import { type MatrixGraph } from '../lib/graphs';
 
-import {type List, tail, is_null, head as l_head } from '../lib/list'
+import {type List, tail, is_null, head as l_head, list } from '../lib/list'
 
 import{
     type Warrior, type Army, type Player, type Castle
@@ -126,14 +126,22 @@ export function get_order_castles(player : Player) : Queue<Castle> {
         return undefined;
     }
 
-    function count_castles(castle_list: List<Castle>, count : Number) : Number | undefined {
-        return is_null(tail(castle_list)) ? count 
+    /*
+    function count_castles(castle_list: List<Castle|undefined>, count : number) : number | undefined {
+        return is_null(tail(castle_list!)) ? count 
                                          : count_castles(castle_list, count + 1);
-                                          
-
+                                        
     }
+    */
 
-    if (player_castles.length > 1) {
+
+    //if (player_castles.length > 1)
+    //if (count_castles(list<Castle|undefined>(player_castles),0)! > 0)
+
+    console.log(list(player_castles));
+
+    if (player_castles.length > 1)
+    {
         while (castle_queue[1] != tail(player).length) {
             print_castle(player);
             const cstl : number = prompt(" Which castle would you like to operate from? ") as number
@@ -287,3 +295,14 @@ export function get_name(): string {
     dequeue(w_names);
     return name;
 }
+
+export function count_castles(castle_arr : Castle[]) {
+    let count = 0;
+    for (let i = 0 ; i < castle_arr.length; i ++){
+        if (castle_arr[i] != undefined){
+            count++
+        }
+    }
+    return count;
+}
+
