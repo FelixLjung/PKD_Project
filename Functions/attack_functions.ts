@@ -78,7 +78,8 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(new_player)[i] = castle;
             break;
         } else if (i == tail(new_player).length - 1 && tail(new_player)[i] != undefined) {
-            tail(new_player)[tail(new_player).length-1] = castle;
+            tail(new_player).push(castle);
+            //tail(new_player)[tail(new_player).length-1] = castle;
         } else {
         }
     }
