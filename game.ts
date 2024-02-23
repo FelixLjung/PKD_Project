@@ -84,19 +84,6 @@ let map = [
 
 game_running = true;
 
-
-
-/* 
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-*/
 // The game loop
 function game(){
     //console.log("Wtf i game");
@@ -132,6 +119,8 @@ function game(){
         
 
     } 
+
+    
 
 }}
 game()
