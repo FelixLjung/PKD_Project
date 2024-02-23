@@ -294,13 +294,6 @@ export function check_if_cpu(player:Player | string) : boolean {
 }
 
 
-
-
-
-
-
-
-
 /**
  * A players turn in game. Should be able to call multiple actions
  * Move and Attack.
