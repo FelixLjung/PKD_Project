@@ -221,7 +221,8 @@ export function move(move_from: Castle, move_to: Castle): void {
     //console.log(move_to);
 
     const player_to: string = move_to.owner;
-    const army = split_army(move_from);
+    const army = move_from.hp                           // här kan det vara något fel
+
 
     let attacking_player: Player | undefined = undefined;
     let defending_player: Player | undefined = undefined;
@@ -410,6 +411,12 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
     return count;
 }
 
+/**
+ * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
+ * to then next.            (CALLAS EJ ÄN)
+ * @param castle 
+ * @returns 
+ */
 export function split_army(castle: Castle): Army {
     let bool = true                         //For the while loop
     const all_in_army: Army = [];           //temporary array of warriors (all alive warriors)
@@ -417,7 +424,7 @@ export function split_army(castle: Castle): Army {
     let troops = castle.hp
     while (bool) {
         console.log("Your army has", all_in_army.length, "warriors...");
-        const choice = (prompt("How many warriors would you like to move?: ") as number - 1);
+        const choice = prompt("How many warriors would you like to move?: ") as number;
         if (choice > 0 && choice <= all_in_army.length) {       //Choose the amount of warriors
             for (let a = 0; 0 <= choice; a++) {
                 if (all_in_army[a]?.alive && all_in_army[a] != undefined) {
@@ -425,9 +432,9 @@ export function split_army(castle: Castle): Army {
 
                 }
             }
-            bool = false
-        } else {                                            //Safe
-            console.log("Not valid number, try again.")
+            bool = false;
+        } else {
+            console.log("Not valid number, try again.");
         }
     }
     return return_army; //The amount of warriors we want to move
@@ -436,19 +443,22 @@ export function split_army(castle: Castle): Army {
 
 
 /**
- * Removes all dead warriors in a castle
+ * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
  * @param army 
  */
-export function remove_dead_warriors(castle: Castle) {
+export function remove_dead_warriors(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
-    for (let i = 0; i < castle.hp.length; i++) {      // Loop that takes out all alive warriors in Army
-        if (castle.hp[i]?.alive) {
-            alive_in_army[alive_in_army.length] = castle.hp[i];
+    if(army.length == 0){
+        army = [];
+    }
+    for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
+        if (army[i]?.alive) {
+            alive_in_army[alive_in_army.length] = army[i];
         }
         else {
             continue;
         }
     }
-    castle.hp = alive_in_army
+    return alive_in_army;
 }
 

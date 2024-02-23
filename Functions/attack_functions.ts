@@ -1,7 +1,7 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { getRandomInt, get_order_castles} from "./general_functions";
+import { getRandomInt, get_order_castles, remove_dead_warriors} from "./general_functions";
 import { get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
@@ -31,7 +31,7 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @param army is a {Army}
  * @returns Void
  */
-function remove_dead_warrior(dead: Warrior, army: Army){
+function unalive_warrior(dead: Warrior, army: Army){
     // denna är mega fudge in the membraine
     for(let i = 0; i < army.length; i++){
         if(army[i]?.name == dead.name){
@@ -68,7 +68,7 @@ export function death_text(dead: Warrior, killer: Warrior) {
                                 "got gob smacked by",
                                 "got his manhood fried by"];
 
-    let curr_event = strings[getRandomInt(0, 3)];
+    let curr_event = strings[getRandomInt(0, 7)];
     console.log();
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log();
@@ -172,7 +172,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
             attacker.health -= defender.attack * getRandomInt(0, 4);
             if (attacker.health <= 0) {
                 death_text(attacker, defender);
-                remove_dead_warrior(attacker, army);
+                unalive_warrior(attacker, army);
                 console.log(defender.name, 'defended the castle, surviving with', defender.health, 'health!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -181,7 +181,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
             defender.health -= attacker.attack * getRandomInt(0, 4);
             if (defender.health <= 0) {
                 death_text(defender, attacker);
-                remove_dead_warrior(defender, castle_army.hp);
+                unalive_warrior(defender, castle_army.hp);
                 console.log(attacker.name, 'won the battle with', attacker.health, 'health left!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -201,7 +201,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
  * @param army - the attacking army
  */
 export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) {
-    function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Array<Warrior | undefined>> {
+    function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Army> {
         let defense_army = castle_army.hp;
         const attackers = enqueue_army(Attacking_army);
         const defenders = enqueue_army(defense_army);
@@ -229,7 +229,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         }
     }
 
-    const winner : Pair<Boolean, Array<Warrior | undefined>> = helper(army, castle);
+    const winner : Pair<Boolean, Army> = helper(army, castle);
     if (winner[0]) {
         //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
