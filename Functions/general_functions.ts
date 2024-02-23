@@ -276,7 +276,7 @@ export function turn(player : Player){
  */
 
 export function check_if_cpu(player:Player | string) : boolean {
-    let name : string = ";"
+    let name : string = "";
     if (typeof(player) == "string"){
         name = player[0]+player[1]+player[2];
     } else {
