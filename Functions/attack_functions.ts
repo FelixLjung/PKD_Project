@@ -226,7 +226,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     if (winner[0]) {
         //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-        console.log(defending_player[0]);
+        //console.log(defending_player[0]);
         castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med botar
         //console.log("V vann");
         prompt();

@@ -96,7 +96,7 @@ function game(){
         if (count_castles(player_list[i][1]) == 0 ){
             continue;
         }
-        //console.log(player_list[i][0]);
+        console.log(player_list[i][0], "turn" );
 
         if (check_if_cpu(player_list[i])){
             
