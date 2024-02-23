@@ -116,6 +116,7 @@ function game(){
             if (get_castle_array()[i].owner != 'CPU1') {
             recruit_warrior(get_castle_array()[i]);
             } 
+        console.log("All castles recruits a new warrior!");
         
 
     } 

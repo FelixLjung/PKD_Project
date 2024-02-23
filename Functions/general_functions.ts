@@ -334,7 +334,6 @@ export function recruit_warrior(castle: Castle) {
     else if(num == 3){
         castle.hp[castle.hp.length] = create_warrior(10, 55);
     }
-    console.log("All castles recruits new warriors!");
 }
 
 /**
