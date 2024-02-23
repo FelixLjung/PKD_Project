@@ -1,5 +1,5 @@
 import{
-    type Player
+    type Player, type Castle
 } from '../types';
 
 import { get_castle_array } from './setup_functions';
@@ -111,6 +111,15 @@ export function print_castle(player: Player) {
 }
 
 
-export function print_army(){
-
+export function print_army(castle : Castle) {
+    console.log();
+    console.log('This is the army currently in this castle, my liege');
+    for (let i = 0; i < castle.hp.length; i++) {
+        if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {
+        console.log('Soldier name:', castle.hp[i]!.name,
+                    '| Attack strength:', castle.hp[i]!.attack,
+                    '| Health:', castle.hp[i]!.health);
+        }
+    }
+    console.log();
 }
