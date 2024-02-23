@@ -16,7 +16,7 @@ import {
 } from '../game';
 
 import {
-    attack
+    attack, is_army_empty
 } from './attack_functions'
 
 import {
@@ -382,7 +382,30 @@ export function count_castles(castle_arr : Array<Castle | undefined>) {
     return count;
 }
 
-export function move_warriors(castle: Castle){
+export function split_army_input(castle: Castle): Army{
+    const temp_army = [];           //temporary array of warriors
+    const return_army = [];         // The warriors that we're moving
+    let troops = castle.hp
+    for(let i = 0; i < castle.hp.length; i++){      // Loop that takes out all alive warriors in Army
+        if (troops[i]?.alive){
+            temp_army[temp_army.length] = troops[i];
+        }
+        else{
+            continue;
+        }
+    }
     console.log("Your army has", castle.hp.length, "warriors...");
-    
-};
+    const choice = prompt("How many warriors would you like to move?: ") as number;
+    if(choice < 0 && choice <= temp_army.length){       //Choose the amount of warriors
+        for(let a = 0; 0 < choice; a++){
+            if(temp_army[a]?.alive && temp_army[a] != undefined){
+                return_army[return_army.length] = temp_army[a];
+            }
+                
+        }
+    } else {                                        //Safe
+        console.log("Not valid number, try again.")
+        split_army_input(castle);
+    }
+    return return_army;                     //The amount of warriors we want to move
+    }
