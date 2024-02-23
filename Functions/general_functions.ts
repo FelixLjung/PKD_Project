@@ -21,7 +21,8 @@ import {
 
 import {
     print_board,
-    print_castle
+    print_castle,
+    print_army
 } from './print_functions'
 
 import {
@@ -286,6 +287,7 @@ export function castle_turn(player: Player, castle : Castle) {
         print_board();
         //let text1 = "currently in"
         console.log('\u001b[3m', "Currently Residing in Castle ", castle.position ,  '\u001b[m');
+        print_army(castle);
         console.log("What is your command, king ", player[0], "..?");
         const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
         
