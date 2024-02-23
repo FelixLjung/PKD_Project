@@ -111,7 +111,7 @@ function game(){
         }
         console.log(player_list[i][0]);
 
-        if (player_list[i][0] == "CPU"){
+        if (player_list[i][0] == "CPU1"){
             
         } else {
             turn(player_list[i]);
