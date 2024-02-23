@@ -239,9 +239,16 @@ export function move(move_from: Castle, move_to: Castle): void {
         
     }
 
-    if (player_from !== player_to) {
+    if (player_from != player_to) {
         console.log(move_from.owner,"has declared war against", move_to.owner);
         attack(move_to, attacking_player!, defending_player!, army);
+    } else if (player_from == player_to) {
+        for (let i = 0; i < move_from.hp.length; i++) {
+            move_to.hp[move_to.hp.length + i] = move_from.hp[i];
+            move_from.hp = [];
+            console.log('move_from', move_from.hp);
+            console.log('move_to', move_to.hp);
+        }
     }
 
     //console.log("VI är i move");
@@ -382,3 +389,7 @@ export function count_castles(castle_arr : Array<Castle | undefined>) {
     return count;
 }
 
+export function move_warriors(castle: Castle){
+    console.log("Your army has", castle.hp.length, "warriors...");
+    
+};
