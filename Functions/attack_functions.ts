@@ -85,7 +85,7 @@ export function death_text(dead: Warrior, killer: Warrior) {
  */
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
 
-    console.log(old_player[0]);
+    //console.log(old_player[0]);
 
     // ändra castles owner 
     // ändra castles army
@@ -111,13 +111,10 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     */
 
 
-
-
-
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
         if(tail(old_player)[i] == castle) {
             tail(old_player)[i] = undefined;
-            console.log(get_order_castles(old_player)[2]);
+            //console.log(get_order_castles(old_player)[2]);
                 
             if (get_order_castles(old_player)[2] == undefined) {
 
