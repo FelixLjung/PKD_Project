@@ -411,38 +411,41 @@ export function count_castles(castle_arr : Array<Castle | undefined>) {
     return count;
 }
 
-export function split_army_input(castle: Castle): Army{
-    const temp_army = [];           //temporary array of warriors
-    const return_army = [];         // The warriors that we're moving
+export function split_army(castle: Castle): Army{
+    const all_in_army: Army = [];           //temporary array of warriors (all alive warriors)
+    const return_army: Army = [];         // The warriors that we're moving
     let troops = castle.hp
     for(let i = 0; i < castle.hp.length; i++){      // Loop that takes out all alive warriors in Army
         if (troops[i]?.alive){
-            temp_army[temp_army.length] = troops[i];
+            all_in_army[all_in_army.length] = troops[i];
+            troops[i].alive = false;
         }
         else{
             continue;
         }
     }
-    console.log("Your army has", castle.hp.length, "warriors...");
+    console.log("Your army has", all_in_army.length, "warriors...");
     const choice = prompt("How many warriors would you like to move?: ") as number;
-    if(choice < 0 && choice <= temp_army.length){       //Choose the amount of warriors
-        for(let a = 0; 0 < choice; a++){
-            if(temp_army[a]?.alive && temp_army[a] != undefined){
-                return_army[return_army.length] = temp_army[a];
-            }
-                
+    if(choice < 0 && choice <= all_in_army.length){       //Choose the amount of warriors
+        for(let a = 0; 0 <= choice; a++){
+            if(all_in_army[a]?.alive && all_in_army[a] != undefined){
+                return_army[return_army.length] = all_in_army[a];
+            } 
         }
-    } else {                                        //Safe
+    } else {                                            //Safe
         console.log("Not valid number, try again.")
-        split_army_input(castle);
+        split_army(castle);
     }
     return return_army;                     //The amount of warriors we want to move
     }
 
+    
+    
     /**
      * When moving a portion of an army, remove those from the old army (stops duplicated warriors).
      * @param army 
      */
-    export function remove_warriors(army: Army){
+    export function remove_warrior(moving_warr: Warrior, castle: Castle){
+        const hp = castle.hp;
 
     }
