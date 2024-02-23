@@ -74,8 +74,6 @@ export function death_text(dead: Warrior, killer: Warrior) {
     console.log();
     console.log(dead.name, curr_event, killer.name);
     console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
 }
 
 /**
@@ -169,19 +167,24 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         return false;
     }
     
+    console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
     while (true) {
         attacker.health -= defender.attack * getRandomInt(0, 4);
-        console.log(defender, "VS", attacker);
         if (attacker.health <= 0) {
             death_text(attacker, defender);
             remove_dead_warrior(attacker, army);
+            console.log(defender.name, 'defended the castle, surviving with', defender.health, 'health!')
+            console.log();
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             return true;
         }
         defender.health -= attacker.attack * getRandomInt(0, 4);
-        console.log(attacker, "VS", defender);
         if (defender.health <= 0) {
             death_text(defender, attacker);
             remove_dead_warrior(defender, castle_army.hp);
+            console.log(attacker.name, 'won the battle with', attacker.health, 'health left!')
+            console.log();
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             return false;
         }
     }
