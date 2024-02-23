@@ -124,11 +124,11 @@ function game(){
 
             //console.clear();
             console.log("------------------------------------------");
+        }   
         for (let i = 0; i < get_castle_array().length; i++){
             if (get_castle_array()[i].owner != 'CPU1') {
             recruit_warrior(get_castle_array()[i]);
-            }
-        }    
+            } 
         
 
     } 
