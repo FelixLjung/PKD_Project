@@ -379,3 +379,7 @@ export function count_castles(castle_arr : Array<Castle | undefined>) {
     return count;
 }
 
+export function move_warriors(castle: Castle){
+    console.log("Your army has", castle.hp.length, "warriors...");
+    
+};

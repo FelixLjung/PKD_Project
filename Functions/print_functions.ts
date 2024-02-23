@@ -109,3 +109,8 @@ export function print_castle(player: Player) {
     console.log(print);
     console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b');
 }
+
+
+export function print_army(){
+
+}
