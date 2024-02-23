@@ -157,36 +157,41 @@ export function retreat(army : Queue<Warrior>, your_castle : Castle) {
  * @returns 
  */
 export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_army: Castle): boolean {
-    if(attacker === undefined){
-        return true;
-    }
-    else if(defender === undefined){
-        return false;
-    }
     
-    console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
-    while (true) {
-        attacker.health -= defender.attack * getRandomInt(0, 4);
-        if (attacker.health <= 0) {
-            death_text(attacker, defender);
-            remove_dead_warrior(attacker, army);
-            console.log(defender.name, 'defended the castle, surviving with', defender.health, 'health!')
-            console.log();
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        if(attacker === undefined){
             return true;
         }
-        defender.health -= attacker.attack * getRandomInt(0, 4);
-        if (defender.health <= 0) {
-            death_text(defender, attacker);
-            remove_dead_warrior(defender, castle_army.hp);
-            console.log(attacker.name, 'won the battle with', attacker.health, 'health left!')
-            console.log();
-            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        else if(defender === undefined){
             return false;
         }
+        
+        console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
+        while (true) {
+            //await delay(1000);
+            //await new Promise(f => setTimeout(f, 1000));
+            attacker.health -= defender.attack * getRandomInt(0, 4);
+            if (attacker.health <= 0) {
+                death_text(attacker, defender);
+                remove_dead_warrior(attacker, army);
+                console.log(defender.name, 'defended the castle, surviving with', defender.health, 'health!')
+                console.log();
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                return true;
+            }
+            defender.health -= attacker.attack * getRandomInt(0, 4);
+            if (defender.health <= 0) {
+                death_text(defender, attacker);
+                remove_dead_warrior(defender, castle_army.hp);
+                console.log(attacker.name, 'won the battle with', attacker.health, 'health left!')
+                console.log();
+                console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                return false;
+            }
+        }
+
     }
 
-}
+    
 
 /**
  * Changes owner of the castle if neseccary after a battle has taken place
@@ -201,6 +206,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         const attackers = enqueue_army(Attacking_army);
         const defenders = enqueue_army(defense_army);
         
+            
         while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
             let curr_attacker: Warrior = head(attackers);
             let curr_defender: Warrior = head(defenders);
@@ -213,8 +219,9 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             else if (def_win === false) {
                 dequeue(defenders);
             }
+
         }
-    
+        
         if (is_army_empty(defenders)) {
             return pair(true, attackers[2]);
         } else {
@@ -236,4 +243,9 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
         prompt();
     }
+
+    function delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+
 }

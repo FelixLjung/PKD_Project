@@ -170,7 +170,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
     {
         while (castle_queue[1] != tail(player).length) {
 
-            //print_castle(player);
+            print_castle(player);
             //console.log(player_castles);
             const cstl : number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
@@ -289,7 +289,12 @@ export function check_if_cpu(player:Player | string) : boolean {
     } else {
         return false;
     }
+
+    
 }
+
+
+
 
 
 
