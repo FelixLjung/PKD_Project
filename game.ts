@@ -84,19 +84,6 @@ let map = [
 
 game_running = true;
 
-
-
-/* 
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-console.log(create_warrior());
-*/
 // The game loop
 function game(){
     //console.log("Wtf i game");
@@ -111,7 +98,7 @@ function game(){
         }
         console.log(player_list[i][0]);
 
-        if (player_list[i][0] == "CPU"){
+        if (player_list[i][0] == "CPU1"){
             
         } else {
             turn(player_list[i]);
@@ -124,14 +111,16 @@ function game(){
 
             //console.clear();
             console.log("------------------------------------------");
+        }   
         for (let i = 0; i < get_castle_array().length; i++){
             if (get_castle_array()[i].owner != 'CPU1') {
             recruit_warrior(get_castle_array()[i]);
-            }
-        }    
+            } 
         
 
     } 
+
+    
 
 }}
 game()
