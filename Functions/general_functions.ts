@@ -258,6 +258,9 @@ export function turn(player : Player){
 export function castle_turn(player: Player, castle : Castle) {
     let bool = true;
     while(bool){
+        print_board();
+        //let text1 = "currently in"
+        console.log('\u001b[3m', "Currently Residing in Castle ", castle.position ,  '\u001b[m');
         console.log("What is your command, king ", player[0], "..?");
         const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
         
