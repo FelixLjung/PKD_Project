@@ -302,12 +302,12 @@ export function recruit_warrior(castle: Castle) {
  * When a warrior dies, it's child gets sent to the possible Warrior names.
  * @param army 
  */
-export function remake_warrior(army: Army) {
-    for(let x = 0; x < army.length; x++){
-        if(army[x] == undefined){
-            continue;
-        }
-        else if(army[x]?.alive == false){
+//export function remake_warrior(army: Army) {
+//    for(let x = 0; x < army.length; x++){
+//        if(army[x] == undefined){
+//            continue;
+//        }
+//        else if(army[x]?.alive == false){
             /*
             if(){
                 
@@ -315,13 +315,13 @@ export function remake_warrior(army: Army) {
                 let new_name = army[x]?.name + "I";
             enqueue(new_name, w_names); 
             */
-        }
-        else{
-            continue;
-        }
-    }
+//        }
+//        else{
+//            continue;
+//        }
+//    }
 
-}
+//}
 
 export function army_size(){
 
