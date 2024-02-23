@@ -229,6 +229,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         console.log(defending_player[0]);
         castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med botar
         //console.log("V vann");
+        prompt();
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];

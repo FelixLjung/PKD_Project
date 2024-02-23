@@ -34,7 +34,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 
 export let w_names: Queue<string> = [0,
     2,
-    ["Eva Darulova",    // Current: 18 warrrior-names
+    ["Eva Darulova",    // Current: 37 warrrior-names
     "Jingwei Hu",
     "Johannes Borgström",
     "Carl Erik",
@@ -99,8 +99,8 @@ export function train_warrior(army: Army) {
         }
         
         else{
-            cur_war!.attack = cur_war!.attack + 5;
-            cur_war!.health = cur_war!.health + 5;
+            cur_war!.attack = cur_war!.attack + getRandomInt(5, 8);
+            cur_war!.health = cur_war!.health + getRandomInt(5, 10)
         }
     }
 }
@@ -283,6 +283,9 @@ export function turn(player : Player){
 export function castle_turn(player: Player, castle : Castle) {
     let bool = true;
     while(bool){
+        print_board();
+        //let text1 = "currently in"
+        console.log('\u001b[3m', "Currently Residing in Castle ", castle.position ,  '\u001b[m');
         console.log("What is your command, king ", player[0], "..?");
         const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
         
@@ -319,7 +322,16 @@ export function castle_turn(player: Player, castle : Castle) {
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    castle.hp[castle.hp.length] = create_warrior(5,100);
+    let num = getRandomInt(1,3);
+    if(num == 1){
+        castle.hp[castle.hp.length] = create_warrior(5, 100);
+    }
+    else if(num == 2){
+        castle.hp[castle.hp.length] = create_warrior(7, 75);
+    }
+    else if(num == 3){
+        castle.hp[castle.hp.length] = create_warrior(10, 55);
+    }
     console.log("All castles recruits new warriors!");
 }
 
@@ -377,3 +389,7 @@ export function count_castles(castle_arr : Array<Castle | undefined>) {
     return count;
 }
 
+export function move_warriors(castle: Castle){
+    console.log("Your army has", castle.hp.length, "warriors...");
+    
+};
