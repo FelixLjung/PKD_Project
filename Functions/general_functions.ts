@@ -34,25 +34,43 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 
 export let w_names: Queue<string> = [0,
     2,
-    ["Eva Darulova",    // Current: 18 warrrior-names
-   "Jingwei Hu",
-   "Johannes Borgström",
-   "Carl Erik",
-   "Runar Stenbock",
-   "Sigvard Bjelkengren",
-   "Ernst Greve",
-   "Hjalmar Storfot",
-   "Lillemor Hoppetoss",
-   "Gustav Backlund",
-   "Hans Hansson",
-   "Frans Storm",
-   "Berit Storm",
-   "Tor Hoppetoss",
-   "Fred von Pickelroy",
-   "Björn Olmedo",
-   "Jimmy Viking",
-   "Thom Surströmming",
-   "Blåtand"]];
+    ["Eva Darulova",    // Current: 37 warrrior-names
+    "Jingwei Hu",
+    "Johannes Borgström",
+    "Carl Erik",
+    "Runar Stenbock",
+    "Sigvard Bjelkengren",
+    "Ernst Greve",
+    "Hjalmar Storfot",
+    "Lillemor Hoppetoss",
+    "Gustav Backlund",
+    "Hans Hansson",
+    "Frans Storm",
+    "Berit Storm",
+    "Tor Hoppetoss",
+    "Fred von Pickelroy",
+    "Björn Olmedo",
+    "Jimmy Viking",
+    "Thom Surströmming",
+    "Fredrik Blåtand",
+    "Göran Borkavik",
+    "Bosse Brunklimp",
+    "Hans Hansson",
+    "Peter Niclass",
+    "Tubbe Tonker",
+    "Frans Tonker",
+    "Per Jutterström",
+    "Zhangwei",
+    "Miro Ali Akbar",
+    "Fader Gustav",
+    "Bartek Bunko",
+    "Wille den snygge",
+    "Kristian Luuk",
+    "Börje Flemming",
+    "Johanna Grönsaksson",
+    "Henning Bollmark",
+    "Krudel Haestre",
+    "Movitz Movitsson"]];
 
 
 
@@ -81,8 +99,8 @@ export function train_warrior(army: Army) {
         }
         
         else{
-            cur_war!.attack = cur_war!.attack + 5;
-            cur_war!.health = cur_war!.health + 5;
+            cur_war!.attack = cur_war!.attack + getRandomInt(5, 8);
+            cur_war!.health = cur_war!.health + getRandomInt(5, 10)
         }
     }
 }
@@ -297,19 +315,29 @@ export function castle_turn(player: Player, castle : Castle) {
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    castle.hp[castle.hp.length] = create_warrior(5,100);
+    let num = getRandomInt(1,3);
+    if(num == 1){
+        castle.hp[castle.hp.length] = create_warrior(5, 100);
+    }
+    else if(num == 2){
+        castle.hp[castle.hp.length] = create_warrior(7, 75);
+    }
+    else if(num == 3){
+        castle.hp[castle.hp.length] = create_warrior(10, 55);
+    }
+    console.log("All castles recruits new warriors!");
 }
 
 /**
  * When a warrior dies, it's child gets sent to the possible Warrior names.
  * @param army 
  */
-export function remake_warrior(army: Army) {
-    for(let x = 0; x < army.length; x++){
-        if(army[x] == undefined){
-            continue;
-        }
-        else if(army[x]?.alive == false){
+//export function remake_warrior(army: Army) {
+//    for(let x = 0; x < army.length; x++){
+//        if(army[x] == undefined){
+//            continue;
+//        }
+//        else if(army[x]?.alive == false){
             /*
             if(){
                 
@@ -317,13 +345,13 @@ export function remake_warrior(army: Army) {
                 let new_name = army[x]?.name + "I";
             enqueue(new_name, w_names); 
             */
-        }
-        else{
-            continue;
-        }
-    }
+//        }
+//        else{
+//            continue;
+//        }
+//    }
 
-}
+//}
 
 export function army_size(){
 
