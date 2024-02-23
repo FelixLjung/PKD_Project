@@ -438,3 +438,11 @@ export function split_army_input(castle: Castle): Army{
     }
     return return_army;                     //The amount of warriors we want to move
     }
+
+    /**
+     * When moving a portion of an army, remove those from the old army (stops duplicated warriors).
+     * @param army 
+     */
+    export function remove_warriors(army: Army){
+
+    }
