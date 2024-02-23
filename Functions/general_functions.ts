@@ -295,6 +295,7 @@ export function castle_turn(player: Player, castle : Castle) {
  */
 export function recruit_warrior(castle: Castle) {
     castle.hp[castle.hp.length] = create_warrior(5,100);
+    console.log("All castles recruits new warriors!");
 }
 
 /**
