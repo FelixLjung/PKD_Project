@@ -268,6 +268,27 @@ export function turn(player : Player){
     }
     
 }
+/**
+ *  checks if a player is a AI
+ * @param player either a player or a player name
+ * @returns true if the player has a name that starts with CPU
+ */
+
+export function check_if_cpu(player:Player | string) : boolean {
+    let name : string = ";"
+    if (typeof(player) == "string"){
+        name = player[0]+player[1]+player[2];
+    } else {
+        name = player[0][0]+player[0][1]+player[0][2];
+    }
+    
+    //str.match(/.{1,3}/g)
+    if (name == "CPU"){
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 
@@ -287,7 +308,9 @@ export function castle_turn(player: Player, castle : Castle) {
         //let text1 = "currently in"
         console.log('\u001b[3m', "Currently Residing in Castle ", castle.position ,  '\u001b[m');
         console.log("What is your command, king ", player[0], "..?");
-        const choice = prompt("1 : Move Army  \n  2: Train Army "); // Här borde vi ha något som dubbelkollar att inputen är valid
+        console.log("1 : Move Army");
+        console.log("2: Train Army");
+        const choice = prompt(); // Här borde vi ha något som dubbelkollar att inputen är valid
         
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {

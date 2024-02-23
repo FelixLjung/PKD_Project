@@ -4,13 +4,13 @@ import { type MatrixGraph } from './lib/graphs';
 
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
-import { getRandomInt, turn, count_castles, recruit_warrior } from './Functions/general_functions';
+import { getRandomInt, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
 import {game_setup, get_castle_array } from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
 
 import { type Player } from './types';
 
-console.log("GAME.ts")
+//console.log("GAME.ts")
 // start nodes
 let node1 = "1";
 let node2 = "2";
@@ -96,9 +96,9 @@ function game(){
         if (count_castles(player_list[i][1]) == 0 ){
             continue;
         }
-        console.log(player_list[i][0]);
+        //console.log(player_list[i][0]);
 
-        if (player_list[i][0] == "CPU1"){
+        if (check_if_cpu(player_list[i])){
             
         } else {
             turn(player_list[i]);
@@ -113,14 +113,16 @@ function game(){
             console.log("------------------------------------------");
         }   
         for (let i = 0; i < get_castle_array().length; i++){
-            if (get_castle_array()[i].owner != 'CPU1') {
-            recruit_warrior(get_castle_array()[i]);
+            if (!check_if_cpu(get_castle_array()[i].owner)) {
+                recruit_warrior(get_castle_array()[i]);
             } 
+
+            
         
 
     } 
 
-    
+
 
 }}
-game()
+game();
