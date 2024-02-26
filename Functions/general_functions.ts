@@ -219,6 +219,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     print_board();
 
     const player_from: string = move_from.owner;
+    let survivors : Army = [];
     //console.log(move_from);
     //console.log(move_to);
 
@@ -253,7 +254,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
     if (player_from != player_to) {
         console.log(move_from.owner, "has declared war against", move_to.owner);
-        const survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
+        survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
     } else if (player_from == player_to) {
         for (let i = 0; i < move_from.hp.length; i++) {
             move_to.hp[move_to.hp.length + i] = move_from.hp[i];
