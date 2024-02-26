@@ -50,18 +50,29 @@ const mormors_kudde: MatrixGraph = {
 }
 
 
+let player_list : Array<Player> = [];
 
-let player_list = game_setup();
-
-
-export function get_player_list() {
-    console.log("in game.ts inside get_player_list");
-    node1 += player_list[0][0][0];
-    node2 += player_list[1][0][0];
-    node5 += player_list[2][0][0];
-    return player_list;
+/**
+ * Changes an array of players through the game_setup function. Used in the beginning of the game
+ * @param player_array - an array of players that is getting updated
+ * @returns - the updated array of players
+ */
+export function a_player_list(player_array : Array<Player>) : Array<Player> {
+    player_array = game_setup();
+    function get_player_list() {
+        console.log("in game.ts inside get_player_list");
+        node1 += player_array[0][0][0];
+        node2 += player_array[1][0][0];
+        node5 += player_array[2][0][0];
+        return player_array;
+    }
+    return get_player_list();
 }
 
+/**
+ * Removes a player without any castles, meaning they have been killed
+ * @param player - the player that has been killed
+ */
 export function kill_player(player : Player ) {
     console.log("!");
     for (let i = 0; i < player_list.length; i++){
@@ -69,9 +80,8 @@ export function kill_player(player : Player ) {
             player_list[i][0] = "UNDEFINED";
         }
     }
-
-    
 }
+
 let map = [
     [" "," "," "," ", node1," "," "," "," "],
     [" "," ","/"," ", "|"," ","\\"," "],
@@ -87,8 +97,11 @@ let map = [
 
 game_running = true;
 
-// The game loop
+/**
+ * The function running the game.
+ */
 function game(){
+    a_player_list(player_list);
     //console.log("Wtf i game");
     while(game_running){
     //print_board();
