@@ -192,12 +192,22 @@ export function create_ai(){
 
 }
 
+/*
 export function create_nodes(player_list : Array<Player>){
         for (let i = 0; i < player_list.length; i++) { // loop over the amount of players
-            const cst_num = player_list[i][1]
-            //nodes[] += // adds the first letter to the nodes
+            
+            if (typeof(player_list[i][1][0]) == "undefined"){
+                continue;
+            } else {
+                const cst_num = player_list[i][1][0]!.position; // gets the position of the castle
+                nodes[cst_num-1] += player_list[i][0][0]; // adds the first letter to the nodes
+            }
+
+            
+            
         }
 }
+*/
 
 export function create_castles() {
 

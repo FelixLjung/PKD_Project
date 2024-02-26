@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove_dead = exports.split_army = exports.alive_in_army = exports.count_castles = exports.get_name = exports.remove_player = exports.army_size = exports.recruit_warrior = exports.castle_turn = exports.check_if_cpu = exports.turn = exports.move = exports.finds_paths = exports.get_order_castles = exports.train_warrior = exports.getRandomInt = exports.w_names = void 0;
+exports.remove_dead = exports.split_army = exports.alive_in_army = exports.count_castles = exports.remove_dead_warriors = exports.split_army = exports.count_castles = exports.get_name = exports.remove_player = exports.army_size = exports.recruit_warrior = exports.castle_turn = exports.check_if_cpu = exports.check_if_cpu = exports.turn = exports.move = exports.finds_paths = exports.get_order_order_castles = exports.train_warrior = exports.getRandomInt = exports.w_names = exports.w_names = void 0;
 var queue_array_1 = require("../lib/queue_array");
 var list_1 = require("../lib/list");
 var game_1 = require("../game");
@@ -46,9 +46,7 @@ exports.w_names = [0,
         "Johanna Grönsaksson",
         "Henning Bollmark",
         "Krudel Haestre",
-        "Movitz Movitsson",
-        "Ronken av Bonken",
-        "Dani af Ljusdal"]];
+        "Movitz Movitsson"]];
 // General Functions
 /**
  * Chooses a random number between [min] and [max].
@@ -194,8 +192,6 @@ function move(move_from, move_to) {
             defending_player = player_list[i];
         }
     }
-    var split = split_army(move_from);
-    attacking_player[1][move_from.position - 1].hp = split[0];
     function get_player_from_castle(castle) {
     }
     if (player_from != player_to) {
@@ -211,7 +207,6 @@ function move(move_from, move_to) {
         }
     }
     //console.log("VI är i move");
-    attacking_player[1][move_from.position - 1].hp = split[1];
 }
 exports.move = move;
 function turn(player) {
@@ -273,10 +268,7 @@ function castle_turn(player, castle) {
             move(castle, castle_to);
         }
         else if (choice === "2") {
-            console.log('You are training:');
-            for (var i = 0; i < player[1][0].hp.length; i++) {
-                console.log(player[1][0].hp[i].name);
-            }
+            console.log("You are training: ", player[1][0].hp);
             train_warrior(castle.hp);
             console.log(castle.hp);
             bool = false;
@@ -356,64 +348,44 @@ function count_castles(castle_arr) {
 }
 exports.count_castles = count_castles;
 /**
- * Takes in an army with dead warriors.
- * @param castle
- * @returns An army with only the alive ones, becomes the new castle.hp
- */
-function alive_in_army(castle) {
-    var alive_in_army = []; //temporary array of warriors (all alive warriors)
-    var army = castle.hp;
-    for (var curr_warr = 0; curr_warr < army.length; curr_warr++) { // Tar ut alla levande warr.
-        alive_in_army[alive_in_army.length] = army[curr_warr];
-    }
-    return alive_in_army;
-}
-exports.alive_in_army = alive_in_army;
-/**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
  * to then next.            (CALLAS EJ ÄN)
  * @param castle
  * @returns
  */
 function split_army(castle) {
+    var _a;
     var bool = true; //For the while loop
-    var pair_army = [];
-    var alive_army = alive_in_army(castle);
-    var army = castle.hp;
-    while (bool) { //This loop is for dividing the army into two.
-        //Invariant choice got to be number!
-        console.log("Your army has", alive_army.length, "warriors...");
+    var all_in_army = []; //temporary array of warriors (all alive warriors)
+    var return_army = []; //The warriors that we're moving
+    var troops = castle.hp;
+    while (bool) {
+        console.log("Your army has", all_in_army.length, "warriors...");
         var choice = prompt("How many warriors would you like to move?: ");
-        if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) { //Choose the amount of warriors
-            var num = parseInt(choice);
-            var move_a = army.slice(0, num);
-            var stay_a = army.slice(num, army.length);
-            pair_army[0] = move_a;
-            pair_army[1] = stay_a;
-            //            for (let a = 0; 0 < num; a++) {
-            //                if (alive_army[a]?.alive && alive_army[a] != undefined) {
-            //                    move_army[move_army.length] = alive_army[a];
-            //                }
-            //                
-            //            }
+        if (choice > 0 && choice <= all_in_army.length) { //Choose the amount of warriors
+            for (var a = 0; 0 <= choice; a++) {
+                if (((_a = all_in_army[a]) === null || _a === void 0 ? void 0 : _a.alive) && all_in_army[a] != undefined) {
+                    return_army[return_army.length] = all_in_army[a];
+                }
+            }
             bool = false;
         }
         else {
             console.log("Not valid number, try again.");
         }
     }
-    return pair_army; //The amount of warriors we want to move
+    return return_army; //The amount of warriors we want to move
 }
 exports.split_army = split_army;
 /**
  * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
  * @param army
  */
-function remove_dead(army) {
+function remove_dead_warriors(army) {
     var _a;
     var alive_in_army = []; //temporary array of warriors (all alive warriors)
     if (army.length == 0) {
-        return army = alive_in_army;
+        army = [];
     }
     for (var i = 0; i < army.length; i++) { // Loop that takes out all alive warriors in Army
         if ((_a = army[i]) === null || _a === void 0 ? void 0 : _a.alive) {
@@ -425,4 +397,4 @@ function remove_dead(army) {
     }
     return alive_in_army;
 }
-exports.remove_dead = remove_dead;
+exports.remove_dead_warriors = remove_dead_warriors;
