@@ -363,6 +363,7 @@ function split_army(castle) {
     var bool = true; //For the while loop
     var all_in_army = []; //temporary array of warriors (all alive warriors)
     var return_army = []; //The warriors that we're moving
+    var troops = castle.hp;
     while (bool) {
         console.log("Your army has", all_in_army.length, "warriors...");
         var choice = prompt("How many warriors would you like to move?: ");
