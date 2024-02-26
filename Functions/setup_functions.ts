@@ -112,6 +112,22 @@ function read_player_names(num: number){
 }
 
 
+export function starting_node(){  //Ska kunna välja en starting node
+
+}
+
+
+/**
+ * Creates a player, who is a pair whose head is a string and tail is an array of Castles.
+ * @param name is a string
+ * @param num_players is a number
+ */
+export function create_player(name: string, num_players: number){
+    const player: Player = [name, [(create_castle(create_army(), name, 1))]]; // Siffran är NODE, får ej vara hårdkodad!
+}
+
+
+
 /**
  * Pick your King, and creates your army
  * @returns A complete setup of the game
