@@ -106,41 +106,41 @@ game_running = true;
  * The function running the game.
  */
 function game(){
-    a_player_list(player_list);
+    player_list = a_player_list(player_list);
     
     while(game_running){
-    //print_board();
-    refresh_board();
-    for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
-        //console.log(player_list[i][1][0].hp);
-        print_board();
-        if (count_castles(player_list[i][1]) == 0 ){
-            continue;
-        }
-        console.log(player_list[i][0], "turn" );
-
-        if (check_if_cpu(player_list[i])){
-            
-        } else {
-            turn(player_list[i]);
-        }
-        
-        if (count_castles(player_list[i][1]) == 5) {
-            console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
-            game_running = false;
-        }
-
-            //console.clear();
-            console.log("------------------------------------------");
-        }
-        if (game_running == true) { 
-            for (let i = 0; i < get_castle_array().length; i++){
-                if (!check_if_cpu(get_castle_array()[i].owner)) {
-                    console.log("All castles recruits a new warrior!");
-                    recruit_warrior(get_castle_array()[i]);
-                } 
+        //print_board();
+        refresh_board();
+        for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
+            //console.log(player_list[i][1][0].hp);
+            print_board();
+            if (count_castles(player_list[i][1]) == 0 ){
+                continue;
             }
-        }
+            console.log(player_list[i][0], "turn" );
+
+            if (check_if_cpu(player_list[i])){
+                
+            } else {
+                turn(player_list[i]);
+            }
+            
+            if (count_castles(player_list[i][1]) == 5) {
+                console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
+                game_running = false;
+            }
+
+                //console.clear();
+                console.log("------------------------------------------");
+            }
+            if (game_running == true) { 
+                for (let i = 0; i < get_castle_array().length; i++){
+                    if (!check_if_cpu(get_castle_array()[i].owner)) {
+                        console.log("All castles recruits a new warrior!");
+                        recruit_warrior(get_castle_array()[i]);
+                    } 
+                }
+            }
 
 
 
