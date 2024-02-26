@@ -123,7 +123,7 @@ export function starting_node(){  //Ska kunna välja en starting node
  * @param num_players is a number
  */
 export function create_player(name: string, node: number): Player{
-    const player: Player = [name, [(create_castle(create_army(), name, 1))]]; // Siffran är NODE, får ej vara hårdkodad!
+    const player: Player = [name, [(create_castle(create_army(), name, node))]]; // Siffran är NODE, får ej vara hårdkodad!
     return player;
 }
 
@@ -131,9 +131,9 @@ export function pick_player_name(name: string): string{
     return name;
 }
 
-const p1: string = "Teachers";
-const p2: string = "Students";
-const p3: string = "Assistants";
+const p1: string = "David";
+const p2: string = "Felix";
+const p3: string = "Alfred";
 const ai_name_1: string = "CPU1";
 const ai_name_2: string = "CPU2";
 
@@ -153,7 +153,7 @@ export function game_setup(): Array<Player> {
     //const player1 : Player = [name_player1 , [(create_castle(create_army(), name_player1, 1))]];
     const player1: Player = create_player(name_player1, 1);
     const player2: Player = create_player(name_player2, 2);
-    const player3: Player = create_player(name_player2, 5);
+    const player3: Player = create_player(name_player3, 5);
 
     //create_ai();
 
