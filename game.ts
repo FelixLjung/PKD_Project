@@ -63,7 +63,9 @@ export function a_player_list(player_array : Array<Player>) : Array<Player> {
         console.log("in game.ts inside get_player_list");
         node1 += player_array[0][0][0];
         node2 += player_array[1][0][0];
-        node5 += player_array[2][0][0];
+        node3 += player_array[3][0][0];
+        //node4 += player_array[4][0][0];
+        //node5 += player_array[2][0][0];
         return player_array;
     }
     return helper();
@@ -114,6 +116,7 @@ function game(){
         for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
             //console.log(player_list[i][1][0].hp);
             print_board();
+            
             if (count_castles(player_list[i][1]) == 0 ){
                 continue;
             }
@@ -141,8 +144,6 @@ function game(){
                     } 
                 }
             }
-
-
-
 }}
+
 game();
