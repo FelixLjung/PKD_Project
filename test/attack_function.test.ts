@@ -7,10 +7,9 @@ describe('enqueue_army', () => {
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
     const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
     const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
-    const wrr4 : Warrior = {attack : 2, health : 5, name : 'Eva', alive : false}
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr1, wrr2, wrr3];
-    const ex_army3 : Army = [wrr1, wrr2, wrr3, wrr4];
+    const ex_army3 : Army = [wrr1, wrr2, wrr3];
     const ex_army4 : Army = [];
     const empty_army = empty<Warrior>();
 
@@ -51,10 +50,9 @@ describe ('fight', () => {
     const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};
     const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
     const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
-    const wrr4 : Warrior = {attack : 2, health : 5, name : 'Eva', alive : false}
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr2, wrr3];
-    const ex_army3 : Army = [wrr1, wrr2, wrr3, wrr4];
+    const ex_army3 : Army = [wrr1, wrr2, wrr3];
     const ex_castle1 : Castle = {hp : ex_army2, owner : 'Affe', position : 2};
     const ex_castle2 : Castle = {hp : ex_army1, owner : 'Davve', position : 3};
 
