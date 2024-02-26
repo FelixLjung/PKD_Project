@@ -265,7 +265,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     }
 
     //console.log("VI är i move");
-    move_from.hp = split[1] + survivors;
+    move_from.hp = merge_army(split[1], survivors);
 
 }
 
@@ -484,7 +484,19 @@ export function split_army(castle: Castle): Array<Army> {
     return pair_army; //The amount of warriors we want to move
 }
 
-
+/**
+ * 
+ * @param a1 is an Army
+ * @param a2 is an Army
+ */
+export function merge_army(a1:Army, a2: Army): Army{
+    let new_army: Army = a1;
+    const combined: number = a1.length + a2.length;
+    for(let w = 0; w < a2.length; w++){
+        new_army[a1.length + w] = a2[w]; 
+    }
+    return new_army;
+}
 
 /**
  * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
