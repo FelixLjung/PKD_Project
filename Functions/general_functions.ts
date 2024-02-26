@@ -417,6 +417,21 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 }
 
 /**
+ * Takes in an army with dead warriors.
+ * @param castle 
+ * @returns An army with only the alive ones, becomes the new castle.hp
+ */
+export function alive_in_army(castle: Castle): Army{
+    const alive_in_army: Army = [];           //temporary array of warriors (all alive warriors)
+    let army = castle.hp;
+    for(let curr_warr = 0; curr_warr < army.length; curr_warr++){       // Tar ut alla levande warr.
+        alive_in_army[alive_in_army.length] = army[curr_warr];
+    }
+    return alive_in_army;
+}
+
+
+/**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
  * to then next.            (CALLAS EJ ÄN)
  * @param castle 
@@ -424,20 +439,23 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
  */
 export function split_army(castle: Castle): Army {
     let bool = true                         //For the while loop
-    const all_in_army: Army = [];           //temporary array of warriors (all alive warriors)
-    const return_army: Army = [];           //The warriors that we're moving
+    const return_army: Army = []            //The warriors that we're moving
+    let alive_army = alive_in_army(castle);
     
-    while (bool) {
-        console.log("Your army has", all_in_army.length, "warriors...");
-        const choice = prompt("How many warriors would you like to move?: ") as number;
-        if (choice > 0 && choice <= all_in_army.length) {       //Choose the amount of warriors
-            for (let a = 0; 0 <= choice; a++) {
-                if (all_in_army[a]?.alive && all_in_army[a] != undefined) {
-                    return_army[return_army.length] = all_in_army[a];
-
+    
+    while (bool) {              //This loop is for dividing the army into two.
+        //Invariant choice got to be number!
+        console.log("Your army has", alive_army.length, "warriors...");
+        const choice = prompt("How many warriors would you like to move?: ");
+        let num: number = parseInt(choice); 
+        if (num > 0 && num <= alive_in_army.length) {       //Choose the amount of warriors
+            for (let a = 0; 0 < num; a++) {
+                if (alive_army[a]?.alive && alive_army[a] != undefined) {
+                    return_army[return_army.length] = alive_army[a];
                 }
             }
             bool = false;
+
         } else {
             console.log("Not valid number, try again.");
         }
@@ -454,7 +472,7 @@ export function split_army(castle: Castle): Army {
 export function remove_dead(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
     if(army.length == 0){
-        army = [];
+        return army = alive_in_army;
     }
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
         if (army[i]?.alive) {

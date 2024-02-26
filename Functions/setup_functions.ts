@@ -122,11 +122,18 @@ export function starting_node(){  //Ska kunna välja en starting node
  * @param name is a string
  * @param num_players is a number
  */
-export function create_player(name: string, num_players: number){
+export function create_player(name: string, node: number): Player{
     const player: Player = [name, [(create_castle(create_army(), name, 1))]]; // Siffran är NODE, får ej vara hårdkodad!
+    return player;
 }
 
+export function pick_player_name(name: string): string{
+    return name;
+}
 
+const p1: string = "Teachers";
+const p2: string = "Students";
+const p3: string = "Assistants"
 
 /**
  * Pick your King, and creates your army
@@ -135,16 +142,14 @@ export function create_player(name: string, num_players: number){
 
 
 export function game_setup(): Array<Player> {
-    let name_player1 = "David"
-    let name_player2 = "Felix"
-    let name_player3 = "Alfred"
+    const name_player1: string = pick_player_name(p1);
+    const name_player2: string = pick_player_name(p2);
+    const name_player3: string = pick_player_name(p3);
     
     //const player1 : Player = [name_player1 , [(create_castle(create_army(), name_player1, 1))]];
-    const player1: Player = [name_player1, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
-    const player2: Player = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
-    const player3: Player = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
-
-    create_player();
+    const player1: Player = create_player(name_player1, 1);
+    const player2: Player = create_player(name_player2, 2);
+    const player3: Player = create_player(name_player2, 5);
 
     create_ai(); // 
 
@@ -153,7 +158,7 @@ export function game_setup(): Array<Player> {
     //const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
 
 
-    create_nodes();
+    //create_nodes();
 
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
@@ -185,6 +190,7 @@ export function create_ai(){
 
 }
 
+/*
 export function create_nodes(player_list : Array<Player>){
         for (let i = 0; i < player_list.length; i++) { // loop over the amount of players
             
@@ -199,6 +205,7 @@ export function create_nodes(player_list : Array<Player>){
             
         }
 }
+*/
 
 export function create_castles() {
 

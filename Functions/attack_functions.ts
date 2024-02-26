@@ -18,9 +18,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
     for (let a = 0; a < army.length; a = a + 1) {
-        if (army[a] != undefined && army[a]!.alive == true) {
         enqueue(army[a], queue_army);
-        }
     }
     return queue_army;
 }
