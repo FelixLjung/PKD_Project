@@ -107,7 +107,7 @@ game_running = true;
  */
 function game(){
     a_player_list(player_list);
-    //console.log("Wtf i game");
+    
     while(game_running){
     //print_board();
     refresh_board();
@@ -145,4 +145,4 @@ function game(){
 
 
 }}
-//game();
+game();
