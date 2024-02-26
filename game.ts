@@ -51,6 +51,11 @@ const mormors_kudde: MatrixGraph = {
 
 let player_list : Array<Player> = [];
 
+/**
+ * Changes an array of players through the game_setup function. Used in the beginning of the game
+ * @param player_array - an array of players that is getting updated
+ * @returns - the updated array of players
+ */
 export function a_player_list(player_array : Array<Player>) : Array<Player> {
     player_array = game_setup();
     function get_player_list() {
@@ -63,6 +68,10 @@ export function a_player_list(player_array : Array<Player>) : Array<Player> {
     return get_player_list();
 }
 
+/**
+ * Removes a player without any castles, meaning they have been killed
+ * @param player - the player that has been killed
+ */
 export function kill_player(player : Player ) {
     console.log("!");
     for (let i = 0; i < player_list.length; i++){
@@ -87,7 +96,9 @@ let map = [
 
 game_running = true;
 
-// The game loop
+/**
+ * The function running the game.
+ */
 function game(){
     a_player_list(player_list);
     //console.log("Wtf i game");
