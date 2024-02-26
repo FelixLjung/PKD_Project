@@ -64,6 +64,10 @@ export function refresh_board() {
         let castles = get_castle_array();
         for (let i = 0; i < nodes.length; i++ ){
             //print(nodes[0])
+            console.log ("Index: ", i);
+            console.log(nodes);
+            console.log(castles);
+            console.log(castles[i]);
             nodes[i] = castles[i].position + castles[i].owner[0];
         }
 
