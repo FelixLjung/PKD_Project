@@ -158,7 +158,7 @@ export function game_setup(): Array<Player> {
     //const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
 
 
-    create_nodes();
+    //create_nodes();
 
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
@@ -190,12 +190,14 @@ export function create_ai(){
 
 }
 
+/*
 export function create_nodes(player_list : Array<Player>){
         for (let i = 0; i < player_list.length; i++) { // loop over the amount of players
             const cst_num = player_list[i][1]
             nodes[] += // adds the first letter to the nodes
         }
 }
+*/
 
 export function create_castles() {
 
