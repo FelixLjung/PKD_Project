@@ -49,14 +49,18 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
+let player_list : Array<Player> = [];
 
-let player_list = game_setup();
-export function get_player_list() {
-    console.log("in game.ts inside get_player_list");
-    node1 += player_list[0][0][0];
-    node2 += player_list[1][0][0];
-    node5 += player_list[2][0][0];
-    return player_list;
+export function a_player_list(player_array : Array<Player>) : Array<Player> {
+    player_array = game_setup();
+    function get_player_list() {
+        console.log("in game.ts inside get_player_list");
+        node1 += player_array[0][0][0];
+        node2 += player_array[1][0][0];
+        node5 += player_array[2][0][0];
+        return player_array;
+    }
+    return get_player_list();
 }
 
 export function kill_player(player : Player ) {
@@ -66,9 +70,8 @@ export function kill_player(player : Player ) {
             player_list[i][0] = "UNDEFINED";
         }
     }
-
-    
 }
+
 let map = [
     [" "," "," "," ", node1," "," "," "," "],
     [" "," ","/"," ", "|"," ","\\"," "],
