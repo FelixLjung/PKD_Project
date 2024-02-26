@@ -131,9 +131,9 @@ export function pick_player_name(name: string): string{
     return name;
 }
 
-const p1: string = "Teachers";
-const p2: string = "Students";
-const p3: string = "Assistants";
+const p1: string = "David";
+const p2: string = "Felix";
+const p3: string = "Alfred";
 const ai_name_1: string = "CPU1";
 const ai_name_2: string = "CPU2";
 
