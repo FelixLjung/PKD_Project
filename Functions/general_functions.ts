@@ -454,7 +454,7 @@ export function split_army(castle: Castle): Army {
 export function remove_dead(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
     if(army.length == 0){
-        army = [];
+        return army = alive_in_army;
     }
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
         if (army[i]?.alive) {
