@@ -223,33 +223,37 @@ export function move(move_from: Castle, move_to: Castle): void {
     //console.log(move_to);
 
     const player_to: string = move_to.owner;
-    const army = move_from.hp                           // här kan det vara något fel
+    const army: Army = move_from.hp
 
 
     let attacking_player: Player | undefined = undefined;
     let defending_player: Player | undefined = undefined;
     const player_list: Array<Player> = get_player_list();
-    for (let i = 0; i < player_list.length; i = i + 1) { // detta är fugded, botarna finns inte med i player_list
-        if (player_list[i][0] == move_from.owner) { // detta borde abstraktas tll en ny fuktion då
+    for (let i = 0; i < player_list.length; i = i + 1) { // botarna finns inte med i player_list
+        if (player_list[i][0] == move_from.owner) { // detta borde abstraktas tll en ny funktion då
             attacking_player = player_list[i];
         } else if (player_list[i][0] == move_to.owner) {
             defending_player = player_list[i];
         }
     }
-    const split = split_army(move_from);
-    attacking_player![1][move_from.position -1]!.hp = split[0];
-
+    const split = split_army(move_from);        //Här splittas Attacking army i två [0 = moving, 1 = staying]
+    console.log(move_from.position);
+    console.log(attacking_player![1]);
+    //attacking_player![1][move_from.position - 1]!.hp = split[0];
+    //attacking_player![1][move_from.position - 1]!.hp = split[0];
+    const moving_army = split[0];
+    const staying_army = split[1];
   
-    
 
 
     function get_player_from_castle(castle: Castle) {
 
     }
+    
 
     if (player_from != player_to) {
         console.log(move_from.owner, "has declared war against", move_to.owner);
-        attack(move_to, attacking_player!, defending_player!, army);
+        const survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
     } else if (player_from == player_to) {
         for (let i = 0; i < move_from.hp.length; i++) {
             move_to.hp[move_to.hp.length + i] = move_from.hp[i];
@@ -259,8 +263,7 @@ export function move(move_from: Castle, move_to: Castle): void {
         }
     }
 
-    //console.log("VI är i move");
-    attacking_player![1][move_from.position -1]!.hp = split[1];
+    
 
 }
 
@@ -444,7 +447,7 @@ export function alive_in_army(castle: Castle): Army{
  */
 export function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
-    const pair_army: Array<Army> = []
+    const pair_army: Array<Army> = []       // Returning
     let alive_army = alive_in_army(castle);
     const army: Army = castle.hp;
     
@@ -452,7 +455,7 @@ export function split_army(castle: Castle): Array<Army> {
     while (bool) {              //This loop is for dividing the army into two.
         //Invariant choice got to be number!
         console.log("Your army has", alive_army.length, "warriors...");
-        const choice:string = prompt("How many warriors would you like to move?: ");
+        const choice: string = prompt("How many warriors would you like to move?: ");
  
         if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) {       //Choose the amount of warriors
             let num: number = parseInt(choice); 
@@ -460,6 +463,8 @@ export function split_army(castle: Castle): Array<Army> {
             let stay_a = army.slice(num, army.length);
             pair_army[0] = move_a;
             pair_army[1] = stay_a;
+            console.log(pair_army[0]);
+            console.log(pair_army[1]);
             
 //            for (let a = 0; 0 < num; a++) {
 //                if (alive_army[a]?.alive && alive_army[a] != undefined) {
