@@ -198,7 +198,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
  * @param defending_player - the player that defending the castle
  * @param army - the attacking army
  */
-export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) {
+export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) : Army {
     function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Army> {
         let defense_army = castle_army.hp;
         const attackers = enqueue_army(Attacking_army);
@@ -219,12 +219,17 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             }
 
         }
+
+       
+
+    
         
         if (is_army_empty(defenders)) {
             return pair(true, attackers[2]);
         } else {
             return pair(false, defenders[2]);
         }
+        
     }
 
     const winner : Pair<Boolean, Army> = helper(army, castle);
@@ -235,6 +240,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med botar
         //console.log("V vann");
         prompt();
+        return (tail(winner)); 
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];
@@ -244,6 +250,10 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     function delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+
+    function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
+        return q[2];
     }
 
 }

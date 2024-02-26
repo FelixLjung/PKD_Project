@@ -237,15 +237,9 @@ export function move(move_from: Castle, move_to: Castle): void {
         }
     }
     const split = split_army(move_from);
-    attacking_player![1][move_from.position -1]!.hp = split[0];
 
-  
-    
+    move_from.hp = split[0];
 
-
-    function get_player_from_castle(castle: Castle) {
-
-    }
 
     if (player_from != player_to) {
         console.log(move_from.owner, "has declared war against", move_to.owner);
@@ -253,14 +247,14 @@ export function move(move_from: Castle, move_to: Castle): void {
     } else if (player_from == player_to) {
         for (let i = 0; i < move_from.hp.length; i++) {
             move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_from.hp = [];
+            move_from.hp = []; // här töms den ju?
             console.log('move_from', move_from.hp);
             console.log('move_to', move_to.hp);
         }
     }
 
     //console.log("VI är i move");
-    attacking_player![1][move_from.position -1]!.hp = split[1];
+    move_from.hp = split[1] + survivors;
 
 }
 
@@ -429,6 +423,7 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 export function alive_in_army(castle: Castle): Army{
     const alive_in_army: Army = [];           //temporary array of warriors (all alive warriors)
     let army = castle.hp;
+
     for(let curr_warr = 0; curr_warr < army.length; curr_warr++){       // Tar ut alla levande warr.
         alive_in_army[alive_in_army.length] = army[curr_warr];
     }
@@ -496,5 +491,8 @@ export function remove_dead(army: Army): Army {
         }
     }
     return alive_in_army;
+
+
+
 }
 
