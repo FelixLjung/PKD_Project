@@ -327,7 +327,10 @@ export function castle_turn(player: Player, castle: Castle) {
 
 
         } else if (choice === "2") {
-            console.log("You are training: ", player[1][0]!.hp);
+            console.log('You are training:')
+            for (let i = 0; i < player[1][0]!.hp.length; i++) {
+                console.log(player[1][0]!.hp[i]!.name);
+            }
             train_warrior(castle.hp);
             console.log(castle.hp);
             bool = false;
