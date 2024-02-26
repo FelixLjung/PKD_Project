@@ -280,9 +280,9 @@ export function turn(player: Player) {
 export function check_if_cpu(player: Player | string): boolean {
     let name: string = "";
     if (typeof (player) == "string") {
-        name = player[0] + player[1] + player[2];
+        name = player[0] + player[1] + player[2]; // gets the first three letters
     } else {
-        name = player[0][0] + player[0][1] + player[0][2];
+        name = player[0][0] + player[0][1] + player[0][2]; // gets the first three letters
     }
 
     //str.match(/.{1,3}/g)
