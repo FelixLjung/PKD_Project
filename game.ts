@@ -58,15 +58,20 @@ let player_list : Array<Player> = [];
  */
 export function a_player_list(player_array : Array<Player>) : Array<Player> {
     player_array = game_setup();
-    function get_player_list() {
+    function helper() {
         console.log("in game.ts inside get_player_list");
         node1 += player_array[0][0][0];
         node2 += player_array[1][0][0];
         node5 += player_array[2][0][0];
         return player_array;
     }
-    return get_player_list();
+    return helper();
 }
+
+export function get_player_list() {
+    return player_list;
+}
+
 
 /**
  * Removes a player without any castles, meaning they have been killed
@@ -139,4 +144,4 @@ function game(){
 
 
 }}
-game();
+//game();
