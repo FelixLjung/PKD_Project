@@ -55,7 +55,7 @@ let map_player_3 = [
 
 ];
 
-let map = map_player_3
+let map = map1;
 
 
 export function refresh_board() {
@@ -81,7 +81,7 @@ export function refresh_board() {
 
     get_castle_owners();
         
-    /*
+    
     map = [
         [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
         [" ", " ", "/", " ", "|", " ", "\\", " "],
@@ -91,8 +91,9 @@ export function refresh_board() {
         [" ", " ", "\\", " ", "|", " ", "/", "", " "],
         [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
     ];
-    */
+    
 
+    /*
     map = [
         [" ", " ", " ", " ", " "," "," ", " ", node3, " ", " "," "," ", " ", " ", " ", " "," "],
         [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
@@ -115,9 +116,9 @@ export function refresh_board() {
         [node1, "  ", "  ", "  ", "  ","  ","  ", "  ", "  ", "  ", " "," "," ", " ", "         ", " ", " ",node2],
     
     
-    
+       
     ];
-
+ */
 
 
 }
