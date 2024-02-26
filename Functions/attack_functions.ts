@@ -1,7 +1,7 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { getRandomInt, get_order_castles, remove_dead_warriors} from "./general_functions";
+import { getRandomInt, get_order_castles, remove_dead} from "./general_functions";
 import { get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";

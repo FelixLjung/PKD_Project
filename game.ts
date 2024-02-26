@@ -49,6 +49,7 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
+
 let player_list : Array<Player> = [];
 
 /**

@@ -112,6 +112,22 @@ function read_player_names(num: number){
 }
 
 
+export function starting_node(){  //Ska kunna välja en starting node
+
+}
+
+
+/**
+ * Creates a player, who is a pair whose head is a string and tail is an array of Castles.
+ * @param name is a string
+ * @param num_players is a number
+ */
+export function create_player(name: string, num_players: number){
+    const player: Player = [name, [(create_castle(create_army(), name, 1))]]; // Siffran är NODE, får ej vara hårdkodad!
+}
+
+
+
 /**
  * Pick your King, and creates your army
  * @returns A complete setup of the game
@@ -128,13 +144,22 @@ export function game_setup(): Array<Player> {
     const player2: Player = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
 
+    create_player();
+
+    create_ai(); // 
+
     const AI1 : Player = ["CPU1",[create_castle(create_army(), "CPU1", 4)]]
     
     //const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
 
+
+    create_nodes();
+
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
     nodes[4] += name_player3[0];
+
+    create_castles();
 
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
@@ -154,4 +179,21 @@ export function game_setup(): Array<Player> {
 
     return [player1, player2, player3,AI1];
 }
+
+
+export function create_ai(){
+
+}
+
+export function create_nodes(player_list : Array<Player>){
+        for (let i = 0; i < player_list.length; i++) { // loop over the amount of players
+            const cst_num = player_list[i][1]
+            nodes[] += // adds the first letter to the nodes
+        }
+}
+
+export function create_castles() {
+
+}
+
 
