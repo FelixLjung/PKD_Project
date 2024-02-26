@@ -1,13 +1,13 @@
 
-import{
+import {
     type Queue, dequeue, head, enqueue, empty
 } from '../lib/queue_array'
 
 import { type MatrixGraph } from '../lib/graphs';
 
-import {type List, tail, is_null, head as l_head, list } from '../lib/list'
+import { type List, tail, is_null, head as l_head, list } from '../lib/list'
 
-import{
+import {
     type Warrior, type Army, type Player, type Castle
 } from '../types'
 
@@ -36,42 +36,42 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 export let w_names: Queue<string> = [0,
     2,
     ["Eva Darulova",    // Current: 37 warrrior-names
-    "Jingwei Hu",
-    "Johannes Borgström",
-    "Carl Erik",
-    "Runar Stenbock",
-    "Sigvard Bjelkengren",
-    "Ernst Greve",
-    "Hjalmar Storfot",
-    "Lillemor Hoppetoss",
-    "Gustav Backlund",
-    "Hans Hansson",
-    "Frans Storm",
-    "Berit Storm",
-    "Tor Hoppetoss",
-    "Fred von Pickelroy",
-    "Björn Olmedo",
-    "Jimmy Viking",
-    "Thom Surströmming",
-    "Fredrik Blåtand",
-    "Göran Borkavik",
-    "Bosse Brunklimp",
-    "Hans Hansson",
-    "Peter Niclass",
-    "Tubbe Tonker",
-    "Frans Tonker",
-    "Per Jutterström",
-    "Zhangwei",
-    "Miro Ali Akbar",
-    "Fader Gustav",
-    "Bartek Bunko",
-    "Wille den snygge",
-    "Kristian Luuk",
-    "Börje Flemming",
-    "Johanna Grönsaksson",
-    "Henning Bollmark",
-    "Krudel Haestre",
-    "Movitz Movitsson"]];
+        "Jingwei Hu",
+        "Johannes Borgström",
+        "Carl Erik",
+        "Runar Stenbock",
+        "Sigvard Bjelkengren",
+        "Ernst Greve",
+        "Hjalmar Storfot",
+        "Lillemor Hoppetoss",
+        "Gustav Backlund",
+        "Hans Hansson",
+        "Frans Storm",
+        "Berit Storm",
+        "Tor Hoppetoss",
+        "Fred von Pickelroy",
+        "Björn Olmedo",
+        "Jimmy Viking",
+        "Thom Surströmming",
+        "Fredrik Blåtand",
+        "Göran Borkavik",
+        "Bosse Brunklimp",
+        "Hans Hansson",
+        "Peter Niclass",
+        "Tubbe Tonker",
+        "Frans Tonker",
+        "Per Jutterström",
+        "Zhangwei",
+        "Miro Ali Akbar",
+        "Fader Gustav",
+        "Bartek Bunko",
+        "Wille den snygge",
+        "Kristian Luuk",
+        "Börje Flemming",
+        "Johanna Grönsaksson",
+        "Henning Bollmark",
+        "Krudel Haestre",
+        "Movitz Movitsson"]];
 
 
 
@@ -95,11 +95,11 @@ export function getRandomInt(min: number, max: number): number {
 export function train_warrior(army: Army) {
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
-        if(cur_war == undefined){
+        if (cur_war == undefined) {
             continue;
         }
-        
-        else{
+
+        else {
             cur_war!.attack = cur_war!.attack + getRandomInt(5, 8);
             cur_war!.health = cur_war!.health + getRandomInt(5, 10)
         }
@@ -111,9 +111,9 @@ export function train_warrior(army: Army) {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_order_castles(player : Player) : Queue<Castle> {
-    let castle_queue : Queue<Castle> = empty();
-    const player_castles : Array<Castle | undefined> = [];
+export function get_order_castles(player: Player): Queue<Castle> {
+    let castle_queue: Queue<Castle> = empty();
+    const player_castles: Array<Castle | undefined> = [];
 
     for (let i = 0; i < tail(player).length; i = i + 1) {
         if (tail(player)[i] != undefined) {
@@ -121,7 +121,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
         }
     }
 
-    function includes(Castles : Array<Castle | undefined>, index : number, player : Player ) : Boolean {
+    function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
         for (let i = 0; i < Castles.length; i = i + 1) {
             if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
                 return true;
@@ -130,7 +130,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
         return false;
     }
 
-    function in_q(castle_queue : Queue<Castle>, castle : Castle | undefined) : Boolean {
+    function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
         for (let i = 0; i < castle_queue[2].length; i = i + 1) {
             if (castle_queue[2][i] == castle) {
                 return true;
@@ -141,8 +141,8 @@ export function get_order_castles(player : Player) : Queue<Castle> {
         return false;
     }
 
-    function get_position(castles : Array<Castle | undefined>, index : number) : Castle | undefined {
-        for(let i = 0; i < castles.length; i = i + 1) {
+    function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
+        for (let i = 0; i < castles.length; i = i + 1) {
             if (castles[i] !== undefined) {
                 if (castles[i]!.position == index) {
                     return castles[i];
@@ -166,13 +166,12 @@ export function get_order_castles(player : Player) : Queue<Castle> {
 
     //console.log(list(player_castles));
 
-    if (count_castles(player_castles) > 1  )
-    {
+    if (count_castles(player_castles) > 1) {
         while (castle_queue[1] != tail(player).length) {
 
             print_castle(player);
             //console.log(player_castles);
-            const cstl : number = prompt(" Which castle would you like to operate from? ") as number
+            const cstl: number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 console.log("You can't choose the same castle twice!")
             } else if (includes(player_castles, cstl, player)) {
@@ -184,7 +183,7 @@ export function get_order_castles(player : Player) : Queue<Castle> {
     } else if (player_castles.length == 1) {
         enqueue(player_castles[0], castle_queue);
     }
-    return(castle_queue);
+    return (castle_queue);
 }
 
 /**
@@ -194,10 +193,10 @@ export function get_order_castles(player : Player) : Queue<Castle> {
  * @returns paths - and array of all castles a player can move to
  */
 
-export function finds_paths(castle : Castle, map : MatrixGraph) : Array<number> {
+export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
     let position = castle.position - 1;
-    let paths : Array<number> = [];
-    let spot : number = 0;
+    let paths: Array<number> = [];
+    let spot: number = 0;
     for (let i = 0; i < map.adj[position].length; i = i + 1) {
         if (map.adj[position][i] === true) {
             paths[spot] = i + 1;
@@ -222,26 +221,27 @@ export function move(move_from: Castle, move_to: Castle): void {
     //console.log(move_to);
 
     const player_to: string = move_to.owner;
-    const army = move_from.hp;
-   
-    let attacking_player : Player | undefined = undefined;
-    let defending_player : Player | undefined = undefined;
-    const player_list : Array<Player> = get_player_list();
+    const army = move_from.hp                           // här kan det vara något fel
+
+
+    let attacking_player: Player | undefined = undefined;
+    let defending_player: Player | undefined = undefined;
+    const player_list: Array<Player> = get_player_list();
     for (let i = 0; i < player_list.length; i = i + 1) { // detta är fugded, botarna finns inte med i player_list
         if (player_list[i][0] == move_from.owner) { // detta borde abstraktas tll en ny fuktion då
             attacking_player = player_list[i];
         } else if (player_list[i][0] == move_to.owner) {
-            defending_player = player_list[i]; 
+            defending_player = player_list[i];
         }
     }
 
 
-    function get_player_from_castle(castle : Castle ) {
-        
+    function get_player_from_castle(castle: Castle) {
+
     }
 
     if (player_from != player_to) {
-        console.log(move_from.owner,"has declared war against", move_to.owner);
+        console.log(move_from.owner, "has declared war against", move_to.owner);
         attack(move_to, attacking_player!, defending_player!, army);
     } else if (player_from == player_to) {
         for (let i = 0; i < move_from.hp.length; i++) {
@@ -253,21 +253,21 @@ export function move(move_from: Castle, move_to: Castle): void {
     }
 
     //console.log("VI är i move");
-    
-    
+
+
 }
 
 
-export function turn(player : Player){
+export function turn(player: Player) {
 
     let castle_queue = get_order_castles(player);
 
-    for(let i = 0; i < castle_queue[1]; i++){
-        
+    for (let i = 0; i < castle_queue[1]; i++) {
+
         castle_turn(player, head(castle_queue));
         dequeue(castle_queue);
     }
-    
+
 }
 /**
  *  checks if a player is a AI
@@ -275,22 +275,22 @@ export function turn(player : Player){
  * @returns true if the player has a name that starts with CPU
  */
 
-export function check_if_cpu(player:Player | string) : boolean {
-    let name : string = "";
-    if (typeof(player) == "string"){
-        name = player[0]+player[1]+player[2];
+export function check_if_cpu(player: Player | string): boolean {
+    let name: string = "";
+    if (typeof (player) == "string") {
+        name = player[0] + player[1] + player[2];
     } else {
-        name = player[0][0]+player[0][1]+player[0][2];
+        name = player[0][0] + player[0][1] + player[0][2];
     }
-    
+
     //str.match(/.{1,3}/g)
-    if (name == "CPU"){
+    if (name == "CPU") {
         return true;
     } else {
         return false;
     }
 
-    
+
 }
 
 
@@ -300,32 +300,32 @@ export function check_if_cpu(player:Player | string) : boolean {
  * Should Call other functions.
  * @param player is a pair(string, List)
  */
-export function castle_turn(player: Player, castle : Castle) {
+export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
-    while(bool){
+    while (bool) {
         print_board();
         //let text1 = "currently in"
-        console.log('\u001b[3m', "Currently Residing in Castle ", castle.position ,  '\u001b[m');
+        console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m');
         print_army(castle);
         console.log("What is your command, king ", player[0], "..?");
         console.log("1 : Move Army");
         console.log("2: Train Army");
         const choice = prompt(); // Här borde vi ha något som dubbelkollar att inputen är valid
-        
+
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {
             //console.clear();
-            
+
             let paths = finds_paths(castle!, mormors_kudde); // Första castle
             console.log("You can move to the following castles: ", paths);
             let choice: number = prompt("Choose your destination: ") as number;
-    
-            let castle_to: Castle = get_castle_array()[choice-1]; // fixa get funktions
+
+            let castle_to: Castle = get_castle_array()[choice - 1]; // fixa get funktions
             //console.log(castle_to);
             bool = false;
             move(castle!, castle_to);
-            
-    
+
+
         } else if (choice === "2") {
             console.log('You are training:')
             for (let i = 0; i < player[1][0]!.hp.length; i++) {
@@ -336,11 +336,11 @@ export function castle_turn(player: Player, castle : Castle) {
             bool = false;
             //return {}
         }
-        else{
+        else {
             console.log("Input is not valid, try again!");
         }
     }
-    
+
 }
 
 /**
@@ -348,14 +348,14 @@ export function castle_turn(player: Player, castle : Castle) {
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    let num = getRandomInt(1,3);
-    if(num == 1){
+    let num = getRandomInt(1, 3);
+    if (num == 1) {
         castle.hp[castle.hp.length] = create_warrior(5, 100);
     }
-    else if(num == 2){
+    else if (num == 2) {
         castle.hp[castle.hp.length] = create_warrior(7, 75);
     }
-    else if(num == 3){
+    else if (num == 3) {
         castle.hp[castle.hp.length] = create_warrior(10, 55);
     }
 }
@@ -370,13 +370,13 @@ export function recruit_warrior(castle: Castle) {
 //            continue;
 //        }
 //        else if(army[x]?.alive == false){
-            /*
-            if(){
-                
-            }
-                let new_name = army[x]?.name + "I";
-            enqueue(new_name, w_names); 
-            */
+/*
+if(){
+    
+}
+    let new_name = army[x]?.name + "I";
+enqueue(new_name, w_names); 
+*/
 //        }
 //        else{
 //            continue;
@@ -385,11 +385,11 @@ export function recruit_warrior(castle: Castle) {
 
 //}
 
-export function army_size(){
+export function army_size() {
 
 }
 
-export function remove_player(){
+export function remove_player() {
 
 }
 
@@ -403,49 +403,65 @@ export function get_name(): string {
     return name;
 }
 
-export function count_castles(castle_arr : Array<Castle | undefined>) {
+export function count_castles(castle_arr: Array<Castle | undefined>) {
     let count = 0;
-    for (let i = 0 ; i < castle_arr.length; i++){
+    for (let i = 0; i < castle_arr.length; i++) {
         //console.log(castle_arr[i]);
-        if (castle_arr[i] != undefined){
+        if (castle_arr[i] != undefined) {
             count++
         }
     }
     return count;
 }
 
-export function split_army_input(castle: Castle): Army{
-    const temp_army = [];           //temporary array of warriors
-    const return_army = [];         // The warriors that we're moving
+/**
+ * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
+ * to then next.            (CALLAS EJ ÄN)
+ * @param castle 
+ * @returns 
+ */
+export function split_army(castle: Castle): Army {
+    let bool = true                         //For the while loop
+    const all_in_army: Army = [];           //temporary array of warriors (all alive warriors)
+    const return_army: Army = [];           //The warriors that we're moving
     let troops = castle.hp
-    for(let i = 0; i < castle.hp.length; i++){      // Loop that takes out all alive warriors in Army
-        if (troops[i]?.alive){
-            temp_army[temp_army.length] = troops[i];
+    while (bool) {
+        console.log("Your army has", all_in_army.length, "warriors...");
+        const choice = prompt("How many warriors would you like to move?: ") as number;
+        if (choice > 0 && choice <= all_in_army.length) {       //Choose the amount of warriors
+            for (let a = 0; 0 <= choice; a++) {
+                if (all_in_army[a]?.alive && all_in_army[a] != undefined) {
+                    return_army[return_army.length] = all_in_army[a];
+
+                }
+            }
+            bool = false;
+        } else {
+            console.log("Not valid number, try again.");
         }
-        else{
+    }
+    return return_army; //The amount of warriors we want to move
+}
+
+
+
+/**
+ * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
+ * @param army 
+ */
+export function remove_dead_warriors(army: Army): Army {
+    const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
+    if(army.length == 0){
+        army = [];
+    }
+    for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
+        if (army[i]?.alive) {
+            alive_in_army[alive_in_army.length] = army[i];
+        }
+        else {
             continue;
         }
     }
-    console.log("Your army has", castle.hp.length, "warriors...");
-    const choice = prompt("How many warriors would you like to move?: ") as number;
-    if(choice < 0 && choice <= temp_army.length){       //Choose the amount of warriors
-        for(let a = 0; 0 < choice; a++){
-            if(temp_army[a]?.alive && temp_army[a] != undefined){
-                return_army[return_army.length] = temp_army[a];
-            }
-                
-        }
-    } else {                                        //Safe
-        console.log("Not valid number, try again.")
-        split_army_input(castle);
-    }
-    return return_army;                     //The amount of warriors we want to move
-    }
+    return alive_in_army;
+}
 
-    /**
-     * When moving a portion of an army, remove those from the old army (stops duplicated warriors).
-     * @param army 
-     */
-    export function remove_warriors(army: Army){
-
-    }
