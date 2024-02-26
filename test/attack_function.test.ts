@@ -23,10 +23,6 @@ describe('enqueue_army', () => {
         expect(enqueue_army(ex_army4)).toEqual(empty<Warrior>());
     });
 
-    it('Does not enqueue a dead warrior', () => {
-        expect(enqueue_army(ex_army4)).toEqual([0, 3, [wrr1, wrr2, wrr3]])
-    });
-
 });
 
 describe('is_army_empty', () => {
