@@ -52,7 +52,6 @@ const mormors_kudde: MatrixGraph = {
 
 let player_list = game_setup();
 export function get_player_list() {
-    console.log("in game.ts inside get_player_list");
     node1 += player_list[0][0][0];
     node2 += player_list[1][0][0];
     node5 += player_list[2][0][0];
