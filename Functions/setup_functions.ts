@@ -144,13 +144,22 @@ export function game_setup(): Array<Player> {
     const player2: Player = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
     const player3: Player = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
 
+    create_player();
+
+    create_ai(); // 
+
     const AI1 : Player = ["CPU1",[create_castle(create_army(), "CPU1", 4)]]
     
     //const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
 
+
+    create_nodes();
+
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
     nodes[4] += name_player3[0];
+
+    create_castles();
 
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
@@ -170,4 +179,21 @@ export function game_setup(): Array<Player> {
 
     return [player1, player2, player3,AI1];
 }
+
+
+export function create_ai(){
+
+}
+
+export function create_nodes(player_list : Array<Player>){
+        for (let i = 0; i < player_list.length; i++) { // loop over the amount of players
+            const cst_num = player_list[i][1]
+            nodes[] += // adds the first letter to the nodes
+        }
+}
+
+export function create_castles() {
+
+}
+
 
