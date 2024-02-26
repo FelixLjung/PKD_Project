@@ -236,6 +236,11 @@ export function move(move_from: Castle, move_to: Castle): void {
             defending_player = player_list[i];
         }
     }
+    const split = split_army(move_from);
+    attacking_player![1][move_from.position -1]!.hp = split[0];
+
+  
+    
 
 
     function get_player_from_castle(castle: Castle) {
@@ -255,7 +260,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     }
 
     //console.log("VI är i move");
-
+    attacking_player![1][move_from.position -1]!.hp = split[1];
 
 }
 
@@ -437,30 +442,38 @@ export function alive_in_army(castle: Castle): Army{
  * @param castle 
  * @returns 
  */
-export function split_army(castle: Castle): Army {
+export function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
-    const return_army: Army = []            //The warriors that we're moving
+    const pair_army: Array<Army> = []
     let alive_army = alive_in_army(castle);
+    const army: Army = castle.hp;
     
     
     while (bool) {              //This loop is for dividing the army into two.
         //Invariant choice got to be number!
         console.log("Your army has", alive_army.length, "warriors...");
-        const choice = prompt("How many warriors would you like to move?: ");
-        let num: number = parseInt(choice); 
-        if (num > 0 && num <= alive_in_army.length) {       //Choose the amount of warriors
-            for (let a = 0; 0 < num; a++) {
-                if (alive_army[a]?.alive && alive_army[a] != undefined) {
-                    return_army[return_army.length] = alive_army[a];
-                }
-            }
+        const choice:string = prompt("How many warriors would you like to move?: ");
+ 
+        if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) {       //Choose the amount of warriors
+            let num: number = parseInt(choice); 
+            let move_a = army.slice(0, num);
+            let stay_a = army.slice(num, army.length);
+            pair_army[0] = move_a;
+            pair_army[1] = stay_a;
+            
+//            for (let a = 0; 0 < num; a++) {
+//                if (alive_army[a]?.alive && alive_army[a] != undefined) {
+//                    move_army[move_army.length] = alive_army[a];
+//                }
+//                
+//            }
             bool = false;
-
-        } else {
+        }
+        else {
             console.log("Not valid number, try again.");
         }
     }
-    return return_army; //The amount of warriors we want to move
+    return pair_army; //The amount of warriors we want to move
 }
 
 

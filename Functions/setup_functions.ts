@@ -134,6 +134,7 @@ export function pick_player_name(name: string): string{
 const p1: string = "Teachers";
 const p2: string = "Students";
 const p3: string = "Assistants"
+const ai_name_1: string = "CPU1"
 
 /**
  * Pick your King, and creates your army
@@ -145,16 +146,17 @@ export function game_setup(): Array<Player> {
     const name_player1: string = pick_player_name(p1);
     const name_player2: string = pick_player_name(p2);
     const name_player3: string = pick_player_name(p3);
+    const cpu_name:string = pick_player_name(ai_name_1);
     
     //const player1 : Player = [name_player1 , [(create_castle(create_army(), name_player1, 1))]];
     const player1: Player = create_player(name_player1, 1);
     const player2: Player = create_player(name_player2, 2);
     const player3: Player = create_player(name_player2, 5);
 
-    create_ai(); // 
+    //create_ai();
 
     const AI1 : Player = ["CPU1",[create_castle(create_army(), "CPU1", 4)]]
-    
+    const AI01 : Player = create_player(cpu_name, 4);
     //const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
 
 
@@ -164,7 +166,7 @@ export function game_setup(): Array<Player> {
     nodes[1] += name_player2[0];
     nodes[4] += name_player3[0];
 
-    create_castles();
+    //create_castles();
 
     castles[0] = player1[1][0]!;
     castles[1] = player2[1][0]!;
