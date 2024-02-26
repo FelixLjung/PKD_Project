@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.game_setup = exports.get_castle_array = exports.create_army = exports.create_warrior = exports.create_castle = exports.mormors_kudde = void 0;
+exports.create_castles = exports.create_ai = exports.game_setup = exports.pick_player_name = exports.create_player = exports.starting_node = exports.get_castle_array = exports.create_army = exports.create_warrior = exports.create_castle = exports.mormors_kudde = void 0;
 var general_functions_1 = require("./general_functions");
+var list_1 = require("../lib/list");
 // Variables
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 var I = true;
@@ -52,9 +53,9 @@ exports.create_castle = create_castle;
  * Creates a warrior (dictionary) with name, attack damage and health
  * @returns a Warrior
  */
-function create_warrior() {
+function create_warrior(attack, health) {
     var name = (0, general_functions_1.get_name)();
-    var warrior = { attack: 5, health: 100, name: name };
+    var warrior = { attack: attack, health: health, name: name, alive: true };
     return warrior;
 }
 exports.create_warrior = create_warrior;
@@ -64,7 +65,7 @@ exports.create_warrior = create_warrior;
  * @returns
  */
 function create_army() {
-    var army = [create_warrior()];
+    var army = [create_warrior((0, general_functions_1.getRandomInt)(1, 5), (0, general_functions_1.getRandomInt)(50, 100))];
     return army;
 }
 exports.create_army = create_army;
@@ -72,29 +73,79 @@ function get_castle_array() {
     return castles;
 }
 exports.get_castle_array = get_castle_array;
+function amount_of_players() {
+    var num_players = prompt("How many are playing?: ");
+    return num_players;
+}
+function read_player_names(num) {
+    var player_lst = (0, list_1.list)();
+    if (1 <= num && num <= 3) {
+        for (var n = 1; n < num; n++) {
+            var name_player = prompt("Name: ");
+        }
+    }
+}
+function starting_node() {
+}
+exports.starting_node = starting_node;
+/**
+ * Creates a player, who is a pair whose head is a string and tail is an array of Castles.
+ * @param name is a string
+ * @param num_players is a number
+ */
+function create_player(name, node) {
+    var player = [name, [(create_castle(create_army(), name, 1))]]; // Siffran är NODE, får ej vara hårdkodad!
+    return player;
+}
+exports.create_player = create_player;
+function pick_player_name(name) {
+    return name;
+}
+exports.pick_player_name = pick_player_name;
+var p1 = "Teachers";
+var p2 = "Students";
+var p3 = "Assistants";
 /**
  * Pick your King, and creates your army
  * @returns A complete setup of the game
  */
 function game_setup() {
-    var name_player1 = prompt("Enter player 1 name: ");
-    var name_player2 = prompt("Enter player 2 name: ");
-    var name_player3 = prompt("Enter player 3 name: ");
-    //const player1 : Player = [name_player1! , [(create_castle(create_army(), name_player1, 1))]];
-    var player1 = [name_player1, [(create_castle(create_army(), name_player1, 1)), (create_castle(create_army(), name_player1, 3))]];
-    var player2 = [name_player2, [(create_castle(create_army(), name_player2, 2))]];
-    var player3 = [name_player3, [(create_castle(create_army(), name_player3, 5))]];
+    var name_player1 = pick_player_name(p1);
+    var name_player2 = pick_player_name(p2);
+    var name_player3 = pick_player_name(p3);
+    //const player1 : Player = [name_player1 , [(create_castle(create_army(), name_player1, 1))]];
+    var player1 = create_player(name_player1, 1);
+    var player2 = create_player(name_player2, 2);
+    var player3 = create_player(name_player2, 5);
+    create_ai(); // 
     var AI1 = ["CPU1", [create_castle(create_army(), "CPU1", 4)]];
+    //const AI2 : Player = ["CPU2",[create_castle(create_army(), "Cpu2", 3)]]
+    //create_nodes();
     nodes[0] += name_player1[0];
     nodes[1] += name_player2[0];
     nodes[4] += name_player3[0];
+    create_castles();
     castles[0] = player1[1][0];
     castles[1] = player2[1][0];
     castles[4] = player3[1][0];
-    castles[2] = player1[1][1];
+    castles[2] = player1[1][1]; // byt dessa ifall player1 har två castles
+    //castles[2] = AI2[1][0]!;
     castles[3] = AI1[1][0];
     //castles[3] = create_castle(create_army(), "AI", 3);
-    //const AI2 : Player = ["AI2",[create_castle(create_army(), "AI2", 3)]]
-    return [player1, player2, player3];
+    return [player1, player2, player3, AI1];
 }
 exports.game_setup = game_setup;
+function create_ai() {
+}
+exports.create_ai = create_ai;
+/*
+export function create_nodes(player_list : Array<Player>){
+        for (let i = 0; i < player_list.length; i++) { // loop over the amount of players
+            const cst_num = player_list[i][1]
+            nodes[] += // adds the first letter to the nodes
+        }
+}
+*/
+function create_castles() {
+}
+exports.create_castles = create_castles;

@@ -16,7 +16,7 @@ let node5 = "5";
 let node3 = "3x";
 let node4 = "4x";
 
-let nodes = [node1,node2,node3,node4,node5];
+let nodes = [node1, node2, node3, node4, node5];
 
 let map1 = [
     [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
