@@ -71,7 +71,9 @@ export let w_names: Queue<string> = [0,
         "Johanna Grönsaksson",
         "Henning Bollmark",
         "Krudel Haestre",
-        "Movitz Movitsson"]];
+        "Movitz Movitsson",
+        "Ronken av Bonken",
+        "Dani af Ljusdal"]];
 
 
 
@@ -421,7 +423,7 @@ export function split_army(castle: Castle): Army {
     let bool = true                         //For the while loop
     const all_in_army: Army = [];           //temporary array of warriors (all alive warriors)
     const return_army: Army = [];           //The warriors that we're moving
-    let troops = castle.hp
+    
     while (bool) {
         console.log("Your army has", all_in_army.length, "warriors...");
         const choice = prompt("How many warriors would you like to move?: ") as number;
@@ -446,7 +448,7 @@ export function split_army(castle: Castle): Army {
  * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
  * @param army 
  */
-export function remove_dead_warriors(army: Army): Army {
+export function remove_dead(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
     if(army.length == 0){
         army = [];
