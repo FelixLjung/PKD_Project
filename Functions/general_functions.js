@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove_dead = exports.split_army = exports.alive_in_army = exports.count_castles = exports.get_name = exports.remove_player = exports.army_size = exports.recruit_warrior = exports.castle_turn = exports.check_if_cpu = exports.turn = exports.move = exports.finds_paths = exports.get_order_castles = exports.train_warrior = exports.getRandomInt = exports.w_names = void 0;
+exports.remove_dead = exports.split_army = exports.count_castles = exports.get_name = exports.remove_player = exports.army_size = exports.recruit_warrior = exports.castle_turn = exports.check_if_cpu = exports.turn = exports.move = exports.finds_paths = exports.get_order_castles = exports.train_warrior = exports.getRandomInt = exports.w_names = void 0;
+exports.remove_dead = exports.split_army = exports.alive_in_army = exports.count_castles = exports.remove_dead_warriors = exports.split_army = exports.count_castles = exports.get_name = exports.remove_player = exports.army_size = exports.recruit_warrior = exports.castle_turn = exports.check_if_cpu = exports.check_if_cpu = exports.turn = exports.move = exports.finds_paths = exports.get_order_order_castles = exports.train_warrior = exports.getRandomInt = exports.w_names = exports.w_names = void 0;
 var queue_array_1 = require("../lib/queue_array");
 var list_1 = require("../lib/list");
 var game_1 = require("../game");
