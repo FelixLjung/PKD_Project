@@ -243,7 +243,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     //attacking_player![1][move_from.position - 1]!.hp = split[0];
     //attacking_player![1][move_from.position - 1]!.hp = split[0];
     const moving_army = split[0];
-    const staying_army = split[1];
+    //const staying_army = split[1];
   
 
 
@@ -490,6 +490,10 @@ export function split_army(castle: Castle): Array<Army> {
  * @param a2 is an Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
+    if(a2 == undefined){
+        return a1
+    }
+    
     let new_army: Army = a1;
     const combined: number = a1.length + a2.length;
     for(let w = 0; w < a2.length; w++){
