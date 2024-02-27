@@ -231,14 +231,9 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     const winner : Pair<Boolean, Army> = helper(army, castle);
     if (winner[0]) {
-        //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-        //console.log(defending_player[0]);
-        console.log("innan castle_owner");
-        console.log(defending_player); 
-        castle_owner(castle, attacking_player, defending_player, winner[1] ); // Denna funkar inte med botar
-        console.log("efter castle_owner")
-        //console.log("V vann");
+        castle_owner(castle, attacking_player, defending_player, winner[1]);
+
         prompt();
         console.log(tail(winner));
         return (remove_dead(tail(winner))); 
