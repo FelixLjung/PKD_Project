@@ -5,7 +5,7 @@ import {
 
 import { type MatrixGraph } from '../lib/graphs';
 
-import { type List, tail, is_null, head as l_head, list } from '../lib/list'
+import { type List, tail, is_null, head as l_head, list, remove } from '../lib/list'
 
 import {
     type Warrior, type Army, type Player, type Castle
@@ -92,8 +92,8 @@ export function getRandomInt(min: number, max: number): number {
 /**
  * Improves every warrior in an armys stats 
  * @param army The army that gets trained
+ * @returns the trained Army.
  */
-
 export function train_warrior(army: Army): Army {
     const temp_arr: Army = []
     let j = 0;
@@ -106,7 +106,7 @@ export function train_warrior(army: Army): Army {
         }
 
         else {
-            cur_war.attack = cur_war.attack + getRandomInt(5, 8);
+            cur_war.attack = cur_war.attack + getRandomInt(4, 7);
             cur_war.health = cur_war.health + getRandomInt(5, 10); 
             temp_arr[j] = cur_war;
             j++
@@ -334,7 +334,7 @@ export function castle_turn(player: Player, castle: Castle) {
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {
             //console.clear();
-
+            remove_dead(castle.hp);
             let paths = finds_paths(castle!, mormors_kudde); // Första castle
             console.log("You can move to the following castles: ", paths);
             let choice: number = prompt("Choose your destination: ") as number;
@@ -350,12 +350,11 @@ export function castle_turn(player: Player, castle: Castle) {
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
             //}
-            console.log(player[1][0]!.hp);
+            remove_dead(castle.hp);
             let trained_army: Army = train_warrior(castle.hp);
             console.log("-----------------");
             console.log(trained_army);
             console.log("-----------------");
-            console.log(castle.hp);
             bool = false;
             //return {}
         }
@@ -379,7 +378,7 @@ export function recruit_warrior(castle: Castle) {
         castle.hp[castle.hp.length] = create_warrior(7, 75);
     }
     else if (num == 3) {
-        castle.hp[castle.hp.length] = create_warrior(10, 55);
+        castle.hp[castle.hp.length] = create_warrior(12, 50);
     }
 }
 

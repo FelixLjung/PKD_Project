@@ -64,9 +64,13 @@ export function death_text(dead: Warrior, killer: Warrior) {
                                 "got stabbed by",
                                 "got schooled by",
                                 "got gob smacked by",
-                                "got his manhood fried by"];
+                                "got their lunch stolen by",
+                                "fell by the blade of",
+                                "got their face bashed in by",
+                                "was gutted by",
+                                "got bored to death by conversing with"];
 
-    let curr_event = strings[getRandomInt(0, 7)];
+    let curr_event = strings[getRandomInt(0, 11)];
     console.log();
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log();
