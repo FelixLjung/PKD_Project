@@ -3,7 +3,7 @@ import { Queue } from "./lib/queue_array";
 
 export type Army = Array<Warrior>;
 
-export type attack_army = Queue<Warrior>;
+export type AttackArmy = Queue<Warrior>;
 
 export type Player = [string, Array<Castle | undefined> ];
 

@@ -1,6 +1,6 @@
 import {type Army, type Castle, type Warrior, type Player} from '../types';
 import { MatrixGraph } from '../lib/graphs';
-import {getRandomInt, get_name} from './general_functions'
+import {get_random_int, get_name} from './general_functions'
 import { read } from 'fs';
 import {type List, head, tail, list, append } from '../lib/list';
 
@@ -86,9 +86,9 @@ export function create_warrior(attack: number, health: number): Warrior {
  * @returns 
  */
 export function create_army(): Army {
-    let army: Army = [create_warrior(getRandomInt(3,5), getRandomInt(50, 100)),
-                      create_warrior(getRandomInt(3,5), getRandomInt(50, 100)),
-                      create_warrior(getRandomInt(3,5), getRandomInt(50, 100)) ];
+    let army: Army = [create_warrior(get_random_int(3,5), get_random_int(50, 100)),
+                      create_warrior(get_random_int(3,5), get_random_int(50, 100)),
+                      create_warrior(get_random_int(3,5), get_random_int(50, 100)) ];
 
     return army;
 }
@@ -193,7 +193,7 @@ export function game_setup(): Array<Player> {
 }
 
 
-export function create_ai(){
+function create_ai(){
 
 }
 

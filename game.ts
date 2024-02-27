@@ -4,7 +4,7 @@ import { type MatrixGraph } from './lib/graphs';
 
 import {type List, type Pair, list, head, tail, pair} from './lib/list';
 
-import { getRandomInt, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
+import { get_random_int, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
 import {game_setup, get_castle_array } from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
 

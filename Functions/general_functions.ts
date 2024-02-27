@@ -85,7 +85,7 @@ export let w_names: Queue<string> = [0,
  * @param max is a {number}. Represents the hightes number on the die
  * @returns a random number / integer.
  */
-export function getRandomInt(min: number, max: number): number {
+export function get_random_int(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
@@ -99,15 +99,11 @@ export function train_warrior(army: Army): Army {
     let j = 0;
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
-        if (cur_war == undefined) {
+        if (cur_war == undefined || cur_war.alive == false) {
             continue;
-        } else if(cur_war.alive == false){
-            continue;
-        }
-
-        else {
-            cur_war.attack = cur_war.attack + getRandomInt(4, 7);
-            cur_war.health = cur_war.health + getRandomInt(5, 10); 
+        } else {
+            cur_war.attack = cur_war.attack + get_random_int(4, 7);
+            cur_war.health = cur_war.health + get_random_int(5, 10); 
             temp_arr[j] = cur_war;
             j++
         }
@@ -223,8 +219,6 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
  * @returns void
  */
 export function move(move_from: Castle, move_to: Castle): void {
-    print_board();
-
     const player_from: string = move_from.owner;
     let survivors : Army = [];
     //console.log(move_from);
@@ -334,7 +328,7 @@ export function castle_turn(player: Player, castle: Castle) {
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {
             //console.clear();
-            remove_dead(castle.hp);
+            castle.hp = remove_dead(castle.hp);
             let paths = finds_paths(castle!, mormors_kudde); // Första castle
             console.log("You can move to the following castles: ", paths);
             let choice: number = prompt("Choose your destination: ") as number;
@@ -350,7 +344,7 @@ export function castle_turn(player: Player, castle: Castle) {
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
             //}
-            remove_dead(castle.hp);
+            castle.hp = remove_dead(castle.hp);
             let trained_army: Army = train_warrior(castle.hp);
             console.log("-----------------");
             console.log(trained_army);
@@ -370,7 +364,7 @@ export function castle_turn(player: Player, castle: Castle) {
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    let num = getRandomInt(1, 3);
+    let num = get_random_int(1, 3);
     if (num == 1) {
         castle.hp[castle.hp.length] = create_warrior(5, 100);
     }
@@ -525,8 +519,7 @@ export function remove_dead(army: Army): Army {
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
         if (army[i]?.alive) {
             alive_in_army[j] = army[i];
-        }
-        else {
+        } else {
             continue;
         }
         j++
