@@ -94,18 +94,25 @@ export function getRandomInt(min: number, max: number): number {
  * @param army The army that gets trained
  */
 
-export function train_warrior(army: Army) {
+export function train_warrior(army: Army): Army {
+    const temp_arr: Army = []
+    let j = 0;
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
         if (cur_war == undefined) {
             continue;
+        } else if(cur_war.alive == false){
+            continue;
         }
 
         else {
-            cur_war!.attack = cur_war!.attack + getRandomInt(5, 8);
-            cur_war!.health = cur_war!.health + getRandomInt(5, 10)
+            cur_war.attack = cur_war.attack + getRandomInt(5, 8);
+            cur_war.health = cur_war.health + getRandomInt(5, 10); 
+            temp_arr[j] = cur_war;
+            j++
         }
     }
+    return temp_arr;
 }
 
 /**
@@ -340,10 +347,14 @@ export function castle_turn(player: Player, castle: Castle) {
 
         } else if (choice === "2") {
             console.log('You are training:')
-            for (let i = 0; i < player[1][0]!.hp.length; i++) {
-                console.log(player[1][0]!.hp[i]!.name);
-            }
-            train_warrior(castle.hp);
+            //for (let i = 0; i < player[1][0]!.hp.length; i++) {
+            //    console.log(player[1][0]!.hp[i]!.name);
+            //}
+            console.log(player[1][0]!.hp);
+            let trained_army: Army = train_warrior(castle.hp);
+            console.log("-----------------");
+            console.log(trained_army);
+            console.log("-----------------");
             console.log(castle.hp);
             bool = false;
             //return {}
@@ -508,16 +519,18 @@ export function merge_army(a1:Army, a2: Army): Army{
  */
 export function remove_dead(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
+    let j = 0;
     if(army.length == 0){
         return army = alive_in_army;
     }
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
         if (army[i]?.alive) {
-            alive_in_army[alive_in_army.length] = army[i];
+            alive_in_army[j] = army[i];
         }
         else {
             continue;
         }
+        j++
     }
     return alive_in_army;
 

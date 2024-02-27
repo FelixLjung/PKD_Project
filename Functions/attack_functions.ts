@@ -240,7 +240,8 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         console.log("efter castle_owner")
         //console.log("V vann");
         prompt();
-        return (tail(winner)); 
+        console.log(tail(winner));
+        return (remove_dead(tail(winner))); 
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         castle.hp = winner[1];
