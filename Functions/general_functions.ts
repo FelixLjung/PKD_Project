@@ -339,12 +339,14 @@ export function castle_turn(player: Player, castle: Castle) {
 
 
         } else if (choice === "2") {
-            console.log('You are training:')
-            for (let i = 0; i < player[1][0]!.hp.length; i++) {
-                console.log(player[1][0]!.hp[i]!.name);
-            }
+            console.log('Your new and improved army:')
             train_warrior(castle.hp);
-            console.log(castle.hp);
+            for (let i = 0; i < castle.hp.length; i++) {
+            console.log('Soldier name:', castle.hp[i]!.name,
+            '| Attack strength:', castle.hp[i]!.attack,
+            '| Health:', castle.hp[i]!.health);
+            }
+            prompt();
             bool = false;
             //return {}
         }
