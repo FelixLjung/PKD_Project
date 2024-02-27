@@ -350,12 +350,13 @@ export function castle_turn(player: Player, castle: Castle) {
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
             //}
-            console.log(player[1][0]!.hp);
+            //console.log(player[1][0]!.hp);
             let trained_army: Army = train_warrior(castle.hp);
             console.log("-----------------");
+            //
             console.log(trained_army);
             console.log("-----------------");
-            console.log(castle.hp);
+            //console.log(castle.hp);
             bool = false;
             //return {}
         }
