@@ -425,7 +425,10 @@ function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
 export function recruit_warrior(castle: Castle) {
     let num = get_random_int(0, 2);
     let len = castle.hp.length; //current players castle
-    if (num == 0) {
+    console.log("length of castle.hp.length", len);
+    castle.hp[len] = create_warrior(5, 100);
+    /**
+     *  if (num == 0) {
         castle.hp[len] = create_warrior(5, 100);
     }
     else if (num == 1) {
@@ -434,6 +437,7 @@ export function recruit_warrior(castle: Castle) {
     else if (num == 2) {
         castle.hp[len] = create_warrior(12, 50);
     }
+     */
 }
 
 /**
