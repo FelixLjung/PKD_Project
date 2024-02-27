@@ -139,10 +139,10 @@ function game(){
             if (game_running == true) { 
                 for (let i = 0; i < get_castle_array().length; i++){
                     if (!check_if_cpu(get_castle_array()[i].owner)) {
-                        console.log("All castles recruits a new warrior!");
-                        recruit_warrior(get_castle_array()[i]);
+                        recruit_warrior(get_castle_array()[i]);     //recruits one warrior to each castle.
                     } 
                 }
+                console.log("All castles recruits a new warrior!");
             }
 }}
 

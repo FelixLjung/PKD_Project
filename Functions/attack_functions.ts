@@ -57,23 +57,40 @@ export function remake_warrior(dead: Warrior, army: Army) {
  * @param killer - the warrior who killed the other warrior
  */
 export function death_text(dead: Warrior, killer: Warrior) {
-    const strings: Array<string> = ["has been slain by", 
-                                "got skewered by",
-                                "was defeated by", 
-                                "got stabbed by",
-                                "got schooled by",
-                                "got gob smacked by",
-                                "got their lunch stolen by",
-                                "fell by the blade of",
-                                "got their face bashed in by",
-                                "was gutted by",
-                                "got bored to death by conversing with"];
+    let d_name: string = dead.name;
+    let k_name: string = killer.name;
+    const strings: Array<string> = [`${d_name} has been slain by ${k_name}`,        //26 different texts
+                                `${d_name} got skewered by ${k_name}`,
+                                `${d_name} was defeated by ${k_name}`, 
+                                `${killer} poked a hole in ${dead}'s throat`,
+                                `${dead} was schooled by ${killer}`,
+                                `${dead} got gob smacked by ${killer}`,
+                                `${k_name} stole ${d_name}'s lunch!`,
+                                `${d_name} took their last breath!`,
+                                `${k_name} bashed in ${d_name}'s skull`,
+                                `${d_name} got trampled on the battlefield.`,
+                                `${d_name} died of conversing with ${k_name}`,
+                                `${d_name} got reduced to rubble.`,
+                                `${d_name} recieved a spanking by ${k_name}`,
+                                `${k_name} crossed their fingers and ${d_name}'s lungs had no more to give`,
+                                `${d_name} got thousand neddled by ${k_name}`,
+                                `${d_name} lifespan was dramatically shorted by ${k_name}`,
+                                `${d_name} got unalived`,
+                                `${d_name} uttered on their dying breath: What an unfortunate situation i've put myself in`,
+                                `${d_name} got Alt F4'd`,
+                                `${k_name}deleted ${d_name}'s kneecaps`,
+                                `${d_name} died of an allergic reaction!`,
+                                `${d_name} laughed so hard, he vanished!`,
+                                `${k_name} slapped ${d_name}'s face into oblivion`,
+                                `${d_name} got stuck in an infinite loop!`,
+                                `${k_name} broke ${d_name}'s back!`,
+                                `${d_name} got sent to bed by ${k_name}`];
 
-    let curr_event = strings[get_random_int(0, 11)];
+    let curr_event = strings[get_random_int(0, 25)];
     console.log();
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log();
-    console.log(dead.name, curr_event, killer.name);
+    console.log(curr_event);
     console.log();
 }
 
