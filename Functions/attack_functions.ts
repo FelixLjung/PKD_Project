@@ -1,7 +1,7 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { getRandomInt, get_order_castles, remove_dead} from "./general_functions";
+import { army_size, get_random_int, get_order_castles, remove_dead} from "./general_functions";
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
@@ -35,8 +35,7 @@ function unalive_warrior(dead: Warrior, army: Army){
         if(army[i]?.name == dead.name){
             army[i]!.alive = false; // denna är fugged
             remake_warrior(dead, army);
-        }
-        else{}
+        } else{}
     }
 }
 
@@ -70,7 +69,7 @@ export function death_text(dead: Warrior, killer: Warrior) {
                                 "was gutted by",
                                 "got bored to death by conversing with"];
 
-    let curr_event = strings[getRandomInt(0, 11)];
+    let curr_event = strings[get_random_int(0, 11)];
     console.log();
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log();
@@ -171,7 +170,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         while (true) {
             //await delay(1000);
             //await new Promise(f => setTimeout(f, 1000));
-            attacker.health -= defender.attack * getRandomInt(0, 4);
+            attacker.health -= defender.attack * get_random_int(0, 4);
             if (attacker.health <= 0) {
                 death_text(attacker, defender);
                 unalive_warrior(attacker, army);
@@ -180,7 +179,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 return true;
             }
-            defender.health -= attacker.attack * getRandomInt(0, 4);
+            defender.health -= attacker.attack * get_random_int(0, 4);
             if (defender.health <= 0) {
                 death_text(defender, attacker);
                 unalive_warrior(defender, castle_army.hp);
@@ -264,4 +263,4 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return q[2];
     }
 
-}
+} 
