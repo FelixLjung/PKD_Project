@@ -2,7 +2,7 @@ import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
 import { getRandomInt, get_order_castles, remove_dead} from "./general_functions";
-import { get_castle_array } from "./setup_functions";
+import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
 
@@ -220,14 +220,11 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
         }
 
-       
-
-    
-        
         if (is_army_empty(defenders)) {
-            return pair(true, attackers[2]);
+            console.log(attackers);
+            return pair(true, queue_to_array(attackers)); // returns true if the attackers won together with the remaining attacking army.
         } else {
-            return pair(false, defenders[2]);
+            return pair(false, queue_to_array(defenders)); // returns false if the defenders win together with the remaining defending army.
         }
         
     }
@@ -237,7 +234,10 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         //console.log("TEst vi kom förbi");
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //console.log(defending_player[0]);
-        castle_owner(castle, attacking_player, defending_player, army); // Denna funkar inte med botar
+        console.log("innan castle_owner");
+        console.log(defending_player); 
+        castle_owner(castle, attacking_player, defending_player, winner[1] ); // Denna funkar inte med botar
+        console.log("efter castle_owner")
         //console.log("V vann");
         prompt();
         return (tail(winner)); 
@@ -247,6 +247,8 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
         prompt();
     }
+
+    return create_army();
 
     function delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
