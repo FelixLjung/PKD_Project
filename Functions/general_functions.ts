@@ -30,6 +30,7 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
+import path = require('path');
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -330,14 +331,24 @@ export function castle_turn(player: Player, castle: Castle) {
             //console.clear();
             castle.hp = remove_dead(castle.hp);
             let paths = finds_paths(castle!, mormors_kudde); // Första castle
-            console.log("You can move to the following castles: ", paths);
-            let choice: number = prompt("Choose your destination: ") as number;
-
-            let castle_to: Castle = get_castle_array()[choice - 1]; // fixa get funktions
-            //console.log(castle_to);
-            bool = false;
-            move(castle!, castle_to);
-
+            while(bool){
+                console.log("You can move to the following castles: ", paths);
+                let choice = prompt("Choose your destination: ") as number; //Invariant must be number
+                if(is_choice_in_paths(paths, choice)){
+                    for(let i = 0; i < paths.length; i++){
+                        if(choice == paths[i]){
+                            let castle_to: Castle = get_castle_array()[choice - 1]; // fixa get funktions
+                            //console.log(castle_to);
+                            bool = false;
+                            move(castle!, castle_to);
+                        } else{
+                            continue
+                        }
+                    } 
+                }else{                  //Fail safe
+                    console.log("Invalid move, try again!");
+                }
+            }
 
         } else if (choice === "2") {
             console.log('You are training:')
@@ -358,6 +369,24 @@ export function castle_turn(player: Player, castle: Castle) {
     }
 
 }
+
+/**
+ * Checks if atrue if choice exists in the array paths. False if it doesn't
+ * @param paths an array of numbers (nodes)
+ * @returns a boolean
+ */
+function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
+    let bool = true;        // Bool that changes when requirement is met
+        for(let i = 0; i < paths.length; i++){
+            if(choice == paths[i]){
+                bool = false;
+                return true
+            } else{
+                continue;
+            }
+        }
+    return false;   // if choice is not a possible path
+    }
 
 /**
  * Recruits a new warrior to a castle
