@@ -234,7 +234,8 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         castle_owner(castle, attacking_player, defending_player, winner[1]);
 
         prompt();
-        return (tail(winner)); 
+        console.log(tail(winner));
+        return (remove_dead(tail(winner))); 
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         console.log('But', army[0].name, 'managed to inform us of the enemy army before falling:');
