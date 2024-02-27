@@ -31,6 +31,7 @@ import {
     mormors_kudde
 } from './setup_functions'
 import path = require('path');
+import { clear } from 'console';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -128,7 +129,7 @@ export function train_warrior(army: Army): Army {
         if (cur_war == undefined || cur_war.alive == false) {
             continue;
         } else {
-            cur_war.attack = cur_war.attack + get_random_int(4, 7);
+            cur_war.attack = cur_war.attack + get_random_int(1, 4);
             cur_war.health = cur_war.health + get_random_int(5, 10); 
             temp_arr[j] = cur_war;
             j++
@@ -265,8 +266,8 @@ export function move(move_from: Castle, move_to: Castle): void {
         }
     }
     const split = split_army(move_from);        //Här splittas Attacking army i två [0 = moving, 1 = staying]
-    console.log(move_from.position);
-    console.log(attacking_player![1]);
+    //console.log(move_from.position);
+    //console.log(attacking_player![1]);
     //attacking_player![1][move_from.position - 1]!.hp = split[0];
     //attacking_player![1][move_from.position - 1]!.hp = split[0];
     const moving_army = split[0];
@@ -341,15 +342,16 @@ export function check_if_cpu(player: Player | string): boolean {
  */
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
+    print_board();
     while (bool) {
-        print_board();
         //let text1 = "currently in"
         console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m');
         print_army(castle);
         console.log("What is your command, king ", player[0], "..?");
-        console.log("1 : Move Army");
-        console.log("2: Train Army");
-        const choice = prompt(); // Här borde vi ha något som dubbelkollar att inputen är valid
+        console.log();
+        console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Red
+        console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Green
+        const choice = prompt("  : "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {
@@ -370,8 +372,9 @@ export function castle_turn(player: Player, castle: Castle) {
                             continue
                         }
                     } 
-                }else{                  //Fail safe
+                } else{                  //Fail safe
                     console.log("Invalid move, try again!");
+                    prompt("press Enter:");
                 }
             }
 
@@ -390,15 +393,17 @@ export function castle_turn(player: Player, castle: Castle) {
         }
         else {
             console.log("Input is not valid, try again!");
+            prompt("press Enter: ");
+            console.clear();
         }
     }
 
 }
 
 /**
- * Checks if atrue if choice exists in the array paths. False if it doesn't
+ * Checks if choice exists in the paths array.
  * @param paths an array of numbers (nodes)
- * @returns a boolean
+ * @returns a boolean (true if choice is in paths)
  */
 function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
     let bool = true;        // Bool that changes when requirement is met
@@ -418,15 +423,16 @@ function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    let num = get_random_int(1, 3);
-    if (num == 1) {
-        castle.hp[castle.hp.length] = create_warrior(5, 100);
+    let num = get_random_int(0, 2);
+    let len = castle.hp.length; //current players castle
+    if (num == 0) {
+        castle.hp[len] = create_warrior(5, 100);
+    }
+    else if (num == 1) {
+        castle.hp[len] = create_warrior(7, 75);
     }
     else if (num == 2) {
-        castle.hp[castle.hp.length] = create_warrior(7, 75);
-    }
-    else if (num == 3) {
-        castle.hp[castle.hp.length] = create_warrior(12, 50);
+        castle.hp[len] = create_warrior(12, 50);
     }
 }
 
@@ -434,26 +440,18 @@ export function recruit_warrior(castle: Castle) {
  * When a warrior dies, it's child gets sent to the possible Warrior names.
  * @param army 
  */
-//export function remake_warrior(army: Army) {
-//    for(let x = 0; x < army.length; x++){
-//        if(army[x] == undefined){
-//            continue;
-//        }
-//        else if(army[x]?.alive == false){
-/*
-if(){
-    
+export function remake_warrior(army: Army) {
+    for(let x = 0; x < army.length; x++){
+        if(army[x] == undefined || army[x].alive == false){
+            continue;
+        }
+        else{
+            let new_name = army[x]?.name + "I";
+            enqueue(new_name, w_names); 
+        }
+    }
 }
-    let new_name = army[x]?.name + "I";
-enqueue(new_name, w_names); 
-*/
-//        }
-//        else{
-//            continue;
-//        }
-//    }
 
-//}
 
 export function army_size() {
 

@@ -60,7 +60,7 @@ let player_list : Array<Player> = [];
 export function a_player_list(player_array : Array<Player>) : Array<Player> {
     player_array = game_setup();
     function helper() {
-        console.log("in game.ts inside get_player_list");
+
         node1 += player_array[0][0][0];
         node2 += player_array[1][0][0];
         node3 += player_array[3][0][0];
@@ -81,7 +81,7 @@ export function get_player_list() {
  * @param player - the player that has been killed
  */
 export function kill_player(player : Player ) {
-    console.log("!");
+//    console.log("!");
     for (let i = 0; i < player_list.length; i++){
         if (player_list[i][0] == player[0]){
             player_list[i][0] = "UNDEFINED";
@@ -108,19 +108,23 @@ game_running = true;
  * The function running the game.
  */
 function game(){
+    console.clear();
     player_list = a_player_list(player_list);
     
     while(game_running){
         //print_board();
+        //console.clear()
+        console.log();
+        console.log();
         refresh_board();
         for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
             //console.log(player_list[i][1][0].hp);
-            print_board();
+            //print_board();
             
-            if (count_castles(player_list[i][1]) == 0 ){
+            if (count_castles(player_list[i][1]) == 0){
                 continue;
             }
-            console.log(player_list[i][0], "turn" );
+            console.log(`\u001b[36m`, player_list[i][0],`\u001b[37m`, "turn");
 
             if (check_if_cpu(player_list[i])){
                 
@@ -134,12 +138,13 @@ function game(){
             }
 
                 //console.clear();
-                console.log("------------------------------------------");
+                console.log("------------------------");
             }
             if (game_running == true) { 
                 for (let i = 0; i < get_castle_array().length; i++){
+                    let curr_player = get_castle_array()[i]
                     if (!check_if_cpu(get_castle_array()[i].owner)) {
-                        recruit_warrior(get_castle_array()[i]);     //recruits one warrior to each castle.
+                        recruit_warrior(curr_player);     //recruits one warrior to each castle.
                     } 
                 }
                 console.log("All castles recruits a new warrior!");
