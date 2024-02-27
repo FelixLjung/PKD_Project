@@ -204,7 +204,6 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         const attackers = enqueue_army(Attacking_army);
         const defenders = enqueue_army(defense_army);
         
-            
         while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
             let curr_attacker: Warrior = head(attackers);
             let curr_defender: Warrior = head(defenders);
@@ -239,6 +238,13 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return (remove_dead(tail(winner))); 
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
+        console.log('But', army[0].name, 'managed to inform us of the enemy army before falling:');
+        for (let i = 0; i < castle.hp.length; i++) {
+            console.log('Soldier name:', castle.hp[i]!.name,
+            '| Attack strength:', castle.hp[i]!.attack,
+            '| Health:', castle.hp[i]!.health);
+            }
+            prompt();
         castle.hp = winner[1];
 
         prompt();
