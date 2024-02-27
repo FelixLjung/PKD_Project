@@ -1,5 +1,5 @@
 import { MatrixGraph } from "../lib/graphs";
-import { finds_paths, getRandomInt, check_if_cpu, remove_dead } from "../Functions/general_functions";
+import { finds_paths, getRandomInt, check_if_cpu, remove_dead, alive_in_army } from "../Functions/general_functions";
 
 import { create_army, create_castle } from "../Functions/setup_functions";
 
@@ -88,3 +88,26 @@ describe('remove_dead', () => {
     });
 
 });
+
+/*
+describe('alive_in_army', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
+    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
+    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : false};
+    const wrr4 : Warrior = {attack : 4, health : 43, name : 'Jingwei', alive : false};
+    const ex_army1 : Army = [wrr1, wrr2, wrr3];
+    const ex_army2 : Army = [wrr3, wrr4];
+    const ex_castle1 : Castle = {hp : ex_army1, owner : 'Alfred', position : 2};
+    const ex_castle2 : Castle = {hp : ex_army2, owner : 'David', position : 1};
+
+    it('Removes a dead warrior from a castle', () => {
+        expect(alive_in_army(ex_castle1)).toBe([wrr1, wrr2]);
+    });
+
+    it('Returns an empty army', () => {
+        expect(alive_in_army(ex_castle2)).toBe([]);
+    });
+
+});
+*/
