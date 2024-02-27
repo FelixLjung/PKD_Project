@@ -344,7 +344,7 @@ export function castle_turn(player: Player, castle: Castle) {
                 console.log(player[1][0]!.hp[i]!.name);
             }
             train_warrior(castle.hp);
-            console.log(castle.hp);
+            //console.log(castle.hp);
             bool = false;
             //return {}
         }
