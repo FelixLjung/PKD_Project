@@ -126,7 +126,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
         if(tail(old_player)[i] == castle) {
-            const name_of_fallen = old_player[i];
+            const name_of_fallen = old_player[i].slice();
             tail(old_player)[i] = undefined;
 
             //console.log(get_order_castles(old_player)[2]);
@@ -134,7 +134,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             if (count_castles(old_player[1]) == 0) { // Checks if player has no castles
 
                 kill_player(old_player);
-                console.log(old_player[0], " has fallen");
+                console.log(name_of_fallen, "has fallen");
                 console.log();
                 //tail(old_player)[i] = undefined;
                 old_player[0] = "UNDEFINED";
