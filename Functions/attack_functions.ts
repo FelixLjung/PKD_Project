@@ -121,7 +121,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     castle.owner = new_player[0];
     castle.hp = army;
 
-    let last_pos = new_player[1].length;
+    let last_pos = new_player[1].length;    //might be able to be a const
     new_player[1][last_pos] = castle;
 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
@@ -261,7 +261,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return (remove_dead_warriors(tail(winner))); 
     } else if (winner[0]) {
         print_to_game("Our army is dead! The battle is lost!");
-        print_to_game('But' + army[0].name + 'managed to inform us of the enemy army before falling:');
+        print_to_game('But' + army[0].name + ' managed to inform us of the enemy army before falling:');
         castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
         for (let i = 0; i < castle.hp.length; i++) {
             print_to_game('Soldier name: ' + castle.hp[i].name +
