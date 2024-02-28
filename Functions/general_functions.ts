@@ -5,7 +5,7 @@ import {
 
 import { type MatrixGraph } from '../lib/graphs';
 
-import { type List, tail, is_null, head as l_head, list } from '../lib/list'
+import { type List, tail, is_null, head as l_head, list, remove } from '../lib/list'
 
 import {
     type Warrior, type Army, type Player, type Castle
@@ -30,6 +30,8 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
+import path = require('path');
+import { clear } from 'console';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -38,12 +40,14 @@ export let w_names: Queue<string> = [0,
     ["Eva Darulova",    // Current: 37 warrrior-names
         "Jingwei Hu",
         "Johannes Borgström",
-        "Carl Erik",
-        "Runar Stenbock",
-        "Sigvard Bjelkengren",
+        "Zhanwei Yu",
+        "Thom Surströmming",
+        "Carl Erik Plopp",
+        "Runar Gravstein",
         "Ernst Greve",
         "Hjalmar Storfot",
-        "Lillemor Hoppetoss",
+        "Bosse Brunklimp",
+        "Lillemor Jumm",
         "Gustav Backlund",
         "Hans Hansson",
         "Frans Storm",
@@ -51,19 +55,19 @@ export let w_names: Queue<string> = [0,
         "Tor Hoppetoss",
         "Fred von Pickelroy",
         "Björn Olmedo",
+        "Xin Shen",
         "Jimmy Viking",
-        "Thom Surströmming",
         "Fredrik Blåtand",
         "Göran Borkavik",
-        "Bosse Brunklimp",
+        "Sigvard Bjelkengren",
         "Hans Hansson",
         "Peter Niclass",
         "Tubbe Tonker",
         "Frans Tonker",
         "Per Jutterström",
-        "Zhangwei",
         "Miro Ali Akbar",
         "Fader Gustav",
+        "Dogge Doggelito",
         "Bartek Bunko",
         "Wille den snygge",
         "Kristian Luuk",
@@ -71,9 +75,32 @@ export let w_names: Queue<string> = [0,
         "Johanna Grönsaksson",
         "Henning Bollmark",
         "Krudel Haestre",
-        "Movitz Movitsson",
-        "Ronken av Bonken",
-        "Dani af Ljusdal"]];
+        "Movitz Grus",
+        "Ronken af Bonken",
+        "Dani af Ljusdal",
+        "Göran Brunklimp",
+        "Junior Brunklimp",
+        "Ash Ketch",
+        "Musk El",
+        "Lars-Åke Nordén",
+        "Helga Hammerhead",
+        "Matilda Mildew",
+        "Oswald the Oblivious",
+        "Cedric the Clumsy",
+        "Gilbert Garlicbreath",
+        "Lil' D Plunderpants",
+        "Ser Loin Raw",
+        "Lord Farquad",
+        "Shrek De la Burro",
+        "Tobias Wrigstad",
+        "David Attenborough",
+        "Teddybjörnen Fredriksson",
+        "Freddy Kalas",
+        "Tomten",
+        "Bert Fylking",
+        "Arne Weise",
+        "Lisa af Bänkpressen",
+        "Göran Pson"]];
 
 
 
@@ -85,29 +112,25 @@ export let w_names: Queue<string> = [0,
  * @param max is a {number}. Represents the hightes number on the die
  * @returns a random number / integer.
  */
-export function getRandomInt(min: number, max: number): number {
+export function get_random_int(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
 /**
  * Improves every warrior in an armys stats 
  * @param army The army that gets trained
+ * @returns the trained Army.
  */
-
 export function train_warrior(army: Army): Army {
     const temp_arr: Army = []
     let j = 0;
     for (let w = 0; w < army.length; w = w + 1) {
         let cur_war = army[w];
-        if (cur_war == undefined) {
+        if (cur_war == undefined || cur_war.alive == false) {
             continue;
-        } else if(cur_war.alive == false){
-            continue;
-        }
-
-        else {
-            cur_war.attack = cur_war.attack + getRandomInt(5, 8);
-            cur_war.health = cur_war.health + getRandomInt(5, 10); 
+        } else {
+            cur_war.attack = cur_war.attack + get_random_int(1, 4);
+            cur_war.health = cur_war.health + get_random_int(5, 10); 
             temp_arr[j] = cur_war;
             j++
         }
@@ -223,8 +246,6 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
  * @returns void
  */
 export function move(move_from: Castle, move_to: Castle): void {
-    print_board();
-
     const player_from: string = move_from.owner;
     let survivors : Army = [];
     //console.log(move_from);
@@ -245,8 +266,8 @@ export function move(move_from: Castle, move_to: Castle): void {
         }
     }
     const split = split_army(move_from);        //Här splittas Attacking army i två [0 = moving, 1 = staying]
-    console.log(move_from.position);
-    console.log(attacking_player![1]);
+    //console.log(move_from.position);
+    //console.log(attacking_player![1]);
     //attacking_player![1][move_from.position - 1]!.hp = split[0];
     //attacking_player![1][move_from.position - 1]!.hp = split[0];
     const moving_army = split[0];
@@ -321,102 +342,124 @@ export function check_if_cpu(player: Player | string): boolean {
  */
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
+    console.log(castle.hp);
+    castle.hp = remove_dead(castle.hp);
+    console.log(castle.hp);
+    print_board();
     while (bool) {
-        print_board();
         //let text1 = "currently in"
         console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m');
         print_army(castle);
         console.log("What is your command, king ", player[0], "..?");
-        console.log("1 : Move Army");
-        console.log("2: Train Army");
-        const choice = prompt(); // Här borde vi ha något som dubbelkollar att inputen är valid
+        console.log();
+        console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Red
+        console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Green
+        const choice = prompt("  : "); // Här borde vi ha något som dubbelkollar att inputen är valid
 
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {
             //console.clear();
-
+            castle.hp = remove_dead(castle.hp);
             let paths = finds_paths(castle!, mormors_kudde); // Första castle
-            console.log("You can move to the following castles: ", paths);
-            let choice: number = prompt("Choose your destination: ") as number;
-
-            let castle_to: Castle = get_castle_array()[choice - 1]; // fixa get funktions
-            //console.log(castle_to);
-            bool = false;
-            move(castle!, castle_to);
-
+            while(bool){
+                console.log("You can move to the following castles: ", paths);
+                let choice = prompt("Choose your destination: ") as number; //Invariant must be number
+                if(is_choice_in_paths(paths, choice)){
+                    for(let i = 0; i < paths.length; i++){
+                        if(choice == paths[i]){
+                            let castle_to: Castle = get_castle_array()[choice - 1]; // fixa get funktions
+                            //console.log(castle_to);
+                            bool = false;
+                            move(castle!, castle_to);
+                            console.log(castle.hp);
+                        } else{
+                            continue
+                        }
+                    } 
+                } else{                  //Fail safe
+                    console.log("Invalid move, try again!");
+                    prompt("press Enter:");
+                }
+            }
 
         } else if (choice === "2") {
             console.log('Your new and improved army:')
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
             //}
-            
-            let temp_array : Army = castle.hp
-
-
-            for (let i = 0; i < castle.hp.length; i++) {
-                temp_array[i] = castle.hp[i];
-            }
-
-            const trained_army : Army = train_warrior(castle.hp);
-            for (let i = 0; i < castle.hp.length; i++) {
-                console.log('Soldier name:', trained_army[i]!.name,
-                '| Attack strength:', temp_array[i].attack, '-->' , trained_army[i]!.attack,
-                '| Health:', temp_array[i].health, '-->', trained_army[i]!.health);
-                }
-                prompt();
-                
+            castle.hp = remove_dead(castle.hp);
+            let trained_army: Army = train_warrior(castle.hp);
+            console.log("-----------------");
+            console.log(trained_army);
+            console.log("-----------------");
             bool = false;
             //return {}
         }
         else {
             console.log("Input is not valid, try again!");
+            prompt("press Enter: ");
+            console.clear();
         }
     }
 
 }
+
+/**
+ * Checks if choice exists in the paths array.
+ * @param paths an array of numbers (nodes)
+ * @returns a boolean (true if choice is in paths)
+ */
+function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
+    let bool = true;        // Bool that changes when requirement is met
+        for(let i = 0; i < paths.length; i++){
+            if(choice == paths[i]){
+                bool = false;
+                return true
+            } else{
+                continue;
+            }
+        }
+    return false;   // if choice is not a possible path
+    }
 
 /**
  * Recruits a new warrior to a castle
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle) {
-    let num = getRandomInt(1, 3);
-    if (num == 1) {
-        castle.hp[castle.hp.length] = create_warrior(5, 100);
+    let num = get_random_int(0, 2);
+    let len = castle.hp.length; //current players castle
+    console.log("length of castle.hp.length", len);
+    castle.hp[len] = create_warrior(5, 100);
+    /**
+     *  if (num == 0) {
+        castle.hp[len] = create_warrior(5, 100);
+    }
+    else if (num == 1) {
+        castle.hp[len] = create_warrior(7, 75);
     }
     else if (num == 2) {
-        castle.hp[castle.hp.length] = create_warrior(7, 75);
+        castle.hp[len] = create_warrior(12, 50);
     }
-    else if (num == 3) {
-        castle.hp[castle.hp.length] = create_warrior(10, 55);
-    }
+     */
 }
 
 /**
  * When a warrior dies, it's child gets sent to the possible Warrior names.
  * @param army 
  */
-//export function remake_warrior(army: Army) {
-//    for(let x = 0; x < army.length; x++){
-//        if(army[x] == undefined){
-//            continue;
-//        }
-//        else if(army[x]?.alive == false){
-/*
-if(){
-    
+export function remake_warrior(army: Army) {
+    for(let x = 0; x < army.length; x++){
+        if(army[x] == undefined || army[x].alive == false){
+            continue;
+        }
+        else{
+            let new_name = army[x]?.name + "I";
+            enqueue(new_name, w_names); 
+        }
+    }
 }
-    let new_name = army[x]?.name + "I";
-enqueue(new_name, w_names); 
-*/
-//        }
-//        else{
-//            continue;
-//        }
-//    }
 
-//}
 
 export function army_size() {
 
@@ -536,8 +579,7 @@ export function remove_dead_warriors(army: Army): Army {
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
         if (army[i]?.alive) {
             alive_in_army[j] = army[i];
-        }
-        else {
+        } else {
             continue;
         }
         j++
