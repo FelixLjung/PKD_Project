@@ -10,6 +10,8 @@ import { refresh_board, print_board } from './Functions/print_functions';
 
 import { type Player } from './types';
 
+
+const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 //console.log("GAME.ts")
 // start nodes
 let node1 = "1";
@@ -115,7 +117,7 @@ function game(){
         refresh_board();
         for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
             //console.log(player_list[i][1][0].hp);
-            print_board();
+            //print_board();
             
             if (count_castles(player_list[i][1]) == 0 ){
                 continue;
@@ -126,6 +128,7 @@ function game(){
                 
             } else {
                 turn(player_list[i]);
+                prompt("Your turn is finished");
             }
             
             if (count_castles(player_list[i][1]) == 5) {
