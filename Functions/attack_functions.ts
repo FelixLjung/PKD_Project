@@ -244,7 +244,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             '| Attack strength:', castle.hp[i]!.attack,
             '| Health:', castle.hp[i]!.health);
             }
-            prompt();
+        //prompt();
         castle.hp = winner[1];
 
         prompt();
@@ -253,6 +253,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     return create_army();
 
     function delay(ms: number) {
+        // denna kommer nog inte användas alls 
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
