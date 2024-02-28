@@ -277,7 +277,9 @@ export function move(move_from: Castle, move_to: Castle): void {
     console.log(" De som FLYTTAS",moving_army);
     const staying_army = split[1];
     console.log(" De som STANNAR", staying_army);
-    move_from.hp = staying_army;
+    move_from.hp = staying_army; // De som ska stanna stannar, 
+                                 //denna gjordes förut bara när man rörde sig till sitt egna castle,
+                                 // inte när man attackerade, staying army ska ju alltid staya 
 
     if (player_from != player_to) {         // if we find an opponent
         print_to_game(move_from.owner +  " has declared war against " +  move_to.owner);
