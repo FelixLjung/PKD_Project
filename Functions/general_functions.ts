@@ -342,6 +342,9 @@ export function check_if_cpu(player: Player | string): boolean {
  */
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
+    console.log(castle.hp);
+    castle.hp = remove_dead(castle.hp);
+    console.log(castle.hp);
     print_board();
     while (bool) {
         //let text1 = "currently in"
@@ -368,6 +371,7 @@ export function castle_turn(player: Player, castle: Castle) {
                             //console.log(castle_to);
                             bool = false;
                             move(castle!, castle_to);
+                            console.log(castle.hp);
                         } else{
                             continue
                         }
