@@ -272,9 +272,10 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
         prompt();
         console.clear();
+        return [];
     }
 
-    return create_army();
+    return [];
 
     function delay(ms: number) {
         // denna kommer nog inte användas alls 
