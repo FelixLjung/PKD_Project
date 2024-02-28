@@ -252,8 +252,6 @@ export function move(move_from: Castle, move_to: Castle): void {
     //console.log(move_to);
 
     const player_to: string = move_to.owner;
-    const army: Army = move_from.hp
-
 
     let attacking_player: Player | undefined = undefined;
     let defending_player: Player | undefined = undefined;
