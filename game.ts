@@ -123,14 +123,14 @@ function game(){
             //console.log(player_list[i][1][0].hp);
             //print_board();
             
-            if (count_castles(player_list[i][1]) == 0){
+            if (count_castles(player_list[i][1]) == 0){ // Checks if player has 0 castles, SKIP
                 continue;
             }
             console.log(`\u001b[36m`, player_list[i][0],`\u001b[37m`, "turn");
 
-            if (check_if_cpu(player_list[i])){
+            if (check_if_cpu(player_list[i])){  // if it's CPU's turn, do nothing
                 
-            } else {
+            } else {                            // If it's a player's turn
                 turn(player_list[i]);
                 prompt("Your turn is finished");
             }

@@ -1,7 +1,7 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { army_size, get_random_int, get_order_castles, remove_dead_warriors} from "./general_functions";
+import { army_size, get_random_int, get_order_castles, remove_dead_warriors, count_castles} from "./general_functions";
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
@@ -127,7 +127,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             tail(old_player)[i] = undefined;
             //console.log(get_order_castles(old_player)[2]);
                 
-            if (head(get_order_castles(old_player)) == undefined) { // Checks if player has no castles
+            if (count_castles(old_player[1]) == 0) { // Checks if player has no castles
 
                 kill_player(old_player);
                 console.log(old_player[0], " has fallen");
