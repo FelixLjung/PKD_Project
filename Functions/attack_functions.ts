@@ -136,6 +136,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
                 kill_player(old_player);
                 console.log(old_player[0], " has fallen");
                 console.log();
+                //tail(old_player)[i] = undefined;
                 old_player[0] = "UNDEFINED";
             }
             

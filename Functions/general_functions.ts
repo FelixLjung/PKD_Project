@@ -148,7 +148,7 @@ export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
     const player_castles: Array<Castle | undefined> = [];
 
-    for (let i = 0; i < tail(player).length; i = i + 1) {
+    for (let i = 0; i < tail(player).length; i = i + 1) { // loops over the array of castles
         if (tail(player)[i] != undefined) {
             player_castles[player_castles.length] = tail(player)[i];
         }
@@ -200,7 +200,8 @@ export function get_order_castles(player: Player): Queue<Castle> {
     //console.log(list(player_castles));
 
     if (count_castles(player_castles) > 1) {
-        while (castle_queue[1] != tail(player).length) {
+        while (castle_queue[1] != count_castles(tail(player))) { // 
+            
 
             print_castle(player);
             //console.log(player_castles);
