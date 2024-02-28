@@ -279,6 +279,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     return create_army();
 
     function delay(ms: number) {
+        // denna kommer nog inte användas alls 
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
 

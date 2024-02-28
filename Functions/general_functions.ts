@@ -395,6 +395,7 @@ export function castle_turn(player: Player, castle: Castle) {
             castle.hp = remove_dead_warriors(castle.hp);
             let trained_army: Army = train_warrior(castle.hp);
             console.log("-----------------");
+            //
             console.log(trained_army);
             console.log("-----------------");
             bool = false;
@@ -431,11 +432,11 @@ function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
  * Recruits a new warrior to a castle
  * @param castle - the castle which is recruiting the new warrior
  */
-export function recruit_warrior(castle: Castle) {
+export function recruit_warrior(castle: Castle, index: number) {
     let num = get_random_int(0, 2);
     let len = castle.hp.length; //current players castle
     console.log("length of castle.hp.length", len);
-    castle.hp[len] = create_warrior(5, 100);
+    castle.hp[index] = create_warrior(5, 100);
     /**
      *  if (num == 0) {
         castle.hp[len] = create_warrior(5, 100);
