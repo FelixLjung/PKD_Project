@@ -5,6 +5,7 @@ import { army_size, get_random_int, get_order_castles, remove_dead_warriors} fro
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
+import { cursive_line, empty_line, print_to_game } from "./utility_functions";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -17,9 +18,11 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
+
     for (let a = 0; a < army.length; a = a + 1) {
         enqueue(army[a], queue_army);
     }
+
     return queue_army;
 }
 
@@ -30,10 +33,10 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @returns Void
  */
 function unalive_warrior(dead: Warrior, army: Army){
-    // denna är mega fudge in the membraine
+    
     for(let i = 0; i < army.length; i++){
         if(army[i].name == dead.name){
-            army[i].alive = false; // denna är fugged
+            army[i].alive = false; // changes the warriors status boolean to false
             remake_warrior(dead, army);
         } else{}
     }
@@ -89,11 +92,11 @@ export function death_text(dead: Warrior, killer: Warrior) {
                                 `${k_name} turned ${d_name} into a fine paste... Yummy!`];
 
     let curr_event = strings[get_random_int(0, 27)];
-    console.log();
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
-    console.log('\u001b[31m', curr_event, `\u001b[37m`);
-    console.log();
+    empty_line();
+    cursive_line();
+    empty_line();
+    console.log('\u001b[31m', curr_event, `\u001b[37m`); // No Abstracted function for printing with color
+    empty_line();
 }
 
 /**
@@ -262,13 +265,13 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
     } else if (!winner[0]) {
-        console.log("Our army is dead! The battle is lost!");
-        console.log('But', army[0].name, 'managed to inform us of the enemy army before falling:');
+        print_to_game("Our army is dead! The battle is lost!");
+        print_to_game('But' + army[0].name + 'managed to inform us of the enemy army before falling:');
         remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
         for (let i = 0; i < castle.hp.length; i++) {
-            console.log('Soldier name:', castle.hp[i].name,
-            '| Attack strength:', castle.hp[i].attack,
-            '| Health:', castle.hp[i].health);
+            print_to_game('Soldier name: ' + castle.hp[i].name +
+            ' | Attack strength: ' + castle.hp[i].attack +
+            ' | Health: ' + castle.hp[i].health);
             }
         castle.hp = winner[1];
 

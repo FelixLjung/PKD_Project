@@ -32,6 +32,7 @@ import {
 } from './setup_functions'
 import path = require('path');
 import { clear } from 'console';
+import { print_to_game } from './utility_functions';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -205,11 +206,11 @@ export function get_order_castles(player: Player): Queue<Castle> {
             //console.log(player_castles);
             const cstl: number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
-                console.log("You can't choose the same castle twice!")
+                print_to_game("You can't choose the same castle twice!");
             } else if (includes(player_castles, cstl, player)) {
                 enqueue(get_position(player_castles, cstl), castle_queue);
             } else {
-                console.log("You don't own this Castle");
+                print_to_game("You don't own this Castle");
             }
         }
     } else if (player_castles.length == 1) {
@@ -281,7 +282,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     
 
     if (player_from != player_to) {
-        console.log(move_from.owner, "has declared war against", move_to.owner);
+        print_to_game(move_from.owner +  " has declared war against " +  move_to.owner);
         survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
     } else if (player_from == player_to) {
         for (let i = 0; i < move_from.hp.length; i++) {
