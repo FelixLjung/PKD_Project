@@ -1,5 +1,5 @@
 import { MatrixGraph } from "../lib/graphs";
-import { finds_paths, getRandomInt, check_if_cpu, remove_dead_warriors, alive_in_army } from "../Functions/general_functions";
+import { finds_paths, get_random_int, check_if_cpu, remove_dead_warriors, alive_in_army } from "../Functions/general_functions";
 
 import { create_army, create_castle } from "../Functions/setup_functions";
 
@@ -8,7 +8,7 @@ import { type Army, type Castle, type Warrior, type Player } from "../types";
 
 describe('getRandomInt', () => {
 
-    let x : number = getRandomInt(1, 5);
+    let x : number = get_random_int(1, 5);
 
     it('the number is between 1 and 5: ', () => {
         expect(1 <= x && x <= 5).toEqual(true);

@@ -1,7 +1,7 @@
 import {type Army, type Castle, type Warrior, type Player} from '../types';
 import { MatrixGraph } from '../lib/graphs';
 import { create_castle, create_warrior, create_army, get_castle_array} from "../Functions/setup_functions";
-import { getRandomInt } from '../Functions/general_functions';
+import { get_random_int } from '../Functions/general_functions';
 
 
 describe('create_castle', () => {
@@ -22,7 +22,7 @@ describe('create_warrior', () => {
         expect(create_warrior(5, 50)).toEqual({attack : 5, health : 50, name : 'Jingwei Hu', alive : true});
     });
 
-    const test_warrior1 : Warrior = create_warrior(getRandomInt(1,5), getRandomInt(50, 100));
+    const test_warrior1 : Warrior = create_warrior(get_random_int(1,5), get_random_int(50, 100));
 
     it('Warrior has the correct amount of attack', () => {
         expect(1 <= test_warrior1.attack && test_warrior1.attack <= 5).toBe(true);

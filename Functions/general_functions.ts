@@ -343,7 +343,7 @@ export function check_if_cpu(player: Player | string): boolean {
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
     console.log(castle.hp);
-    castle.hp = remove_dead(castle.hp);
+    castle.hp = remove_dead_warriors(castle.hp);
     console.log(castle.hp);
     print_board();
     while (bool) {
@@ -359,7 +359,7 @@ export function castle_turn(player: Player, castle: Castle) {
         // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
         if (choice === "1") {
             //console.clear();
-            castle.hp = remove_dead(castle.hp);
+            castle.hp = remove_dead_warriors(castle.hp);
             let paths = finds_paths(castle!, mormors_kudde); // Första castle
             while(bool){
                 console.log("You can move to the following castles: ", paths);
@@ -387,7 +387,7 @@ export function castle_turn(player: Player, castle: Castle) {
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
             //}
-            castle.hp = remove_dead(castle.hp);
+            castle.hp = remove_dead_warriors(castle.hp);
             let trained_army: Army = train_warrior(castle.hp);
             console.log("-----------------");
             console.log(trained_army);
