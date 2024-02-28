@@ -277,6 +277,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     console.log(" De som FLYTTAS",moving_army);
     const staying_army = split[1];
     console.log(" De som STANNAR", staying_army);
+    move_from.hp = staying_army;
 
     if (player_from != player_to) {         // if we find an opponent
         print_to_game(move_from.owner +  " has declared war against " +  move_to.owner);
@@ -294,7 +295,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     } else if (player_from == player_to) {      // Move to your own castle
         for (let i = 0; i < move_from.hp.length; i++) { //
             //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army
+            move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
             console.log('move_from', move_from.hp);
             console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
