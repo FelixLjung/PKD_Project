@@ -16,7 +16,7 @@ import {
 } from '../game';
 
 import {
-    attack, is_army_empty
+    attack, is_army_empty, castle_owner
 } from './attack_functions'
 
 import {
@@ -248,53 +248,55 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
  */
 export function move(move_from: Castle, move_to: Castle): void {
     const player_from: string = move_from.owner;
+    const player_to: string = move_to.owner;
     let survivors : Army = [];
     //console.log(move_from);
     //console.log(move_to);
 
-    const player_to: string = move_to.owner;
     const army: Army = move_from.hp
+    
 
-
-    let attacking_player: Player | undefined = undefined;
+    let attacking_player: Player | undefined = undefined;   
     let defending_player: Player | undefined = undefined;
-    const player_list: Array<Player> = get_player_list();
-    for (let i = 0; i < player_list.length; i = i + 1) { // botarna finns inte med i player_list
-        if (player_list[i][0] == move_from.owner) { // detta borde abstraktas tll en ny funktion då
+    const player_list: Array<Player> = get_player_list();   
+    //Detta borde bli en egen funktion ABSTRAHERA
+    for (let i = 0; i < player_list.length; i = i + 1) { // Loops over all players,
+        if (player_list[i][0] == move_from.owner) {         // Retrieves the type Player from the "owner"
             attacking_player = player_list[i];
-        } else if (player_list[i][0] == move_to.owner) {
+        } else if (player_list[i][0] == move_to.owner) {    // Retrieves the type Player from the "owner"
             defending_player = player_list[i];
         }
     }
     const split = split_army(move_from);        //Här splittas Attacking army i två [0 = moving, 1 = staying]
     //console.log(move_from.position);
     //console.log(attacking_player![1]);
-    //attacking_player![1][move_from.position - 1]!.hp = split[0];
-    //attacking_player![1][move_from.position - 1]!.hp = split[0];
+
     const moving_army = split[0];
-    //const staying_army = split[1];
-  
+    console.log(" De som FLYTTAS",moving_army);
+    const staying_army = split[1];
+    console.log(" De som STANNAR", staying_army);
 
-
-    function get_player_from_castle(castle: Castle) {
-
-    }
-    
-
-    if (player_from != player_to) {
+    if (player_from != player_to) {         // if we find an opponent
         print_to_game(move_from.owner +  " has declared war against " +  move_to.owner);
-        survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
-    } else if (player_from == player_to) {
-        for (let i = 0; i < move_from.hp.length; i++) {
-            move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_from.hp = []; // här töms den ju?
+        move_to.hp = remove_dead_warriors(move_to.hp) // Defending army clear the dead
+        if (move_to.hp.length != 0) {       //if army is not empty (we attack)
+            survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
+
+            if (survivors.length != 0) {
+                castle_owner(move_to, attacking_player!, defending_player!, survivors);
+            }
+        } else {                            // If def. castle is empty, we change owner
+            console.log('The castle was empty my lord! Free for the taking!');
+            castle_owner(move_to, attacking_player!, defending_player!, moving_army);
+        }
+    } else if (player_from == player_to) {      // Move to your own castle
+        for (let i = 0; i < move_from.hp.length; i++) { //
+            //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
+            move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army
             console.log('move_from', move_from.hp);
-            console.log('move_to', move_to.hp);
+            console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
     }
-
-    //console.log("VI är i move");
-    move_from.hp = merge_army(split[1], survivors);
 
 }
 
@@ -343,36 +345,33 @@ export function check_if_cpu(player: Player | string): boolean {
  */
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
-    console.log(castle.hp);
     castle.hp = remove_dead_warriors(castle.hp);
-    console.log(castle.hp);
+    //console.log(castle.hp);
     print_board();
     while (bool) {
         //let text1 = "currently in"
         console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m');
         print_army(castle);
-        console.log("What is your command, king ", player[0], "..?");
+        console.log(`What is your command, king ${player[0]} ..?`);
         console.log();
         console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Red
         console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Green
-        const choice = prompt("  : "); // Här borde vi ha något som dubbelkollar att inputen är valid
+        const choice: string = prompt("  :  "); // Action
 
-        // Någonstans ska vi föra in print_castles funktionen (väljer vilket slott man vill börja med)
-        if (choice === "1") {
-            //console.clear();
+        if (choice === "1") {   // MOVE
             castle.hp = remove_dead_warriors(castle.hp);
-            let paths = finds_paths(castle!, mormors_kudde); // Första castle
+            let paths = finds_paths(castle, mormors_kudde); // Första castle
             while(bool){
                 console.log("You can move to the following castles: ", paths);
                 let choice = prompt("Choose your destination: ") as number; //Invariant must be number
                 if(is_choice_in_paths(paths, choice)){
                     for(let i = 0; i < paths.length; i++){
-                        if(choice == paths[i]){
-                            let castle_to: Castle = get_castle_array()[choice - 1]; // fixa get funktions
+                        if(choice == paths[i]){         // if we make a correct choice.
+                            let castle_to: Castle = get_castle_array()[choice - 1];
                             //console.log(castle_to);
                             bool = false;
                             move(castle!, castle_to);
-                            console.log(castle.hp);
+                            //console.log(castle.hp);
                         } else{
                             continue
                         }
@@ -383,7 +382,7 @@ export function castle_turn(player: Player, castle: Castle) {
                 }
             }
 
-        } else if (choice === "2") {
+        } else if (choice === "2") {    // TRAIN
             console.log('Your new and improved army:')
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
@@ -400,7 +399,7 @@ export function castle_turn(player: Player, castle: Castle) {
         else {
             console.log("Input is not valid, try again!");
             prompt("press Enter: ");
-            console.clear();
+            
         }
     }
 
@@ -428,11 +427,11 @@ function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
  * Recruits a new warrior to a castle
  * @param castle - the castle which is recruiting the new warrior
  */
-export function recruit_warrior(castle: Castle) {
+export function recruit_warrior(castle: Castle, index: number) {
     let num = get_random_int(0, 2);
     let len = castle.hp.length; //current players castle
     console.log("length of castle.hp.length", len);
-    castle.hp[len] = create_warrior(5, 100);
+    castle.hp[index] = create_warrior(5, 100);
     /**
      *  if (num == 0) {
         castle.hp[len] = create_warrior(5, 100);

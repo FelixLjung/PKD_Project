@@ -18,7 +18,9 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
-
+    if(army.length == 0){
+        return queue_army;
+    }
     for (let a = 0; a < army.length; a = a + 1) {
         enqueue(army[a], queue_army);
     }
@@ -106,14 +108,15 @@ export function death_text(dead: Warrior, killer: Warrior) {
  * @param old_player - the player who previously owned the castle
  * @param army - the army that now is in the castle
  */
-export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
 
-    //console.log(old_player[0]);
+//console.log(old_player[0]);
 
     // ändra castles owner 
     // ändra castles army
     // lägg till castle i nya spelarens array av castles
     // ta bort castle från gamla spelarens array av castles
+
+export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
 
     castle.owner = new_player[0];
     castle.hp = army;
@@ -121,25 +124,12 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     let last_pos = new_player[1].length;
     new_player[1][last_pos] = castle;
 
-    /*
-    for (let i = 0; i < tail(new_player)!.length; i = i + 1) {
-        if(tail(new_player)[i] == undefined) {
-            tail(new_player)[i] = castle;
-            break;
-        } else if (i == tail(new_player).length && tail(new_player)[i] != undefined) {
-            tail(new_player)[i] = castle;
-        } else {
-        }
-    }
-    */
-
-
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
         if(tail(old_player)[i] == castle) {
             tail(old_player)[i] = undefined;
             //console.log(get_order_castles(old_player)[2]);
                 
-            if (get_order_castles(old_player)[2] == undefined) {
+            if (head(get_order_castles(old_player)) == undefined) { // Checks if player has no castles
 
                 kill_player(old_player);
                 console.log(old_player[0], " has fallen");
@@ -158,7 +148,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
  * @returns Boolean - whether the army is empty or not
  */
 export function is_army_empty(army : Queue<Warrior>) : Boolean {
-    if (head(army) == undefined) {
+    if (head(army) == undefined || army[2].length < 1) {
         return true;
     } else {
         return false;
@@ -181,11 +171,13 @@ export function retreat(army : Queue<Warrior>, your_castle : Castle) {
  * @returns 
  */
 export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_army: Castle): boolean {
-    
-        if(attacker === undefined){
+        army = remove_dead_warriors(army);                      // Attacker army fix
+        castle_army.hp = remove_dead_warriors(castle_army.hp);  //Def. army fix
+        
+        if(attacker === undefined || !attacker.alive){
             return true;
         }
-        else if(defender === undefined){
+        else if(defender === undefined || !defender.alive){
             return false;
         }
         
@@ -227,12 +219,15 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
  * @param army - the attacking army
  */
 export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) : Army {
-    function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Army> {
+    console.log("defending army...", castle.hp);
+    //Helper: returns true if 
+    function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Army> { 
         let defense_army = castle_army.hp;
         const attackers = enqueue_army(Attacking_army);
         const defenders = enqueue_army(defense_army);
         
         while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
+            
             let curr_attacker: Warrior = head(attackers);
             let curr_defender: Warrior = head(defenders);
             
@@ -249,25 +244,25 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
         if (is_army_empty(defenders)) {
             //console.log(attackers);
-            return pair(true, queue_to_array(attackers)); // returns true if the attackers won together with the remaining attacking army.
+            return pair(false, queue_to_array(attackers)); // returns false if the attackers won together with the remaining attacking army.
         } else {
-            return pair(false, queue_to_array(defenders)); // returns false if the defenders win together with the remaining defending army.
+            return pair(true, queue_to_array(defenders)); // returns true if the defenders win together with the remaining defending army.
         }
         
     }
 
     const winner : Pair<Boolean, Army> = helper(army, castle);
-    if (winner[0]) {
+    if (!winner[0]) {
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-        castle_owner(castle, attacking_player, defending_player, winner[1]);
+        //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
         prompt();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
-    } else if (!winner[0]) {
+    } else if (winner[0]) {
         print_to_game("Our army is dead! The battle is lost!");
         print_to_game('But' + army[0].name + 'managed to inform us of the enemy army before falling:');
-        remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
+        castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
         for (let i = 0; i < castle.hp.length; i++) {
             print_to_game('Soldier name: ' + castle.hp[i].name +
             ' | Attack strength: ' + castle.hp[i].attack +

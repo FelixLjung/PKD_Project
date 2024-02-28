@@ -145,9 +145,11 @@ function game(){
             }
             if (game_running == true) { 
                 for (let i = 0; i < get_castle_array().length; i++){
-                    let curr_player = get_castle_array()[i]
+                    let curr_castle = get_castle_array()[i]
+                    let index = curr_castle.hp.length
                     if (!check_if_cpu(get_castle_array()[i].owner)) {
-                        recruit_warrior(curr_player);     //recruits one warrior to each castle.
+                        recruit_warrior(curr_castle, index);     //recruits one warrior to each castle.
+                        
                     } 
                 }
                 console.log("All castles recruits a new warrior!");
