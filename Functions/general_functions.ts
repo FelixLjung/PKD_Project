@@ -302,7 +302,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
 
 export function turn(player: Player) {
-
+    
     let castle_queue = get_order_castles(player);
 
     for (let i = 0; i < castle_queue[1]; i++) {
@@ -359,7 +359,6 @@ export function castle_turn(player: Player, castle: Castle) {
         const choice: string = prompt("  :  "); // Action
 
         if (choice === "1") {   // MOVE
-            castle.hp = remove_dead_warriors(castle.hp);
             let paths = finds_paths(castle, mormors_kudde); // Första castle
             while(bool){
                 console.log("You can move to the following castles: ", paths);
