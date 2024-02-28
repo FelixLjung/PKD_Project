@@ -263,8 +263,8 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return (remove_dead_warriors(tail(winner))); 
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
-        console.log('But', army[0].name, 'managed to inform us of the enemy army before falling:');
-        remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
+        console.log('But', army[0].name, 'managed to inform us of the remaining enemy army before falling:');
+        castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
         for (let i = 0; i < castle.hp.length; i++) {
             console.log('Soldier name:', castle.hp[i].name,
             '| Attack strength:', castle.hp[i].attack,
