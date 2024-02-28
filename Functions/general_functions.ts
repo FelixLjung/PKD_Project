@@ -32,13 +32,13 @@ import {
 } from './setup_functions'
 import path = require('path');
 import { clear } from 'console';
-import { print_to_game } from './utility_functions';
+import { clear_terminal, print_to_game } from './utility_functions';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 export let w_names: Queue<string> = [0,
     2,
-    ["Eva Darulova",    // Current: 37 warrrior-names
+    ["Eva Darulova",    // Current: 65 warrrior-names
         "Jingwei Hu",
         "Johannes Borgström",
         "Zhanwei Yu",
@@ -101,7 +101,8 @@ export let w_names: Queue<string> = [0,
         "Bert Fylking",
         "Arne Weise",
         "Lisa af Bänkpressen",
-        "Göran Pson"]];
+        "Göran Pson",
+        "Tjark Weber"]];
 
 
 
@@ -303,7 +304,7 @@ export function move(move_from: Castle, move_to: Castle): void {
 
 
 export function turn(player: Player) {
-    
+
     let castle_queue = get_order_castles(player);
 
     for (let i = 0; i < castle_queue[1]; i++) {
@@ -379,6 +380,7 @@ export function castle_turn(player: Player, castle: Castle) {
                 } else{                  //Fail safe
                     console.log("Invalid move, try again!");
                     prompt("press Enter:");
+                    clear_terminal();
                 }
             }
 

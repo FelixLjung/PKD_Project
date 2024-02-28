@@ -16,3 +16,27 @@ export function empty_line(){
 export function cursive_line() {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 }
+
+
+export function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+export function clear_terminal(){
+    console.log(`
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    `);
+
+}
