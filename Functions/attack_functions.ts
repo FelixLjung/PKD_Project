@@ -1,7 +1,7 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { getRandomInt, get_order_castles, remove_dead} from "./general_functions";
+import { getRandomInt, get_order_castles, remove_dead_warriors} from "./general_functions";
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
@@ -235,7 +235,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
         prompt();
         console.log(tail(winner));
-        return (remove_dead(tail(winner))); 
+        return (remove_dead_warriors(tail(winner))); 
     } else if (!winner[0]) {
         console.log("Our army is dead! The battle is lost!");
         console.log('But', army[0].name, 'managed to inform us of the enemy army before falling:');

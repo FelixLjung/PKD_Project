@@ -346,16 +346,26 @@ export function castle_turn(player: Player, castle: Castle) {
 
 
         } else if (choice === "2") {
-            console.log('You are training:')
+            console.log('Your new and improved army:')
             //for (let i = 0; i < player[1][0]!.hp.length; i++) {
             //    console.log(player[1][0]!.hp[i]!.name);
             //}
-            console.log(player[1][0]!.hp);
-            let trained_army: Army = train_warrior(castle.hp);
-            console.log("-----------------");
-            console.log(trained_army);
-            console.log("-----------------");
-            console.log(castle.hp);
+            
+            let temp_array : Army = castle.hp
+
+
+            for (let i = 0; i < castle.hp.length; i++) {
+                temp_array[i] = castle.hp[i];
+            }
+
+            const trained_army : Army = train_warrior(castle.hp);
+            for (let i = 0; i < castle.hp.length; i++) {
+                console.log('Soldier name:', trained_army[i]!.name,
+                '| Attack strength:', temp_array[i].attack, '-->' , trained_army[i]!.attack,
+                '| Health:', temp_array[i].health, '-->', trained_army[i]!.health);
+                }
+                prompt();
+                
             bool = false;
             //return {}
         }
@@ -420,7 +430,7 @@ export function remove_player() {
  * Warrior gets a name from queue
  * @returns string
  */
-export function get_name(): string {
+export function get_first_warrior_name(): string {
     let name = head(w_names);
     dequeue(w_names);
     return name;
@@ -517,7 +527,7 @@ export function merge_army(a1:Army, a2: Army): Army{
  * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
  * @param army 
  */
-export function remove_dead(army: Army): Army {
+export function remove_dead_warriors(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
     let j = 0;
     if(army.length == 0){
