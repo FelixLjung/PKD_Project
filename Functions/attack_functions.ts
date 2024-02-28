@@ -126,7 +126,9 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
         if(tail(old_player)[i] == castle) {
+            const name_of_fallen = old_player[i];
             tail(old_player)[i] = undefined;
+
             //console.log(get_order_castles(old_player)[2]);
                 
             if (count_castles(old_player[1]) == 0) { // Checks if player has no castles
