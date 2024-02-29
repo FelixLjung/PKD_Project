@@ -423,7 +423,7 @@ export function castle_turn(player: Player, castle: Castle) {
  * @param paths an array of numbers (nodes)
  * @returns a boolean (true if choice is in paths)
  */
-function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
+export function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
     for(let i = 0; i < paths.length; i++){
         if(choice == paths[i]){
             return true
