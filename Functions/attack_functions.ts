@@ -97,7 +97,7 @@ export function death_text(dead: string, killer: string) {
     empty_line();
     cursive_line();
     empty_line();
-    console.log('\u001b[31m', curr_event, `\u001b[37m`); // No Abstracted function for printing with color
+    console.log( curr_event); // No Abstracted function for printing with color
     empty_line();
 }
 
@@ -259,7 +259,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         prompt();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
-        
+
     } else if (winner[0]) { //attacker wins
         print_to_game("Our army is dead! The battle is lost!");
         print_to_game('But' + army[0].name + ' managed to inform us of the enemy army before falling:');
