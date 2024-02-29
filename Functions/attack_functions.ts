@@ -5,7 +5,7 @@ import { army_size, get_random_int, get_order_castles, remove_dead_warriors, cou
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
-import { cursive_line, empty_line, print_to_game } from "./utility_functions";
+import { clear_terminal, cursive_line, empty_line, press_to_continue, print_to_game } from "./utility_functions";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -182,25 +182,32 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
         console.log();
         while (true) {
+
+            
             //await delay(1000);
             //await new Promise(f => setTimeout(f, 1000));
             attacker.health -= defender.attack * get_random_int(0, 3);
             if (attacker.health <= 0) {
+                clear_terminal();
                 death_text(attacker, defender);
                 unalive_warrior(attacker, army);
                 console.log()
                 console.log(`\u001b[32m`, defender.name,`\u001b[37m`, 'defended the castle, surviving with',`\u001b[35m`, defender.health,`\u001b[37m`, 'health!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                
+                press_to_continue();
                 return true;
             }
             defender.health -= attacker.attack * get_random_int(0, 3);
             if (defender.health <= 0) {
+                clear_terminal();
                 death_text(defender, attacker);
                 unalive_warrior(defender, castle_army.hp);
                 console.log(`\u001b[32m`,attacker.name,`\u001b[37m`, 'won the battle with',`\u001b[35m`, attacker.health,`\u001b[37m`, 'health left!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                press_to_continue();
                 return false;
             }
         }
