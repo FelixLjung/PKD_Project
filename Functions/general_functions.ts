@@ -30,7 +30,7 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
-import { debug_log, format_array } from './utility_functions';
+import { debug_log, format_array, press_to_continue } from './utility_functions';
 import path = require('path');
 import { clear } from 'console';
 import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
@@ -296,7 +296,8 @@ export function move(move_from: Castle, move_to: Castle): void {
     } else if (player_from == player_to) {      // Move to your own castle
         for (let i = 0; i < move_from.hp.length; i++) { //
             //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
+            move_to.hp = merge_army(move_from.hp, moving_army);
+            //move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
             console.log('move_from', move_from.hp);
             console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
@@ -372,6 +373,7 @@ export function castle_turn(player: Player, castle: Castle) {
         print_army(castle); // Displays the army currently station in the active castle
         console.log(`What is your command, king ${player[0]} ..?`); 
         empty_line();
+        
         console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Input option 1, move army red
         console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Input option 2, train army green
         const choice: string = prompt("  :  "); // Reads the player input 
@@ -411,7 +413,7 @@ export function castle_turn(player: Player, castle: Castle) {
         }
         else {
             print_to_game("Input is not valid, try again!");
-            prompt("press Enter: ");
+            press_to_continue();
             
         }
     }
@@ -513,7 +515,7 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 
 /**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
- * to then next.            (CALLAS EJ ÄN)
+ * to then next.
  * @param castle 
  * @returns 
  */
@@ -525,7 +527,7 @@ export function split_army(castle: Castle): Array<Army> {
     
     
     while (bool) {              //This loop is for dividing the army into two.
-        //Invariant choice got to be number!
+
         print_to_game("Your army has " + alive_army.length + " warriors...");
         const choice: string = prompt("How many warriors would you like to move?: ");
  
@@ -535,18 +537,8 @@ export function split_army(castle: Castle): Array<Army> {
             let stay_a = army.slice(num, army.length);
             pair_army[0] = move_a;
             pair_army[1] = stay_a;
-            //console.log(pair_army[0]);
-            //console.log(pair_army[1]);
-            
-//            for (let a = 0; 0 < num; a++) {
-//                if (alive_army[a]?.alive && alive_army[a] != undefined) {
-//                    move_army[move_army.length] = alive_army[a];
-//                }
-//                
-//            }
             bool = false;
-        }
-        else {
+        } else {
             print_to_game("Not valid number, try again.");
         }
     }
@@ -560,20 +552,20 @@ export function split_army(castle: Castle): Array<Army> {
  * @returns a merged Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
-    if(a2 == undefined){
+    if(a2 == undefined){ // if the other army doesnt exist 
         return a1
     }
     
-    let new_army: Army = a1;
+    let new_army: Army = a1; // copys the fist army 
     const combined: number = a1.length + a2.length;
-    for(let w = 0; w < a2.length; w++){
-        new_army[a1.length + w] = a2[w]; 
+    for(let w = 0; w < a2.length; w++){ // loops over all the elemts in the other army 
+        new_army[a1.length + w] = a2[w]; // adds them to the new army 
     }
     return new_army;
 }
 
 /**
- * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
+ * Removes all dead warriors in a castle
  * @param army 
  */
 export function remove_dead_warriors(army: Army): Army {

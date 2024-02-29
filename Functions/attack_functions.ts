@@ -5,7 +5,7 @@ import { army_size, get_random_int, get_order_castles, remove_dead_warriors, cou
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
-import { cursive_line, empty_line, print_to_game } from "./utility_functions";
+import { clear_terminal, cursive_line, empty_line, press_to_continue, print_to_game } from "./utility_functions";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -97,7 +97,7 @@ export function death_text(dead: string, killer: string) {
     empty_line();
     cursive_line();
     empty_line();
-    console.log( curr_event); // No Abstracted function for printing with color
+    console.log(curr_event); // No Abstracted function for printing with color
     empty_line();
 }
 
@@ -182,27 +182,32 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
         console.log();
         while (true) {
+
+            
             //await delay(1000);
             //await new Promise(f => setTimeout(f, 1000));
             attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
+                clear_terminal();
                 death_text( "Attacker " + `\u001b[31m` + attacker.name +`\u001b[37m`, "Defender " + `\u001b[32m` + defender.name +`\u001b[37m`);
                 unalive_warrior(attacker, army);
                 console.log()
                 console.log(`\u001b[32m` + defender.name +`\u001b[37m`, ' defended the castle, surviving with ',`\u001b[33m` + defender.health +`\u001b[37m`, ' health!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                prompt();
+                
+                press_to_continue();
                 return true;
             }
             defender.health -= attacker.attack * get_random_int(0, 2);
             if (defender.health <= 0) {
+                clear_terminal();
                 death_text("Defender " + `\u001b[32m` + defender.name +`\u001b[37m`, "Attacker " + `\u001b[31m` + attacker.name +`\u001b[37m`,);
                 unalive_warrior(defender, castle_army.hp);
                 console.log(`\u001b[31m` + attacker.name + `\u001b[37m`, 'won the battle with ',`\u001b[33m` + attacker.health +`\u001b[37m`, 'health left!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                prompt();
+                press_to_continue();
                 return false;
             }
         }
@@ -256,7 +261,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
-        prompt();
+        press_to_continue();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
 
@@ -271,7 +276,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             }
         castle.hp = winner[1];
 
-        //prompt();
+        press_to_continue();
         console.clear();
         return [];
     }
