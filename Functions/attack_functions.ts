@@ -252,14 +252,15 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     }
 
     const winner : Pair<Boolean, Army> = helper(army, castle);
-    if (!winner[0]) {
+    if (!winner[0]) {   //defender wins
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
         prompt();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
-    } else if (winner[0]) {
+        
+    } else if (winner[0]) { //attacker wins
         print_to_game("Our army is dead! The battle is lost!");
         print_to_game('But' + army[0].name + ' managed to inform us of the enemy army before falling:');
         castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
