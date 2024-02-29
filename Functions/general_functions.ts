@@ -252,7 +252,7 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 export function move(move_from: Castle, move_to: Castle): void {
     const player_from: string = move_from.owner;
     const player_to: string = move_to.owner;
-    let survivors : Army = [];
+    let survivors : Army = [];  //When attacking, surviving warriors are saved here
     //console.log(move_from);
     //console.log(move_to);
 
@@ -275,9 +275,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     //console.log(attacking_player![1]);
 
     const moving_army = split[0];
-    console.log(" De som FLYTTAS",moving_army);
     const staying_army = split[1];
-    console.log(" De som STANNAR", staying_army);
     move_from.hp = staying_army; // De som ska stanna stannar, 
                                  //denna gjordes förut bara när man rörde sig till sitt egna castle,
                                  // inte när man attackerade, staying army ska ju alltid staya 
@@ -556,9 +554,10 @@ export function split_army(castle: Castle): Array<Army> {
 }
 
 /**
- * 
- * @param a1 is an Army
- * @param a2 is an Army
+ * Takes in two armies When moving, merge the two armies into one.
+ * @param a1 is the army that is MOVING TO
+ * @param a2 is an Army that is in the Army when merging
+ * @returns a merged Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
     if(a2 == undefined){

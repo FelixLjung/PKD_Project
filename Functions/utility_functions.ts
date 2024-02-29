@@ -51,9 +51,13 @@ export function clear_terminal(){
     
     
     
-    
-    
 
+
+
+
+
+
+    
 
     `);
 
