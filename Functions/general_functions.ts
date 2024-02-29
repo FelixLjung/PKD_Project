@@ -514,25 +514,6 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 }
 
 /**
- * Takes in an army with dead warriors. // Den tar ju inte levande warriors också???
- * @param castle 
- * @returns An army with only the alive ones, becomes the new castle.hp // Nej den blir inte den nya castle.hp
- */
-export function alive_in_army(castle: Castle): Army{
-    const alive_in_army: Army = [];           //temporary array of warriors (all alive warriors)
-    let army = castle.hp;
-
-    for(let curr_warr = 0; curr_warr < army.length; curr_warr++){       // Tar ut alla levande warr. // HURDÅ
-        alive_in_army[alive_in_army.length] = army[curr_warr];
-        debug_log(army[curr_warr]);
-    }
-
-    debug_log(alive_in_army);
-    return alive_in_army;
-}
-
-
-/**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
  * to then next.            (CALLAS EJ ÄN)
  * @param castle 
@@ -541,7 +522,7 @@ export function alive_in_army(castle: Castle): Army{
 export function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
     const pair_army: Array<Army> = []       // Returning
-    let alive_army = alive_in_army(castle);
+    let alive_army = remove_dead_warriors(castle.hp);
     const army: Army = castle.hp;
     
     
