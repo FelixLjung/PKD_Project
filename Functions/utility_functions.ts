@@ -1,6 +1,9 @@
 import { Castle, Player, Warrior } from "../types";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
+const testing : Boolean = true;
+
 export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
     console.log(text);
 }
@@ -41,7 +44,10 @@ export function format_array<T>(a : Array<T>) : String {
 }
 
 export function press_to_continue(){
-    prompt("\u001b[3m press ENTER to continue... \u001b[m ");
+    if (!testing){
+        prompt("\u001b[3m press ENTER to continue... \u001b[m ");
+    }
+    
 }
 
 

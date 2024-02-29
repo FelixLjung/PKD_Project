@@ -97,7 +97,7 @@ export function death_text(dead: string, killer: string) {
     empty_line();
     cursive_line();
     empty_line();
-    console.log('\u001b[31m', curr_event, `\u001b[37m`); // No Abstracted function for printing with color
+    console.log(curr_event); // No Abstracted function for printing with color
     empty_line();
 }
 
@@ -261,7 +261,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
-        prompt();
+        press_to_continue();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
         
@@ -276,7 +276,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             }
         castle.hp = winner[1];
 
-        prompt();
+        press_to_continue();
         console.clear();
         return [];
     }

@@ -30,7 +30,7 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
-import { debug_log, format_array } from './utility_functions';
+import { debug_log, format_array, press_to_continue } from './utility_functions';
 import path = require('path');
 import { clear } from 'console';
 import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
@@ -413,7 +413,7 @@ export function castle_turn(player: Player, castle: Castle) {
         }
         else {
             print_to_game("Input is not valid, try again!");
-            prompt("press Enter: ");
+            press_to_continue();
             
         }
     }
