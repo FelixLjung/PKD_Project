@@ -61,9 +61,9 @@ export function remake_warrior(dead: Warrior, army: Army) {
  * @param dead - the warrior who has been killed
  * @param killer - the warrior who killed the other warrior
  */
-export function death_text(dead: Warrior, killer: Warrior) {
-    let d_name: string = dead.name;
-    let k_name: string = killer.name;
+export function death_text(dead: string, killer: string) {
+    let d_name: string = dead;
+    let k_name: string = killer;
     const strings: Array<string> = [`${d_name} has been slain by ${k_name}`,        //26 different texts
                                 `${d_name} got skewered by ${k_name}`,
                                 `${d_name} was defeated by ${k_name}`, 
@@ -186,25 +186,25 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
             
             //await delay(1000);
             //await new Promise(f => setTimeout(f, 1000));
-            attacker.health -= defender.attack * get_random_int(0, 3);
+            attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
                 clear_terminal();
-                death_text(attacker, defender);
+                death_text( "Attacker " + `\u001b[31m` + attacker.name +`\u001b[37m`, "Defender " + `\u001b[32m` + defender.name +`\u001b[37m`);
                 unalive_warrior(attacker, army);
                 console.log()
-                console.log(`\u001b[32m`, defender.name,`\u001b[37m`, 'defended the castle, surviving with',`\u001b[35m`, defender.health,`\u001b[37m`, 'health!')
+                console.log(`\u001b[32m` + defender.name +`\u001b[37m`, ' defended the castle, surviving with ',`\u001b[33m` + defender.health +`\u001b[37m`, ' health!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 
                 press_to_continue();
                 return true;
             }
-            defender.health -= attacker.attack * get_random_int(0, 3);
+            defender.health -= attacker.attack * get_random_int(0, 2);
             if (defender.health <= 0) {
                 clear_terminal();
-                death_text(defender, attacker);
+                death_text("Defender " + `\u001b[32m` + defender.name +`\u001b[37m`, "Attacker " + `\u001b[31m` + attacker.name +`\u001b[37m`,);
                 unalive_warrior(defender, castle_army.hp);
-                console.log(`\u001b[32m`,attacker.name,`\u001b[37m`, 'won the battle with',`\u001b[35m`, attacker.health,`\u001b[37m`, 'health left!')
+                console.log(`\u001b[31m` + attacker.name + `\u001b[37m`, 'won the battle with ',`\u001b[33m` + attacker.health +`\u001b[37m`, 'health left!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 press_to_continue();

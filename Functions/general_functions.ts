@@ -252,7 +252,7 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 export function move(move_from: Castle, move_to: Castle): void {
     const player_from: string = move_from.owner;
     const player_to: string = move_to.owner;
-    let survivors : Army = [];
+    let survivors : Army = [];  //When attacking, surviving warriors are saved here
     //console.log(move_from);
     //console.log(move_to);
 
@@ -275,9 +275,7 @@ export function move(move_from: Castle, move_to: Castle): void {
     //console.log(attacking_player![1]);
 
     const moving_army = split[0];
-    console.log(" De som FLYTTAS",moving_army);
     const staying_army = split[1];
-    console.log(" De som STANNAR", staying_army);
     move_from.hp = staying_army; // De som ska stanna stannar, 
                                  //denna gjordes förut bara när man rörde sig till sitt egna castle,
                                  // inte när man attackerade, staying army ska ju alltid staya 
@@ -516,25 +514,6 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 }
 
 /**
- * Takes in an army with dead warriors. // Den tar ju inte levande warriors också???
- * @param castle 
- * @returns An army with only the alive ones, becomes the new castle.hp // Nej den blir inte den nya castle.hp
- */
-export function alive_in_army(castle: Castle): Army{
-    const alive_in_army: Army = [];           //temporary array of warriors (all alive warriors)
-    let army = castle.hp;
-
-    for(let curr_warr = 0; curr_warr < army.length; curr_warr++){       // Tar ut alla levande warr. // HURDÅ
-        alive_in_army[alive_in_army.length] = army[curr_warr];
-        debug_log(army[curr_warr]);
-    }
-
-    debug_log(alive_in_army);
-    return alive_in_army;
-}
-
-
-/**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
  * to then next.            (CALLAS EJ ÄN)
  * @param castle 
@@ -543,7 +522,7 @@ export function alive_in_army(castle: Castle): Army{
 export function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
     const pair_army: Array<Army> = []       // Returning
-    let alive_army = alive_in_army(castle);
+    let alive_army = remove_dead_warriors(castle.hp);
     const army: Army = castle.hp;
     
     
@@ -577,9 +556,10 @@ export function split_army(castle: Castle): Array<Army> {
 }
 
 /**
- * 
+ * Takes in two armies When moving, merge the two armies into one.
  * @param a1 is an Army
  * @param a2 is an Army
+ * @returns a merged Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
     if(a2 == undefined){ // if the other army doesnt exist 
