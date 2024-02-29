@@ -1,9 +1,18 @@
 import { MatrixGraph } from "../lib/graphs";
-import { finds_paths, get_random_int, check_if_cpu, remove_dead_warriors, alive_in_army } from "../Functions/general_functions";
 
-import { create_army, create_castle } from "../Functions/setup_functions";
+import { finds_paths, 
+    get_random_int,
+    check_if_cpu,
+    remove_dead_warriors,
+    train_warrior,
+    is_choice_in_paths,
+    get_first_warrior_name,
+    merge_army } from "../Functions/general_functions";
 
-import { type Army, type Castle, type Warrior, type Player } from "../types";
+import { type Army,
+    type Castle,
+    type Warrior,
+    type Player } from "../types";
 
 
 describe('getRandomInt', () => {
@@ -89,24 +98,60 @@ describe('remove_dead_warrior', () => {
 
 });
 
+describe('train_warrior', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
+    const ex_army1 : Army = [wrr1];
+
+    it('The warrior has gotten increased attack', () => {
+        expect(train_warrior(ex_army1)[0].attack > 5).toBe(true);
+    });
+
+    it('The warrior has gotten increased health', () => {
+        expect(train_warrior(ex_army1)[0].health > 10).toBe(true);
+    });
+
+});
+
+describe('is_choice_in_paths', () => {
+    
+    const paths : Array<number> = [1, 2, 4];
+
+    it('4 is in the paths array', () => {
+        expect(is_choice_in_paths(paths, 4)).toBe(true);
+    });
+
+    it('5 is not in the paths array', () => {
+        expect(is_choice_in_paths(paths, 5)).toBe(false);
+    });
+
+});
+
+describe('get_first_warrior_name', () => {
+
+    it('returns the first warrior name in the queue of names', () => {
+        expect(get_first_warrior_name()).toBe('Eva Darulova');
+    });
+
+});
+
 /*
-describe('alive_in_army', () => {
+describe('merge_army', () => {
     
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
     const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
     const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : false};
-    const wrr4 : Warrior = {attack : 4, health : 43, name : 'Jingwei', alive : false};
-    const ex_army1 : Army = [wrr1, wrr2, wrr3];
-    const ex_army2 : Army = [wrr3, wrr4];
-    const ex_castle1 : Castle = {hp : ex_army1, owner : 'Alfred', position : 2};
-    const ex_castle2 : Castle = {hp : ex_army2, owner : 'David', position : 1};
+    const wrr4 : Warrior = {attack : 5, health : 10, name : 'Kalle', alive : true};
+    const ex_army1 : Army = [wrr1];
+    const ex_army2 : Army = [wrr2, wrr3, wrr4];
+    const ex_army3 : Army = [];
 
-    it('Removes a dead warrior from a castle', () => {
-        expect(alive_in_army(ex_castle1)).toBe([wrr1, wrr2]);
+    it('Merges two armies', () => {
+        expect(merge_army(ex_army1, ex_army2)).toBe([wrr1, wrr2, ,  wrr3, , , wrr4]);
     });
 
-    it('Returns an empty army', () => {
-        expect(alive_in_army(ex_castle2)).toBe([]);
+    it('If one army is empty, the other army is returned', () => {
+        expect(merge_army(ex_army1, ex_army3)).toBe([wrr1]);
     });
 
 });

@@ -264,7 +264,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         press_to_continue();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
-        
+
     } else if (winner[0]) { //attacker wins
         print_to_game("Our army is dead! The battle is lost!");
         print_to_game('But' + army[0].name + ' managed to inform us of the enemy army before falling:');
