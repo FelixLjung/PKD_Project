@@ -351,7 +351,22 @@ export function check_if_cpu(player: Player | string): boolean {
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
     castle.hp = remove_dead_warriors(castle.hp);
+    
     //console.log(castle.hp);
+    const healed_warriors: Array<string> = [];
+    let j = 0;
+    for(let i = 0; i < castle.hp.length; i++){  //Beginning of turn if warr has below 40 hp, heals them up to 40hp
+        let curr_warr = castle.hp[i];
+        if(curr_warr.health > 0 && curr_warr.health < 40){
+            heal_warrior(curr_warr);
+            healed_warriors[j] = curr_warr.name;
+            j++
+        }
+    }
+    if(healed_warriors.length > 0){
+        console.log(`Your wounded warriors regained some of their health!`);
+    }
+
     print_board();
     while (bool) {
         //let text1 = "currently in"
@@ -435,19 +450,29 @@ function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
 export function recruit_warrior(castle: Castle, index: number) {
     let num = get_random_int(0, 2);
     let len = castle.hp.length; //current players castle
-    console.log("length of castle.hp.length", len);
-    castle.hp[index] = create_warrior(5, 100);
-    /**
-     *  if (num == 0) {
-        castle.hp[len] = create_warrior(5, 100);
+    //console.log("length of castle.hp.length", len);
+    //castle.hp[index] = create_warrior(5, 100);
+    
+    if (num == 0) {
+        castle.hp[index] = create_warrior(5, 100);
     }
     else if (num == 1) {
-        castle.hp[len] = create_warrior(7, 75);
+        castle.hp[index] = create_warrior(7, 75);
     }
     else if (num == 2) {
-        castle.hp[len] = create_warrior(12, 50);
+        castle.hp[index] = create_warrior(10, 50);
     }
-     */
+    
+}
+
+/**
+ * After a battle, when their next turn starts, all surviving warriors in army gets healed to 50 hp
+ * @param warrior 
+ */ 
+export function heal_warrior(warrior: Warrior): string | void{
+    let war_hp = warrior.health;
+        war_hp = 40;
+        return warrior.name;
 }
 
 /**
@@ -458,8 +483,7 @@ export function remake_warrior(army: Army) {
     for(let x = 0; x < army.length; x++){
         if(army[x] == undefined || army[x].alive == false){
             continue;
-        }
-        else{
+        } else{
             let new_name = army[x]?.name + "I";
             enqueue(new_name, w_names); 
         }
