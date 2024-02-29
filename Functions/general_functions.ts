@@ -557,8 +557,8 @@ export function split_army(castle: Castle): Array<Army> {
 
 /**
  * Takes in two armies When moving, merge the two armies into one.
- * @param a1 is an Army
- * @param a2 is an Army
+ * @param a1 is the army that is MOVING TO
+ * @param a2 is an Army that is in the Army when merging
  * @returns a merged Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
