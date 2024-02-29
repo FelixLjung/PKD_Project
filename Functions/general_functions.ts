@@ -513,7 +513,7 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 
 /**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
- * to then next.            (CALLAS EJ ÄN)
+ * to then next.
  * @param castle 
  * @returns 
  */
@@ -525,7 +525,7 @@ export function split_army(castle: Castle): Array<Army> {
     
     
     while (bool) {              //This loop is for dividing the army into two.
-        //Invariant choice got to be number!
+
         print_to_game("Your army has " + alive_army.length + " warriors...");
         const choice: string = prompt("How many warriors would you like to move?: ");
  
@@ -535,18 +535,8 @@ export function split_army(castle: Castle): Array<Army> {
             let stay_a = army.slice(num, army.length);
             pair_army[0] = move_a;
             pair_army[1] = stay_a;
-            //console.log(pair_army[0]);
-            //console.log(pair_army[1]);
-            
-//            for (let a = 0; 0 < num; a++) {
-//                if (alive_army[a]?.alive && alive_army[a] != undefined) {
-//                    move_army[move_army.length] = alive_army[a];
-//                }
-//                
-//            }
             bool = false;
-        }
-        else {
+        } else {
             print_to_game("Not valid number, try again.");
         }
     }
@@ -573,7 +563,7 @@ export function merge_army(a1:Army, a2: Army): Army{
 }
 
 /**
- * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
+ * Removes all dead warriors in a castle
  * @param army 
  */
 export function remove_dead_warriors(army: Army): Army {
