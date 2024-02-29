@@ -2,7 +2,7 @@ import { Castle, Player, Warrior } from "../types";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-const testing : Boolean = true;
+const testing : Boolean = false;
 
 export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
     console.log(text);
