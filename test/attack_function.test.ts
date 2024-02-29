@@ -1,6 +1,15 @@
-import { is_army_empty, enqueue_army, fight } from '../Functions/attack_functions'
-import { empty, enqueue } from '../lib/queue_array'
-import { type Army, type Warrior, type Castle } from '../types'
+import { is_army_empty,
+    enqueue_army,
+    fight,
+    attack } from '../Functions/attack_functions'
+
+import { empty } from '../lib/queue_array'
+
+import { type Army,
+    type Warrior,
+    type Castle,
+    type Player } from '../types'
+
 
 describe('enqueue_army', () => {
 
@@ -63,5 +72,26 @@ describe ('fight', () => {
     it ('The attacker wins', () => {
         expect(fight(wrr2, wrr1, ex_army1, ex_castle2)).toEqual(false);
     });
+
+});
+
+describe('attack', () => {
+    
+    const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};
+    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
+    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
+    const wrr4 : Warrior = {attack : 5, health : 10, name : 'Kalle', alive : true};
+    const ex_army1 : Army = [wrr1];
+    const ex_army2 : Army = [wrr2, wrr3, wrr4];
+    const ex_castle1 : Castle = {hp : ex_army1, owner : 'Alfred', position : 4};
+    const ex_castle2 : Castle = {hp : ex_army2, owner : 'David', position : 3};
+    const ex_player1 : Player = ['Alfred', [ex_castle1]];
+    const ex_player2 : Player = ['David', [ex_castle1]];
+
+    it('Returns ex_army2', () => {
+        expect(attack(ex_castle1, ex_player2, ex_player1, ex_army2)).toEqual(ex_army2);
+    });
+
+
 
 });
