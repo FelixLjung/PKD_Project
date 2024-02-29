@@ -46,7 +46,6 @@ function refresh_board() {
     function get_castle_owners() {
         var castles = (0, setup_functions_1.get_castle_array)();
         for (var i = 0; i < nodes.length; i++) {
-            //print(nodes[0])
             nodes[i] = castles[i].position + castles[i].owner[0];
         }
     }
@@ -138,12 +137,14 @@ function print_castle(player) {
 exports.print_castle = print_castle;
 function print_army(castle) {
     console.log();
-    console.log('This is the army currently in this castle, my liege');
+    console.log('This is the army in this castle, my liege');
+    console.log();
     for (var i = 0; i < castle.hp.length; i++) {
         if (castle.hp[i] != undefined && castle.hp[i].alive == true) {
             console.log('Soldier name:', castle.hp[i].name, '| Attack strength:', castle.hp[i].attack, '| Health:', castle.hp[i].health);
         }
     }
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log();
 }
 exports.print_army = print_army;

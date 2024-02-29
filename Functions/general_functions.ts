@@ -30,9 +30,10 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
+import { debug_log, format_array } from './utility_functions';
 import path = require('path');
 import { clear } from 'console';
-import { clear_terminal, print_to_game } from './utility_functions';
+import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -369,22 +370,31 @@ export function castle_turn(player: Player, castle: Castle) {
 
     print_board();
     while (bool) {
-        //let text1 = "currently in"
-        console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m');
-        print_army(castle);
-        console.log(`What is your command, king ${player[0]} ..?`);
-        console.log();
-        console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Red
-        console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Green
-        const choice: string = prompt("  :  "); // Action
+        console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m'); // Displays the current castle in cursive text
+        print_army(castle); // Displays the army currently station in the active castle
+        console.log(`What is your command, king ${player[0]} ..?`); 
+        empty_line();
+        console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Input option 1, move army red
+        console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Input option 2, train army green
+        const choice: string = prompt("  :  "); // Reads the player input 
 
         if (choice === "1") {   // MOVE
-            let paths = finds_paths(castle, mormors_kudde); // Första castle
-            while(bool){
-                console.log("You can move to the following castles: ", paths);
-                let choice = prompt("Choose your destination: ") as number; //Invariant must be number
-                if(is_choice_in_paths(paths, choice)){
+            let paths = finds_paths(castle, mormors_kudde); // Finds all the neighbouring castles
+            while(bool){ // Wrapping the input in a While loop to handle invalid inputs 
+                print_to_game("You can move to the following castles: " + "\u001b[33m"+ format_array(paths) + "\u001b[0m"); // Displays the neighbouring castles
+                let choice = prompt("Choose your destination: ") as number; // Invariant must be number
+
+                if(is_choice_in_paths(paths, choice)){ //  checks if the input is a valid path
                     for(let i = 0; i < paths.length; i++){
+                        bool = false;
+                        // tror det ska vara såhär istället
+                        /*
+                        let castle_to: Castle = get_castle_array()[choice - 1];
+                        move(castle!, castle_to);
+                        */
+
+                        // tror inte vi behöver denna väl?
+                        
                         if(choice == paths[i]){         // if we make a correct choice.
                             let castle_to: Castle = get_castle_array()[choice - 1];
                             //console.log(castle_to);
@@ -394,11 +404,12 @@ export function castle_turn(player: Player, castle: Castle) {
                         } else{
                             continue
                         }
+                        
                     } 
                 } else{                  //Fail safe
-                    console.log("Invalid move, try again!");
+                    print_to_game("Invalid move, try again!");
                     prompt("press Enter:");
-                    clear_terminal();
+                    //clear_terminal();
                 }
             }
 
@@ -409,15 +420,16 @@ export function castle_turn(player: Player, castle: Castle) {
             //}
             castle.hp = remove_dead_warriors(castle.hp);
             let trained_army: Army = train_warrior(castle.hp);
-            console.log("-----------------");
-            //
-            console.log(trained_army);
-            console.log("-----------------");
+            print_line();
+            
+            print_to_game(trained_army);
+            print_line()
+            
             bool = false;
-            //return {}
+            
         }
         else {
-            console.log("Input is not valid, try again!");
+            print_to_game("Input is not valid, try again!");
             prompt("press Enter: ");
             
         }
@@ -431,15 +443,13 @@ export function castle_turn(player: Player, castle: Castle) {
  * @returns a boolean (true if choice is in paths)
  */
 function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
-    let bool = true;        // Bool that changes when requirement is met
-        for(let i = 0; i < paths.length; i++){
-            if(choice == paths[i]){
-                bool = false;
-                return true
-            } else{
-                continue;
-            }
+    for(let i = 0; i < paths.length; i++){
+        if(choice == paths[i]){
+            return true
+        } else{
+            continue;
         }
+    }
     return false;   // if choice is not a possible path
     }
 
@@ -521,17 +531,20 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 }
 
 /**
- * Takes in an army with dead warriors.
+ * Takes in an army with dead warriors. // Den tar ju inte levande warriors också???
  * @param castle 
- * @returns An army with only the alive ones, becomes the new castle.hp
+ * @returns An army with only the alive ones, becomes the new castle.hp // Nej den blir inte den nya castle.hp
  */
 export function alive_in_army(castle: Castle): Army{
     const alive_in_army: Army = [];           //temporary array of warriors (all alive warriors)
     let army = castle.hp;
 
-    for(let curr_warr = 0; curr_warr < army.length; curr_warr++){       // Tar ut alla levande warr.
+    for(let curr_warr = 0; curr_warr < army.length; curr_warr++){       // Tar ut alla levande warr. // HURDÅ
         alive_in_army[alive_in_army.length] = army[curr_warr];
+        debug_log(army[curr_warr]);
     }
+
+    debug_log(alive_in_army);
     return alive_in_army;
 }
 
@@ -551,7 +564,7 @@ export function split_army(castle: Castle): Array<Army> {
     
     while (bool) {              //This loop is for dividing the army into two.
         //Invariant choice got to be number!
-        console.log("Your army has", alive_army.length, "warriors...");
+        print_to_game("Your army has " + alive_army.length + " warriors...");
         const choice: string = prompt("How many warriors would you like to move?: ");
  
         if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) {       //Choose the amount of warriors
@@ -560,8 +573,8 @@ export function split_army(castle: Castle): Array<Army> {
             let stay_a = army.slice(num, army.length);
             pair_army[0] = move_a;
             pair_army[1] = stay_a;
-            console.log(pair_army[0]);
-            console.log(pair_army[1]);
+            //console.log(pair_army[0]);
+            //console.log(pair_army[1]);
             
 //            for (let a = 0; 0 < num; a++) {
 //                if (alive_army[a]?.alive && alive_army[a] != undefined) {
@@ -572,7 +585,7 @@ export function split_army(castle: Castle): Array<Army> {
             bool = false;
         }
         else {
-            console.log("Not valid number, try again.");
+            print_to_game("Not valid number, try again.");
         }
     }
     return pair_army; //The amount of warriors we want to move

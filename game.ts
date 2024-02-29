@@ -7,6 +7,7 @@ import {type List, type Pair, list, head, tail, pair} from './lib/list';
 import { get_random_int, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
 import {game_setup, get_castle_array } from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
+import { print_to_game } from './Functions/utility_functions';
 
 import { type Player } from './types';
 
@@ -83,12 +84,16 @@ export function get_player_list() {
  * @param player - the player that has been killed
  */
 export function kill_player(player : Player ) {
-//    console.log("!");
+    print_to_game(player[0] + " has fallen");
+
     for (let i = 0; i < player_list.length; i++){
         if (player_list[i][0] == player[0]){
             player_list[i][0] = "UNDEFINED";
         }
     }
+
+    
+    
 }
 
 let map = [

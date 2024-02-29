@@ -118,30 +118,25 @@ export function death_text(dead: Warrior, killer: Warrior) {
 
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
 
-    castle.owner = new_player[0];
-    castle.hp = army;
+    castle.owner = new_player[0]; // Changes the owner name of the castle
+    castle.hp = army; // adds the incoming army to the castle
 
-    let last_pos = new_player[1].length;    //might be able to be a const
-    new_player[1][last_pos] = castle;
+    let last_pos = new_player[1].length;    // might be able to be a const
+    new_player[1][last_pos] = castle;  // adds the castle to the New Players castle array
 
-    for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
+    const name_of_fallen = old_player[0];
+
+    // for (let i = 0; i < tail(old_player)!.length; i = i + 1) { // old, should not use .length, use count_Castles() instead
+    for (let i = 0; i < count_castles(tail(old_player)); i = i + 1) { // Loops over the player old players castle 
         if(tail(old_player)[i] == castle) {                                 // måste fixa en undefine check, får error när nån dör
-            const name_of_fallen = old_player[i].slice();
-            tail(old_player)[i] = undefined;
-
-            //console.log(get_order_castles(old_player)[2]);
+           
+            tail(old_player)[i] = undefined; // removes the castle from the previous owners castle array
                 
             if (count_castles(old_player[1]) == 0) { // Checks if player has no castles
-
-                kill_player(old_player);
-                console.log(name_of_fallen, "has fallen");
-                console.log();
-                //tail(old_player)[i] = undefined;
-                old_player[0] = "UNDEFINED";
-            }
+                kill_player(old_player); // kills the player
+            } else {}
             
-        } else {
-        }
+        } else {}
     }
 }
 
