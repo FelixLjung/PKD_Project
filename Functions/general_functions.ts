@@ -385,30 +385,13 @@ export function castle_turn(player: Player, castle: Castle) {
                 let choice = prompt("Choose your destination: ") as number; // Invariant must be number
 
                 if(is_choice_in_paths(paths, choice)){ //  checks if the input is a valid path
-                    for(let i = 0; i < paths.length; i++){
-                        bool = false;
-                        // tror det ska vara såhär istället
-                        /*
-                        let castle_to: Castle = get_castle_array()[choice - 1];
-                        move(castle!, castle_to);
-                        */
-
-                        // tror inte vi behöver denna väl?
-                        
-                        if(choice == paths[i]){         // if we make a correct choice.
-                            let castle_to: Castle = get_castle_array()[choice - 1];
-                            //console.log(castle_to);
-                            bool = false;
-                            move(castle!, castle_to);
-                            //console.log(castle.hp);
-                        } else{
-                            continue
-                        }
-                        
-                    } 
+                    let castle_to: Castle = get_castle_array()[choice - 1];
+                    move(castle!, castle_to);
+                    bool = false;             
+                    
                 } else{                  //Fail safe
                     print_to_game("Invalid move, try again!");
-                    prompt("press Enter:");
+                    //prompt("press Enter:"); // Better without a prompt here
                     //clear_terminal();
                 }
             }
