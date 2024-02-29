@@ -86,9 +86,9 @@ export function create_warrior(attack: number, health: number): Warrior {
  * @returns 
  */
 export function create_army(): Army {
-    let army: Army = [create_warrior(get_random_int(3,5), get_random_int(50, 100)),
-                      create_warrior(get_random_int(3,5), get_random_int(50, 100)),
-                      create_warrior(get_random_int(3,5), get_random_int(50, 100)) ];
+    let army: Army = [create_warrior(get_random_int(3,5), 70),
+                      create_warrior(get_random_int(3,5), 70),
+                      create_warrior(get_random_int(3,5), 70)];
 
     return army;
 }

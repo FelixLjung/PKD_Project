@@ -125,7 +125,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     new_player[1][last_pos] = castle;
 
     for (let i = 0; i < tail(old_player)!.length; i = i + 1) {
-        if(tail(old_player)[i] == castle) {
+        if(tail(old_player)[i] == castle) {                                 // måste fixa en undefine check, får error när nån dör
             const name_of_fallen = old_player[i].slice();
             tail(old_player)[i] = undefined;
 
