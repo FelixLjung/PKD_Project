@@ -189,7 +189,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         while (true) {
             //await delay(1000);
             //await new Promise(f => setTimeout(f, 1000));
-            attacker.health -= defender.attack * get_random_int(0, 3);
+            attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
                 death_text(attacker, defender);
                 unalive_warrior(attacker, army);
@@ -199,7 +199,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 return true;
             }
-            defender.health -= attacker.attack * get_random_int(0, 3);
+            defender.health -= attacker.attack * get_random_int(0, 2);
             if (defender.health <= 0) {
                 death_text(defender, attacker);
                 unalive_warrior(defender, castle_army.hp);
