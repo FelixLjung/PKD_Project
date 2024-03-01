@@ -161,7 +161,7 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-function get_order_castles(player: Player): Queue<Castle> {
+export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
     const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);
     let j = 0    
