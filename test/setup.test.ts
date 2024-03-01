@@ -34,6 +34,23 @@ describe('create_warrior', () => {
 
 });
 
+describe('create_army', () => {
+    
+    it('Creates an army with three soldiers', () => {
+        expect(create_army().length).toBe(3);
+    });
+
+    it('A soldier has an attack stat between 3 and 5', () => {
+        expect(3 <= create_army()[0].attack && create_army()[0].attack <= 5).toBe(true);
+    });
+
+    it('A soldier has 70 hp', () => {
+        expect(create_army()[0].health).toBe(70);
+    });
+
+});
+
+
 /*
 describe('', () => {
     

@@ -4,7 +4,7 @@ import { Castle, Player, Warrior } from "../types";
 //Variables
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-const testing : Boolean = true;
+const testing : Boolean = false;
 
 
 //Functions

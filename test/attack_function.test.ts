@@ -1,6 +1,6 @@
 import { is_army_empty,
     enqueue_army,
-    fight,
+    fight, 
     attack } from '../Functions/attack_functions'
 
 import { empty } from '../lib/queue_array'
@@ -9,7 +9,6 @@ import { type Army,
     type Warrior,
     type Castle,
     type Player } from '../types'
-
 
 describe('enqueue_army', () => {
 
@@ -75,7 +74,6 @@ describe ('fight', () => {
 
 });
 
-
 describe('attack', () => {
     
     const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};
@@ -92,7 +90,5 @@ describe('attack', () => {
     it('Returns ex_army2', () => {
         expect(attack(ex_castle1, ex_player2, ex_player1, ex_army2)).toEqual(ex_army2);
     });
-
-
 
 });
