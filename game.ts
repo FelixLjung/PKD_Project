@@ -7,9 +7,10 @@ import {type List, type Pair, list, head, tail, pair} from './lib/list';
 import { get_random_int, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
 import {game_setup, get_castle_array } from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
-import { print_line, print_to_game } from './Functions/utility_functions';
+import { press_to_continue, print_line, print_to_game } from './Functions/utility_functions';
 
 import { type Player } from './types';
+import { count } from 'console';
 
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
@@ -92,9 +93,17 @@ export function kill_player(player : Player ) {
         }
     }
 
-    
-    
 }
+
+function player_is_alive(player : Player) : Boolean {
+    if (count_castles(player[1]) <= 1){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 
 let map = [
     [" "," "," "," ", node1," "," "," "," "],
@@ -131,13 +140,15 @@ function game(){
             if (count_castles(player_list[i][1]) == 0){ // Checks if player has 0 castles, SKIP
                 continue;
             }
-            console.log(`\u001b[36m`, player_list[i][0],`\u001b[37m`, "turn");
+            console.log(`\u001b[36m`, player_list[i][0],`\u001b[37m`, "turn" , count_castles(player_list[i][1]));
 
             if (check_if_cpu(player_list[i])){  // if it's CPU's turn, do nothing
                 
             } else {                            // If it's a player's turn
                 turn(player_list[i]);
-                prompt("Your turn is finished");
+                print_to_game("Your turn is finished");
+                press_to_continue();
+ 
             }
             
             if (count_castles(player_list[i][1]) == 5) {
