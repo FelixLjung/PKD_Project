@@ -517,7 +517,7 @@ export function merge_army(a1:Army, a2: Army): Army{
     
     const new_army: Army = a1; // copies the first army
     for(let w = 0; w < a2.length; w++){ // loops over all the elemts in the other army
-        new_army[a1.length + w] = a2[w]; // adds them to the new army
+        new_army[a1.length] = a2[w]; // adds them to the new army
     }
     return new_army;
 }
