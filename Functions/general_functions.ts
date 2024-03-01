@@ -3,9 +3,13 @@ import {
     type Queue, dequeue, head as q_head, enqueue, empty
 } from '../lib/queue_array'
 
-import { type MatrixGraph } from '../lib/graphs';
+import {
+     type MatrixGraph 
+} from '../lib/graphs';
 
-import { tail, head as l_head, list, remove } from '../lib/list'
+import {
+    tail, head as l_head
+} from '../lib/list'
 
 import {
     type Warrior, type Army, type Player, type Castle
@@ -16,10 +20,12 @@ import {
 } from '../game';
 
 import {
-    attack, is_army_empty, castle_owner
+    attack, castle_owner
 } from './attack_functions'
 
-import { w_names } from './resources';
+import { 
+    w_names 
+} from './resources';
 
 import {
     print_board,
@@ -32,11 +38,19 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
-import { cursive_line, debug_log, format_array, press_to_continue } from './utility_functions';
+import { 
+    cursive_line, debug_log, format_array, press_to_continue 
+} from './utility_functions';
 import path = require('path');
-import { clear } from 'console';
-import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
-import { stripVTControlCharacters } from 'util';
+import { 
+    clear 
+} from 'console';
+import { 
+    clear_terminal, empty_line, print_line, print_to_game 
+} from './utility_functions';
+import { 
+    stripVTControlCharacters 
+} from 'util';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
