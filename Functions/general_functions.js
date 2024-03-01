@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
+exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.get_order_castles = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
 //Imports
 var queue_array_1 = require("../lib/queue_array");
 var list_1 = require("../lib/list");
@@ -11,9 +11,10 @@ var print_functions_1 = require("./print_functions");
 var setup_functions_1 = require("./setup_functions");
 var utility_functions_1 = require("./utility_functions");
 var utility_functions_2 = require("./utility_functions");
+var utility_functions_3 = require("./utility_functions");
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 var total_amount_of_castles = 5;
-var testing = false;
+var testing = (0, utility_functions_3.get_testing_bool)();
 // General Functions
 /**
  * Chooses a random number between [min] and [max].
@@ -124,7 +125,7 @@ function get_order_castles(player) {
             while (castle_queue[1] != count_castles((0, list_1.tail)(player))) { // 
                 (0, print_functions_1.print_castle)(player);
                 //console.log(player_castles);
-                var cstl = prompt("Which castle would you like to operate from? "); //FIXME: ingen check här? 
+                var cstl = prompt("Which castle would you like to operate from? ");
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     (0, utility_functions_2.print_to_game)("You can't choose the same castle twice!");
                 }
@@ -144,6 +145,7 @@ function get_order_castles(player) {
     //debug_log(player_castles.length);
     return castle_queue;
 }
+exports.get_order_castles = get_order_castles;
 /**
  * Finds all possible paths from a castle
  * @param castle - the castle the player wants to move from
