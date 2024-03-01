@@ -497,14 +497,13 @@ export function split_army(castle: Castle): Array<Army> {
  * @returns a merged Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
-    if(a2 == undefined){ // if the other army doesnt exist 
+    if(a2 == undefined){ // if the other army doesnt exist
         return a1
     }
     
-    let new_army: Army = a1; // copys the fist army 
-    const combined: number = a1.length + a2.length;
-    for(let w = 0; w < a2.length; w++){ // loops over all the elemts in the other army 
-        new_army[a1.length + w] = a2[w]; // adds them to the new army 
+    let new_army: Army = a1; // copys the fist army
+    for(let w = 0; w < a2.length; w++){ // loops over all the elemts in the other army
+        new_army[a1.length + w] = a2[w]; // adds them to the new army
     }
     return new_army;
 }
