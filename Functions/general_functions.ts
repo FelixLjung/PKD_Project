@@ -39,8 +39,9 @@ import {
     mormors_kudde
 } from './setup_functions'
 import { 
-    cursive_line, debug_log, format_array, press_to_continue 
+    cursive_line, debug_log, format_array, press_to_continue, testing 
 } from './utility_functions';
+
 import path = require('path');
 import { 
     clear 
@@ -143,18 +144,22 @@ export function get_order_castles(player: Player): Queue<Castle> {
     }
 
     if (count_castles(player_castles) > 1) {
-        while (castle_queue[1] != count_castles(tail(player))) { // 
+        if (testing == true) {      //Checking if we are testing currently or not
+            enqueue(player_castles[0], castle_queue);
+            enqueue(player_castles[1], castle_queue);
+        } else {
+            while (castle_queue[1] != count_castles(tail(player))) { // 
             
-
-            print_castle(player);
-            //console.log(player_castles);
-            const cstl: number = prompt(" Which castle would you like to operate from? ") as number
-            if (in_q(castle_queue, get_position(player_castles, cstl))) {
-                print_to_game("You can't choose the same castle twice!");
-            } else if (includes(player_castles, cstl, player)) {
-                enqueue(get_position(player_castles, cstl), castle_queue);
-            } else {
-                print_to_game("You don't own this Castle");
+                print_castle(player);
+                //console.log(player_castles);
+                const cstl: number = prompt(" Which castle would you like to operate from? ") as number
+                if (in_q(castle_queue, get_position(player_castles, cstl))) {
+                    print_to_game("You can't choose the same castle twice!");
+                } else if (includes(player_castles, cstl, player)) {
+                    enqueue(get_position(player_castles, cstl), castle_queue);
+                } else {
+                    print_to_game("You don't own this Castle");
+                }
             }
         }
     } else if (player_castles.length == 1) {
