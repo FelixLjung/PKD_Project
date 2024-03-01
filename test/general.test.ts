@@ -9,7 +9,7 @@ import { finds_paths,
     get_first_warrior_name,
     merge_army,
     heal_warrior,
-    get_order_castles } from "../Functions/general_functions";
+    get_order_castles} from "../Functions/general_functions";
 
 import { type Army,
     type Castle,
@@ -17,8 +17,7 @@ import { type Army,
     type Player } from "../types";
 
 import { type Queue,
-        empty,
-         } from "../lib/queue_array";
+        empty} from "../lib/queue_array";
 
 
 describe('getRandomInt', () => {
@@ -178,16 +177,20 @@ describe('get_order_castles', () => {
     const test_castle1 : Castle = {hp : [wrr1], owner : 'Alfred', position : 3};
     const test_castle2 : Castle = {hp : [wrr1], owner : 'Felix', position : 3};
     const test_castle3 : Castle = {hp : [wrr1, wrr2], owner : 'Felix', position : 2};
-    const test_player1 : Player = ['Alfred', [test_castle1, undefined]];
+    const test_player1 : Player = ['Alfred', [test_castle1]];
     const test_player2 : Player = ['Felix', [test_castle2, test_castle3 ]];
     const empty_queue : Queue<Castle> = empty();
 
     it('If you only have one castle it returns a queue with one element', () => {
-        expect(head(get_order_castles(test_player1)).toBe(test_castle1));
+        expect(get_order_castles(test_player1)[2][0]).toBe(test_castle1);
     });
 
-    it('Returns a queue of castles', () => {
-        expect(get_order_castles(test_player2)).toBe();
+    it('The first castle in castle queue', () => {
+        expect(get_order_castles(test_player2)[2][0]).toBe(test_castle2);
     });
 
+    it('The second castle in castle queue', () => {
+        expect((get_order_castles(test_player2))[2][1]).toBe(test_castle3);
+    });
+    
 });

@@ -162,7 +162,7 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-function get_order_castles(player: Player): Queue<Castle> {
+export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
     const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);
     let j = 0    
@@ -349,7 +349,7 @@ export function check_if_cpu(player: Player | string): boolean {
  * Should Call other functions.
  * @param player is a pair(string, List)
  */
-function castle_turn(player: Player, castle: Castle) {
+export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
     castle.hp = remove_dead_warriors(castle.hp);
     
@@ -377,7 +377,7 @@ function castle_turn(player: Player, castle: Castle) {
         
         console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Input option 1, move army red
         console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Input option 2, train army green
-        const choice: string = prompt("  :  ").trim(); // Reads the player input 
+        const choice : string = prompt("  :  ").trim(); // Reads the player input 
 
         if (choice === "1") {   // MOVE
             let paths = finds_paths(castle, mormors_kudde); // Finds all the neighbouring castles

@@ -6,9 +6,16 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 
 const testing : Boolean = false;
 
+
+
 const debugging = false;
 
-export function get_testing_bool(){
+/**
+ * Used to export the testing variable. When the testing variable is true we enter testing state,
+ * which disabels some prompts in tested functions.
+ * @returns Boolean - descides if we go into testing mode or not
+ */
+export function get_testing_bool() : Boolean {
     return testing;
 }
 
@@ -16,7 +23,7 @@ export function get_testing_bool(){
 
 /**
  * Debug log function
- * @param text 
+ * @param text - what is being logged
  */
 export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
     if (debugging){
@@ -27,7 +34,7 @@ export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castl
 
 /**
  * Print function
- * @param text 
+ * @param text - what is being printed
  */
 export function print_to_game<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
     console.log(text);
@@ -55,19 +62,9 @@ export function print_line() {
 }
 
 /**
- * 
- * @param ms 
- * @returns 
- */
-export function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-/**
- * 
- * @param a 
- * @returns 
+ * Changes an array into a string in order to change its appearance.
+ * @param a - an array that is supposed to be changed into a string
+ * @returns string - the array turned into a string
  */
 export function format_array<T>(a : Array<T>) : String {
     let str = "";
@@ -85,13 +82,12 @@ export function format_array<T>(a : Array<T>) : String {
 }
 
 /**
- * 
+ * Stops the next step in the game until a player clicks enter
  */
 export function press_to_continue(){
     if (!testing){
         prompt("\u001b[3m press ENTER to continue... \u001b[m ");
     }
-    
 }
 
 /**
@@ -116,5 +112,4 @@ export function clear_terminal(){
 
 
     `);
-
 }

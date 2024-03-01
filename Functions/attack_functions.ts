@@ -30,6 +30,8 @@ import {
     death_text 
 } from "./resources";
 
+import { get_testing_bool } from './utility_functions';
+
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 //Attack functions
