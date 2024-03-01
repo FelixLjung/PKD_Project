@@ -9,7 +9,7 @@ import { finds_paths,
     get_first_warrior_name,
     merge_army,
     heal_warrior,
-    get_order_castles } from "../Functions/general_functions";
+    get_order_castles} from "../Functions/general_functions";
 
 import { type Army,
     type Castle,
@@ -17,9 +17,7 @@ import { type Army,
     type Player } from "../types";
 
 import { type Queue,
-        empty,
-        dequeue,
-        head } from "../lib/queue_array";
+        empty} from "../lib/queue_array";
 
 
 describe('getRandomInt', () => {
