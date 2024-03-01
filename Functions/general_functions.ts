@@ -512,10 +512,10 @@ export function split_army(castle: Castle): Array<Army> {
  */
 export function merge_army(a1:Army, a2: Army): Army{
     if(a2 == undefined){ // if the other army doesnt exist 
-        return a1
+        return a1   // a1 is the army you moving in with, should never be empty or undefined
     }
     
-    let new_army: Army = a1; // copys the fist army 
+    const new_army: Army = a1; // copies the first army 
     const combined: number = a1.length + a2.length;
     for(let w = 0; w < a2.length; w++){ // loops over all the elemts in the other army 
         new_army[a1.length + w] = a2[w]; // adds them to the new army 
@@ -534,7 +534,7 @@ export function remove_dead_warriors(army: Army): Army {
         return army = alive_in_army;
     }
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
-        if (army[i]?.alive) {
+        if (army[i].alive && army[i] != undefined) {
             alive_in_army[j] = army[i];
         } else {
             continue;
