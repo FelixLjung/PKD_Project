@@ -269,8 +269,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             }
         castle.hp = winner[1];
 
-        //press_to_continue();
-        //console.clear();
+        press_to_continue();
         return [];
     }
 
