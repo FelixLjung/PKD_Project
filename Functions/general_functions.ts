@@ -3,9 +3,13 @@ import {
     type Queue, dequeue, head as q_head, enqueue, empty
 } from '../lib/queue_array'
 
-import { type MatrixGraph } from '../lib/graphs';
+import {
+     type MatrixGraph 
+} from '../lib/graphs';
 
-import { tail, head as l_head, list, remove } from '../lib/list'
+import {
+    tail, head as l_head
+} from '../lib/list'
 
 import {
     type Warrior, type Army, type Player, type Castle
@@ -16,10 +20,12 @@ import {
 } from '../game';
 
 import {
-    attack, is_army_empty, castle_owner
+    attack, castle_owner
 } from './attack_functions'
 
-import { w_names } from './resources';
+import { 
+    w_names 
+} from './resources';
 
 import {
     print_board,
@@ -32,11 +38,19 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
-import { cursive_line, debug_log, format_array, press_to_continue } from './utility_functions';
+import { 
+    cursive_line, debug_log, format_array, press_to_continue 
+} from './utility_functions';
 import path = require('path');
-import { clear } from 'console';
-import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
-import { stripVTControlCharacters } from 'util';
+import { 
+    clear 
+} from 'console';
+import { 
+    clear_terminal, empty_line, print_line, print_to_game 
+} from './utility_functions';
+import { 
+    stripVTControlCharacters 
+} from 'util';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -497,11 +511,11 @@ export function split_army(castle: Castle): Array<Army> {
  * @returns a merged Army
  */
 export function merge_army(a1:Army, a2: Army): Army{
-    if(a2 == undefined){ // if the other army doesnt exist
-        return a1
+    if(a2 == undefined){ // if the other army doesnt exist 
+        return a1   // a1 is the army you moving in with, should never be empty or undefined
     }
     
-    let new_army: Army = a1; // copys the fist army
+    const new_army: Army = a1; // copies the first army
     for(let w = 0; w < a2.length; w++){ // loops over all the elemts in the other army
         new_army[a1.length + w] = a2[w]; // adds them to the new army
     }
@@ -519,7 +533,7 @@ export function remove_dead_warriors(army: Army): Army {
         return army = alive_in_army;
     }
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
-        if (army[i]?.alive) {
+        if (army[i].alive && army[i] != undefined) {
             alive_in_army[j] = army[i];
         } else {
             continue;

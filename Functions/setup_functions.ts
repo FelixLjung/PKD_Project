@@ -2,7 +2,7 @@ import {type Army, type Castle, type Warrior, type Player} from '../types';
 import { MatrixGraph } from '../lib/graphs';
 import {get_random_int, get_first_warrior_name} from './general_functions'
 import { read } from 'fs';
-import {type List, head, tail, list, append } from '../lib/list';
+import {list} from '../lib/list';
 
 
 // Variables
