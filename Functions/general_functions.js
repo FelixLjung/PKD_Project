@@ -199,7 +199,9 @@ function move(move_from, move_to) {
     // inte när man attackerade, staying army ska ju alltid stanna 
     if (player_from != player_to) { // if we find an opponent
         utility_functions_2.clear_terminal;
-        (0, utility_functions_2.print_to_game)(move_from.owner + " has declared war against " + move_to.owner);
+        (0, utility_functions_1.cursive_line)();
+        (0, utility_functions_2.print_to_game)("\u001B[31m".concat(move_from.owner, " \u001B[37m") + " has declared war against " + "\u001B[32m".concat(move_to.owner, "\u001B[37m"));
+        (0, utility_functions_1.press_to_continue)();
         move_to.hp = remove_dead_warriors(move_to.hp); // Defending army clear the dead
         if (move_to.hp.length != 0) { //if army is not empty (we attack)
             survivors = (0, attack_functions_1.attack)(move_to, attacking_player, defending_player, moving_army);
@@ -424,8 +426,11 @@ function split_army(castle) {
     var alive_army = remove_dead_warriors(castle.hp);
     var army = castle.hp;
     while (bool) { //This loop is for dividing the army into two.
+        (0, utility_functions_2.empty_line)();
         (0, utility_functions_2.print_to_game)("Your army has " + alive_army.length + " warriors...");
         var choice = prompt("How many warriors would you like to move?: ");
+        (0, utility_functions_2.empty_line)();
+        (0, utility_functions_2.empty_line)();
         if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) { //Choose the amount of warriors
             var num = parseInt(choice);
             var move_a = army.slice(0, num);

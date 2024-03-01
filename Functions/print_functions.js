@@ -110,7 +110,7 @@ exports.refresh_board = refresh_board;
  */
 function print_board() {
     refresh_board();
-    console.log("-------------------------------------------");
+    (0, utility_functions_1.print_line)();
     for (var i = 0; i < map.length; i++) {
         console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic, Cyan Color
     }
@@ -137,7 +137,7 @@ function print_board() {
         }
         return str;
     }
-    console.log("-------------------------------------------");
+    (0, utility_functions_1.print_line)();
 }
 exports.print_board = print_board;
 /**
@@ -174,7 +174,6 @@ exports.print_castle = print_castle;
 function print_army(castle) {
     (0, utility_functions_1.empty_line)();
     (0, utility_functions_1.print_to_game)('This is the army in this castle, my liege');
-    (0, utility_functions_1.empty_line)();
     (0, utility_functions_1.cursive_line)();
     for (var i = 0; i < castle.hp.length; i++) {
         if (castle.hp[i] != undefined && castle.hp[i].alive == true) {

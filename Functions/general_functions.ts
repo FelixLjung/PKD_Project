@@ -257,7 +257,9 @@ function move(move_from: Castle, move_to: Castle): void {
 
     if (player_from != player_to) {         // if we find an opponent
         clear_terminal
-        print_to_game(move_from.owner +  " has declared war against " +  move_to.owner);
+        cursive_line();
+        print_to_game(`\u001b[31m${move_from.owner} \u001b[37m` +  " has declared war against " +  `\u001b[32m${move_to.owner}\u001b[37m`);
+        press_to_continue();
         move_to.hp = remove_dead_warriors(move_to.hp) // Defending army clear the dead
         if (move_to.hp.length != 0) {       //if army is not empty (we attack)
             survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
@@ -511,9 +513,12 @@ function split_army(castle: Castle): Array<Army> {
     
     while (bool) {              //This loop is for dividing the army into two.
 
+        empty_line();
         print_to_game("Your army has " + alive_army.length + " warriors...");
         const choice: string = prompt("How many warriors would you like to move?: ");
- 
+        empty_line();
+        empty_line();
+
         if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) {       //Choose the amount of warriors
             let num: number = parseInt(choice); 
             let move_a = army.slice(0, num);

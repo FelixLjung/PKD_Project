@@ -159,7 +159,6 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         }
         
         console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
-        empty_line();
         while (true) {
             attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
@@ -196,7 +195,10 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
  * @param army - the attacking army
  */
 export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) : Army {
+    empty_line();
     console.log("defending army...", castle.hp);
+    empty_line();
+    empty_line();
     //Helper: returns true if 
     function helper(Attacking_army: Army, castle_army: Castle): Pair<Boolean, Army> { 
         let defense_army = castle_army.hp;
@@ -238,8 +240,10 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return (remove_dead_warriors(tail(winner))); 
 
     } else if (winner[0]) { //attacker wins
+        empty_line();
         print_to_game("Our army is dead! The battle is lost!");
         print_to_game('But ' + army[0].name + ' managed to inform us of the enemy army before falling:');
+        empty_line();
         castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
         for (let i = 0; i < castle.hp.length; i++) {
             print_to_game('Soldier name: ' + castle.hp[i].name +

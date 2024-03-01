@@ -3,7 +3,7 @@ import{
 } from '../types';
 
 import { get_castle_array } from './setup_functions';
-import { cursive_line, empty_line, print_to_game } from './utility_functions';
+import { cursive_line, empty_line, print_line, print_to_game } from './utility_functions';
 
 
 // Print functions 
@@ -166,7 +166,7 @@ export function refresh_board() {
 
 export function print_board() {
     refresh_board();
-    console.log("-------------------------------------------");
+    print_line();
     for (let i = 0; i < map.length; i++) {
         console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic, Cyan Color
     }
@@ -191,7 +191,7 @@ export function print_board() {
         }
         return str;
     }
-    console.log("-------------------------------------------");
+    print_line();
 }
 
 /**
@@ -232,7 +232,6 @@ export function print_castle(player: Player) {
 export function print_army(castle : Castle) {
     empty_line();
     print_to_game('This is the army in this castle, my liege');
-    empty_line();
     cursive_line();
     for (let i = 0; i < castle.hp.length; i++) {
         if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {
