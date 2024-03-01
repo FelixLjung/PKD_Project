@@ -144,6 +144,22 @@ export function train_warrior(army: Army): Army {
     return temp_arr;
 }
 
+function remove_dead_castles(castles : Array<Castle | undefined> ) : Array<Castle | undefined> {
+    let new_castles : Array<Castle| undefined> = []; 
+    let j = 0; 
+    debug_log(castles);
+    for (let i = 0; i < castles.length; i++ ){
+        if (castles[i] != undefined){
+            new_castles[j] = castles[i];
+            j++;
+        }
+        
+    }
+    debug_log(new_castles);
+    return new_castles;
+
+}
+
 /**
  * The player determines the order in which they want to make their moves from their castles.
  * @param player the player in question.
@@ -151,14 +167,27 @@ export function train_warrior(army: Army): Army {
  */
 export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
-    const player_castles: Array<Castle | undefined> = [];
+    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);
+    let j = 0
 
+    /*
     for (let i = 0; i < count_castles(player[1]); i = i + 1) { // loops over the array of castles 
-        if (tail(player)[i] != undefined) {
-            player_castles[player_castles.length] = tail(player)[i];
+        if (tail(player)[i] != undefined) { // if the player is no undefined 
+            player_castles[j] = tail(player)[i]; // removes all the dead castles (undefined
         }
+        j++;
     }
+    */
 
+
+
+    /**
+     * loops over an array of castles and checks if a castle 
+     * @param Castles 
+     * @param index 
+     * @param player 
+     * @returns 
+     */
     function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
         for (let i = 0; i < Castles.length; i = i + 1) {
             if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
@@ -190,26 +219,12 @@ export function get_order_castles(player: Player): Queue<Castle> {
         return undefined;
     }
 
-    /*
-    function count_castles(castle_list: List<Castle|undefined>, count : number) : number | undefined {
-        return is_null(tail(castle_list!)) ? count 
-                                         : count_castles(castle_list, count + 1);
-                                        
-    }
-    */
-
-
-    //if (player_castles.length > 1)
-    //if (count_castles(list<Castle|undefined>(player_castles),0)! > 0)
-
-    //console.log(list(player_castles));
-
-    if (count_castles(player_castles) > 1) {
-        while (castle_queue[1] != count_castles(tail(player))) { // 
-            
-
+    if (count_castles(player_castles) > 1) { // if the player has more than one castle
+        debug_log("THe player has more than 1 castle");
+        while (castle_queue[2].length < count_castles(tail(player))) { // 
+            debug_log(castle_queue[2].length);
             print_castle(player);
-            //console.log(player_castles);
+            
             const cstl: number = prompt(" Which castle would you like to operate from? ") as number
             if (in_q(castle_queue, get_position(player_castles, cstl))) {
                 print_to_game("You can't choose the same castle twice!");
@@ -220,9 +235,12 @@ export function get_order_castles(player: Player): Queue<Castle> {
             }
         }
     } else if (player_castles.length == 1) {
+        debug_log("The player has one casle");
         enqueue(player_castles[0], castle_queue);
     }
-    return (castle_queue);
+
+    debug_log(player_castles.length);
+    return castle_queue;
 }
 
 /**
@@ -323,10 +341,11 @@ export function move(move_from: Castle, move_to: Castle): void {
 export function turn(player: Player) {
 
     let castle_queue = get_order_castles(player);
-
+    debug_log(castle_queue);
     for (let i = 0; i < castle_queue[1]; i++) {
-
+        debug_log(i);
         if(check_win_condition(player)){
+            debug_log(player + " has won höö");
             break;
         }
 
@@ -481,9 +500,14 @@ export function recruit_warrior(castle: Castle, index: number) {
  * @param warrior 
  */ 
 export function heal_warrior(warrior: Warrior): string | void{
+    warrior.health = 40;
+
+    /*
     let war_hp = warrior.health;
         war_hp = 40;
-        return warrior.name;
+    */
+
+    return warrior.name;
 }
 
 /**
@@ -595,10 +619,11 @@ export function remove_dead_warriors(army: Army): Army {
     for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
         if (army[i]?.alive) {
             alive_in_army[j] = army[i];
+            j++;
         } else {
             continue;
         }
-        j++
+        
     }
     return alive_in_army;
 

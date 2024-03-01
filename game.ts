@@ -104,7 +104,7 @@ function player_is_alive(player : Player) : Boolean {
 }
 
 
-
+/*
 let map = [
     [" "," "," "," ", node1," "," "," "," "],
     [" "," ","/"," ", "|"," ","\\"," "],
@@ -114,6 +114,7 @@ let map = [
     [" "," ","\\"," ", "|"," ","/",""," "],
     [" "," "," "," ", node5," "," "," "," "]
 ];
+*/
 //const player1 = player_list[0];
 //print_board(map);
 //console.log(player_list);
@@ -140,11 +141,12 @@ function game(){
             if (count_castles(player_list[i][1]) == 0){ // Checks if player has 0 castles, SKIP
                 continue;
             }
-            console.log(`\u001b[36m`, player_list[i][0],`\u001b[37m`, "turn" , count_castles(player_list[i][1]));
+            
 
             if (check_if_cpu(player_list[i])){  // if it's CPU's turn, do nothing
                 
             } else {                            // If it's a player's turn
+                console.log(`\u001b[36m`, player_list[i][0],`\u001b[37m`, "turn" , count_castles(player_list[i][1]) );
                 turn(player_list[i]);
                 print_to_game("Your turn is finished");
                 press_to_continue();
