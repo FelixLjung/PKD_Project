@@ -7,7 +7,7 @@ import {
 } from "../lib/list";
 
 import { 
-    type Queue, head, dequeue, enqueue, empty 
+    type Queue, head as q_head, dequeue, enqueue, empty 
 } from "../lib/queue_array";
 
 import { 
@@ -123,7 +123,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
  * @returns Boolean - whether the army is empty or not
  */
 export function is_army_empty(army : Queue<Warrior>) : Boolean {
-    if (head(army) == undefined || army[2].length < 1) {
+    if (q_head(army) == undefined || army[2].length < 1) {
         return true;
     } else {
         return false;
@@ -203,8 +203,8 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         
         while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
             
-            let curr_attacker: Warrior = head(attackers);
-            let curr_defender: Warrior = head(defenders);
+            let curr_attacker: Warrior = q_head(attackers);
+            let curr_defender: Warrior = q_head(defenders);
             
             let def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
     
