@@ -1,11 +1,10 @@
 import { type Warrior, type Army, type Castle, type Player } from "../types";
 import { type Pair, tail, pair } from "../lib/list";
 import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { army_size, get_random_int, get_order_castles, remove_dead_warriors, count_castles} from "./general_functions";
-import { create_army, get_castle_array } from "./setup_functions";
+import { get_random_int, remove_dead_warriors, count_castles} from "./general_functions";
 import { kill_player } from "../game";
 import { w_names } from "./resources";
-import { cursive_line, empty_line, press_to_continue, print_to_game } from "./utility_functions";
+import { empty_line, press_to_continue, print_to_game } from "./utility_functions";
 import { death_text } from "./resources";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs

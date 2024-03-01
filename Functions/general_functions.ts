@@ -1,18 +1,18 @@
 
 import {
-    type Queue, dequeue, head, enqueue, empty
+    type Queue, dequeue, head as q_head, enqueue, empty
 } from '../lib/queue_array'
 
 import { type MatrixGraph } from '../lib/graphs';
 
-import { type List, tail, is_null, head as l_head, list, remove } from '../lib/list'
+import { tail, head as l_head, list, remove } from '../lib/list'
 
 import {
     type Warrior, type Army, type Player, type Castle
 } from '../types'
 
 import {
-    get_player_list, kill_player
+    get_player_list
 } from '../game';
 
 import {
@@ -254,7 +254,7 @@ export function turn(player: Player) {
             break;
         }
 
-        castle_turn(player, head(castle_queue));
+        castle_turn(player, q_head(castle_queue));
         dequeue(castle_queue);
     }
 
@@ -442,7 +442,7 @@ export function remove_player() {
  * @returns string
  */
 export function get_first_warrior_name(): string {
-    let name = head(w_names);
+    let name = q_head(w_names);
     dequeue(w_names);
     return name;
 }
