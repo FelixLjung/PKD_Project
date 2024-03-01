@@ -140,7 +140,7 @@ export function print_board() {
     function helper(line: Array<string>) {
         let str = "";
 
-        for (let j = 0; j < line.length; j++) {
+        for (let j = 0; j < line.length; j++) {     // Color the Players differently on the MAP
             if(is_string_arr(line[j])){
                 if(line[j][1] == "D"){
                     str += "\u001b[31m" + line[j] + "\u001b[36m";
