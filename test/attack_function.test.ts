@@ -10,6 +10,7 @@ import { type Army,
     type Castle,
     type Player } from '../types'
 
+
 describe('enqueue_army', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};

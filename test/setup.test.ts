@@ -1,6 +1,15 @@
-import {type Army, type Castle, type Warrior, type Player} from '../types';
+import {type Army,
+    type Castle,
+    type Warrior,
+    type Player} from '../types';
+
 import { MatrixGraph } from '../lib/graphs';
-import { create_castle, create_warrior, create_army, get_castle_array} from "../Functions/setup_functions";
+
+import { create_castle,
+    create_warrior,
+    create_army,
+    get_castle_array} from "../Functions/setup_functions";
+    
 import { get_random_int } from '../Functions/general_functions';
 
 
