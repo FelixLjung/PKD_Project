@@ -31,7 +31,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 let I = true;
 let O = false;
 
-export const mormors_kudde: MatrixGraph = {
+export const mormors_kudde: MatrixGraph = { // The matrixgraph representing the paths between our castles (nodes)
     size: 5,
     adj:
         [
@@ -44,7 +44,7 @@ export const mormors_kudde: MatrixGraph = {
 
 }
 
-let castles: Array<Castle> = [];
+let castles: Array<Castle> = []; // init empty castles array
 
 
 // board
@@ -54,12 +54,13 @@ let node1 = "1";
 let node2 = "2";
 let node5 = "5";
 
-//unclaimed nodes
+//unclaimed nodes 
 let node3 = "3x";
 let node4 = "4x";
 
 let nodes = [node1,node2,node3,node4,node5];
 
+/*
 let map = [
     [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
     [" ", " ", "/", " ", "|", " ", "\\", " "],
@@ -69,6 +70,7 @@ let map = [
     [" ", " ", "\\", " ", "|", " ", "/", "", " "],
     [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
 ];
+*/
 
 
 

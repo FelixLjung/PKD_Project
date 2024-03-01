@@ -4,11 +4,11 @@ import { Castle, Player, Warrior } from "../types";
 //Variables
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-const testing : Boolean = false;
+const testing : Boolean = false; // set this to true if testing with jest, disables all empty promopts 
 
 
 
-const debugging = false;
+const debugging = false; // set this to false to quickly remove all debug console logs
 
 /**
  * Used to export the testing variable. When the testing variable is true we enter testing state,
@@ -22,7 +22,7 @@ export function get_testing_bool() : Boolean {
 //Functions
 
 /**
- * Debug log function
+ * prints a non gameplay related message to the console
  * @param text - what is being logged
  */
 export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
@@ -33,7 +33,7 @@ export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castl
 }
 
 /**
- * Print function
+ * Print a gameplay related message or graphic 
  * @param text - what is being printed
  */
 export function print_to_game<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {

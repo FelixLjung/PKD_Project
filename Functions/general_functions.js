@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
+exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.castle_turn = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.get_order_castles = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
 //Imports
 var queue_array_1 = require("../lib/queue_array");
 var list_1 = require("../lib/list");
@@ -145,6 +145,7 @@ function get_order_castles(player) {
     //debug_log(player_castles.length);
     return castle_queue;
 }
+exports.get_order_castles = get_order_castles;
 /**
  * Finds all possible paths from a castle
  * @param castle - the castle the player wants to move from
@@ -337,6 +338,7 @@ function castle_turn(player, castle) {
         }
     }
 }
+exports.castle_turn = castle_turn;
 /**
  * Checks if choice exists in the paths array.
  * @param paths an array of numbers (nodes)

@@ -17,17 +17,18 @@ exports.mormors_kudde = {
         [O, I, I, I, O], //4. from E
     ]
 };
-var castles = [];
+var castles = []; // init empty castles array
 // board
 // start nodes
 var node1 = "1";
 var node2 = "2";
 var node5 = "5";
-//unclaimed nodes
+//unclaimed nodes 
 var node3 = "3x";
 var node4 = "4x";
 var nodes = [node1, node2, node3, node4, node5];
-var map = [
+/*
+let map = [
     [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
     [" ", " ", "/", " ", "|", " ", "\\", " "],
     [" ", "/", " ", " ", "|", " ", " ", "\\"],
@@ -36,6 +37,7 @@ var map = [
     [" ", " ", "\\", " ", "|", " ", "/", "", " "],
     [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
 ];
+*/
 // Functions
 /**
      * Creates a castle in setup phase
