@@ -12,7 +12,7 @@ import {
 } from '../types'
 
 import {
-    get_player_list
+    get_player_list, kill_player
 } from '../game';
 
 import {
@@ -281,6 +281,7 @@ export function move(move_from: Castle, move_to: Castle): void {
                                  // inte när man attackerade, staying army ska ju alltid staya 
 
     if (player_from != player_to) {         // if we find an opponent
+        clear_terminal
         print_to_game(move_from.owner +  " has declared war against " +  move_to.owner);
         move_to.hp = remove_dead_warriors(move_to.hp) // Defending army clear the dead
         if (move_to.hp.length != 0) {       //if army is not empty (we attack)
@@ -292,6 +293,12 @@ export function move(move_from: Castle, move_to: Castle): void {
         } else {                            // If def. castle is empty, we change owner
             console.log('The castle was empty my lord! Free for the taking!');
             castle_owner(move_to, attacking_player!, defending_player!, moving_army);
+
+            // DAVID LÖSER, If you go into an empty castle, we do a check to see if player does not have other castles. If not we kill player.
+            //if(defending_player != undefined && count_castles(defending_player[1]) == 0){ 
+
+            //    kill_player(defending_player);
+            //}
             
             // HÄR ska det finnas en safe som kollar om förra ägarens castle inte har några andra!
 
