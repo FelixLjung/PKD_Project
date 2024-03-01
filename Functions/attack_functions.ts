@@ -1,11 +1,34 @@
-import { type Warrior, type Army, type Castle, type Player } from "../types";
-import { type Pair, tail, pair } from "../lib/list";
-import { type Queue, head, dequeue, enqueue, empty } from "../lib/queue_array";
-import { army_size, get_random_int, get_order_castles, remove_dead_warriors, count_castles} from "./general_functions";
-import { create_army, get_castle_array } from "./setup_functions";
-import { kill_player } from "../game";
-import { w_names } from "./general_functions";
-import { cursive_line, empty_line, print_to_game } from "./utility_functions";
+import {
+    type Warrior, type Army, type Castle, type Player
+} from "../types";
+
+import {
+     type Pair, tail, pair 
+} from "../lib/list";
+
+import { 
+    type Queue, head as q_head, dequeue, enqueue, empty 
+} from "../lib/queue_array";
+
+import { 
+    get_random_int, remove_dead_warriors, count_castles
+} from "./general_functions";
+
+import { 
+    kill_player 
+} from "../game";
+
+import { 
+    w_names 
+} from "./resources";
+
+import { 
+    empty_line, press_to_continue, print_to_game 
+} from "./utility_functions";
+
+import { 
+    death_text 
+} from "./resources";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -34,7 +57,7 @@ export function enqueue_army(army: Army): Queue<Warrior> {
  * @param army is a {Army}
  * @returns Void
  */
-function unalive_warrior(dead: Warrior, army: Army){
+export function unalive_warrior(dead: Warrior, army: Army){
     
     for(let i = 0; i < army.length; i++){
         if(army[i].name == dead.name){
@@ -55,51 +78,6 @@ export function remake_warrior(dead: Warrior, army: Army) {
         }
     }
 
-
-/**
- * displays the death message when a soldier dies
- * @param dead - the warrior who has been killed
- * @param killer - the warrior who killed the other warrior
- */
-export function death_text(dead: string, killer: string) {
-    let d_name: string = dead;
-    let k_name: string = killer;
-    const strings: Array<string> = [`${d_name} has been slain by ${k_name}`,        //26 different texts
-                                `${d_name} got skewered by ${k_name}`,
-                                `${d_name} was defeated by ${k_name}`, 
-                                `${k_name} poked a hole in ${d_name}'s throat`,
-                                `${d_name} was schooled by ${k_name}`,
-                                `${d_name} got gob smacked by ${k_name}`,
-                                `${k_name} stole ${d_name}'s lunch!`,
-                                `${d_name} took their last breath!`,
-                                `${k_name} bashed in ${d_name}'s skull`,
-                                `${d_name} got trampled on the battlefield.`,
-                                `${d_name} died of conversing with ${k_name}`,
-                                `${k_name} turned ${d_name} to rubble.`,
-                                `${d_name} recieved a spanking by ${k_name}`,
-                                `${d_name} lost in rock paper scissor and ${d_name} died from embarrassment`,
-                                `${d_name} got thousand neddled by ${k_name}`,
-                                `${d_name} lifespan was dramatically shorted by ${k_name}`,
-                                `${d_name} got unalived`,
-                                `${d_name} spoke on their dying breath... " Darnit... "`,
-                                `${d_name} got Alt F4'd`,
-                                `${k_name} deleted ${d_name}'s kneecaps`,
-                                `${d_name} died of an allergic reaction!`,
-                                `${d_name} laughed so hard, he vanished!`,
-                                `${k_name} slapped ${d_name}'s face into oblivion`,
-                                `${d_name} got stuck in an infinite loop!`,
-                                `${k_name} broke ${d_name}'s back!`,
-                                `${d_name} got sent to bed by ${k_name}`,
-                                `${d_name} broke ${k_name}'s pinky promised, which resulted in instant death!`,
-                                `${k_name} turned ${d_name} into a fine paste... Yummy!`];
-
-    let curr_event = strings[get_random_int(0, 27)];
-    empty_line();
-    cursive_line();
-    empty_line();
-    console.log(curr_event); // No Abstracted function for printing with color yet
-    empty_line();
-}
 
 /**
  * Changes the owner of a castle
@@ -145,7 +123,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
  * @returns Boolean - whether the army is empty or not
  */
 export function is_army_empty(army : Queue<Warrior>) : Boolean {
-    if (head(army) == undefined || army[2].length < 1) {
+    if (q_head(army) == undefined || army[2].length < 1) {
         return true;
     } else {
         return false;
@@ -189,7 +167,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 console.log(`\u001b[32m` + defender.name +`\u001b[37m`, ' defended the castle, surviving with ',`\u001b[33m` + defender.health +`\u001b[37m`, ' health!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                prompt();
+                press_to_continue();
                 return true;
             }
             defender.health -= attacker.attack * get_random_int(0, 2);
@@ -199,7 +177,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 console.log(`\u001b[31m` + attacker.name + `\u001b[37m`, 'won the battle with ',`\u001b[33m` + attacker.health +`\u001b[37m`, 'health left!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                prompt();
+                press_to_continue();
                 return false;
             }
         }
@@ -225,8 +203,8 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         
         while (is_army_empty(attackers) == false && is_army_empty(defenders) == false) {
             
-            let curr_attacker: Warrior = head(attackers);
-            let curr_defender: Warrior = head(defenders);
+            let curr_attacker: Warrior = q_head(attackers);
+            let curr_defender: Warrior = q_head(defenders);
             
             let def_win = fight(curr_attacker, curr_defender, Attacking_army, castle_army);
     
@@ -253,7 +231,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
-        prompt();
+        press_to_continue();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
 
@@ -268,8 +246,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             }
         castle.hp = winner[1];
 
-        //prompt();
-        //console.clear();
+        press_to_continue();
         return [];
     }
 
@@ -280,7 +257,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
-    function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
+function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
         return q[2];
     }
 

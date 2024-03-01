@@ -7,12 +7,18 @@ import { finds_paths,
     train_warrior,
     is_choice_in_paths,
     get_first_warrior_name,
-    merge_army } from "../Functions/general_functions";
+    merge_army,
+    heal_warrior,
+    get_order_castles } from "../Functions/general_functions";
 
 import { type Army,
     type Castle,
     type Warrior,
     type Player } from "../types";
+
+import { type Queue,
+        empty,
+         } from "../lib/queue_array";
 
 
 describe('getRandomInt', () => {
@@ -135,24 +141,53 @@ describe('get_first_warrior_name', () => {
 
 });
 
-/*
 describe('merge_army', () => {
     
-    const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
-    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
-    const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : false};
-    const wrr4 : Warrior = {attack : 5, health : 10, name : 'Kalle', alive : true};
+    const wrr1 : Warrior = {alive : true, attack : 5, health : 10, name : 'Alfred'};
+    const wrr2 : Warrior = {alive : true, attack : 3, health : 15, name : 'David'};
+    const wrr3 : Warrior = {alive : true, attack : 8, health : 16, name : 'Felix'};
+    const wrr4 : Warrior = {alive : true, attack : 5, health : 10, name : 'Kalle'};
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr2, wrr3, wrr4];
     const ex_army3 : Army = [];
 
     it('Merges two armies', () => {
-        expect(merge_army(ex_army1, ex_army2)).toBe([wrr1, wrr2, ,  wrr3, , , wrr4]);
+        expect(merge_army(ex_army1, ex_army2)).toEqual([wrr1, wrr2, wrr3, wrr4]);
     });
 
     it('If one army is empty, the other army is returned', () => {
-        expect(merge_army(ex_army1, ex_army3)).toBe([wrr1]);
+        expect(merge_army(ex_army1, ex_army3)).toEqual(ex_army1);
     });
 
 });
-*/
+
+describe('heal_warrior', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 25, name : 'Felix', alive : true};
+
+    it('heals a warrior', () => {
+        expect(heal_warrior(wrr1)).toBe('Felix');
+    });
+
+});
+
+describe('get_order_castles', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
+    const wrr2 : Warrior = {attack : 5, health : 10, name : 'Felix', alive : true};
+    const test_castle1 : Castle = {hp : [wrr1], owner : 'Alfred', position : 3};
+    const test_castle2 : Castle = {hp : [wrr1], owner : 'Felix', position : 3};
+    const test_castle3 : Castle = {hp : [wrr1, wrr2], owner : 'Felix', position : 2};
+    const test_player1 : Player = ['Alfred', [test_castle1, undefined]];
+    const test_player2 : Player = ['Felix', [test_castle2, test_castle3 ]];
+    const empty_queue : Queue<Castle> = empty();
+
+    it('If you only have one castle it returns a queue with one element', () => {
+        expect(head(get_order_castles(test_player1)).toBe(test_castle1));
+    });
+
+    it('Returns a queue of castles', () => {
+        expect(get_order_castles(test_player2)).toBe();
+    });
+
+});

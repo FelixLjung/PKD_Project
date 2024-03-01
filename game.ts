@@ -1,30 +1,37 @@
-import { type MatrixGraph } from './lib/graphs';
+import { 
+    type MatrixGraph 
+} from './lib/graphs';
 
-//import {getRandomInt, attack, move, castle_owner, print_board, turn, setup, create_warrior, refresh_board, castle_turn} from './functions';
+import {
+     turn, count_castles, recruit_warrior, check_if_cpu 
+} from './Functions/general_functions';
 
-import {type List, type Pair, list, head, tail, pair} from './lib/list';
+import {
+    game_setup, get_castle_array 
+} from './Functions/setup_functions'
 
-import { get_random_int, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
-import {game_setup, get_castle_array } from './Functions/setup_functions'
-import { refresh_board, print_board } from './Functions/print_functions';
-import { press_to_continue, print_line, print_to_game } from './Functions/utility_functions';
+import {
+     refresh_board 
+} from './Functions/print_functions';
 
-import { type Player } from './types';
-import { count } from 'console';
+import { 
+    press_to_continue, print_line, print_to_game 
+} from './Functions/utility_functions';
 
+import { 
+    type Player 
+} from './types';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-//console.log("GAME.ts")
+
 // start nodes
 let node1 = "1";
 let node2 = "2";
 let node5 = "5";
 
-//unclaimed nodes
+// unclaimed nodes
 let node3 = "3x"
 let node4 = "4x";
-
-
 
 let game_running = false;
 /*
