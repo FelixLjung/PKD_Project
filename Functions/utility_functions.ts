@@ -6,6 +6,9 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 
 const testing : Boolean = false;
 
+export function get_testing_bool(){
+    return testing;
+}
 
 //Functions
 
