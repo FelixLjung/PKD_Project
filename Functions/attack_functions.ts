@@ -39,7 +39,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
  * @param army 
  * @returns A queue of warriors (used to attack / defend)
  */
-function enqueue_army(army: Army): Queue<Warrior> {
+export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
     if(army.length == 0){
         return queue_army;
@@ -57,7 +57,7 @@ function enqueue_army(army: Army): Queue<Warrior> {
  * @param army is a {Army}
  * @returns Void
  */
-function unalive_warrior(dead: Warrior, army: Army){
+export function unalive_warrior(dead: Warrior, army: Army){
     
     for(let i = 0; i < army.length; i++){
         if(army[i].name == dead.name){
@@ -257,7 +257,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
-    function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
+function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
         return q[2];
     }
 
