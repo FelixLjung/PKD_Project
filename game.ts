@@ -11,7 +11,7 @@ import {
 } from './Functions/setup_functions'
 
 import {
-     refresh_board 
+     refresh_board, splash, splash_end 
 } from './Functions/print_functions';
 
 import { 
@@ -134,6 +134,9 @@ game_running = true;
 function game(){
     console.clear();
     player_list = a_player_list(player_list);
+
+    splash();
+    press_to_continue();
     
     while(game_running){
         //print_board();
@@ -161,7 +164,9 @@ function game(){
             }
             
             if (count_castles(player_list[i][1]) == 5) {
-                console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
+                //console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
+                splash_end(player_list[i])
+
                 game_running = false;
                 break;
             }

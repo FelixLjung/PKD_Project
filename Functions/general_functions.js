@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.get_order_castles = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
+exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.castle_turn = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.get_order_castles = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
 //Imports
 var queue_array_1 = require("../lib/queue_array");
 var list_1 = require("../lib/list");
@@ -217,14 +217,21 @@ function move(move_from, move_to) {
             // HÄR ska det finnas en safe som kollar om förra ägarens castle inte har några andra!
         }
     }
-    else if (player_from == player_to) { // Move to your own castle
-        for (var i = 0; i < move_from.hp.length; i++) { //
-            //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_to.hp = merge_army(move_from.hp, moving_army);
-            //move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
-            //console.log('move_from', move_from.hp);
-            //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
-        }
+    else if (player_from == player_to) {
+        // Move to your own castle
+        /*
+     for (let i = 0; i < move_from.hp.length; i++) { //
+         //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
+         move_to.hp = merge_army(move_from.hp, moving_army);
+         move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army
+         //console.log('move_from', move_from.hp);
+         //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
+     }
+     */
+        move_to.hp = merge_army(move_to.hp, moving_army);
+        move_from.hp = staying_army;
+        console.log('move_from', move_from.hp);
+        console.log('move_to', move_to.hp);
     }
 }
 function turn(player) {
@@ -315,6 +322,7 @@ function castle_turn(player, castle) {
         else if (choice === "2") { // TRAIN
             console.log('Your new and improved army:');
             castle.hp = remove_dead_warriors(castle.hp);
+            castle.hp = train_warrior(castle.hp);
             (0, utility_functions_1.cursive_line)();
             for (var i = 0; i < castle.hp.length; i++) { //Prints your army after training
                 console.log(" | Name: ", castle.hp[i].name, " | Attack: ", castle.hp[i].attack, " | Health: ", castle.hp[i].health, "| ");
@@ -330,6 +338,7 @@ function castle_turn(player, castle) {
         }
     }
 }
+exports.castle_turn = castle_turn;
 /**
  * Checks if choice exists in the paths array.
  * @param paths an array of numbers (nodes)

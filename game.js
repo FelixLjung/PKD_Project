@@ -102,6 +102,8 @@ game_running = true;
 function game() {
     console.clear();
     player_list = a_player_list(player_list);
+    (0, print_functions_1.splash)();
+    (0, utility_functions_1.press_to_continue)();
     while (game_running) {
         //print_board();
         //console.clear()
@@ -123,7 +125,8 @@ function game() {
                 (0, utility_functions_1.press_to_continue)();
             }
             if ((0, general_functions_1.count_castles)(player_list[i][1]) == 5) {
-                console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!');
+                //console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
+                (0, print_functions_1.splash_end)(player_list[i]);
                 game_running = false;
                 break;
             }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.print_army = exports.print_castle = exports.print_board = exports.refresh_board = void 0;
+exports.print_army = exports.print_castle = exports.print_board = exports.refresh_board = exports.splash_end = exports.splash = void 0;
 var setup_functions_1 = require("./setup_functions");
 var utility_functions_1 = require("./utility_functions");
 // Print functions 
@@ -43,6 +43,14 @@ var map_player_3 = [
     [node1, " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", node2],
 ];
 var map = map1;
+function splash() {
+    console.log("\n\n    ____    __    ___                                                                            ____    __    ___   \n   [____]__[__]__[___]                                                                          [____]__[__]__[___] \n    [_I_]__\u9763__[_I_]                                                                             [_I_]__\u9763__[_I_]\n    [_I_]_\u21F1\u21F2__[_I_] \u2588\u2588\u2588    \u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588\u2588     \u2588\u2588   \u2588\u2588 \u2588\u2588 \u2588\u2588\u2588    \u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588\u2588 [__I_]_\u21F1\u21F2__[_I_]   \n    [_I_]_\u21F1\u21F2__[_I_] \u2588\u2588\u2588\u2588   \u2588\u2588 \u2588\u2588    \u2588\u2588 \u2588\u2588   \u2588\u2588 \u2588\u2588          \u2588\u2588  \u2588\u2588  \u2588\u2588 \u2588\u2588\u2588\u2588   \u2588\u2588 \u2588\u2588       \u2588\u2588      [__I_]_\u21F1\u21F2__[_I_]\n    [_I_]_\u21F1\u21F2__[_I_] \u2588\u2588 \u2588\u2588  \u2588\u2588 \u2588\u2588    \u2588\u2588 \u2588\u2588   \u2588\u2588 \u2588\u2588\u2588\u2588\u2588       \u2588\u2588\u2588\u2588\u2588   \u2588\u2588 \u2588\u2588 \u2588\u2588  \u2588\u2588 \u2588\u2588   \u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2588\u2588\u2588 [__I_]_\u21F1\u21F2__[_I_]\n    [_I_]_\u21F1\u21F2__[_I_] \u2588\u2588  \u2588\u2588 \u2588\u2588 \u2588\u2588    \u2588\u2588 \u2588\u2588   \u2588\u2588 \u2588\u2588          \u2588\u2588  \u2588\u2588  \u2588\u2588 \u2588\u2588  \u2588\u2588 \u2588\u2588 \u2588\u2588    \u2588\u2588      \u2588\u2588 [__I_]_\u21F1\u21F2__[_I_]  \n    [_I_]_\u21F1\u21F2__[_I_] \u2588\u2588   \u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588\u2588     \u2588\u2588   \u2588\u2588 \u2588\u2588 \u2588\u2588   \u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588  \u2588\u2588\u2588\u2588\u2588\u2588\u2588 [__I_]_\u21F1\u21F2__[_I_]  \n    [_I_]_|\uD81A\uDD05|__[_I_]   ________________________________________________________________________  [_I_]_|\uD81A\uDD05|__[_I_]                                                                     \n\n    \n    ");
+}
+exports.splash = splash;
+function splash_end(winner) {
+    console.log("\n                    _\n                   |\u2963| \n    _______    _   |\u296F|\n   /_-_W_-_|  |+|  |\u296F|       __________________________________________________\n           | _<=>_ |\u296F|       \u001B[31m".concat(winner[0], " The Counqueror\u001B[37m Rules The Entire Kingdom!\n           0/  V   o=o                           \u001B[33mGAME OVER\u001B[37m\n            V| ^ |V 0\n           | |_^_|\n           | || ||\n         __|_d|_|b____\n\n    "));
+}
+exports.splash_end = splash_end;
 function refresh_board() {
     function get_castle_owners() {
         var castles = (0, setup_functions_1.get_castle_array)();
@@ -108,7 +116,7 @@ function print_board() {
     }
     function helper(line) {
         var str = "";
-        for (var j = 0; j < line.length; j++) {
+        for (var j = 0; j < line.length; j++) { // Color the Players differently on the MAP
             if (is_string_arr(line[j])) {
                 if (line[j][1] == "D") {
                     str += "\u001b[31m" + line[j] + "\u001b[36m";

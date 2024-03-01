@@ -1,25 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.sleep = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = exports.get_testing_bool = void 0;
+exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = exports.get_testing_bool = void 0;
 //Variables
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-var testing = true;
+var testing = false; // set this to true if testing with jest, disables all empty promopts 
+var debugging = false; // set this to false to quickly remove all debug console logs
+/**
+ * Used to export the testing variable. When the testing variable is true we enter testing state,
+ * which disabels some prompts in tested functions.
+ * @returns Boolean - descides if we go into testing mode or not
+ */
 function get_testing_bool() {
     return testing;
 }
 exports.get_testing_bool = get_testing_bool;
 //Functions
 /**
- * Debug log function
- * @param text
+ * prints a non gameplay related message to the console
+ * @param text - what is being logged
  */
 function debug_log(text) {
-    console.log(text);
+    if (debugging) {
+        console.log(text);
+    }
 }
 exports.debug_log = debug_log;
 /**
- * Print function
- * @param text
+ * Print a gameplay related message or graphic
+ * @param text - what is being printed
  */
 function print_to_game(text) {
     console.log(text);
@@ -47,18 +55,9 @@ function print_line() {
 }
 exports.print_line = print_line;
 /**
- *
- * @param ms
- * @returns
- */
-function sleep(ms) {
-    return new Promise(function (resolve) { return setTimeout(resolve, ms); });
-}
-exports.sleep = sleep;
-/**
- *
- * @param a
- * @returns
+ * Changes an array into a string in order to change its appearance.
+ * @param a - an array that is supposed to be changed into a string
+ * @returns string - the array turned into a string
  */
 function format_array(a) {
     var str = "";
@@ -74,7 +73,7 @@ function format_array(a) {
 }
 exports.format_array = format_array;
 /**
- *
+ * Stops the next step in the game until a player clicks enter
  */
 function press_to_continue() {
     if (!testing) {
