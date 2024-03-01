@@ -190,20 +190,6 @@ export function get_order_castles(player: Player): Queue<Castle> {
         return undefined;
     }
 
-    /*
-    function count_castles(castle_list: List<Castle|undefined>, count : number) : number | undefined {
-        return is_null(tail(castle_list!)) ? count 
-                                         : count_castles(castle_list, count + 1);
-                                        
-    }
-    */
-
-
-    //if (player_castles.length > 1)
-    //if (count_castles(list<Castle|undefined>(player_castles),0)! > 0)
-
-    //console.log(list(player_castles));
-
     if (count_castles(player_castles) > 1) {
         while (castle_queue[1] != count_castles(tail(player))) { // 
             

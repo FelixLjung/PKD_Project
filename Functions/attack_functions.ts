@@ -91,9 +91,10 @@ export function death_text(dead: string, killer: string) {
                                 `${k_name} broke ${d_name}'s back!`,
                                 `${d_name} got sent to bed by ${k_name}`,
                                 `${d_name} broke ${k_name}'s pinky promised, which resulted in instant death!`,
-                                `${k_name} turned ${d_name} into a fine paste... Yummy!`];
+                                `${k_name} turned ${d_name} into a fine paste... Yummy!`,
+                                `${d_name} oxygen was depleted`];
 
-    let curr_event = strings[get_random_int(0, 27)];
+    let curr_event = strings[get_random_int(0, 28)];
     empty_line();
     cursive_line();
     empty_line();
