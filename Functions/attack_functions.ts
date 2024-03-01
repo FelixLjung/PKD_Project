@@ -97,7 +97,7 @@ export function death_text(dead: string, killer: string) {
     empty_line();
     cursive_line();
     empty_line();
-    console.log(curr_event); // No Abstracted function for printing with color
+    console.log(curr_event); // No Abstracted function for printing with color yet
     empty_line();
 }
 
@@ -124,12 +124,11 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     let last_pos = new_player[1].length;    // might be able to be a const
     new_player[1][last_pos] = castle;  // adds the castle to the New Players castle array
 
-    const name_of_fallen = old_player[0];
+    
 
     // for (let i = 0; i < tail(old_player)!.length; i = i + 1) { // old, should not use .length, use count_Castles() instead
     for (let i = 0; i < count_castles(tail(old_player)); i = i + 1) { // Loops over the player old players castle 
-        if(tail(old_player)[i] == castle) {                                 // måste fixa en undefine check, får error när nån dör
-           
+        if(tail(old_player)[i] == castle) {                                
             tail(old_player)[i] = undefined; // removes the castle from the previous owners castle array
                 
             if (count_castles(old_player[1]) == 0) { // Checks if player has no castles
@@ -180,12 +179,8 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         }
         
         console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
-        console.log();
+        empty_line();
         while (true) {
-
-            
-            //await delay(1000);
-            //await new Promise(f => setTimeout(f, 1000));
             attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
                 clear_terminal();
@@ -267,7 +262,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     } else if (winner[0]) { //attacker wins
         print_to_game("Our army is dead! The battle is lost!");
-        print_to_game('But' + army[0].name + ' managed to inform us of the enemy army before falling:');
+        print_to_game('But ' + army[0].name + ' managed to inform us of the enemy army before falling:');
         castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
         for (let i = 0; i < castle.hp.length; i++) {
             print_to_game('Soldier name: ' + castle.hp[i].name +

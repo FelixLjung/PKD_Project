@@ -7,7 +7,7 @@ import {type List, type Pair, list, head, tail, pair} from './lib/list';
 import { get_random_int, turn, count_castles, recruit_warrior, check_if_cpu } from './Functions/general_functions';
 import {game_setup, get_castle_array } from './Functions/setup_functions'
 import { refresh_board, print_board } from './Functions/print_functions';
-import { print_to_game } from './Functions/utility_functions';
+import { print_line, print_to_game } from './Functions/utility_functions';
 
 import { type Player } from './types';
 
@@ -143,12 +143,14 @@ function game(){
             if (count_castles(player_list[i][1]) == 5) {
                 console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
                 game_running = false;
+                break;
             }
 
                 //console.clear();
-                console.log("------------------------");
+                //console.log("------------------------");
+                print_line();
             }
-            if (game_running == true) { 
+            if (game_running == true) {  // Allt detta borde abstractas
                 for (let i = 0; i < get_castle_array().length; i++){
                     let curr_castle = get_castle_array()[i]
                     let index = curr_castle.hp.length
@@ -157,8 +159,8 @@ function game(){
                         
                     } 
                 }
-                console.log("All castles recruits a new warrior!");
+                print_to_game("All castles recruits a new warrior!");
             }
 }}
 
-//game();
+game();

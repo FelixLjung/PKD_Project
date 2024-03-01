@@ -34,8 +34,11 @@ import { debug_log, format_array, press_to_continue } from './utility_functions'
 import path = require('path');
 import { clear } from 'console';
 import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
+import { stripVTControlCharacters } from 'util';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
+const total_amount_of_castles  : number = 5;
 
 export let w_names: Queue<string> = [0,
     2,
@@ -316,6 +319,10 @@ export function turn(player: Player) {
 
     for (let i = 0; i < castle_queue[1]; i++) {
 
+        if(check_win_condition(player)){
+            break;
+        }
+
         castle_turn(player, head(castle_queue));
         dequeue(castle_queue);
     }
@@ -590,5 +597,19 @@ export function remove_dead_warriors(army: Army): Army {
 
 
 
+}
+
+/**
+ * Checks if a player is controlling all the castles on the board
+ * @param player the current player 
+ * @returns true if the player controlls all the castles, otherwise false
+ */
+export function check_win_condition(player : Player) : Boolean {
+    const player_castles_count : number = count_castles(player[1]); 
+    if (player_castles_count == total_amount_of_castles){
+        return true;
+    } else {
+        return false;
+    }
 }
 
