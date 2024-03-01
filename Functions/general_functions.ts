@@ -30,7 +30,7 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
-import { debug_log, format_array, press_to_continue } from './utility_functions';
+import { cursive_line, debug_log, format_array, press_to_continue } from './utility_functions';
 import path = require('path');
 import { clear } from 'console';
 import { clear_terminal, empty_line, print_line, print_to_game } from './utility_functions';
@@ -136,7 +136,7 @@ export function train_warrior(army: Army): Army {
             continue;
         } else {
             cur_war.attack = cur_war.attack + get_random_int(1, 4);
-            cur_war.health = cur_war.health + get_random_int(5, 10); 
+            cur_war.health = cur_war.health + get_random_int(5, 16); 
             temp_arr[j] = cur_war;
             j++
         }
@@ -179,9 +179,15 @@ export function get_order_castles(player: Player): Queue<Castle> {
         return false;
     }
 
+    /**
+     * 
+     * @param castles 
+     * @param index 
+     * @returns 
+     */
     function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
         for (let i = 0; i < castles.length; i = i + 1) {
-            if (castles[i] !== undefined) {
+            if (castles[i] != undefined) {
                 if (castles[i]!.position == index) {
                     return castles[i];
                 }
@@ -402,15 +408,18 @@ export function castle_turn(player: Player, castle: Castle) {
 
         } else if (choice === "2") {    // TRAIN
             console.log('Your new and improved army:')
-            //for (let i = 0; i < player[1][0]!.hp.length; i++) {
-            //    console.log(player[1][0]!.hp[i]!.name);
-            //}
             castle.hp = remove_dead_warriors(castle.hp);
             let trained_army: Army = train_warrior(castle.hp);
-            print_line();
+            cursive_line();
+            for (let i = 0; i < player[1][0]!.hp.length; i++) { //Prints your army after training
+                console.log(` | Name: ` ,player[1][0]!.hp[i]!.name,
+                            ` | Attack: `, player[1][0]!.hp[i]!.attack,
+                            ` | Health: `, player[1][0]!.hp[i]!.health,`| `);
+            }
             
-            print_to_game(trained_army);
-            print_line()
+            //print_to_game(trained_army);
+            cursive_line();
+            empty_line();
             
             bool = false;
             

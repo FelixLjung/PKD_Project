@@ -3,6 +3,7 @@ import{
 } from '../types';
 
 import { get_castle_array } from './setup_functions';
+import { cursive_line, empty_line, print_to_game } from './utility_functions';
 
 
 // Print functions 
@@ -172,9 +173,10 @@ export function print_castle(player: Player) {
 
 
 export function print_army(castle : Castle) {
-    console.log();
-    console.log('This is the army in this castle, my liege');
-    console.log();
+    empty_line();
+    print_to_game('This is the army in this castle, my liege');
+    empty_line();
+    cursive_line();
     for (let i = 0; i < castle.hp.length; i++) {
         if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {
         console.log('Soldier name:', castle.hp[i]!.name,
@@ -182,6 +184,6 @@ export function print_army(castle : Castle) {
                     '| Health:', castle.hp[i]!.health);
         }
     }
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
+    cursive_line();
+    empty_line();
 }

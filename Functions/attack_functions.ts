@@ -5,7 +5,7 @@ import { army_size, get_random_int, get_order_castles, remove_dead_warriors, cou
 import { create_army, get_castle_array } from "./setup_functions";
 import { kill_player } from "../game";
 import { w_names } from "./general_functions";
-import { cursive_line, empty_line, print_to_game } from "./utility_functions";
+import { cursive_line, empty_line, press_to_continue, print_to_game } from "./utility_functions";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -190,7 +190,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 console.log(`\u001b[32m` + defender.name +`\u001b[37m`, ' defended the castle, surviving with ',`\u001b[33m` + defender.health +`\u001b[37m`, ' health!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                prompt();
+                press_to_continue();
                 return true;
             }
             defender.health -= attacker.attack * get_random_int(0, 2);
@@ -200,7 +200,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 console.log(`\u001b[31m` + attacker.name + `\u001b[37m`, 'won the battle with ',`\u001b[33m` + attacker.health +`\u001b[37m`, 'health left!')
                 console.log();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                prompt();
+                press_to_continue();
                 return false;
             }
         }
@@ -254,7 +254,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
-        prompt();
+        press_to_continue();
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
 
@@ -269,7 +269,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
             }
         castle.hp = winner[1];
 
-        //prompt();
+        //press_to_continue();
         //console.clear();
         return [];
     }
