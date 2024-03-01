@@ -11,9 +11,10 @@ var print_functions_1 = require("./print_functions");
 var setup_functions_1 = require("./setup_functions");
 var utility_functions_1 = require("./utility_functions");
 var utility_functions_2 = require("./utility_functions");
+var utility_functions_3 = require("./utility_functions");
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 var total_amount_of_castles = 5;
-var testing = false;
+var testing = (0, utility_functions_3.get_testing_bool)();
 // General Functions
 /**
  * Chooses a random number between [min] and [max].
@@ -124,7 +125,7 @@ function get_order_castles(player) {
             while (castle_queue[1] != count_castles((0, list_1.tail)(player))) { // 
                 (0, print_functions_1.print_castle)(player);
                 //console.log(player_castles);
-                var cstl = prompt("Which castle would you like to operate from? "); //FIXME: ingen check här? 
+                var cstl = prompt("Which castle would you like to operate from? ");
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     (0, utility_functions_2.print_to_game)("You can't choose the same castle twice!");
                 }
@@ -215,14 +216,21 @@ function move(move_from, move_to) {
             // HÄR ska det finnas en safe som kollar om förra ägarens castle inte har några andra!
         }
     }
-    else if (player_from == player_to) { // Move to your own castle
-        for (var i = 0; i < move_from.hp.length; i++) { //
-            //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_to.hp = merge_army(move_from.hp, moving_army);
-            //move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
-            //console.log('move_from', move_from.hp);
-            //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
-        }
+    else if (player_from == player_to) {
+        // Move to your own castle
+        /*
+     for (let i = 0; i < move_from.hp.length; i++) { //
+         //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
+         move_to.hp = merge_army(move_from.hp, moving_army);
+         move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army
+         //console.log('move_from', move_from.hp);
+         //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
+     }
+     */
+        move_to.hp = merge_army(move_to.hp, moving_army);
+        move_from.hp = staying_army;
+        console.log('move_from', move_from.hp);
+        console.log('move_to', move_to.hp);
     }
 }
 function turn(player) {
@@ -313,6 +321,7 @@ function castle_turn(player, castle) {
         else if (choice === "2") { // TRAIN
             console.log('Your new and improved army:');
             castle.hp = remove_dead_warriors(castle.hp);
+            castle.hp = train_warrior(castle.hp);
             (0, utility_functions_1.cursive_line)();
             for (var i = 0; i < castle.hp.length; i++) { //Prints your army after training
                 console.log(" | Name: ", castle.hp[i].name, " | Attack: ", castle.hp[i].attack, " | Health: ", castle.hp[i].health, "| ");

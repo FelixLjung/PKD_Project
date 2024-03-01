@@ -1,16 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.sleep = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = void 0;
+exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.sleep = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = exports.get_testing_bool = void 0;
 //Variables
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 var testing = false;
+var debugging = false;
+function get_testing_bool() {
+    return testing;
+}
+exports.get_testing_bool = get_testing_bool;
 //Functions
 /**
  * Debug log function
  * @param text
  */
 function debug_log(text) {
-    console.log(text);
+    if (debugging) {
+        console.log(text);
+    }
 }
 exports.debug_log = debug_log;
 /**

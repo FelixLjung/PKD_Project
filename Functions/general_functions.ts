@@ -53,6 +53,7 @@ import {
     stripVTControlCharacters  // Ursäkta?
 } from 'util';
 import { get_testing_bool } from './utility_functions';
+import { transcode } from 'buffer';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
@@ -278,14 +279,25 @@ function move(move_from: Castle, move_to: Castle): void {
 
             
         }
-    } else if (player_from == player_to) {      // Move to your own castle
+    } else if (player_from == player_to) {   
+           // Move to your own castle
+           /*
         for (let i = 0; i < move_from.hp.length; i++) { //
             //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
             move_to.hp = merge_army(move_from.hp, moving_army);
-            //move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
+            move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
             //console.log('move_from', move_from.hp);
             //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
+        */
+
+
+        move_to.hp = merge_army(move_to.hp, moving_army);
+
+        move_from.hp = staying_army;   
+        
+        console.log('move_from', move_from.hp);
+        console.log('move_to', move_to.hp);    
     }
 }
 
@@ -388,10 +400,10 @@ function castle_turn(player: Player, castle: Castle) {
         } else if (choice === "2") {    // TRAIN
             console.log('Your new and improved army:')
             castle.hp = remove_dead_warriors(castle.hp);
-            
+            castle.hp = train_warrior(castle.hp);
             cursive_line();
             for (let i = 0; i < castle.hp.length; i++) { //Prints your army after training
-                console.log(` | Name: ` ,castle.hp[i].name,
+                console.log(` | Name: ` , castle.hp[i].name,
                             ` | Attack: `, castle.hp[i].attack,
                             ` | Health: `, castle.hp[i].health,`| `);
             }

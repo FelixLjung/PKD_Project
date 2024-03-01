@@ -6,6 +6,8 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 
 const testing : Boolean = false;
 
+const debugging = false;
+
 export function get_testing_bool(){
     return testing;
 }
@@ -17,7 +19,10 @@ export function get_testing_bool(){
  * @param text 
  */
 export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
-    console.log(text);
+    if (debugging){
+        console.log(text);
+    }
+    
 }
 
 /**
