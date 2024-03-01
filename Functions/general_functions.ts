@@ -52,6 +52,7 @@ import {
 import { 
     stripVTControlCharacters  // Ursäkta?
 } from 'util';
+import { get_testing_bool } from './utility_functions';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
