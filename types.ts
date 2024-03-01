@@ -29,3 +29,5 @@ export type Castle = {
     owner: string
     position: number
 }
+
+export type Kingdom = Array<Castle>;

@@ -73,7 +73,7 @@ export function get_random_int(min: number, max: number): number {
  * @param army The army that gets trained
  * @returns the trained Army.
  */
-export function train_warrior(army: Army): Army {
+function train_warrior(army: Army): Army {
     const temp_arr: Army = []
     let j = 0;
     for (let w = 0; w < army.length; w = w + 1) {
@@ -95,7 +95,7 @@ export function train_warrior(army: Army): Army {
  * @param player the player in question.
  * @returns Array<string> of the castles
  */
-export function get_order_castles(player: Player): Queue<Castle> {
+function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
     const player_castles: Array<Castle | undefined> = [];
 
@@ -114,7 +114,7 @@ export function get_order_castles(player: Player): Queue<Castle> {
         return false;
     }
 
-    function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
+function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
         for (let i = 0; i < castle_queue[2].length; i = i + 1) {
             if (castle_queue[2][i] == castle) {
                 return true;
@@ -125,27 +125,25 @@ export function get_order_castles(player: Player): Queue<Castle> {
         return false;
     }
 
-    /**
-     * 
-     * @param castles 
-     * @param index 
-     * @returns 
-     */
-    function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
-        for (let i = 0; i < castles.length; i = i + 1) {
-            if (castles[i] != undefined) {
-                if (castles[i]!.position == index) {
-                    return castles[i];
-                }
+/**
+ * 
+ * @param castles 
+ * @param index 
+ * @returns 
+*/
+function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
+    for (let i = 0; i < castles.length; i = i + 1) {
+        if (castles[i] != undefined) {
+            if (castles[i]!.position == index) {
+                return castles[i];
             }
         }
-        return undefined;
     }
-
+    return undefined;
+    }
+    
     if (count_castles(player_castles) > 1) {
         while (castle_queue[1] != count_castles(tail(player))) { // 
-            
-
             print_castle(player);
             //console.log(player_castles);
             const cstl: number = prompt(" Which castle would you like to operate from? ") as number
@@ -190,15 +188,13 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
  * @param Soldiers - The army being moved from one castle to another // tror inte denna behövs
  * @returns void
  */
-export function move(move_from: Castle, move_to: Castle): void {
+function move(move_from: Castle, move_to: Castle): void {
     const player_from: string = move_from.owner;
     const player_to: string = move_to.owner;
+    const army: Army = move_from.hp
     let survivors : Army = [];  //When attacking, surviving warriors are saved here
     //console.log(move_from);
     //console.log(move_to);
-
-    const army: Army = move_from.hp
-    
 
     let attacking_player: Player | undefined = undefined;   
     let defending_player: Player | undefined = undefined;
@@ -212,14 +208,11 @@ export function move(move_from: Castle, move_to: Castle): void {
         }
     }
     const split = split_army(move_from);        //Här splittas Attacking army i två [0 = moving, 1 = staying]
-    //console.log(move_from.position);
-    //console.log(attacking_player![1]);
-
     const moving_army = split[0];
     const staying_army = split[1];
     move_from.hp = staying_army; // De som ska stanna stannar, 
                                  //denna gjordes förut bara när man rörde sig till sitt egna castle,
-                                 // inte när man attackerade, staying army ska ju alltid staya 
+                                 // inte när man attackerade, staying army ska ju alltid stanna 
 
     if (player_from != player_to) {         // if we find an opponent
         clear_terminal
@@ -254,7 +247,6 @@ export function move(move_from: Castle, move_to: Castle): void {
             console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
     }
-
 }
 
 
@@ -304,7 +296,7 @@ export function check_if_cpu(player: Player | string): boolean {
  * Should Call other functions.
  * @param player is a pair(string, List)
  */
-export function castle_turn(player: Player, castle: Castle) {
+function castle_turn(player: Player, castle: Castle) {
     let bool = true;
     castle.hp = remove_dead_warriors(castle.hp);
     
@@ -369,8 +361,7 @@ export function castle_turn(player: Player, castle: Castle) {
             
             bool = false;
             
-        }
-        else {
+        } else {
             print_to_game("Input is not valid, try again!");
             press_to_continue();
             
@@ -384,7 +375,7 @@ export function castle_turn(player: Player, castle: Castle) {
  * @param paths an array of numbers (nodes)
  * @returns a boolean (true if choice is in paths)
  */
-export function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
+function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
     for(let i = 0; i < paths.length; i++){
         if(choice == paths[i]){
             return true
@@ -421,7 +412,7 @@ export function recruit_warrior(castle: Castle, index: number) {
  * After a battle, when their next turn starts, all surviving warriors in army gets healed to 50 hp
  * @param warrior 
  */ 
-export function heal_warrior(warrior: Warrior): string | void{
+function heal_warrior(warrior: Warrior): string | void{
     let war_hp = warrior.health;
         war_hp = 40;
         return warrior.name;
@@ -440,15 +431,6 @@ export function remake_warrior(army: Army) {
             enqueue(new_name, w_names); 
         }
     }
-}
-
-
-export function army_size() {
-
-}
-
-export function remove_player() {
-
 }
 
 /**
@@ -478,7 +460,7 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
  * @param castle 
  * @returns 
  */
-export function split_army(castle: Castle): Array<Army> {
+function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
     const pair_army: Array<Army> = []       // Returning
     let alive_army = remove_dead_warriors(castle.hp);
@@ -510,7 +492,7 @@ export function split_army(castle: Castle): Array<Army> {
  * @param a2 is an Army that is in the Army when merging
  * @returns a merged Army
  */
-export function merge_army(a1:Army, a2: Army): Army{
+function merge_army(a1:Army, a2: Army): Army{
     if(a2 == undefined){ // if the other army doesnt exist 
         return a1   // a1 is the army you moving in with, should never be empty or undefined
     }
@@ -551,7 +533,7 @@ export function remove_dead_warriors(army: Army): Army {
  * @param player the current player 
  * @returns true if the player controlls all the castles, otherwise false
  */
-export function check_win_condition(player : Player) : Boolean {
+function check_win_condition(player : Player) : Boolean {
     const player_castles_count : number = count_castles(player[1]); 
     if (player_castles_count == total_amount_of_castles){
         return true;

@@ -39,7 +39,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
  * @param army 
  * @returns A queue of warriors (used to attack / defend)
  */
-export function enqueue_army(army: Army): Queue<Warrior> {
+function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
     if(army.length == 0){
         return queue_army;
