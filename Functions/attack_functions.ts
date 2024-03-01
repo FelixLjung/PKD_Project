@@ -163,9 +163,9 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
             if (attacker.health <= 0) {
                 death_text( "Attacker " + `\u001b[31m` + attacker.name +`\u001b[37m`, "Defender " + `\u001b[32m` + defender.name +`\u001b[37m`);
                 unalive_warrior(attacker, army);
-                console.log()
+                empty_line();
                 console.log(`\u001b[32m` + defender.name +`\u001b[37m`, ' defended the castle, surviving with ',`\u001b[33m` + defender.health +`\u001b[37m`, ' health!')
-                console.log();
+                empty_line();
                 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 press_to_continue();
                 return true;

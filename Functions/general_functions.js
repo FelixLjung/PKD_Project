@@ -124,7 +124,7 @@ function get_order_castles(player) {
             while (castle_queue[1] != count_castles((0, list_1.tail)(player))) { // 
                 (0, print_functions_1.print_castle)(player);
                 //console.log(player_castles);
-                var cstl = prompt(" Which castle would you like to operate from? ");
+                var cstl = prompt("Which castle would you like to operate from? "); //FIXME: ingen check här? 
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     (0, utility_functions_2.print_to_game)("You can't choose the same castle twice!");
                 }
@@ -231,7 +231,7 @@ function turn(player) {
     for (var i = 0; i < castle_queue[1]; i++) {
         (0, utility_functions_1.debug_log)(i);
         if (check_win_condition(player)) {
-            (0, utility_functions_1.debug_log)(player + " has won höö");
+            //debug_log(player + " has won höö");
             break;
         }
         castle_turn(player, (0, queue_array_1.head)(castle_queue));
@@ -292,7 +292,7 @@ function castle_turn(player, castle) {
         (0, utility_functions_2.empty_line)();
         console.log("\u001B[33m", "1:", "\u001B[37m", "Move Army"); // Input option 1, move army red
         console.log("\u001B[33m", "2:", "\u001B[37m", "Train Army"); // Input option 2, train army green
-        var choice = prompt("  :  "); // Reads the player input 
+        var choice = prompt("  :  ").trim(); // Reads the player input 
         if (choice === "1") { // MOVE
             var paths = finds_paths(castle, setup_functions_1.mormors_kudde); // Finds all the neighbouring castles
             while (bool) { // Wrapping the input in a While loop to handle invalid inputs 

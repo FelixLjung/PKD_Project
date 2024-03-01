@@ -128,9 +128,9 @@ function fight(attacker, defender, army, castle_army) {
         if (attacker.health <= 0) {
             (0, resources_2.death_text)("Attacker " + "\u001B[31m" + attacker.name + "\u001B[37m", "Defender " + "\u001B[32m" + defender.name + "\u001B[37m");
             unalive_warrior(attacker, army);
-            console.log();
+            (0, utility_functions_1.empty_line)();
             console.log("\u001B[32m" + defender.name + "\u001B[37m", ' defended the castle, surviving with ', "\u001B[33m" + defender.health + "\u001B[37m", ' health!');
-            console.log();
+            (0, utility_functions_1.empty_line)();
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             (0, utility_functions_1.press_to_continue)();
             return true;

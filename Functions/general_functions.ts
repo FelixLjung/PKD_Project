@@ -57,7 +57,7 @@ const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hant
 
 const total_amount_of_castles  : number = 5;
 
-const testing : Boolean = false;
+const testing : Boolean = get_testing_bool();
 
 // General Functions
 
@@ -174,7 +174,8 @@ function get_order_castles(player: Player): Queue<Castle> {
             
                 print_castle(player);
                 //console.log(player_castles);
-                const cstl: number = prompt(" Which castle would you like to operate from? ") as number
+                const cstl: number = prompt("Which castle would you like to operate from? ") as number 
+
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     print_to_game("You can't choose the same castle twice!");
                 } else if (includes(player_castles, cstl, player)) {
@@ -215,6 +216,7 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
             spot = spot + 1;
         }
     }
+
     return paths;
 }
 
@@ -294,7 +296,7 @@ export function turn(player: Player) {
     for (let i = 0; i < castle_queue[1]; i++) {
         debug_log(i);
         if(check_win_condition(player)){
-            debug_log(player + " has won höö");
+            //debug_log(player + " has won höö");
             break;
         }
 
@@ -362,7 +364,7 @@ function castle_turn(player: Player, castle: Castle) {
         
         console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Input option 1, move army red
         console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Input option 2, train army green
-        const choice: string = prompt("  :  "); // Reads the player input 
+        const choice: string = prompt("  :  ").trim(); // Reads the player input 
 
         if (choice === "1") {   // MOVE
             let paths = finds_paths(castle, mormors_kudde); // Finds all the neighbouring castles
@@ -397,7 +399,7 @@ function castle_turn(player: Player, castle: Castle) {
 
             cursive_line();
             empty_line();
-            
+    
             bool = false;
             
         } else {
