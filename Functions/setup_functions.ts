@@ -24,8 +24,6 @@ import {
 
 
 // Variables
-
-
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 let I = true;
@@ -45,7 +43,6 @@ export const mormors_kudde: MatrixGraph = { // The matrixgraph representing the 
 }
 
 let castles: Array<Castle> = []; // init empty castles array
-
 
 // board
 

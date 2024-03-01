@@ -140,14 +140,37 @@ export function print_board() {
     function helper(line: Array<string>) {
         let str = "";
 
-        for (let j = 0; j < line.length; j++) {
-            str += line[j];
+        for (let j = 0; j < line.length; j++) {     // Color the Players differently on the MAP
+            if(is_string_arr(line[j])){
+                if(line[j][1] == "D"){
+                    str += "\u001b[31m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == "F"){
+                    str += "\u001b[32m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == "A"){
+                    str += "\u001b[33m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == "C"){
+                    str += "\u001b[37m" + line[j] + "\u001b[36m";
+                }  
+            }else{
+                str += line[j];
+            }
         }
         return str;
     }
     console.log("-------------------------------------------");
 }
 
+/**
+ * When printing the map, checks if we find an array, (if length of string is > 1)
+ * @param map 
+ * @returns 
+ */
+function is_string_arr(map: string): boolean{
+    if(map.length == 2){
+        return true;
+    }
+    return false;
+}
 /**
  * Gets an array of all the castles the player currently control.
  * @param player the player in question.

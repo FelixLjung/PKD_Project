@@ -534,7 +534,7 @@ function split_army(castle: Castle): Array<Army> {
  * @param a2 is an Army that is in the Army when merging
  * @returns a merged Army
  */
-export function merge_army(a1:Army, a2: Army): Army{
+export function merge_army(a1: Army, a2: Army): Army{
     if(a2 == undefined){ // if the other army doesnt exist 
         return a1   // a1 is the army you moving in with, should never be empty or undefined
     }

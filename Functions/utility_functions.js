@@ -1,19 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = exports.get_testing_bool = void 0;
+exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.sleep = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = void 0;
 //Variables
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-var testing = false; // set this to true if testing with jest, disables all empty promopts 
-var debugging = false; // set this to false to quickly remove all debug console logs
-/**
- * Used to export the testing variable. When the testing variable is true we enter testing state,
- * which disabels some prompts in tested functions.
- * @returns Boolean - descides if we go into testing mode or not
- */
-function get_testing_bool() {
-    return testing;
-}
-exports.get_testing_bool = get_testing_bool;
+var testing = false;
 //Functions
 /**
  * prints a non gameplay related message to the console
