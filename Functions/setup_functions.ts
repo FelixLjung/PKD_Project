@@ -7,6 +7,7 @@ import {list} from '../lib/list';
 
 // Variables
 
+
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 let I = true;

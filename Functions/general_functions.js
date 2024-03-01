@@ -1,82 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.remove_dead_warriors = exports.merge_army = exports.split_army = exports.alive_in_army = exports.count_castles = exports.get_first_warrior_name = exports.remove_player = exports.army_size = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.castle_turn = exports.check_if_cpu = exports.turn = exports.move = exports.finds_paths = exports.get_order_castles = exports.train_warrior = exports.get_random_int = exports.w_names = void 0;
+exports.remove_dead_warriors = exports.merge_army = exports.get_first_warrior_name = exports.remake_warrior = exports.heal_warrior = exports.recruit_warrior = exports.is_choice_in_paths = exports.check_if_cpu = exports.turn = exports.finds_paths = exports.count_castles = exports.train_warrior = exports.get_random_int = void 0;
+//Imports
 var queue_array_1 = require("../lib/queue_array");
 var list_1 = require("../lib/list");
 var game_1 = require("../game");
 var attack_functions_1 = require("./attack_functions");
+var resources_1 = require("./resources");
 var print_functions_1 = require("./print_functions");
 var setup_functions_1 = require("./setup_functions");
 var utility_functions_1 = require("./utility_functions");
 var utility_functions_2 = require("./utility_functions");
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-exports.w_names = [0,
-    2,
-    ["Eva Darulova", // Current: 65 warrrior-names
-        "Jingwei Hu",
-        "Johannes Borgström",
-        "Zhanwei Yu",
-        "Thom Surströmming",
-        "Carl Erik Plopp",
-        "Runar Gravstein",
-        "Ernst Greve",
-        "Hjalmar Storfot",
-        "Bosse Brunklimp",
-        "Lillemor Jumm",
-        "Gustav Backlund",
-        "Hans Hansson",
-        "Frans Storm",
-        "Berit Storm",
-        "Tor Hoppetoss",
-        "Fred von Pickelroy",
-        "Björn Olmedo",
-        "Xin Shen",
-        "Jimmy Viking",
-        "Fredrik Blåtand",
-        "Göran Borkavik",
-        "Sigvard Bjelkengren",
-        "Hans Hansson",
-        "Peter Niclass",
-        "Tubbe Tonker",
-        "Frans Tonker",
-        "Per Jutterström",
-        "Miro Ali Akbar",
-        "Fader Gustav",
-        "Dogge Doggelito",
-        "Bartek Bunko",
-        "Wille den snygge",
-        "Kristian Luuk",
-        "Börje Flemming",
-        "Johanna Grönsaksson",
-        "Henning Bollmark",
-        "Krudel Haestre",
-        "Movitz Grus",
-        "Ronken af Bonken",
-        "Dani af Ljusdal",
-        "Göran Brunklimp",
-        "Junior Brunklimp",
-        "Ash Ketch",
-        "Musk El",
-        "Lars-Åke Nordén",
-        "Helga Hammerhead",
-        "Matilda Mildew",
-        "Oswald the Oblivious",
-        "Cedric the Clumsy",
-        "Gilbert Garlicbreath",
-        "Lil' D Plunderpants",
-        "Ser Loin Raw",
-        "Lord Farquad",
-        "Shrek De la Burro",
-        "Tobias Wrigstad",
-        "David Attenborough",
-        "Teddybjörnen Fredriksson",
-        "Freddy Kalas",
-        "Tomten",
-        "Bert Fylking",
-        "Arne Weise",
-        "Lisa af Bänkpressen",
-        "Göran Pson",
-        "Tjark Weber"]];
+var total_amount_of_castles = 5;
+var testing = false;
 // General Functions
 /**
  * Chooses a random number between [min] and [max].
@@ -103,7 +40,7 @@ function train_warrior(army) {
         }
         else {
             cur_war.attack = cur_war.attack + get_random_int(1, 4);
-            cur_war.health = cur_war.health + get_random_int(5, 10);
+            cur_war.health = cur_war.health + get_random_int(5, 16);
             temp_arr[j] = cur_war;
             j++;
         }
@@ -111,6 +48,64 @@ function train_warrior(army) {
     return temp_arr;
 }
 exports.train_warrior = train_warrior;
+function count_castles(castle_arr) {
+    var count = 0;
+    for (var i = 0; i < castle_arr.length; i++) {
+        //console.log(castle_arr[i]);
+        if (castle_arr[i] != undefined) {
+            count++;
+        }
+    }
+    return count;
+}
+exports.count_castles = count_castles;
+function remove_dead_castles(castles) {
+    var new_castles = [];
+    var j = 0;
+    //debug_log(castles);
+    for (var i = 0; i < castles.length; i++) {
+        if (castles[i] != undefined) {
+            new_castles[j] = castles[i];
+            j++;
+        }
+    }
+    //debug_log(new_castles);
+    return new_castles;
+}
+/**
+ *
+ * @param castles
+ * @param index
+ * @returns
+*/
+function get_position(castles, index) {
+    for (var i = 0; i < castles.length; i = i + 1) {
+        if (castles[i] != undefined) {
+            if (castles[i].position == index) {
+                return castles[i];
+            }
+        }
+    }
+    return undefined;
+}
+function includes(Castles, index, player) {
+    for (var i = 0; i < Castles.length; i = i + 1) {
+        if (Castles[i].position == index && Castles[i].owner == player[0]) {
+            return true;
+        }
+    }
+    return false;
+}
+function in_q(castle_queue, castle) {
+    for (var i = 0; i < castle_queue[2].length; i = i + 1) {
+        if (castle_queue[2][i] == castle) {
+            return true;
+        }
+        else {
+        }
+    }
+    return false;
+}
 /**
  * The player determines the order in which they want to make their moves from their castles.
  * @param player the player in question.
@@ -118,72 +113,37 @@ exports.train_warrior = train_warrior;
  */
 function get_order_castles(player) {
     var castle_queue = (0, queue_array_1.empty)();
-    var player_castles = [];
-    for (var i = 0; i < (0, list_1.tail)(player).length; i = i + 1) { // loops over the array of castles
-        if ((0, list_1.tail)(player)[i] != undefined) {
-            player_castles[player_castles.length] = (0, list_1.tail)(player)[i];
-        }
-    }
-    function includes(Castles, index, player) {
-        for (var i = 0; i < Castles.length; i = i + 1) {
-            if (Castles[i].position == index && Castles[i].owner == player[0]) {
-                return true;
-            }
-        }
-        return false;
-    }
-    function in_q(castle_queue, castle) {
-        for (var i = 0; i < castle_queue[2].length; i = i + 1) {
-            if (castle_queue[2][i] == castle) {
-                return true;
-            }
-            else {
-            }
-        }
-        return false;
-    }
-    function get_position(castles, index) {
-        for (var i = 0; i < castles.length; i = i + 1) {
-            if (castles[i] !== undefined) {
-                if (castles[i].position == index) {
-                    return castles[i];
-                }
-            }
-        }
-        return undefined;
-    }
-    /*
-    function count_castles(castle_list: List<Castle|undefined>, count : number) : number | undefined {
-        return is_null(tail(castle_list!)) ? count
-                                         : count_castles(castle_list, count + 1);
-                                        
-    }
-    */
-    //if (player_castles.length > 1)
-    //if (count_castles(list<Castle|undefined>(player_castles),0)! > 0)
-    //console.log(list(player_castles));
+    var player_castles = remove_dead_castles(player[1]);
+    var j = 0;
     if (count_castles(player_castles) > 1) {
-        while (castle_queue[1] != count_castles((0, list_1.tail)(player))) { // 
-            (0, print_functions_1.print_castle)(player);
-            //console.log(player_castles);
-            var cstl = prompt(" Which castle would you like to operate from? ");
-            if (in_q(castle_queue, get_position(player_castles, cstl))) {
-                (0, utility_functions_2.print_to_game)("You can't choose the same castle twice!");
-            }
-            else if (includes(player_castles, cstl, player)) {
-                (0, queue_array_1.enqueue)(get_position(player_castles, cstl), castle_queue);
-            }
-            else {
-                (0, utility_functions_2.print_to_game)("You don't own this Castle");
+        if (testing == true) { //Checking if we are testing currently or not
+            (0, queue_array_1.enqueue)(player_castles[0], castle_queue);
+            (0, queue_array_1.enqueue)(player_castles[1], castle_queue);
+        }
+        else {
+            while (castle_queue[1] != count_castles((0, list_1.tail)(player))) { // 
+                (0, print_functions_1.print_castle)(player);
+                //console.log(player_castles);
+                var cstl = prompt(" Which castle would you like to operate from? ");
+                if (in_q(castle_queue, get_position(player_castles, cstl))) {
+                    (0, utility_functions_2.print_to_game)("You can't choose the same castle twice!");
+                }
+                else if (includes(player_castles, cstl, player)) {
+                    (0, queue_array_1.enqueue)(get_position(player_castles, cstl), castle_queue);
+                }
+                else {
+                    (0, utility_functions_2.print_to_game)("You don't own this Castle");
+                }
             }
         }
     }
     else if (player_castles.length == 1) {
+        (0, utility_functions_1.debug_log)("The player has one casle");
         (0, queue_array_1.enqueue)(player_castles[0], castle_queue);
     }
-    return (castle_queue);
+    //debug_log(player_castles.length);
+    return castle_queue;
 }
-exports.get_order_castles = get_order_castles;
 /**
  * Finds all possible paths from a castle
  * @param castle - the castle the player wants to move from
@@ -213,10 +173,10 @@ exports.finds_paths = finds_paths;
 function move(move_from, move_to) {
     var player_from = move_from.owner;
     var player_to = move_to.owner;
-    var survivors = [];
+    var army = move_from.hp;
+    var survivors = []; //When attacking, surviving warriors are saved here
     //console.log(move_from);
     //console.log(move_to);
-    var army = move_from.hp;
     var attacking_player = undefined;
     var defending_player = undefined;
     var player_list = (0, game_1.get_player_list)();
@@ -230,16 +190,13 @@ function move(move_from, move_to) {
         }
     }
     var split = split_army(move_from); //Här splittas Attacking army i två [0 = moving, 1 = staying]
-    //console.log(move_from.position);
-    //console.log(attacking_player![1]);
     var moving_army = split[0];
-    console.log(" De som FLYTTAS", moving_army);
     var staying_army = split[1];
-    console.log(" De som STANNAR", staying_army);
     move_from.hp = staying_army; // De som ska stanna stannar, 
     //denna gjordes förut bara när man rörde sig till sitt egna castle,
-    // inte när man attackerade, staying army ska ju alltid staya 
+    // inte när man attackerade, staying army ska ju alltid stanna 
     if (player_from != player_to) { // if we find an opponent
+        utility_functions_2.clear_terminal;
         (0, utility_functions_2.print_to_game)(move_from.owner + " has declared war against " + move_to.owner);
         move_to.hp = remove_dead_warriors(move_to.hp); // Defending army clear the dead
         if (move_to.hp.length != 0) { //if army is not empty (we attack)
@@ -251,21 +208,32 @@ function move(move_from, move_to) {
         else { // If def. castle is empty, we change owner
             console.log('The castle was empty my lord! Free for the taking!');
             (0, attack_functions_1.castle_owner)(move_to, attacking_player, defending_player, moving_army);
+            // DAVID LÖSER, If you go into an empty castle, we do a check to see if player does not have other castles. If not we kill player.
+            //if(defending_player != undefined && count_castles(defending_player[1]) == 0){ 
+            //    kill_player(defending_player);
+            //}
+            // HÄR ska det finnas en safe som kollar om förra ägarens castle inte har några andra!
         }
     }
     else if (player_from == player_to) { // Move to your own castle
         for (var i = 0; i < move_from.hp.length; i++) { //
             //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_from.hp = staying_army; // Remaining warriors who didnt move, returns to the castle army 
-            console.log('move_from', move_from.hp);
-            console.log('move_to', move_to.hp); // GÖR DESSA SNYGGA!
+            move_to.hp = merge_army(move_from.hp, moving_army);
+            //move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
+            //console.log('move_from', move_from.hp);
+            //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
     }
 }
-exports.move = move;
 function turn(player) {
     var castle_queue = get_order_castles(player);
+    (0, utility_functions_1.debug_log)(castle_queue);
     for (var i = 0; i < castle_queue[1]; i++) {
+        (0, utility_functions_1.debug_log)(i);
+        if (check_win_condition(player)) {
+            (0, utility_functions_1.debug_log)(player + " has won höö");
+            break;
+        }
         castle_turn(player, (0, queue_array_1.head)(castle_queue));
         (0, queue_array_1.dequeue)(castle_queue);
     }
@@ -331,52 +299,35 @@ function castle_turn(player, castle) {
                 (0, utility_functions_2.print_to_game)("You can move to the following castles: " + "\u001b[33m" + (0, utility_functions_1.format_array)(paths) + "\u001b[0m"); // Displays the neighbouring castles
                 var choice_1 = prompt("Choose your destination: "); // Invariant must be number
                 if (is_choice_in_paths(paths, choice_1)) { //  checks if the input is a valid path
-                    for (var i = 0; i < paths.length; i++) {
-                        bool = false;
-                        // tror det ska vara såhär istället
-                        /*
-                        let castle_to: Castle = get_castle_array()[choice - 1];
-                        move(castle!, castle_to);
-                        */
-                        // tror inte vi behöver denna väl?
-                        if (choice_1 == paths[i]) { // if we make a correct choice.
-                            var castle_to = (0, setup_functions_1.get_castle_array)()[choice_1 - 1];
-                            //console.log(castle_to);
-                            bool = false;
-                            move(castle, castle_to);
-                            //console.log(castle.hp);
-                        }
-                        else {
-                            continue;
-                        }
-                    }
+                    var castle_to = (0, setup_functions_1.get_castle_array)()[choice_1 - 1];
+                    move(castle, castle_to);
+                    bool = false;
                 }
                 else { //Fail safe
                     (0, utility_functions_2.print_to_game)("Invalid move, try again!");
-                    prompt("press Enter:");
+                    //prompt("press Enter:"); // Better without a prompt here
                     //clear_terminal();
                 }
             }
         }
         else if (choice === "2") { // TRAIN
             console.log('Your new and improved army:');
-            //for (let i = 0; i < player[1][0]!.hp.length; i++) {
-            //    console.log(player[1][0]!.hp[i]!.name);
-            //}
             castle.hp = remove_dead_warriors(castle.hp);
-            var trained_army = train_warrior(castle.hp);
-            (0, utility_functions_2.print_line)();
-            (0, utility_functions_2.print_to_game)(trained_army);
-            (0, utility_functions_2.print_line)();
+            (0, utility_functions_1.cursive_line)();
+            for (var i = 0; i < castle.hp.length; i++) { //Prints your army after training
+                console.log(" | Name: ", castle.hp[i].name, " | Attack: ", castle.hp[i].attack, " | Health: ", castle.hp[i].health, "| ");
+            }
+            //print_to_game(trained_army);
+            (0, utility_functions_1.cursive_line)();
+            (0, utility_functions_2.empty_line)();
             bool = false;
         }
         else {
             (0, utility_functions_2.print_to_game)("Input is not valid, try again!");
-            prompt("press Enter: ");
+            (0, utility_functions_1.press_to_continue)();
         }
     }
 }
-exports.castle_turn = castle_turn;
 /**
  * Checks if choice exists in the paths array.
  * @param paths an array of numbers (nodes)
@@ -393,6 +344,7 @@ function is_choice_in_paths(paths, choice) {
     }
     return false; // if choice is not a possible path
 }
+exports.is_choice_in_paths = is_choice_in_paths;
 /**
  * Recruits a new warrior to a castle
  * @param castle - the castle which is recruiting the new warrior
@@ -418,8 +370,7 @@ exports.recruit_warrior = recruit_warrior;
  * @param warrior
  */
 function heal_warrior(warrior) {
-    var war_hp = warrior.health;
-    war_hp = 40;
+    warrior.health = 50;
     return warrior.name;
 }
 exports.heal_warrior = heal_warrior;
@@ -435,67 +386,33 @@ function remake_warrior(army) {
         }
         else {
             var new_name = ((_a = army[x]) === null || _a === void 0 ? void 0 : _a.name) + "I";
-            (0, queue_array_1.enqueue)(new_name, exports.w_names);
+            (0, queue_array_1.enqueue)(new_name, resources_1.w_names);
         }
     }
 }
 exports.remake_warrior = remake_warrior;
-function army_size() {
-}
-exports.army_size = army_size;
-function remove_player() {
-}
-exports.remove_player = remove_player;
 /**
  * Warrior gets a name from queue
  * @returns string
  */
 function get_first_warrior_name() {
-    var name = (0, queue_array_1.head)(exports.w_names);
-    (0, queue_array_1.dequeue)(exports.w_names);
+    var name = (0, queue_array_1.head)(resources_1.w_names);
+    (0, queue_array_1.dequeue)(resources_1.w_names);
     return name;
 }
 exports.get_first_warrior_name = get_first_warrior_name;
-function count_castles(castle_arr) {
-    var count = 0;
-    for (var i = 0; i < castle_arr.length; i++) {
-        //console.log(castle_arr[i]);
-        if (castle_arr[i] != undefined) {
-            count++;
-        }
-    }
-    return count;
-}
-exports.count_castles = count_castles;
-/**
- * Takes in an army with dead warriors. // Den tar ju inte levande warriors också???
- * @param castle
- * @returns An army with only the alive ones, becomes the new castle.hp // Nej den blir inte den nya castle.hp
- */
-function alive_in_army(castle) {
-    var alive_in_army = []; //temporary array of warriors (all alive warriors)
-    var army = castle.hp;
-    for (var curr_warr = 0; curr_warr < army.length; curr_warr++) { // Tar ut alla levande warr. // HURDÅ
-        alive_in_army[alive_in_army.length] = army[curr_warr];
-        (0, utility_functions_1.debug_log)(army[curr_warr]);
-    }
-    (0, utility_functions_1.debug_log)(alive_in_army);
-    return alive_in_army;
-}
-exports.alive_in_army = alive_in_army;
 /**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
- * to then next.            (CALLAS EJ ÄN)
+ * to then next.
  * @param castle
  * @returns
  */
 function split_army(castle) {
     var bool = true; //For the while loop
     var pair_army = []; // Returning
-    var alive_army = alive_in_army(castle);
+    var alive_army = remove_dead_warriors(castle.hp);
     var army = castle.hp;
     while (bool) { //This loop is for dividing the army into two.
-        //Invariant choice got to be number!
         (0, utility_functions_2.print_to_game)("Your army has " + alive_army.length + " warriors...");
         var choice = prompt("How many warriors would you like to move?: ");
         if (parseInt(choice) > 0 && parseInt(choice) <= alive_army.length) { //Choose the amount of warriors
@@ -504,14 +421,6 @@ function split_army(castle) {
             var stay_a = army.slice(num, army.length);
             pair_army[0] = move_a;
             pair_army[1] = stay_a;
-            //console.log(pair_army[0]);
-            //console.log(pair_army[1]);
-            //            for (let a = 0; 0 < num; a++) {
-            //                if (alive_army[a]?.alive && alive_army[a] != undefined) {
-            //                    move_army[move_army.length] = alive_army[a];
-            //                }
-            //                
-            //            }
             bool = false;
         }
         else {
@@ -520,44 +429,56 @@ function split_army(castle) {
     }
     return pair_army; //The amount of warriors we want to move
 }
-exports.split_army = split_army;
 /**
- *
- * @param a1 is an Army
- * @param a2 is an Army
+ * Takes in two armies When moving, merge the two armies into one.
+ * @param a1 is the army that is MOVING TO
+ * @param a2 is an Army that is in the Army when merging
+ * @returns a merged Army
  */
 function merge_army(a1, a2) {
-    if (a2 == undefined) {
-        return a1;
+    if (a2 == undefined) { // if the other army doesnt exist 
+        return a1; // a1 is the army you moving in with, should never be empty or undefined
     }
-    var new_army = a1;
-    var combined = a1.length + a2.length;
-    for (var w = 0; w < a2.length; w++) {
-        new_army[a1.length + w] = a2[w];
+    var new_army = a1; // copies the first army
+    for (var w = 0; w < a2.length; w++) { // loops over all the elemts in the other army
+        new_army[new_army.length] = a2[w]; // adds them to the new army
     }
     return new_army;
 }
 exports.merge_army = merge_army;
 /**
- * Removes all dead warriors in a castle    (FUNKAR EJ ÄN, ändrar ej i castle(Army), CALLAS EJ)
+ * Removes all dead warriors in a castle
  * @param army
  */
 function remove_dead_warriors(army) {
-    var _a;
     var alive_in_army = []; //temporary array of warriors (all alive warriors)
     var j = 0;
     if (army.length == 0) {
         return army = alive_in_army;
     }
     for (var i = 0; i < army.length; i++) { // Loop that takes out all alive warriors in Army
-        if ((_a = army[i]) === null || _a === void 0 ? void 0 : _a.alive) {
+        if (army[i].alive && army[i] != undefined) {
             alive_in_army[j] = army[i];
+            j++;
         }
         else {
             continue;
         }
-        j++;
     }
     return alive_in_army;
 }
 exports.remove_dead_warriors = remove_dead_warriors;
+/**
+ * Checks if a player is controlling all the castles on the board
+ * @param player the current player
+ * @returns true if the player controlls all the castles, otherwise false
+ */
+function check_win_condition(player) {
+    var player_castles_count = count_castles(player[1]);
+    if (player_castles_count == total_amount_of_castles) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}

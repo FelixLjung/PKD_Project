@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.print_army = exports.print_castle = exports.print_board = exports.refresh_board = void 0;
 var setup_functions_1 = require("./setup_functions");
+var utility_functions_1 = require("./utility_functions");
 // Print functions 
 // start nodes
 var node1 = "1";
@@ -136,15 +137,16 @@ function print_castle(player) {
 }
 exports.print_castle = print_castle;
 function print_army(castle) {
-    console.log();
-    console.log('This is the army in this castle, my liege');
-    console.log();
+    (0, utility_functions_1.empty_line)();
+    (0, utility_functions_1.print_to_game)('This is the army in this castle, my liege');
+    (0, utility_functions_1.empty_line)();
+    (0, utility_functions_1.cursive_line)();
     for (var i = 0; i < castle.hp.length; i++) {
         if (castle.hp[i] != undefined && castle.hp[i].alive == true) {
             console.log('Soldier name:', castle.hp[i].name, '| Attack strength:', castle.hp[i].attack, '| Health:', castle.hp[i].health);
         }
     }
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log();
+    (0, utility_functions_1.cursive_line)();
+    (0, utility_functions_1.empty_line)();
 }
 exports.print_army = print_army;

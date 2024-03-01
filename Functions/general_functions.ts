@@ -39,7 +39,7 @@ import {
     mormors_kudde
 } from './setup_functions'
 import { 
-    cursive_line, debug_log, format_array, press_to_continue, testing 
+    cursive_line, debug_log, format_array, press_to_continue 
 } from './utility_functions';
 
 import path = require('path');
@@ -50,12 +50,14 @@ import {
     clear_terminal, empty_line, print_line, print_to_game 
 } from './utility_functions';
 import { 
-    stripVTControlCharacters 
+    stripVTControlCharacters  // Ursäkta?
 } from 'util';
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 const total_amount_of_castles  : number = 5;
+
+const testing : Boolean = false;
 
 // General Functions
 
@@ -90,11 +92,21 @@ export function train_warrior(army: Army): Army {
     }
     return temp_arr;
 }
+export function count_castles(castle_arr: Array<Castle | undefined>) {
+    let count = 0;
+    for (let i = 0; i < castle_arr.length; i++) {
+        //console.log(castle_arr[i]);
+        if (castle_arr[i] != undefined) {
+            count++
+        }
+    }
+    return count;
+}
 
 function remove_dead_castles(castles : Array<Castle | undefined> ) : Array<Castle | undefined> {
     let new_castles : Array<Castle| undefined> = []; 
     let j = 0; 
-    debug_log(castles);
+    //debug_log(castles);
     for (let i = 0; i < castles.length; i++ ){
         if (castles[i] != undefined){
             new_castles[j] = castles[i];
@@ -102,59 +114,10 @@ function remove_dead_castles(castles : Array<Castle | undefined> ) : Array<Castl
         }
         
     }
-    debug_log(new_castles);
+    //debug_log(new_castles);
     return new_castles;
 
 }
-
-/**
- * The player determines the order in which they want to make their moves from their castles.
- * @param player the player in question.
- * @returns Array<string> of the castles
- */
-function get_order_castles(player: Player): Queue<Castle> {
-    let castle_queue: Queue<Castle> = empty();
-    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);
-    let j = 0
-
-    /*
-    for (let i = 0; i < count_castles(player[1]); i = i + 1) { // loops over the array of castles 
-        if (tail(player)[i] != undefined) { // if the player is no undefined 
-            player_castles[j] = tail(player)[i]; // removes all the dead castles (undefined
-        }
-        j++;
-    }
-    */
-
-
-
-    /**
-     * loops over an array of castles and checks if a castle 
-     * @param Castles 
-     * @param index 
-     * @param player 
-     * @returns 
-     */
-    function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
-        for (let i = 0; i < Castles.length; i = i + 1) {
-            if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
-        for (let i = 0; i < castle_queue[2].length; i = i + 1) {
-            if (castle_queue[2][i] == castle) {
-                return true;
-            } else {
-
-            }
-        }
-        return false;
-    }
-
 /**
  * 
  * @param castles 
@@ -170,8 +133,38 @@ function get_position(castles: Array<Castle | undefined>, index: number): Castle
         }
     }
     return undefined;
+
+}
+
+function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
+    for (let i = 0; i < Castles.length; i = i + 1) {
+        if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
+            return true;
+        }
     }
-    
+    return false;
+}
+
+function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
+    for (let i = 0; i < castle_queue[2].length; i = i + 1) {
+        if (castle_queue[2][i] == castle) {
+            return true;
+        } else {
+
+        }
+    }
+    return false;
+}
+/**
+ * The player determines the order in which they want to make their moves from their castles.
+ * @param player the player in question.
+ * @returns Array<string> of the castles
+ */
+function get_order_castles(player: Player): Queue<Castle> {
+    let castle_queue: Queue<Castle> = empty();
+    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);
+    let j = 0    
+
     if (count_castles(player_castles) > 1) {
         if (testing == true) {      //Checking if we are testing currently or not
             enqueue(player_castles[0], castle_queue);
@@ -189,26 +182,21 @@ function get_position(castles: Array<Castle | undefined>, index: number): Castle
                 } else {
                     print_to_game("You don't own this Castle");
                 }
-        while (castle_queue[1] != count_castles(tail(player))) { // 
-            print_castle(player);
             
-            const cstl: number = prompt(" Which castle would you like to operate from? ") as number
-            if (in_q(castle_queue, get_position(player_castles, cstl))) {
-                print_to_game("You can't choose the same castle twice!");
-            } else if (includes(player_castles, cstl, player)) {
-                enqueue(get_position(player_castles, cstl), castle_queue);
-            } else {
-                print_to_game("You don't own this Castle");
             }
-        }
-    } else if (player_castles.length == 1) {
+
+
+}} else if (player_castles.length == 1) {
         debug_log("The player has one casle");
         enqueue(player_castles[0], castle_queue);
     }
-
-    debug_log(player_castles.length);
+   
+    //debug_log(player_castles.length);
     return castle_queue;
+
+    
 }
+
 
 /**
  * Finds all possible paths from a castle
@@ -292,8 +280,8 @@ function move(move_from: Castle, move_to: Castle): void {
             //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
             move_to.hp = merge_army(move_from.hp, moving_army);
             //move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
-            console.log('move_from', move_from.hp);
-            console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
+            //console.log('move_from', move_from.hp);
+            //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
         }
     }
 }
@@ -397,15 +385,16 @@ function castle_turn(player: Player, castle: Castle) {
         } else if (choice === "2") {    // TRAIN
             console.log('Your new and improved army:')
             castle.hp = remove_dead_warriors(castle.hp);
-            let trained_army: Army = train_warrior(castle.hp);
+            
             cursive_line();
-            for (let i = 0; i < player[1][0]!.hp.length; i++) { //Prints your army after training
-                console.log(` | Name: ` ,player[1][0]!.hp[i]!.name,
-                            ` | Attack: `, player[1][0]!.hp[i]!.attack,
-                            ` | Health: `, player[1][0]!.hp[i]!.health,`| `);
+            for (let i = 0; i < castle.hp.length; i++) { //Prints your army after training
+                console.log(` | Name: ` ,castle.hp[i].name,
+                            ` | Attack: `, castle.hp[i].attack,
+                            ` | Health: `, castle.hp[i].health,`| `);
             }
             
             //print_to_game(trained_army);
+
             cursive_line();
             empty_line();
             
@@ -490,17 +479,6 @@ export function get_first_warrior_name(): string {
     let name = q_head(w_names);
     dequeue(w_names);
     return name;
-}
-
-export function count_castles(castle_arr: Array<Castle | undefined>) {
-    let count = 0;
-    for (let i = 0; i < castle_arr.length; i++) {
-        //console.log(castle_arr[i]);
-        if (castle_arr[i] != undefined) {
-            count++
-        }
-    }
-    return count;
 }
 
 /**

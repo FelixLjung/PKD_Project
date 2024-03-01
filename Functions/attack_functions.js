@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.attack = exports.fight = exports.retreat = exports.is_army_empty = exports.castle_owner = exports.death_text = exports.remake_warrior = exports.enqueue_army = void 0;
+exports.attack = exports.fight = exports.retreat = exports.is_army_empty = exports.castle_owner = exports.remake_warrior = exports.unalive_warrior = exports.enqueue_army = void 0;
 var list_1 = require("../lib/list");
 var queue_array_1 = require("../lib/queue_array");
 var general_functions_1 = require("./general_functions");
 var game_1 = require("../game");
-var general_functions_2 = require("./general_functions");
+var resources_1 = require("./resources");
 var utility_functions_1 = require("./utility_functions");
+var resources_2 = require("./resources");
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 //Attack functions
 /**
@@ -40,6 +41,7 @@ function unalive_warrior(dead, army) {
         else { }
     }
 }
+exports.unalive_warrior = unalive_warrior;
 /**
  * When a warrior dies, it's child gets sent to the possible Warrior names.
  * @param army
@@ -47,28 +49,10 @@ function unalive_warrior(dead, army) {
 function remake_warrior(dead, army) {
     if (dead.alive == false) {
         var new_name = dead.name + "I";
-        (0, queue_array_1.enqueue)(new_name, general_functions_2.w_names);
+        (0, queue_array_1.enqueue)(new_name, resources_1.w_names);
     }
 }
 exports.remake_warrior = remake_warrior;
-/**
- * displays the death message when a soldier dies
- * @param dead - the warrior who has been killed
- * @param killer - the warrior who killed the other warrior
- */
-function death_text(dead, killer) {
-    var d_name = dead.name;
-    var k_name = killer.name;
-    var strings = ["".concat(d_name, " has been slain by ").concat(k_name), //26 different texts
-        "".concat(d_name, " got skewered by ").concat(k_name), "".concat(d_name, " was defeated by ").concat(k_name), "".concat(k_name, " poked a hole in ").concat(d_name, "'s throat"), "".concat(d_name, " was schooled by ").concat(k_name), "".concat(d_name, " got gob smacked by ").concat(k_name), "".concat(k_name, " stole ").concat(d_name, "'s lunch!"), "".concat(d_name, " took their last breath!"), "".concat(k_name, " bashed in ").concat(d_name, "'s skull"), "".concat(d_name, " got trampled on the battlefield."), "".concat(d_name, " died of conversing with ").concat(k_name), "".concat(k_name, " turned ").concat(d_name, " to rubble."), "".concat(d_name, " recieved a spanking by ").concat(k_name), "".concat(d_name, " lost in rock paper scissor and ").concat(d_name, " died from embarrassment"), "".concat(d_name, " got thousand neddled by ").concat(k_name), "".concat(d_name, " lifespan was dramatically shorted by ").concat(k_name), "".concat(d_name, " got unalived"), "".concat(d_name, " spoke on their dying breath... \" Darnit... \""), "".concat(d_name, " got Alt F4'd"), "".concat(k_name, " deleted ").concat(d_name, "'s kneecaps"), "".concat(d_name, " died of an allergic reaction!"), "".concat(d_name, " laughed so hard, he vanished!"), "".concat(k_name, " slapped ").concat(d_name, "'s face into oblivion"), "".concat(d_name, " got stuck in an infinite loop!"), "".concat(k_name, " broke ").concat(d_name, "'s back!"), "".concat(d_name, " got sent to bed by ").concat(k_name), "".concat(d_name, " broke ").concat(k_name, "'s pinky promised, which resulted in instant death!"), "".concat(k_name, " turned ").concat(d_name, " into a fine paste... Yummy!")];
-    var curr_event = strings[(0, general_functions_1.get_random_int)(0, 27)];
-    (0, utility_functions_1.empty_line)();
-    (0, utility_functions_1.cursive_line)();
-    (0, utility_functions_1.empty_line)();
-    console.log('\u001b[31m', curr_event, "\u001B[37m"); // No Abstracted function for printing with color
-    (0, utility_functions_1.empty_line)();
-}
-exports.death_text = death_text;
 /**
  * Changes the owner of a castle
  * @param castle - the castle that is changing owner
@@ -86,12 +70,11 @@ function castle_owner(castle, new_player, old_player, army) {
     castle.hp = army; // adds the incoming army to the castle
     var last_pos = new_player[1].length; // might be able to be a const
     new_player[1][last_pos] = castle; // adds the castle to the New Players castle array
-    var name_of_fallen = old_player[0];
     // for (let i = 0; i < tail(old_player)!.length; i = i + 1) { // old, should not use .length, use count_Castles() instead
     for (var i = 0; i < (0, general_functions_1.count_castles)((0, list_1.tail)(old_player)); i = i + 1) { // Loops over the player old players castle 
-        if ((0, list_1.tail)(old_player)[i] == castle) { // måste fixa en undefine check, får error när nån dör
+        if ((0, list_1.tail)(old_player)[i] == castle) {
             (0, list_1.tail)(old_player)[i] = undefined; // removes the castle from the previous owners castle array
-            if ((0, general_functions_1.count_castles)(old_player[1]) == 0) { // Checks if player has no castles
+            if ((0, general_functions_1.count_castles)(old_player[1]) == 0 && old_player[0] != "UNDEFINED") { // Checks if player has no castles
                 (0, game_1.kill_player)(old_player); // kills the player
             }
             else { }
@@ -139,27 +122,27 @@ function fight(attacker, defender, army, castle_army) {
         return false;
     }
     console.log(defender.name, 'is defending castle', castle_army.position, 'against', attacker.name, '!');
-    console.log();
+    (0, utility_functions_1.empty_line)();
     while (true) {
-        //await delay(1000);
-        //await new Promise(f => setTimeout(f, 1000));
-        attacker.health -= defender.attack * (0, general_functions_1.get_random_int)(0, 3);
+        attacker.health -= defender.attack * (0, general_functions_1.get_random_int)(0, 2);
         if (attacker.health <= 0) {
-            death_text(attacker, defender);
+            (0, resources_2.death_text)("Attacker " + "\u001B[31m" + attacker.name + "\u001B[37m", "Defender " + "\u001B[32m" + defender.name + "\u001B[37m");
             unalive_warrior(attacker, army);
             console.log();
-            console.log("\u001B[32m", defender.name, "\u001B[37m", 'defended the castle, surviving with', "\u001B[35m", defender.health, "\u001B[37m", 'health!');
+            console.log("\u001B[32m" + defender.name + "\u001B[37m", ' defended the castle, surviving with ', "\u001B[33m" + defender.health + "\u001B[37m", ' health!');
             console.log();
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            (0, utility_functions_1.press_to_continue)();
             return true;
         }
-        defender.health -= attacker.attack * (0, general_functions_1.get_random_int)(0, 3);
+        defender.health -= attacker.attack * (0, general_functions_1.get_random_int)(0, 2);
         if (defender.health <= 0) {
-            death_text(defender, attacker);
+            (0, resources_2.death_text)("Defender " + "\u001B[32m" + defender.name + "\u001B[37m", "Attacker " + "\u001B[31m" + attacker.name + "\u001B[37m");
             unalive_warrior(defender, castle_army.hp);
-            console.log("\u001B[32m", attacker.name, "\u001B[37m", 'won the battle with', "\u001B[35m", attacker.health, "\u001B[37m", 'health left!');
+            console.log("\u001B[31m" + attacker.name + "\u001B[37m", 'won the battle with ', "\u001B[33m" + attacker.health + "\u001B[37m", 'health left!');
             console.log();
             console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            (0, utility_functions_1.press_to_continue)();
             return false;
         }
     }
@@ -199,16 +182,16 @@ function attack(castle, attacking_player, defending_player, army) {
         }
     }
     var winner = helper(army, castle);
-    if (!winner[0]) {
+    if (!winner[0]) { //defender wins
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
-        prompt();
+        (0, utility_functions_1.press_to_continue)();
         //console.log(tail(winner));
         return ((0, general_functions_1.remove_dead_warriors)((0, list_1.tail)(winner)));
     }
-    else if (winner[0]) {
+    else if (winner[0]) { //attacker wins
         (0, utility_functions_1.print_to_game)("Our army is dead! The battle is lost!");
-        (0, utility_functions_1.print_to_game)('But' + army[0].name + ' managed to inform us of the enemy army before falling:');
+        (0, utility_functions_1.print_to_game)('But ' + army[0].name + ' managed to inform us of the enemy army before falling:');
         castle.hp = (0, general_functions_1.remove_dead_warriors)(castle.hp); // får error 27/2, testar lägga till detta
         for (var i = 0; i < castle.hp.length; i++) {
             (0, utility_functions_1.print_to_game)('Soldier name: ' + castle.hp[i].name +
@@ -216,8 +199,7 @@ function attack(castle, attacking_player, defending_player, army) {
                 ' | Health: ' + castle.hp[i].health);
         }
         castle.hp = winner[1];
-        prompt();
-        console.clear();
+        (0, utility_functions_1.press_to_continue)();
         return [];
     }
     return [];

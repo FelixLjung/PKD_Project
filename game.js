@@ -6,12 +6,11 @@ var setup_functions_1 = require("./Functions/setup_functions");
 var print_functions_1 = require("./Functions/print_functions");
 var utility_functions_1 = require("./Functions/utility_functions");
 var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-//console.log("GAME.ts")
 // start nodes
 var node1 = "1";
 var node2 = "2";
 var node5 = "5";
-//unclaimed nodes
+// unclaimed nodes
 var node3 = "3x";
 var node4 = "4x";
 var game_running = false;
@@ -74,15 +73,25 @@ function kill_player(player) {
     }
 }
 exports.kill_player = kill_player;
-var map = [
-    [" ", " ", " ", " ", node1, " ", " ", " ", " "],
-    [" ", " ", "/", " ", "|", " ", "\\", " "],
-    [" ", "/", " ", " ", "|", " ", " ", "\\"],
-    [node2, "-", "-", node3, "-", "-", node4],
-    [" ", "\\", " ", " ", "|", " ", " ", "/", " "],
-    [" ", " ", "\\", " ", "|", " ", "/", "", " "],
-    [" ", " ", " ", " ", node5, " ", " ", " ", " "]
+function player_is_alive(player) {
+    if ((0, general_functions_1.count_castles)(player[1]) <= 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+/*
+let map = [
+    [" "," "," "," ", node1," "," "," "," "],
+    [" "," ","/"," ", "|"," ","\\"," "],
+    [" ","/"," "," ", "|"," "," ","\\"],
+    [node2,"-", "-", node3,"-","-",node4],
+    [" ","\\"," "," ", "|"," "," ","/"," "],
+    [" "," ","\\"," ", "|"," ","/",""," "],
+    [" "," "," "," ", node5," "," "," "," "]
 ];
+*/
 //const player1 = player_list[0];
 //print_board(map);
 //console.log(player_list);
@@ -105,21 +114,24 @@ function game() {
             if ((0, general_functions_1.count_castles)(player_list[i][1]) == 0) { // Checks if player has 0 castles, SKIP
                 continue;
             }
-            console.log("\u001B[36m", player_list[i][0], "\u001B[37m", "turn");
             if ((0, general_functions_1.check_if_cpu)(player_list[i])) { // if it's CPU's turn, do nothing
             }
             else { // If it's a player's turn
+                console.log("\u001B[36m", player_list[i][0], "\u001B[37m", "turn", (0, general_functions_1.count_castles)(player_list[i][1]));
                 (0, general_functions_1.turn)(player_list[i]);
-                prompt("Your turn is finished");
+                (0, utility_functions_1.print_to_game)("Your turn is finished");
+                (0, utility_functions_1.press_to_continue)();
             }
             if ((0, general_functions_1.count_castles)(player_list[i][1]) == 5) {
                 console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!');
                 game_running = false;
+                break;
             }
             //console.clear();
-            console.log("------------------------");
+            //console.log("------------------------");
+            (0, utility_functions_1.print_line)();
         }
-        if (game_running == true) {
+        if (game_running == true) { // Allt detta borde abstractas
             for (var i = 0; i < (0, setup_functions_1.get_castle_array)().length; i++) {
                 var curr_castle = (0, setup_functions_1.get_castle_array)()[i];
                 var index = curr_castle.hp.length;
@@ -127,7 +139,7 @@ function game() {
                     (0, general_functions_1.recruit_warrior)(curr_castle, index); //recruits one warrior to each castle.
                 }
             }
-            console.log("All castles recruits a new warrior!");
+            (0, utility_functions_1.print_to_game)("All castles recruits a new warrior!");
         }
     }
 }
