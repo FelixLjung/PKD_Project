@@ -75,6 +75,7 @@ describe ('fight', () => {
 
 });
 
+
 describe('attack', () => {
     
     const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};

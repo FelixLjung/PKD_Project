@@ -292,6 +292,10 @@ export function move(move_from: Castle, move_to: Castle): void {
         } else {                            // If def. castle is empty, we change owner
             console.log('The castle was empty my lord! Free for the taking!');
             castle_owner(move_to, attacking_player!, defending_player!, moving_army);
+            
+            // HÄR ska det finnas en safe som kollar om förra ägarens castle inte har några andra!
+
+            
         }
     } else if (player_from == player_to) {      // Move to your own castle
         for (let i = 0; i < move_from.hp.length; i++) { //
