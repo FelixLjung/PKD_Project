@@ -73,7 +73,7 @@ export function get_random_int(min: number, max: number): number {
  * @param army The army that gets trained
  * @returns the trained Army.
  */
-function train_warrior(army: Army): Army {
+export function train_warrior(army: Army): Army {
     const temp_arr: Army = []
     let j = 0;
     for (let w = 0; w < army.length; w = w + 1) {
@@ -114,7 +114,7 @@ function get_order_castles(player: Player): Queue<Castle> {
         return false;
     }
 
-function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
+    function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
         for (let i = 0; i < castle_queue[2].length; i = i + 1) {
             if (castle_queue[2][i] == castle) {
                 return true;
@@ -375,7 +375,7 @@ function castle_turn(player: Player, castle: Castle) {
  * @param paths an array of numbers (nodes)
  * @returns a boolean (true if choice is in paths)
  */
-function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
+export function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
     for(let i = 0; i < paths.length; i++){
         if(choice == paths[i]){
             return true
@@ -412,10 +412,9 @@ export function recruit_warrior(castle: Castle, index: number) {
  * After a battle, when their next turn starts, all surviving warriors in army gets healed to 50 hp
  * @param warrior 
  */ 
-function heal_warrior(warrior: Warrior): string | void{
-    let war_hp = warrior.health;
-        war_hp = 40;
-        return warrior.name;
+export function heal_warrior(warrior: Warrior): string{
+    warrior.health = 50;
+    return warrior.name;
 }
 
 /**
@@ -492,7 +491,7 @@ function split_army(castle: Castle): Array<Army> {
  * @param a2 is an Army that is in the Army when merging
  * @returns a merged Army
  */
-function merge_army(a1:Army, a2: Army): Army{
+export function merge_army(a1:Army, a2: Army): Army{
     if(a2 == undefined){ // if the other army doesnt exist 
         return a1   // a1 is the army you moving in with, should never be empty or undefined
     }
