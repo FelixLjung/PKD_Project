@@ -19,6 +19,8 @@ import {
     attack, is_army_empty, castle_owner
 } from './attack_functions'
 
+import { w_names } from './resources';
+
 import {
     print_board,
     print_castle,
@@ -39,76 +41,6 @@ import { stripVTControlCharacters } from 'util';
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
 const total_amount_of_castles  : number = 5;
-
-export let w_names: Queue<string> = [0,
-    2,
-    ["Eva Darulova",    // Current: 65 warrrior-names
-        "Jingwei Hu",
-        "Johannes Borgström",
-        "Zhanwei Yu",
-        "Thom Surströmming",
-        "Carl Erik Plopp",
-        "Runar Gravstein",
-        "Ernst Greve",
-        "Hjalmar Storfot",
-        "Bosse Brunklimp",
-        "Lillemor Jumm",
-        "Gustav Backlund",
-        "Hans Hansson",
-        "Frans Storm",
-        "Berit Storm",
-        "Tor Hoppetoss",
-        "Fred von Pickelroy",
-        "Björn Olmedo",
-        "Xin Shen",
-        "Jimmy Viking",
-        "Fredrik Blåtand",
-        "Göran Borkavik",
-        "Sigvard Bjelkengren",
-        "Hans Hansson",
-        "Peter Niclass",
-        "Tubbe Tonker",
-        "Frans Tonker",
-        "Per Jutterström",
-        "Miro Ali Akbar",
-        "Fader Gustav",
-        "Dogge Doggelito",
-        "Bartek Bunko",
-        "Wille den snygge",
-        "Kristian Luuk",
-        "Börje Flemming",
-        "Johanna Grönsaksson",
-        "Henning Bollmark",
-        "Krudel Haestre",
-        "Movitz Grus",
-        "Ronken af Bonken",
-        "Dani af Ljusdal",
-        "Göran Brunklimp",
-        "Junior Brunklimp",
-        "Ash Ketch",
-        "Musk El",
-        "Lars-Åke Nordén",
-        "Helga Hammerhead",
-        "Matilda Mildew",
-        "Oswald the Oblivious",
-        "Cedric the Clumsy",
-        "Gilbert Garlicbreath",
-        "Lil' D Plunderpants",
-        "Ser Loin Raw",
-        "Lord Farquad",
-        "Shrek De la Burro",
-        "Tobias Wrigstad",
-        "David Attenborough",
-        "Teddybjörnen Fredriksson",
-        "Freddy Kalas",
-        "Tomten",
-        "Bert Fylking",
-        "Arne Weise",
-        "Lisa af Bänkpressen",
-        "Göran Pson",
-        "Tjark Weber"]];
-
-
 
 // General Functions
 
