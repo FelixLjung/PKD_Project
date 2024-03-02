@@ -105,12 +105,19 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
     return count;
 }
 
-function remove_dead_castles(castles : Array<Castle | undefined> ) : Array<Castle | undefined> {
+function remove_dead_castles(castles : Array<Castle | undefined>, player: Player ) : Array<Castle | undefined> {
     let new_castles : Array<Castle| undefined> = []; 
-    let j = 0; 
+    let j = 0;
+    let name = player[0] 
     //debug_log(castles);
-    for (let i = 0; i < castles.length; i++ ){
-        if (castles[i] != undefined){
+    for (let i = 0; i < castles.length; i++ ){  //tar bort undefined OCH kollar om owner är densamma
+        //if(castles[i] != undefined){
+        //    debug_log("Castle Owner:   " + castles[i]!.owner);
+        //    new_castles[j] = castles[i];
+        //    j++;
+        //}
+        if (castles[i] != undefined && name == castles[i]!.owner){  //nya funktionen, kollar om owner också är samma!
+            debug_log("Castle Owner:   " + castles[i]!.owner);
             new_castles[j] = castles[i];
             j++;
         }
@@ -164,7 +171,7 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
  */
 export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
-    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);  // remove dead borde kanske ta in en player också, vi jämför owner för varje castle. returnerar endast de med samma.
+    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1], player);  // remove dead borde kanske ta in en player också, vi jämför owner för varje castle. returnerar endast de med samma.
     let j = 0    // Debug?
     //for(let i=0; i < )
 
@@ -300,8 +307,8 @@ function move(move_from: Castle, move_to: Castle): void {
 
         move_from.hp = staying_army;   
         
-        console.log('move_from', move_from.hp);
-        console.log('move_to', move_to.hp);    
+        debug_log('move_from' + move_from.hp);
+        debug_log('move_to' + move_to.hp);    
     }
 }
 
