@@ -23,6 +23,7 @@ import {
 } from "./resources";
 
 import { 
+    debug_log,
     empty_line, press_to_continue, print_to_game 
 } from "./utility_functions";
 
@@ -97,7 +98,7 @@ export function remake_warrior(dead: Warrior, army: Army) {
     // ta bort castle från gamla spelarens array av castles
 
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
-
+    debug_log("gamla castle owner:   " + castle.owner);
     castle.owner = new_player[0]; // Changes the owner name of the castle
     castle.hp = army; // adds the incoming army to the castle
 
@@ -117,6 +118,7 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
             
         } else {}
     }
+    debug_log("castle.owner:  " + castle.owner);
 }
 
 /**
@@ -236,6 +238,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
         press_to_continue();
+        empty_line()
         //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
 

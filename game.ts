@@ -100,7 +100,7 @@ export function kill_player(player : Player ) {
             player_list[i][0] = "UNDEFINED";
         }
     }
-
+    empty_line();
 }
 
 function player_is_alive(player : Player) : Boolean {

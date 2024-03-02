@@ -44,7 +44,7 @@ import {
 
 import path = require('path');
 import { 
-    clear 
+    clear, count 
 } from 'console';
 import { 
     clear_terminal, empty_line, print_line, print_to_game 
@@ -121,7 +121,7 @@ function remove_dead_castles(castles : Array<Castle | undefined> ) : Array<Castl
 
 }
 /**
- * 
+ * Retrieves a castle or undefined from a specific index in an array of castles
  * @param castles 
  * @param index 
  * @returns 
@@ -164,8 +164,9 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
  */
 export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty();
-    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);
-    let j = 0    
+    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1]);  // remove dead borde kanske ta in en player också, vi jämför owner för varje castle. returnerar endast de med samma.
+    let j = 0    // Debug?
+    //for(let i=0; i < )
 
     if (count_castles(player_castles) > 1) {
         if (testing == true) {      //Checking if we are testing currently or not
@@ -177,6 +178,7 @@ export function get_order_castles(player: Player): Queue<Castle> {
                 print_castle(player);
                 //console.log(player_castles);
                 const cstl: number = prompt("Which castle would you like to operate from? ") as number 
+                
 
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     print_to_game("You can't choose the same castle twice!");
@@ -189,7 +191,7 @@ export function get_order_castles(player: Player): Queue<Castle> {
             }
 
 
-}} else if (player_castles.length == 1) {
+}} else if (player_castles.length == 1 && player[0] == player_castles[0]!.owner) {
         debug_log("The player has one casle");
         enqueue(player_castles[0], castle_queue);
     }
@@ -354,6 +356,9 @@ export function check_if_cpu(player: Player | string): boolean {
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true;
     castle.hp = remove_dead_warriors(castle.hp);
+    debug_log("player list Castles" + tail(player));
+    debug_log("Count of castle array: " + count_castles(tail(player)));
+
     
     //console.log(castle.hp);
     const healed_warriors: Array<string> = [];
@@ -453,13 +458,13 @@ export function recruit_warrior(castle: Castle, index: number) {
     //castle.hp[index] = create_warrior(5, 100);
     
     if (num == 0) {
-        castle.hp[index] = create_warrior(5, 100);
+        castle.hp[index] = create_warrior(5, 94);
     }
     else if (num == 1) {
         castle.hp[index] = create_warrior(7, 75);
     }
     else if (num == 2) {
-        castle.hp[index] = create_warrior(10, 50);
+        castle.hp[index] = create_warrior(10, 60);
     }
     
 }

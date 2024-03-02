@@ -60,7 +60,10 @@ let map = map1;
 
 export function splash(){
     console.log(`
-
+                                                       By
+                                                  David Julin
+                                                  Felix Ljung
+                                                Alfred Enoksson 
     ____    __    ___                                                                            ____    __    ___   
    [____]__[__]__[___]                                                                          [____]__[__]__[___] 
     [_I_]__靣__[_I_]                                                                             [_I_]__靣__[_I_]
@@ -226,6 +229,7 @@ export function print_castle(player: Player) {
     }
     console.log(print);
     console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b');
+    print_board();
 }
 
 
