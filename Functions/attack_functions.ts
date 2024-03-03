@@ -55,7 +55,7 @@ export function enqueue_army(army: Army): Queue<Warrior> {
 }
 
 /**
- * A helper function that removes dead warriors from the players "Army" (Array)
+ * A helper function that kills warriors from the army array, changing their alive status to false.
  * @param dead is a {Warrior}
  * @param army is a {Army}
  * @returns Void
