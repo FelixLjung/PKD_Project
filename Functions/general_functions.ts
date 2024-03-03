@@ -267,7 +267,7 @@ function move(move_from: Castle, move_to: Castle): void {
     move_from.hp = staying_army;  // Changes the army in the current castle to the army which will not move
                                
     if (player_from != player_to) {         // if we find an opponent
-        clear_terminal();
+        empty_line();
         cursive_line();
         print_to_game(`\u001b[31m${move_from.owner} \u001b[37m` +  " has declared war against " +  `\u001b[32m${move_to.owner}\u001b[37m`);
         press_to_continue();
