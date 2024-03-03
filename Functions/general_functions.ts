@@ -42,24 +42,19 @@ import {
     cursive_line, debug_log, format_array, press_to_continue 
 } from './utility_functions';
 
-import path = require('path');
-import { 
-    clear, count 
-} from 'console';
+
 import { 
     clear_terminal, empty_line, print_line, print_to_game 
 } from './utility_functions';
-import { 
-    stripVTControlCharacters  // Ursäkta?
-} from 'util';
+
 import { get_testing_bool } from './utility_functions';
-import { transcode } from 'buffer';
 
-const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-const total_amount_of_castles  : number = 5;
+const prompt = require('prompt-sync')({ sigint: true }); // To handle inputs via the terminal 
 
-const testing : Boolean = get_testing_bool();
+const total_amount_of_castles  : number = 5; // The sum of all the castles, this controls the wincondition 
+
+const testing : Boolean = get_testing_bool(); // Disables prompts for testing with jest
 
 // General Functions
 
@@ -70,8 +65,9 @@ const testing : Boolean = get_testing_bool();
  * @returns a random number / integer.
  */
 export function get_random_int(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min) + min); 
 }
+
 
 /**
  * Improves every warrior in an armys stats 
@@ -80,24 +76,28 @@ export function get_random_int(min: number, max: number): number {
  */
 export function train_warrior(army: Army): Army {
     const temp_arr: Army = []
-    let j = 0;
-    for (let w = 0; w < army.length; w = w + 1) {
+    let j = 0; // count variable
+    for (let w = 0; w < army.length; w = w + 1) { // loops over every warrior in the army, all the dead warriors have already been removed
         let cur_war = army[w];
         if (cur_war == undefined || cur_war.alive == false) {
             continue;
         } else {
-            cur_war.attack = cur_war.attack + get_random_int(1, 4);
-            cur_war.health = cur_war.health + get_random_int(5, 16); 
+            cur_war.attack = cur_war.attack + get_random_int(1, 4); // increases attack points
+            cur_war.health = cur_war.health + get_random_int(5, 16); // increases health points
             temp_arr[j] = cur_war;
             j++
         }
     }
     return temp_arr;
 }
+/**
+ * counts the total amount of castles in an castle array, that are not undefined
+ * @param castle_arr 
+ * @returns 
+ */
 export function count_castles(castle_arr: Array<Castle | undefined>) {
     let count = 0;
-    for (let i = 0; i < castle_arr.length; i++) {
-        //console.log(castle_arr[i]);
+    for (let i = 0; i < castle_arr.length; i++) { // loops over the lenght of the array
         if (castle_arr[i] != undefined) {
             count++
         }
@@ -105,34 +105,37 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
     return count;
 }
 
+/**
+ * Removes lost castles from a player 
+ * @param castles the players castle array
+ * @param player the player 
+ * @returns a new castle array 
+ */
+
 function remove_dead_castles(castles : Array<Castle | undefined>, player: Player ) : Array<Castle | undefined> {
     let new_castles : Array<Castle| undefined> = []; 
-    let j = 0;
-    let name = player[0] 
-    //debug_log(castles);
-    for (let i = 0; i < castles.length; i++ ){  //tar bort undefined OCH kollar om owner är densamma
-        //if(castles[i] != undefined){
-        //    debug_log("Castle Owner:   " + castles[i]!.owner);
-        //    new_castles[j] = castles[i];
-        //    j++;
-        //}
-        if (castles[i] != undefined && name == castles[i]!.owner){  //nya funktionen, kollar om owner också är samma!
-            debug_log("Castle Owner:   " + castles[i]!.owner);
-            new_castles[j] = castles[i];
+    let j = 0; // inner count variable
+    let name = player[0] // The name of the player
+    
+    for (let i = 0; i < castles.length; i++ ){ // loops over the castles
+
+        if (castles[i] != undefined && name == castles[i]!.owner){  // Checks if the castle is undefined or has another owner
+            new_castles[j] = castles[i]; // adds the castles to the new array
             j++;
         }
         
     }
-    //debug_log(new_castles);
+    
     return new_castles;
 
-}
+} 
 /**
- * Retrieves a castle or undefined from a specific index in an array of castles
- * @param castles 
+ * Retrieves a castle from an index, returns false if the castle doesn not exist or is undefined
+ * @param castles array of castles
  * @param index 
  * @returns 
 */
+
 function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
     for (let i = 0; i < castles.length; i = i + 1) {
         if (castles[i] != undefined) {
@@ -141,10 +144,17 @@ function get_position(castles: Array<Castle | undefined>, index: number): Castle
             }
         }
     }
+
     return undefined;
 
 }
-
+/**
+ * 
+ * @param Castles 
+ * @param index 
+ * @param player 
+ * @returns 
+ */
 function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
     for (let i = 0; i < Castles.length; i = i + 1) {
         if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
@@ -170,20 +180,18 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
  * @returns Array<string> of the castles
  */
 export function get_order_castles(player: Player): Queue<Castle> {
-    let castle_queue: Queue<Castle> = empty();
-    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1], player);  // remove dead borde kanske ta in en player också, vi jämför owner för varje castle. returnerar endast de med samma.
-    let j = 0    // Debug?
-    //for(let i=0; i < )
+    let castle_queue: Queue<Castle> = empty(); // Inits a empty Queue of Castles
+    const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1], player);  // Removes dead castles 
 
     if (count_castles(player_castles) > 1) {
         if (testing == true) {      //Checking if we are testing currently or not
-            enqueue(player_castles[0], castle_queue);
+            enqueue(player_castles[0], castle_queue); // we skip prompts if we are running testcases
             enqueue(player_castles[1], castle_queue);
         } else {
-            while (castle_queue[1] != count_castles(tail(player))) { // 
+            while (castle_queue[1] != count_castles(tail(player))) { // Loops as long as the queue is not full of all the castles, also works as input check
             
                 print_castle(player);
-                //console.log(player_castles);
+               
                 const cstl: number = prompt("Which castle would you like to operate from? ") as number 
                 
 
@@ -198,15 +206,11 @@ export function get_order_castles(player: Player): Queue<Castle> {
             }
 
 
-}} else if (player_castles.length == 1 && player[0] == player_castles[0]!.owner) {
-        debug_log("The player has one casle");
+}} else if (player_castles.length == 1 && player[0] == player_castles[0]!.owner) { // If the player only has one castle it will skip the selection process
         enqueue(player_castles[0], castle_queue);
     }
    
-    //debug_log(player_castles.length);
     return castle_queue;
-
-    
 }
 
 
@@ -218,13 +222,13 @@ export function get_order_castles(player: Player): Queue<Castle> {
  */
 
 export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
-    let position = castle.position - 1;
-    let paths: Array<number> = [];
+    let position = castle.position - 1; // The castles position start from 1
+    let paths: Array<number> = []; // Init poossible paths array
     let spot: number = 0;
-    for (let i = 0; i < map.adj[position].length; i = i + 1) {
+    for (let i = 0; i < map.adj[position].length; i = i + 1) { // Loops over matrixgraph
         if (map.adj[position][i] === true) {
-            paths[spot] = i + 1;
-            spot = spot + 1;
+            paths[spot] = i + 1; 
+            spot = spot + 1; 
         }
     }
 
@@ -233,8 +237,8 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 
 /**
  * Moves an army from one castle to another, attacking if it is an enemy castle
- * @param Move_from - The castle the army is being moved from
- * @param Move_to - The castle the army is being moved to
+ * @param Movd from
+ * @param Move_to - The castle the army is being moved toe_from - The castle the army is being move
  * @param Soldiers - The army being moved from one castle to another // tror inte denna behövs
  * @returns void
  */
@@ -243,107 +247,80 @@ function move(move_from: Castle, move_to: Castle): void {
     const player_to: string = move_to.owner;
     const army: Army = move_from.hp
     let survivors : Army = [];  //When attacking, surviving warriors are saved here
-    //console.log(move_from);
-    //console.log(move_to);
 
     let attacking_player: Player | undefined = undefined;   
     let defending_player: Player | undefined = undefined;
     const player_list: Array<Player> = get_player_list();   
+
     //Detta borde bli en egen funktion ABSTRAHERA
-    for (let i = 0; i < player_list.length; i = i + 1) { // Loops over all players,
-        if (player_list[i][0] == move_from.owner) {         // Retrieves the type Player from the "owner"
+    for (let i = 0; i < player_list.length; i = i + 1) { // Loops over all players, to get the Player from the name
+        if (player_list[i][0] == move_from.owner) {         // Retrieves the Player from the "owner"
             attacking_player = player_list[i];
-        } else if (player_list[i][0] == move_to.owner) {    // Retrieves the type Player from the "owner"
+        } else if (player_list[i][0] == move_to.owner) {    // Retrieves the Player from the "owner"
             defending_player = player_list[i];
         }
     }
-    const split = split_army(move_from);        //Här splittas Attacking army i två [0 = moving, 1 = staying]
-    const moving_army = split[0];
-    const staying_army = split[1];
-    move_from.hp = staying_army; // De som ska stanna stannar, 
-                                 //denna gjordes förut bara när man rörde sig till sitt egna castle,
-                                 // inte när man attackerade, staying army ska ju alltid stanna 
 
+    const split = split_army(move_from);        // the army is split in two
+    const moving_army = split[0]; 
+    const staying_army = split[1];
+    move_from.hp = staying_army;  // Changes the army in the current castle to the army which will not move
+                               
     if (player_from != player_to) {         // if we find an opponent
-        clear_terminal
+        clear_terminal();
         cursive_line();
         print_to_game(`\u001b[31m${move_from.owner} \u001b[37m` +  " has declared war against " +  `\u001b[32m${move_to.owner}\u001b[37m`);
         press_to_continue();
         move_to.hp = remove_dead_warriors(move_to.hp) // Defending army clear the dead
-        if (move_to.hp.length != 0) {       //if army is not empty (we attack)
+        if (move_to.hp.length != 0) {       //if army is not empty an attack will be triggered
             survivors = attack(move_to, attacking_player!, defending_player!, moving_army);
 
-            if (survivors.length != 0) {
-                castle_owner(move_to, attacking_player!, defending_player!, survivors);
+            if (survivors.length != 0) { // If there were survivors, the attackers won,
+                castle_owner(move_to, attacking_player!, defending_player!, survivors); // Change ownership of attacked castle
             }
         } else {                            // If def. castle is empty, we change owner
-            console.log('The castle was empty my lord! Free for the taking!');
-            castle_owner(move_to, attacking_player!, defending_player!, moving_army);
-
-            // DAVID LÖSER, If you go into an empty castle, we do a check to see if player does not have other castles. If not we kill player.
-            //if(defending_player != undefined && count_castles(defending_player[1]) == 0){ 
-
-            //    kill_player(defending_player);
-            //}
-            
-            // HÄR ska det finnas en safe som kollar om förra ägarens castle inte har några andra!
-
-            
+            print_to_game('The castle was empty my lord! Free for the taking!');
+            castle_owner(move_to, attacking_player!, defending_player!, moving_army);      
         }
-    } else if (player_from == player_to) {   
-           // Move to your own castle
-           /*
-        for (let i = 0; i < move_from.hp.length; i++) { //
-            //move_to.hp[move_to.hp.length + i] = move_from.hp[i];
-            move_to.hp = merge_army(move_from.hp, moving_army);
-            move_from.hp = staying_army;        // Remaining warriors who didnt move, returns to the castle army 
-            //console.log('move_from', move_from.hp);
-            //console.log('move_to', move_to.hp);         // GÖR DESSA SNYGGA!
-        }
-        */
 
-
-        move_to.hp = merge_army(move_to.hp, moving_army);
-
-        move_from.hp = staying_army;   
-        
-        debug_log('move_from' + move_from.hp);
-        debug_log('move_to' + move_to.hp);    
+    } else if (player_from == player_to) {   // Moving to your own castle
+        move_to.hp = merge_army(move_to.hp, moving_army); // Merge the armies
+        move_from.hp = staying_army; // the staying army is added 
     }
 }
 
+/**
+ * Procecces the individual turn for a player
+ * @param player the player who will play a turn
+ */
 
 export function turn(player: Player) {
 
-    let castle_queue = get_order_castles(player);
-    debug_log(castle_queue);
+    let castle_queue = get_order_castles(player); // Gets the queue of castle to be played from
     for (let i = 0; i < castle_queue[1]; i++) {
-        debug_log(i);
-        if(check_win_condition(player)){
-            //debug_log(player + " has won höö");
+        if(check_win_condition(player)){ // if the win condition is met we will break
             break;
         }
 
-        castle_turn(player, q_head(castle_queue));
-        dequeue(castle_queue);
+        castle_turn(player, q_head(castle_queue)); // Procecces the individual turn for a castle
+        dequeue(castle_queue); // dequeues the castle 
     }
 
 }
 /**
- *  checks if a player is a AI
- * @param player either a player or a player name
+ *  checks if a player is non human
+ * @param player either a Player or a name of a player
  * @returns true if the player has a name that starts with CPU
  */
 
 export function check_if_cpu(player: Player | string): boolean {
     let name: string = "";
-    if (typeof (player) == "string") {
+    if (typeof (player) == "string") { // if input was a string
         name = player[0] + player[1] + player[2]; // gets the first three letters
-    } else {
+    } else { // if input was of type Player
         name = player[0][0] + player[0][1] + player[0][2]; // gets the first three letters
     }
 
-    //str.match(/.{1,3}/g)
     if (name == "CPU") {
         return true;
     } else {
@@ -366,8 +343,6 @@ export function castle_turn(player: Player, castle: Castle) {
     debug_log("player list Castles" + tail(player));
     debug_log("Count of castle array: " + count_castles(tail(player)));
 
-    
-    //console.log(castle.hp);
     const healed_warriors: Array<string> = [];
     let j = 0;
     for(let i = 0; i < castle.hp.length; i++){  //Beginning of turn if warr has below 40 hp, heals them up to 40hp

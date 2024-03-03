@@ -116,7 +116,7 @@ export function death_text(dead: string, killer: string) {
                                 `${k_name} turned ${d_name} into a fine paste... Yummy!`,
                                 `${d_name} oxygen was depleted`,
                                 `${d_name} became an ingredient in tonights dinner!`,
-                                `${d_name} failed HW10... it was WAY TO HARD!`];
+                                `${d_name} failed HW10... it was WAY TOO HARD!`];
 
     let curr_event = strings[get_random_int(0, 30)];
     empty_line();

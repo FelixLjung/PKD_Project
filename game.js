@@ -71,6 +71,7 @@ function kill_player(player) {
             player_list[i][0] = "UNDEFINED";
         }
     }
+    (0, utility_functions_1.empty_line)();
 }
 exports.kill_player = kill_player;
 function player_is_alive(player) {

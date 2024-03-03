@@ -25,6 +25,9 @@ import {
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
+
+
+
 // start nodes
 let node1 = "1";
 let node2 = "2";
@@ -180,9 +183,6 @@ function game(){
                 game_running = false;
                 break;
             }
-
-                //console.clear();
-                //console.log("------------------------");
                 print_line();
             }
             if (game_running == true) {  // Allt detta borde abstractas

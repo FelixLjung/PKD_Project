@@ -6,37 +6,43 @@ var general_functions_1 = require("./general_functions");
 var utility_functions_1 = require("./utility_functions");
 exports.w_names = [0,
     2,
-    ["Eva Darulova", // Current: 65 warrrior-names
-        "Jingwei Hu",
-        "Johannes Borgström",
-        "Zhanwei Yu",
-        "Thom Surströmming",
-        "Carl Erik Plopp",
+    [
+        "Eva Darulova", //David starter  1
+        "Bosse Brunklimp", //               2
+        "Jingwei Hu", //               3
+        "Johannes Borgström", //Felix Starter  1
+        "Lillemor Jumm", //               2
+        "Zhanwei Yu", //               3
+        "Thom Surströmming", //Alfred Starter 1
+        "Xin Shen", //               2
+        "Hans Hansson", //               3
+        "Carl Plopp",
         "Runar Gravstein",
         "Ernst Greve",
         "Hjalmar Storfot",
-        "Bosse Brunklimp",
         "Lillemor Jumm",
         "Gustav Backlund",
-        "Hans Hansson",
+        "Lars-Åke Nordén",
+        "Tobias Wrigstad",
+        "Lord Farquad",
         "Frans Storm",
-        "Berit Storm",
+        "Göran Borkavik",
         "Tor Hoppetoss",
+        "Berit Storm",
         "Fred von Pickelroy",
         "Björn Olmedo",
-        "Xin Shen",
         "Jimmy Viking",
         "Fredrik Blåtand",
-        "Göran Borkavik",
+        "Tjark Weber",
         "Sigvard Bjelkengren",
-        "Hans Hansson",
         "Peter Niclass",
         "Tubbe Tonker",
-        "Frans Tonker",
         "Per Jutterström",
         "Miro Ali Akbar",
+        "Frans Tonker",
         "Fader Gustav",
         "Dogge Doggelito",
+        "Lisa af Bänkpressen",
         "Bartek Bunko",
         "Wille den snygge",
         "Kristian Luuk",
@@ -44,6 +50,7 @@ exports.w_names = [0,
         "Johanna Grönsaksson",
         "Henning Bollmark",
         "Krudel Haestre",
+        "David Attenborough",
         "Movitz Grus",
         "Ronken af Bonken",
         "Dani af Ljusdal",
@@ -51,26 +58,21 @@ exports.w_names = [0,
         "Junior Brunklimp",
         "Ash Ketch",
         "Musk El",
-        "Lars-Åke Nordén",
-        "Helga Hammerhead",
+        "Helga Hömwurk",
         "Matilda Mildew",
         "Oswald the Oblivious",
         "Cedric the Clumsy",
         "Gilbert Garlicbreath",
         "Lil' D Plunderpants",
         "Ser Loin Raw",
-        "Lord Farquad",
         "Shrek De la Burro",
-        "Tobias Wrigstad",
-        "David Attenborough",
         "Teddybjörnen Fredriksson",
         "Freddy Kalas",
         "Tomten",
         "Bert Fylking",
         "Arne Weise",
-        "Lisa af Bänkpressen",
-        "Göran Pson",
-        "Tjark Weber"]];
+        "Göran Pson"
+    ]];
 /**
 * displays the death message when a soldier dies
 * @param dead - the warrior who has been killed

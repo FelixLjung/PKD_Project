@@ -66,6 +66,7 @@ exports.remake_warrior = remake_warrior;
 // lägg till castle i nya spelarens array av castles
 // ta bort castle från gamla spelarens array av castles
 function castle_owner(castle, new_player, old_player, army) {
+    (0, utility_functions_1.debug_log)("gamla castle owner:   " + castle.owner);
     castle.owner = new_player[0]; // Changes the owner name of the castle
     castle.hp = army; // adds the incoming army to the castle
     var last_pos = new_player[1].length; // might be able to be a const
@@ -81,6 +82,7 @@ function castle_owner(castle, new_player, old_player, army) {
         }
         else { }
     }
+    (0, utility_functions_1.debug_log)("castle.owner:  " + castle.owner);
 }
 exports.castle_owner = castle_owner;
 /**
@@ -188,6 +190,7 @@ function attack(castle, attacking_player, defending_player, army) {
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
         //castle_owner(castle, attacking_player, defending_player, winner[1]);
         (0, utility_functions_1.press_to_continue)();
+        (0, utility_functions_1.empty_line)();
         //console.log(tail(winner));
         return ((0, general_functions_1.remove_dead_warriors)((0, list_1.tail)(winner)));
     }
