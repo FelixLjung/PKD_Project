@@ -187,7 +187,11 @@ export function print_board() {
                     str += "\u001b[33m" + line[j] + "\u001b[36m";
                 } else if(line[j][1] == "C"){
                     str += "\u001b[37m" + line[j] + "\u001b[36m";
-                }  
+                } else if(line[j][1] == "E"){
+                    str += "\u001b[35m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == "J"){
+                    str += "\u001b[34m" + line[j] + "\u001b[36m";
+                }
             }else{
                 str += line[j];
             }

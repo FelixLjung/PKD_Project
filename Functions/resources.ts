@@ -6,7 +6,7 @@ import { empty_line, cursive_line } from "./utility_functions";
 
 export let w_names: Queue<string> = [0,
     2,
-    [   // Current: 65 warrrior-names
+    [   // Current: 66 warrrior-names
         "Eva Darulova",         //David starter  1
         "Bosse Brunklimp",      //               2
         "Jingwei Hu",           //               3
@@ -19,6 +19,7 @@ export let w_names: Queue<string> = [0,
         "Xin Shen",             //               2
         "Hans Hansson",         //               3
         "Carl Plopp",
+        "Ruoqi Zhang",
         "Runar Gravstein",
         "Ernst Greve",
         "Hjalmar Storfot",
@@ -32,7 +33,7 @@ export let w_names: Queue<string> = [0,
         "Tor Hoppetoss",
         "Berit Storm",
         "Fred von Pickelroy",
-        "Björn Olmedo",
+        "Lille-De von Olmedo",
         "Jimmy Viking",
         "Fredrik Blåtand",
         "Tjark Weber",
@@ -45,8 +46,9 @@ export let w_names: Queue<string> = [0,
         "Fader Gustav",
         "Dogge Doggelito",
         "Lisa af Bänkpressen",
+        "Wilmer von Handtel",
         "Bartek Bunko",
-        "Wille den snygge",
+        "Wille den Snygge",
         "Kristian Luuk",
         "Börje Flemming",
         "Johanna Grönsaksson",
@@ -57,9 +59,9 @@ export let w_names: Queue<string> = [0,
         "Ronken af Bonken",
         "Dani af Ljusdal",
         "Göran Brunklimp",
-        "Junior Brunklimp",
         "Ash Ketch",
         "Musk El",
+        "Junior Brunklimp",
         "Helga Hömwurk",
         "Matilda Mildew",
         "Oswald the Oblivious",
