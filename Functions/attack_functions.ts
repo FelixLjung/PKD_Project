@@ -191,7 +191,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
     
 
 /**
- * Changes owner of the castle if neseccary after a battle has taken place
+ * Performs a battle between two armies in a castle
  * @param castle - the castle where the battle takes place
  * @param attacking_player - the player attacking the castle
  * @param defending_player - the player that defending the castle
