@@ -23,6 +23,7 @@ import {
 } from "./resources";
 
 import { 
+    cursive_line,
     debug_log,
     empty_line, press_to_continue, print_to_game 
 } from "./utility_functions";
@@ -135,12 +136,6 @@ export function is_army_empty(army : Queue<Warrior>) : Boolean {
     }
 }
 
-/**
- * retreats an army from the battlefield
- * @param army - the army that is retreating
- */
-export function retreat(army : Queue<Warrior>, your_castle : Castle) {
-}
 
 /**
  * returns true if the defender wins the battle and false if the attacker wins
@@ -170,7 +165,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 empty_line();
                 console.log(`\u001b[32m` + defender.name +`\u001b[37m`, ' defended the castle, surviving with ',`\u001b[33m` + defender.health +`\u001b[37m`, ' health!')
                 empty_line();
-                console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                cursive_line();
                 press_to_continue();
                 return true;
             }
@@ -179,8 +174,8 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
                 death_text("Defender " + `\u001b[32m` + defender.name +`\u001b[37m`, "Attacker " + `\u001b[31m` + attacker.name +`\u001b[37m`,);
                 unalive_warrior(defender, castle_army.hp);
                 console.log(`\u001b[31m` + attacker.name + `\u001b[37m`, 'won the battle with ',`\u001b[33m` + attacker.health +`\u001b[37m`, 'health left!')
-                console.log();
-                console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                empty_line()
+                cursive_line();
                 press_to_continue();
                 return false;
             }
@@ -191,7 +186,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
     
 
 /**
- * Changes owner of the castle if neseccary after a battle has taken place
+ * Performs a battle between two armies in a castle
  * @param castle - the castle where the battle takes place
  * @param attacking_player - the player attacking the castle
  * @param defending_player - the player that defending the castle

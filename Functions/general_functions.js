@@ -12,9 +12,9 @@ var setup_functions_1 = require("./setup_functions");
 var utility_functions_1 = require("./utility_functions");
 var utility_functions_2 = require("./utility_functions");
 var utility_functions_3 = require("./utility_functions");
-var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
-var total_amount_of_castles = 5;
-var testing = (0, utility_functions_3.get_testing_bool)();
+var prompt = require('prompt-sync')({ sigint: true }); // To handle inputs via the terminal 
+var total_amount_of_castles = 5; // The sum of all the castles, this controls the wincondition 
+var testing = (0, utility_functions_3.get_testing_bool)(); // Disables prompts for testing with jest
 // General Functions
 /**
  * Chooses a random number between [min] and [max].
@@ -23,7 +23,7 @@ var testing = (0, utility_functions_3.get_testing_bool)();
  * @returns a random number / integer.
  */
 function get_random_int(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min) + min); // 
 }
 exports.get_random_int = get_random_int;
 /**
@@ -60,12 +60,19 @@ function count_castles(castle_arr) {
     return count;
 }
 exports.count_castles = count_castles;
-function remove_dead_castles(castles) {
+function remove_dead_castles(castles, player) {
     var new_castles = [];
     var j = 0;
+    var name = player[0];
     //debug_log(castles);
-    for (var i = 0; i < castles.length; i++) {
-        if (castles[i] != undefined) {
+    for (var i = 0; i < castles.length; i++) { //tar bort undefined OCH kollar om owner är densamma
+        //if(castles[i] != undefined){
+        //    debug_log("Castle Owner:   " + castles[i]!.owner);
+        //    new_castles[j] = castles[i];
+        //    j++;
+        //}
+        if (castles[i] != undefined && name == castles[i].owner) { //nya funktionen, kollar om owner också är samma!
+            (0, utility_functions_1.debug_log)("Castle Owner:   " + castles[i].owner);
             new_castles[j] = castles[i];
             j++;
         }
@@ -74,7 +81,7 @@ function remove_dead_castles(castles) {
     return new_castles;
 }
 /**
- *
+ * Retrieves a castle or undefined from a specific index in an array of castles
  * @param castles
  * @param index
  * @returns
@@ -113,9 +120,8 @@ function in_q(castle_queue, castle) {
  * @returns Array<string> of the castles
  */
 function get_order_castles(player) {
-    var castle_queue = (0, queue_array_1.empty)();
-    var player_castles = remove_dead_castles(player[1]);
-    var j = 0;
+    var castle_queue = (0, queue_array_1.empty)(); // Inits a empty Queue of Castles
+    var player_castles = remove_dead_castles(player[1], player); // Removes dead castles 
     if (count_castles(player_castles) > 1) {
         if (testing == true) { //Checking if we are testing currently or not
             (0, queue_array_1.enqueue)(player_castles[0], castle_queue);
@@ -124,7 +130,6 @@ function get_order_castles(player) {
         else {
             while (castle_queue[1] != count_castles((0, list_1.tail)(player))) { // 
                 (0, print_functions_1.print_castle)(player);
-                //console.log(player_castles);
                 var cstl = prompt("Which castle would you like to operate from? ");
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     (0, utility_functions_2.print_to_game)("You can't choose the same castle twice!");
@@ -138,7 +143,7 @@ function get_order_castles(player) {
             }
         }
     }
-    else if (player_castles.length == 1) {
+    else if (player_castles.length == 1 && player[0] == player_castles[0].owner) {
         (0, utility_functions_1.debug_log)("The player has one casle");
         (0, queue_array_1.enqueue)(player_castles[0], castle_queue);
     }
@@ -232,8 +237,8 @@ function move(move_from, move_to) {
      */
         move_to.hp = merge_army(move_to.hp, moving_army);
         move_from.hp = staying_army;
-        console.log('move_from', move_from.hp);
-        console.log('move_to', move_to.hp);
+        (0, utility_functions_1.debug_log)('move_from' + move_from.hp);
+        (0, utility_functions_1.debug_log)('move_to' + move_to.hp);
     }
 }
 function turn(player) {
@@ -281,6 +286,8 @@ exports.check_if_cpu = check_if_cpu;
 function castle_turn(player, castle) {
     var bool = true;
     castle.hp = remove_dead_warriors(castle.hp);
+    (0, utility_functions_1.debug_log)("player list Castles" + (0, list_1.tail)(player));
+    (0, utility_functions_1.debug_log)("Count of castle array: " + count_castles((0, list_1.tail)(player)));
     //console.log(castle.hp);
     var healed_warriors = [];
     var j = 0;
@@ -368,13 +375,13 @@ function recruit_warrior(castle, index) {
     //console.log("length of castle.hp.length", len);
     //castle.hp[index] = create_warrior(5, 100);
     if (num == 0) {
-        castle.hp[index] = (0, setup_functions_1.create_warrior)(5, 100);
+        castle.hp[index] = (0, setup_functions_1.create_warrior)(5, 94);
     }
     else if (num == 1) {
         castle.hp[index] = (0, setup_functions_1.create_warrior)(7, 75);
     }
     else if (num == 2) {
-        castle.hp[index] = (0, setup_functions_1.create_warrior)(10, 50);
+        castle.hp[index] = (0, setup_functions_1.create_warrior)(10, 60);
     }
 }
 exports.recruit_warrior = recruit_warrior;
