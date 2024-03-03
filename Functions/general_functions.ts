@@ -8,7 +8,7 @@ import {
 } from '../lib/graphs';
 
 import {
-    tail, head as l_head
+    tail, head as l_head, Pair
 } from '../lib/list'
 
 import {
@@ -234,6 +234,17 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 
     return paths;
 }
+function get_player(player_name : String ) : Player | undefined {
+    const player_array: Array<Player> = get_player_list();
+
+    for(let i = 0; player_array.length; i++){
+        if (player_name == player_array[i][0] ) {
+            return player_array[i];
+        }
+    }
+
+    return undefined
+}
 
 /**
  * Moves an army from one castle to another, attacking if it is an enemy castle
@@ -248,22 +259,12 @@ function move(move_from: Castle, move_to: Castle): void {
     const army: Army = move_from.hp
     let survivors : Army = [];  //When attacking, surviving warriors are saved here
 
-    let attacking_player: Player | undefined = undefined;   
-    let defending_player: Player | undefined = undefined;
-    const player_list: Array<Player> = get_player_list();   
+    let attacking_player: Player | undefined = get_player(move_from.owner);  
+    let defending_player: Player | undefined = get_player(move_to.owner);
 
-    //Detta borde bli en egen funktion ABSTRAHERA
-    for (let i = 0; i < player_list.length; i = i + 1) { // Loops over all players, to get the Player from the name
-        if (player_list[i][0] == move_from.owner) {         // Retrieves the Player from the "owner"
-            attacking_player = player_list[i];
-        } else if (player_list[i][0] == move_to.owner) {    // Retrieves the Player from the "owner"
-            defending_player = player_list[i];
-        }
-    }
-
-    const split = split_army(move_from);        // the army is split in two
-    const moving_army = split[0]; 
-    const staying_army = split[1];
+    const split : Army[] = split_army(move_from);        // the army is split in two
+    const moving_army : Army = split[0]; 
+    const staying_army : Army = split[1];
     move_from.hp = staying_army;  // Changes the army in the current castle to the army which will not move
                                
     if (player_from != player_to) {         // if we find an opponent
@@ -338,10 +339,8 @@ export function check_if_cpu(player: Player | string): boolean {
  * @param player is a pair(string, List)
  */
 export function castle_turn(player: Player, castle: Castle) {
-    let bool = true;
-    castle.hp = remove_dead_warriors(castle.hp);
-    debug_log("player list Castles" + tail(player));
-    debug_log("Count of castle array: " + count_castles(tail(player)));
+    let bool = true; 
+    castle.hp = remove_dead_warriors(castle.hp); 
 
     const healed_warriors: Array<string> = [];
     let j = 0;
