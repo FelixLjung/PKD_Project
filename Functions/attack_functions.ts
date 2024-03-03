@@ -56,8 +56,9 @@ export function enqueue_army(army: Army): Queue<Warrior> {
 
 /**
  * A helper function that kills warriors from the army array, changing their alive status to false.
- * @param dead is a {Warrior}
- * @param army is a {Army}
+ * @param dead is a @Warrior , a record that describes a piece.
+ * @param army is an @Army , an array of Warriors
+ * @modifies the 
  * @returns Void
  */
 export function unalive_warrior(dead: Warrior, army: Army){
