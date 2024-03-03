@@ -198,7 +198,6 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
  */
 export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) : Army {
     empty_line();
-    console.log("defending army...", castle.hp);
     empty_line();
     empty_line();
     //Helper: returns true if 
