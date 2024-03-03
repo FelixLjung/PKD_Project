@@ -9,7 +9,7 @@ import { create_castle,
     create_warrior,
     create_army,
     get_castle_array} from "../Functions/setup_functions";
-    
+
 import { get_random_int } from '../Functions/general_functions';
 
 
@@ -27,8 +27,8 @@ describe('create_castle', () => {
 
 describe('create_warrior', () => {
     
-    it('Creates the warrior Jingwei Hu with 5 attack and 50 health', () => {
-        expect(create_warrior(5, 50)).toEqual({attack : 5, health : 50, name : 'Jingwei Hu', alive : true});
+    it('Creates the warrior Bosse Brunklimp with 5 attack and 50 health', () => {
+        expect(create_warrior(5, 50)).toEqual({attack : 5, health : 50, name : 'Bosse Brunklimp', alive : true});
     });
 
     const test_warrior1 : Warrior = create_warrior(get_random_int(1,5), get_random_int(50, 100));
