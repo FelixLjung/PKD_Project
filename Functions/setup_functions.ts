@@ -97,9 +97,9 @@ export function create_warrior(attack: number, health: number): Warrior {
  * @returns {Army} - An army with three warriors
  */
 export function create_army(): Army {
-    let army: Army = [create_warrior(get_random_int(3,5), 70), // the starting warriors
-                      create_warrior(get_random_int(3,5), 70),
-                      create_warrior(get_random_int(3,5), 70)];
+    let army: Army = [create_warrior(get_random_int(3,6), get_random_int(80, 91)), // the starting warriors
+                      create_warrior(get_random_int(2,6), get_random_int(75, 91)),
+                      create_warrior(get_random_int(4,8), get_random_int(50, 91))];
 
     return army;
 }
@@ -113,11 +113,6 @@ export function get_castle_array(): Array<Castle> {
     return castles;
 }
 
-
-/**
- * Gets an array of the nodes in the map
- * @returns {Array<string>} - The nodes in the map
- */
 export function get_nodes(): Array<string> {
     return nodes;
 }
