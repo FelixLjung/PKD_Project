@@ -1,15 +1,21 @@
-import { is_army_empty,
+// Imports
+
+import {
+    is_army_empty,
     enqueue_army,
     fight, 
     attack } from '../Functions/attack_functions'
 
 import { empty } from '../lib/queue_array'
 
-import { type Army,
+import {
+    type Army,
     type Warrior,
     type Castle,
     type Player } from '../types'
 
+
+// Tests
 
 describe('enqueue_army', () => {
 
@@ -18,9 +24,7 @@ describe('enqueue_army', () => {
     const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr1, wrr2, wrr3];
-    const ex_army3 : Army = [wrr1, wrr2, wrr3];
     const ex_army4 : Army = [];
-    const empty_army = empty<Warrior>();
 
     it('Changes armies with soldiers in to queues', () => {
         expect(enqueue_army(ex_army1)).toEqual([0, 1, [wrr1]]);
@@ -33,6 +37,7 @@ describe('enqueue_army', () => {
 
 });
 
+
 describe('is_army_empty', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
@@ -40,7 +45,6 @@ describe('is_army_empty', () => {
     const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr1, wrr2, wrr3];
-    const ex_army3 : Army = [];
     const empty_army = empty<Warrior>();
 
     it('Returns false for a non empty army', () => {
@@ -54,6 +58,7 @@ describe('is_army_empty', () => {
 
 });
 
+
 describe ('fight', () => {
 
     const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};
@@ -61,7 +66,6 @@ describe ('fight', () => {
     const wrr3 : Warrior = {attack : 8, health : 16, name : 'Felix', alive : true};
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr2, wrr3];
-    const ex_army3 : Army = [wrr1, wrr2, wrr3];
     const ex_castle1 : Castle = {hp : ex_army2, owner : 'Affe', position : 2};
     const ex_castle2 : Castle = {hp : ex_army1, owner : 'Davve', position : 3};
 
@@ -75,6 +79,7 @@ describe ('fight', () => {
 
 });
 
+
 describe('attack', () => {
     
     const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};
@@ -84,7 +89,6 @@ describe('attack', () => {
     const ex_army1 : Army = [wrr1];
     const ex_army2 : Army = [wrr2, wrr3, wrr4];
     const ex_castle1 : Castle = {hp : ex_army1, owner : 'Alfred', position : 4};
-    const ex_castle2 : Castle = {hp : ex_army2, owner : 'David', position : 3};
     const ex_player1 : Player = ['Alfred', [ex_castle1]];
     const ex_player2 : Player = ['David', [ex_castle1]];
 

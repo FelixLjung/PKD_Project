@@ -1,17 +1,18 @@
-import {type Army,
-    type Castle,
-    type Warrior,
-    type Player} from '../types';
+// Imports
 
-import { MatrixGraph } from '../lib/graphs';
+import {
+    type Army,
+    type Warrior } from '../types';
 
-import { create_castle,
+import {
+    create_castle,
     create_warrior,
-    create_army,
-    get_castle_array} from "../Functions/setup_functions";
+    create_army } from "../Functions/setup_functions";
 
 import { get_random_int } from '../Functions/utility_functions';
 
+
+// Tests
 
 describe('create_castle', () => {
     
@@ -24,6 +25,7 @@ describe('create_castle', () => {
     });
 
 });
+
 
 describe('create_warrior', () => {
     
@@ -42,6 +44,7 @@ describe('create_warrior', () => {
     });
 
 });
+
 
 describe('create_army', () => {
     

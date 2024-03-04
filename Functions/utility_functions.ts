@@ -1,54 +1,59 @@
 // Imports
-import { 
+
+import {
     Castle,
     Player,
     Warrior } from "../types";
 
+
 //Variables
-const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
+const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inputs
 
 const testing : Boolean = false; // set this to true if testing with jest, disables all empty promopts 
 
-
-
 const debugging = true; // set this to false to quickly remove all debug console logs
+
+
+//Functions
 
 /**
  * Used to export the testing variable. When the testing variable is true we enter testing state,
- * which disabels some prompts in tested functions.
- * @returns Boolean - descides if we go into testing mode or not
+ * Which disabels some prompts in tested functions.
+ * @returns {Boolean} - Descides if we go into testing mode or not
  */
 export function get_testing_bool() : Boolean {
     return testing;
 }
 
-//Functions
 
 /**
- * prints a non gameplay related message to the console
- * @param text - what is being logged
+ * Prints a non gameplay related message to the console
+ * @param {String | Array<T> | Number | Warrior | Castle | Player | undefined} text - What is being logged
  */
 export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
     if (debugging){
         console.log(text);
     }
-    
 }
+
 
 /**
  * Prints a gameplay related message or graphic 
- * @param text - what is being printed
+ * @param {String | Array<T> | Number | Warrior | Castle | Player | undefine} text - What is being printed
  */
 export function print_to_game<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
     console.log(text);
 }
 
+
 /**
- * prints an empty line
+ * Prints an empty line
  */
 export function empty_line(){
     console.log();
 }
+
 
 /**
  * Prints a cursive line, in order to divide messages
@@ -57,6 +62,7 @@ export function cursive_line() {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 }
 
+
 /**
  * prints a regular line
  */
@@ -64,10 +70,11 @@ export function print_line() {
     console.log("--------------------------------------------------------------");
 }
 
+
 /**
  * Changes an array into a string in order to change its appearance.
- * @param a - an array that is supposed to be changed into a string
- * @returns string - the array turned into a string
+ * @param {Array<T>} a - An array that is supposed to be changed into a string
+ * @returns {string} - The array turned into a string
  */
 export function format_array<T>(a : Array<T>) : String {
     let str = "";
@@ -84,6 +91,7 @@ export function format_array<T>(a : Array<T>) : String {
     return str;
 }
 
+
 /**
  * Stops the next step in the game until a player clicks enter
  */
@@ -93,8 +101,9 @@ export function press_to_continue(){
     }
 }
 
+
 /**
- * prints empty lines, to clear the previous player's action.
+ * Prints empty lines, to clear the previous player's action.
  */
 export function clear_terminal(){
     console.log(`
@@ -121,10 +130,10 @@ export function clear_terminal(){
 
 
 /**
- * Returns a random number between [min] and [max].
- * @param min is a number. Represents the lowest number on the die
- * @param max is a {number}. Represents the hightes number on the die
- * @returns a random number / integer.
+ * Returns a random number between [min] and [max]
+ * @param {number} min - Represents the lowest number on the die
+ * @param {number} max - Represents the hightes number on the die
+ * @returns {number} - A random number
  */
 export function get_random_int(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min) + min); 

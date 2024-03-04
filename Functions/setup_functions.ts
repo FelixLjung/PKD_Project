@@ -1,35 +1,24 @@
-import {
-    type Army, type Castle, type Warrior, type Player
-} from '../types';
-
-import { 
-    MatrixGraph 
-} from '../lib/graphs';
+// Imports
 
 import {
-    get_first_warrior_name
-} from './general_functions'
+    type Army,
+    type Castle,
+    type Warrior,
+    type Player } from '../types';
+
+import { MatrixGraph } from '../lib/graphs';
+
+import { get_first_warrior_name } from './general_functions'
 
 import {
-     read 
-} from 'fs';
-
-import {
-    list
-} from '../lib/list';
-
-import { 
     empty_line,
     print_to_game,
     get_random_int } from './utility_functions';
 
-import { platform } from 'os';
-
-import { stringify } from 'querystring';
-
 
 // Variables
-const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
+const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inputs
 
 let I = true;
 let O = false;
@@ -48,7 +37,11 @@ export const mormors_kudde: MatrixGraph = { // The matrixgraph representing the 
 }
 
 let castles: Array<Castle> = []; // init empty castles array
-let arr_players : Array<Player> = [];
+
+let arr_players : Array<Player> = [];           // Array of players
+
+const arr_names: Array<string> = [];            // Array of player names
+
 
 // board
 
@@ -63,14 +56,15 @@ let node4 = "4x";
 
 let nodes = [node1,node2,node3,node4,node5];
 
+
 // Functions
 
 /**
      * Creates a castle in setup phase
-     * @param army the army that will be station in the castle (hp)
-     * @param owner the name of the owner 
-     * @param position the position on the board 1-5 
-     * @returns A castle
+     * @param {Army} army - The army that will be station in the castle (hp)
+     * @param {Player} owner - The name of the owner 
+     * @param {number} position - The position on the board 1-5 
+     * @returns {Castle} - A castle
      */
 export function create_castle(army: Army, owner: string, position: number): Castle {
     let castle = { hp: army, owner: owner, position: position };
@@ -80,8 +74,10 @@ export function create_castle(army: Army, owner: string, position: number): Cast
 
 
 /**
- * Creates a warrior (dictionary) with name, attack damage and health
- * @returns a Warrior
+ * Creates a warrior with name, attack damage and health
+ * @param {number} attack - The attack stat for the warrior
+ * @param {number} health - The health stat for the warrior
+ * @returns {Warrior} - A warrior
  */
 export function create_warrior(attack: number, health: number): Warrior {
     let name = get_first_warrior_name(); // Gets a name 
@@ -95,10 +91,10 @@ export function create_warrior(attack: number, health: number): Warrior {
     return warrior;
 }
 
+
 /**
  * Creates a an array of warriors
- *
- * @returns An Army with three warriors 
+ * @returns {Army} - An army with three warriors
  */
 export function create_army(): Army {
     let army: Army = [create_warrior(get_random_int(3,5), 70), // the starting warriors
@@ -108,14 +104,20 @@ export function create_army(): Army {
     return army;
 }
 
+
 /**
- * exported function to retrieve the castles created in this ts script 
- * @returns an array of all the castlees
+ * Exported function to retrieve the castles created
+ * @returns {Array<Castle>} - An array of all the castles
  */
 export function get_castle_array(): Array<Castle> {
     return castles;
 }
 
+
+/**
+ * Gets an array of the nodes in the map
+ * @returns {Array<string>} - The nodes in the map
+ */
 export function get_nodes(): Array<string> {
     return nodes;
 }
@@ -123,18 +125,19 @@ export function get_nodes(): Array<string> {
 
 /**
  * Creates a player, a pair whose head is a string and tail is an array of Castles.
- * @param name is a string
- * @param num_players is a number
+ * @param {string} name -  The name of a player
+ * @param {number} node - A node where a castle is
+ * @returns {Player} - A created player
  */
-export function create_player(name: string, node: number): Player{
-    const player: Player = [name, [(create_castle(create_army(), name, node))]]; // Siffran är NODE, får ej vara hårdkodad!
+export function create_player(name: string, node: number): Player {
+    const player: Player = [name, [(create_castle(create_army(), name, node))]];
     return player;
 }
 
 
 /**
  * Pick amount of players
- * @returns a number
+ * @returns {number} - The amount of players in the game
  */
 function choose_players(): number{
     let loop = true;
@@ -150,9 +153,11 @@ function choose_players(): number{
     return 0;
 
 }
+
+
 /**
  * Reads player input to get name
- * @returns a name.
+ * @returns {string} - The name of a player
  */
 function choose_name(): string{
     empty_line();
@@ -160,7 +165,12 @@ function choose_name(): string{
     return name;
 }
 
-export function get_player_names() {
+
+/**
+ * Makes an array with all player names
+ * @returns {Array<string>} - An array with all player names
+ */
+export function get_player_names() : Array<string> {
     let arr = [];
     for(let i = 0; i < arr_players.length; i++){
         arr[i] = arr_players[i][0][0];
@@ -169,14 +179,11 @@ export function get_player_names() {
     return arr;
 }
 
-const arr_names: Array<string> = [];            // Array of player names
 
 /**
- * initialiases the game,
- * creates players and AI
- * 
- * @returns A complete setup of the game
- * 
+ * initialiases the game by creating players and AI
+ * @modifies {Array<Player>} - The array of players
+ * @returns {Array<Player>} - An array of all players
  */
 export function game_setup(): Array<Player> {
     const num_players = choose_players();
@@ -186,11 +193,6 @@ export function game_setup(): Array<Player> {
         arr_names[n] = player_name; 
     }
 
-    /**
-     * Creates all players
-     * @param names 
-     * @returns an array of players
-     */
     function create_players(names: Array<string>): Array<Player>{
         const arr_pos: Array<number> = [1, 5, 2, 4, 3]; // Array of positions  
         const arr: Array<Player> = [];
@@ -199,7 +201,7 @@ export function game_setup(): Array<Player> {
                 const player: Player = create_player(names[n], arr_pos[n]); // creates a player with corresponding name and position
                 arr[n] = player;
             } else{
-                const ai: Player = create_player("CPU" + arr_pos[n] as string, arr_pos[n]) // createsa an ai with correspongding position
+                const ai: Player = create_player("CPU" + arr_pos[n] as string, arr_pos[n]) // creates an ai with correspongding position
                 arr[n] = ai;
             }
         }
@@ -212,9 +214,11 @@ export function game_setup(): Array<Player> {
     return arr_players;
 }
 
+
 /**
- * 
- * @param arr_players 
+ * Changes the map to show who owns a castle
+ * @modifies {node} - Adds the players first letter to a node
+ * @param {Array<Player>} arr_players - The array of all players
  */
 function create_nodes(arr_players: Array<Player>){
     for (let i = 0 ; i < arr_players.length; i++) { // loops over the all participants
@@ -226,4 +230,3 @@ function create_nodes(arr_players: Array<Player>){
 
     }
 }
-

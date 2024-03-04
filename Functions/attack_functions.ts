@@ -1,26 +1,34 @@
-import { type Warrior,
+// Imports
+
+import {
+    type Warrior,
     type Army,
     type Castle,
-    type Player } from "../types";
+    type Player,
+    type AttackArmy } from "../types";
 
-import { type Pair,
+import {
+    type Pair,
      tail,
      pair } from "../lib/list";
 
-import { type Queue,
+import {
+    type Queue,
     head as q_head,
     dequeue,
     enqueue,
     empty } from "../lib/queue_array";
 
-import { remove_dead_warriors,
+import {
+    remove_dead_warriors,
      count_castles } from "./general_functions";
 
 import { kill_player } from "../game";
 
 import { w_names } from "./resources";
 
-import { cursive_line,
+import {
+    cursive_line,
     debug_log,
     empty_line,
     press_to_continue,
@@ -29,15 +37,15 @@ import { cursive_line,
 
 import { death_text } from "./resources";
 
-const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inputs
 
 
 //Attack functions
 
 /**
  * Changes an army from an array to a queue
- * @param army - the army that is changed into a queue
- * @returns A queue of warriors (used to attack / defend)
+ * @param {Army} army - the army that is changed into a queue
+ * @returns {Queue<Warrior>} - A queue of warriors (used to attack / defend)
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
     const queue_army = empty<Warrior>();
@@ -51,11 +59,12 @@ export function enqueue_army(army: Army): Queue<Warrior> {
     return queue_army;
 }
 
+
 /**
  * A helper function that kills warriors from the army array, changing their alive status to false.
- * @param dead - is a @Warrior , a record that describes a piece.
- * @param army - is an @Army , an array of Warriors
- * @modifies the existing @Army
+ * @param {Warrior} dead - The warrior that has been killed
+ * @param {Army} army - The army the warrior is in
+ * @modifies {Warrior} - Changes the warriors alive boolean to false
  */
 export function unalive_warrior(dead: Warrior, army: Army){
     
@@ -67,9 +76,12 @@ export function unalive_warrior(dead: Warrior, army: Army){
     }
 }
 
+
 /**
  * When a warrior dies, it's child gets sent to the possible Warrior names.
- * @param army 
+ * @param {Warrior} dead - The dead warrior
+ * @param {Army} army - The army that the dead warrior was/is in
+ * @modifies {Queue<string>} - Adds the dead warriors name to the queue of names
  */
 export function remake_warrior(dead: Warrior, army: Army) {
         if(dead.alive == false){
@@ -81,10 +93,12 @@ export function remake_warrior(dead: Warrior, army: Army) {
 
 /**
  * Changes the owner of a castle
- * @param castle - the castle that is changing owner
- * @param new_player - the new owner of the castle
- * @param old_player - the player who previously owned the castle
- * @param army - the army that now is in the castle
+ * @param {Castle} castle -The castle that is changing owner
+ * @param {Player} new_player - The new owner of the castle
+ * @param {Player} old_player - The player who previously owned the castle
+ * @param {Army} army - The army that now is in the castle
+ * @modifies {Player} - Changes both old and new players castle array
+ * @modifies {Castle} - Changes the owner of the castle, as well as its' army
  */
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
     debug_log("gamla castle owner:   " + castle.owner);
@@ -94,9 +108,6 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     let last_pos = new_player[1].length;    // might be able to be a const
     new_player[1][last_pos] = castle;  // adds the castle to the New Players castle array
 
-    
-
-    // for (let i = 0; i < tail(old_player)!.length; i = i + 1) { // old, should not use .length, use count_Castles() instead
     for (let i = 0; i < count_castles(tail(old_player)); i = i + 1) { // Loops over the player old players castle 
         if(tail(old_player)[i] == castle) {                                
             tail(old_player)[i] = undefined; // removes the castle from the previous owners castle array
@@ -110,12 +121,13 @@ export function castle_owner(castle : Castle, new_player : Player, old_player : 
     debug_log("castle.owner:  " + castle.owner);
 }
 
+
 /**
- * checks if an army is empty
- * @param army - the army that might be empty
- * @returns Boolean - whether the army is empty or not
+ * Checks if an army is empty
+ * @param {AttackArmy} army - The army that might be empty
+ * @returns {Boolean} - Whether the army is empty or not
  */
-export function is_army_empty(army : Queue<Warrior>) : Boolean {
+export function is_army_empty(army : AttackArmy) : Boolean {
     if (q_head(army) == undefined || army[2].length < 1) {
         return true;
     } else {
@@ -125,14 +137,14 @@ export function is_army_empty(army : Queue<Warrior>) : Boolean {
 
 
 /**
- * returns true if the defender wins the battle and false if the attacker wins
- * @param attacker - attacking warrior
- * @param defender - defending warrior
- * @param army - the attacking army
- * @param castle_army - the defending castle
- * @returns 
+ * Returns true if the defender wins the battle and false if the attacker wins
+ * @param {Warrior} attacker - The attacking warrior
+ * @param {Warrior} defender - The defending warrior
+ * @param {Army} army - The attacking army
+ * @param {Castle} castle_army - The defending castle
+ * @returns {Boolean} - If the defending warrior won or not
  */
-export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_army: Castle): boolean {
+export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_army: Castle): Boolean {
         army = remove_dead_warriors(army);                      // Attacker army fix
         castle_army.hp = remove_dead_warriors(castle_army.hp);  //Def. army fix
         
@@ -170,14 +182,14 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
 
     }
 
-    
 
 /**
  * Performs a battle between two armies in a castle
- * @param castle - the castle where the battle takes place
- * @param attacking_player - the player attacking the castle
- * @param defending_player - the player that defending the castle
- * @param army - the attacking army
+ * @param {Castle} castle - The castle where the battle takes place
+ * @param {Player} attacking_player - The player attacking the castle
+ * @param {Player} defending_player - The player that defending the castle
+ * @param {Army} army - The attacking army
+ * @return {Army} - The surviving army after the battle
  */
 export function attack(castle : Castle, attacking_player : Player, defending_player : Player, army : Army) : Army {
     empty_line();
@@ -206,7 +218,6 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         }
 
         if (is_army_empty(defenders)) {
-            //console.log(attackers);
             return pair(false, queue_to_array(attackers)); // returns false if the attackers won together with the remaining attacking army.
         } else {
             return pair(true, queue_to_array(defenders)); // returns true if the defenders win together with the remaining defending army.
@@ -217,11 +228,9 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     const winner : Pair<Boolean, Army> = helper(army, castle);
     if (!winner[0]) {   //defender wins
         console.log("You have won the battle my liege! Congratulations, the castle is yours!");
-        //castle_owner(castle, attacking_player, defending_player, winner[1]);
 
         press_to_continue();
         empty_line()
-        //console.log(tail(winner));
         return (remove_dead_warriors(tail(winner))); 
 
     } else if (winner[0]) { //attacker wins
@@ -229,7 +238,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
         print_to_game("Our army is dead! The battle is lost!");
         print_to_game('But ' + army[0].name + ' managed to inform us of the enemy army before falling:');
         empty_line();
-        castle.hp = remove_dead_warriors(castle.hp); // får error 27/2, testar lägga till detta
+        castle.hp = remove_dead_warriors(castle.hp);
         for (let i = 0; i < castle.hp.length; i++) {
             print_to_game('Soldier name: ' + castle.hp[i].name +
             ' | Attack strength: ' + castle.hp[i].attack +
@@ -242,10 +251,14 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
     }
 
     return [];
+}
 
 
-function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
+/**
+ * Changes a queue of warriors into an array
+ * @param {AttackArmy} q - A queue of warriors
+ * @returns {Army} - The army, turned into an array
+ */
+function queue_to_array(q : AttackArmy ) : Army {
         return q[2];
-    }
-
-} 
+}

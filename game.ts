@@ -1,3 +1,5 @@
+// Imports
+
 import { 
     type MatrixGraph 
 } from './lib/graphs';
@@ -23,35 +25,19 @@ import {
     type Player 
 } from './types';
 
+
+// Variables
+
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
 
-
-
-
-// start nodes
-let node1 = "1";
-let node2 = "2";
-let node5 = "5";
-
-// unclaimed nodes
-let node3 = "3x"
-let node4 = "4x";
-
 let game_running = false;
-/*
-let map = [
-    [" "," "," "," ", node1," "," "," "," "],
-    [" "," ","/"," ", "|"," ","\\"," "],
-    [" ","/"," "," ", "|"," "," ","\\"],
-    [node2,"-","-", "-", node4,"-","-","-",node4],
-    [" ","\\"," "," ", "|"," "," ","/"," "],
-    [" "," ","\\"," ", "|"," ","/",""," "],
-    [" "," "," "," ", node3," "," "," "," "]
-];
-*/
+
+game_running = true;
 
 const I = true;
+
 const O = false;
+
 const mormors_kudde: MatrixGraph = {
     size: 5,
     adj:[
@@ -64,13 +50,15 @@ const mormors_kudde: MatrixGraph = {
 
 }
 
-
 let player_list : Array<Player> = [];
+
+
+// Functions
 
 /**
  * Changes an array of players through the game_setup function. Used in the beginning of the game
- * @param player_array - an array of players that is getting updated
- * @returns - the updated array of players
+ * @param {Array<Player>} player_array - An array of players that is getting updated
+ * @returns {Array<Player>} - Te updated array of players
  */
 export function a_player_list(player_array : Array<Player>) : Array<Player> {
     player_array = game_setup();
@@ -85,8 +73,6 @@ export function a_player_list(player_array : Array<Player>) : Array<Player> {
         //node4 += player_array[4][0][0];
         //node5 += player_array[2][0][0];
 
-        // FIXME: denna funktion är väl onödigt ändå, vi fixar detta i setup tror jag?
-
         return player_array;
     }
     return helper();
@@ -99,7 +85,7 @@ export function get_player_list() {
 
 /**
  * Removes a player without any castles, meaning they have been killed
- * @param player - the player that has been killed
+ * @param {Player} player - The player that has been killed
  */
 export function kill_player(player : Player ) {
     print_to_game(player[0] + " has fallen");
@@ -112,6 +98,12 @@ export function kill_player(player : Player ) {
     empty_line();
 }
 
+
+/**
+ * Checks if a player has any castles or if they are out of the game
+ * @param {Player} player - The player being looked at
+ * @returns {Boolean} - True if the player has castle/castles, otherwise false
+ */
 function player_is_alive(player : Player) : Boolean {
     if (count_castles(player[1]) <= 1){
         return true;
@@ -121,42 +113,20 @@ function player_is_alive(player : Player) : Boolean {
 }
 
 
-/*
-let map = [
-    [" "," "," "," ", node1," "," "," "," "],
-    [" "," ","/"," ", "|"," ","\\"," "],
-    [" ","/"," "," ", "|"," "," ","\\"],
-    [node2,"-", "-", node3,"-","-",node4],
-    [" ","\\"," "," ", "|"," "," ","/"," "],
-    [" "," ","\\"," ", "|"," ","/",""," "],
-    [" "," "," "," ", node5," "," "," "," "]
-];
-*/
-//const player1 = player_list[0];
-//print_board(map);
-//console.log(player_list);
-
-game_running = true;
-
 /**
  * The function running the game.
  */
 function game(){
-    //console.clear();
     player_list = a_player_list(player_list);
 
     splash();
     press_to_continue();
     
     while(game_running){
-        //print_board();
-        //console.clear()
         console.log();
         console.log();
         refresh_board();
-        for(let i = 0; i < player_list.length; i++){ // ger en turn åt varje spelare
-            //console.log(player_list[i][1][0].hp);
-            //print_board();
+        for(let i = 0; i < player_list.length; i++){ // Gives one turn to each player
             
             if (count_castles(player_list[i][1]) == 0){ // Checks if player has 0 castles, SKIP
                 continue;
@@ -183,7 +153,6 @@ function game(){
             }
             
             if (count_castles(player_list[i][1]) == 5) {
-                //console.log('Congratulations', player_list[i], '! You now rule the entire kingdom!')
                 splash_end(player_list[i])
 
                 game_running = false;
@@ -191,7 +160,7 @@ function game(){
             }
                 print_line();
             }
-            if (game_running == true) {  // Allt detta borde abstractas
+            if (game_running == true) {
                 for (let i = 0; i < get_castle_array().length; i++){
                     let curr_castle = get_castle_array()[i]
                     let index = curr_castle.hp.length
