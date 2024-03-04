@@ -126,7 +126,6 @@ function remove_dead_castles(castles : Array<Castle | undefined>, player: Player
  * @param index 
  * @returns 
 */
-
 function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
     for (let i = 0; i < castles.length; i = i + 1) {
         if (castles[i] != undefined) {
@@ -231,6 +230,12 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 
     return paths;
 }
+
+/**
+ * 
+ * @param player_name 
+ * @returns 
+ */
 function get_player(player_name : String ) : Player | undefined {
     const player_array: Array<Player> = get_player_list();
 
@@ -242,6 +247,7 @@ function get_player(player_name : String ) : Player | undefined {
 
     return undefined
 }
+
 
 /**
  * Moves an army from one castle to another, attacking if it is an enemy castle
@@ -288,7 +294,7 @@ function move(move_from: Castle, move_to: Castle): void {
 }
 
 /**
- * Procecces the individual turn for a player
+ * Processes the individual turn for a player
  * @param player the player who will play a turn
  */
 
@@ -426,7 +432,7 @@ export function is_choice_in_paths(paths: Array<number>, choice: number): boolea
     }
 
 /**
- * Recruits a new warrior to a castle
+ * After every player has ended their turn, all castle recruits a new warrior.
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle, index: number) {

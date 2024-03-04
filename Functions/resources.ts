@@ -74,7 +74,8 @@ export let w_names: Queue<string> = [0,
         "Tomten",
         "Bert Fylking",
         "Arne Weise",
-        "Göran Pson"]];
+        "Göran Pson",
+        "Theodor Porken"]];
 
 
 
