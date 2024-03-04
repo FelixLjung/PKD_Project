@@ -46,6 +46,7 @@ export const mormors_kudde: MatrixGraph = { // The matrixgraph representing the 
 }
 
 let castles: Array<Castle> = []; // init empty castles array
+let arr_players : Array<Player> = [];
 
 // board
 
@@ -157,15 +158,26 @@ function choose_name(): string{
     return name;
 }
 
+export function get_player_names() {
+    let arr = [];
+    for(let i = 0; i < arr_players.length; i++){
+        arr[i] = arr_players[i][0][0];
+    }
+
+    return arr;
+}
+
+const arr_names: Array<string> = [];            // Array of player names
+
 /**
  * initialiases the game,
  * creates players and AI
  * 
  * @returns A complete setup of the game
+ * 
  */
 export function game_setup(): Array<Player> {
     const num_players = choose_players();
-    const arr_names: Array<string> = [];     // Array of player names
         
     for(let n = 0; n < num_players; n++){   // loop over the number of human players
         let player_name = choose_name(); // gets their name 
@@ -192,7 +204,7 @@ export function game_setup(): Array<Player> {
         return arr;
     }
 
-    let arr_players = create_players(arr_names); // fills the array of players with the players
+    arr_players = create_players(arr_names); // fills the array of players with the players
 
     create_nodes(arr_players); // Creates nodes with the first letter of every name
     return arr_players;
