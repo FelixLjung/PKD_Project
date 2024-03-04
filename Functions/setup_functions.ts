@@ -1,31 +1,18 @@
 import {
-    type Army, type Castle, type Warrior, type Player
-} from '../types';
+    type Army, 
+    type Castle, 
+    type Warrior, 
+    type Player } from '../types';
 
-import { 
-    MatrixGraph 
-} from '../lib/graphs';
+import { MatrixGraph } from '../lib/graphs';
 
-import {
-    get_first_warrior_name
-} from './general_functions'
-
-import {
-     read 
-} from 'fs';
-
-import {
-    list
-} from '../lib/list';
+import { get_first_warrior_name } from './general_functions'
 
 import { 
     empty_line,
     print_to_game,
     get_random_int } from './utility_functions';
 
-import { platform } from 'os';
-
-import { stringify } from 'querystring';
 
 
 // Variables
