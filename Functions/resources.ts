@@ -1,8 +1,7 @@
 // Resources
 
 import {type Queue } from "../lib/queue_array";
-import { get_random_int } from "./general_functions";
-import { empty_line, cursive_line } from "./utility_functions";
+import { empty_line, cursive_line, get_random_int } from "./utility_functions";
 
 export let w_names: Queue<string> = [0,
     2,
