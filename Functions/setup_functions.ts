@@ -88,9 +88,9 @@ export function create_warrior(attack: number, health: number): Warrior {
  * @returns An Army with three warriors 
  */
 export function create_army(): Army {
-    let army: Army = [create_warrior(get_random_int(3,5), get_random_int(80, 90)), // the starting warriors
-                      create_warrior(get_random_int(2,6), get_random_int(75, 90)),
-                      create_warrior(get_random_int(4,8), get_random_int(50, 90))];
+    let army: Army = [create_warrior(get_random_int(3,6), get_random_int(80, 91)), // the starting warriors
+                      create_warrior(get_random_int(2,6), get_random_int(75, 91)),
+                      create_warrior(get_random_int(4,8), get_random_int(50, 91))];
 
     return army;
 }
