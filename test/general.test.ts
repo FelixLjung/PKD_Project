@@ -1,6 +1,9 @@
+// Imports
+
 import { MatrixGraph } from "../lib/graphs";
 
-import { finds_paths, 
+import {
+    finds_paths, 
     check_if_cpu,
     remove_dead_warriors,
     train_warrior,
@@ -13,14 +16,18 @@ import { finds_paths,
 import {
     get_random_int } from "../Functions/utility_functions";
 
-import { type Army,
+import {
+    type Army,
     type Castle,
     type Warrior,
     type Player } from "../types";
 
-import { type Queue,
+import {
+    type Queue,
         empty} from "../lib/queue_array";
 
+
+// Tests
 
 describe('getRandomInt', () => {
 
@@ -32,6 +39,7 @@ describe('getRandomInt', () => {
     });
 
 });
+
 
 describe('finds_paths', () => {
     
@@ -62,6 +70,7 @@ describe('finds_paths', () => {
     
 });
 
+
 describe('check_if_cpu', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
@@ -87,6 +96,7 @@ describe('check_if_cpu', () => {
 
 });
 
+
 describe('remove_dead_warrior', () => {
 
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
@@ -105,6 +115,7 @@ describe('remove_dead_warrior', () => {
 
 });
 
+
 describe('train_warrior', () => {
     
     const wrr1 : Warrior = {attack : 5, health : 10, name : 'Alfred', alive : true};
@@ -120,6 +131,7 @@ describe('train_warrior', () => {
 
 });
 
+
 describe('is_choice_in_paths', () => {
     
     const paths : Array<number> = [1, 2, 4];
@@ -134,6 +146,7 @@ describe('is_choice_in_paths', () => {
 
 });
 
+
 describe('get_first_warrior_name', () => {
 
     it('returns the first warrior name in the queue of names', () => {
@@ -141,6 +154,7 @@ describe('get_first_warrior_name', () => {
     });
 
 });
+
 
 describe('merge_army', () => {
     
@@ -162,6 +176,7 @@ describe('merge_army', () => {
 
 });
 
+
 describe('heal_warrior', () => {
     
     const wrr1 : Warrior = {attack : 5, health : 25, name : 'Felix', alive : true};
@@ -171,6 +186,7 @@ describe('heal_warrior', () => {
     });
 
 });
+
 
 describe('get_order_castles', () => {
     

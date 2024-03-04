@@ -1,23 +1,22 @@
+// Imports
+
 import{
     type Player, 
-    type Castle
-} from '../types';
+    type Castle } from '../types';
 
 import { 
     get_castle_array,
     get_nodes,
-    get_player_names
-} from './setup_functions';
+    get_player_names } from './setup_functions';
 
 import { 
     cursive_line,
     empty_line,
     print_line,
-    print_to_game
-} from './utility_functions';
+    print_to_game } from './utility_functions';
 
 
-
+// Variables
 
 // Nodes
 let node1 = "1";
