@@ -98,6 +98,7 @@ export function format_array<T>(a : Array<T>) : String {
 export function press_to_continue(){
     if (!testing){
         prompt("\u001b[3m press ENTER to continue... \u001b[m ");
+        empty_line();
     }
 }
 
@@ -115,6 +116,10 @@ export function clear_terminal(){
     
     
     
+
+
+
+
 
 
 

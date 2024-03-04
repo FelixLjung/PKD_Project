@@ -62,6 +62,13 @@ export function splash(){
     [_I_]_|𖤅|__[_I_]   ________________________________________________________________________  [_I_]_|𖤅|__[_I_]                                                                     
 
     
+
+
+
+
+
+    
+
     `)
 }
 
@@ -76,7 +83,7 @@ export function splash_end(winner: Player){
                    |⥣| 
     _______    _   |⥯|
    /_-_W_-_|  |+|  |⥯|       __________________________________________________
-           | _<=>_ |⥯|       \u001b[31m${winner[0]} The Counqueror\u001b[37m Rules The Entire Kingdom!
+           | _<=>_ |⥯|       \u001b[31m${winner[0]}\u001b[37m Has Conquered The Entire World!
            0/  V   o=o                           \u001b[33mGAME OVER\u001b[37m
             V| ^ |V 0
            | |_^_|
@@ -208,13 +215,13 @@ export function print_castle(player: Player) {
  */
 export function print_army(castle : Castle) {
     empty_line();
-    print_to_game('This is the army in this castle, my liege');
+    print_to_game('This is the army in this castle, my Liege.');
     cursive_line();
     for (let i = 0; i < castle.hp.length; i++) { // loops over all the warriors in the castle
-        if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {  // only print alivewarriors and non undefined
-        console.log('Soldier name:', castle.hp[i]!.name, // fancy print 
-                    '| Attack strength:', castle.hp[i]!.attack,
-                    '| Health:', castle.hp[i]!.health);
+        if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {  // only print alive_warriors and non undefined
+        console.log('| Soldier Name:', castle.hp[i]!.name, // fancy print 
+                    '| \u001b[31m Attack: \u001b[m', castle.hp[i]!.attack,
+                    '|\u001b[32m Health: \u001b[m', castle.hp[i]!.health, '|');
         }
     }
     cursive_line();

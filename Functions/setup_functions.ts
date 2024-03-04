@@ -13,7 +13,8 @@ import { get_first_warrior_name } from './general_functions'
 import {
     empty_line,
     print_to_game,
-    get_random_int } from './utility_functions';
+    get_random_int, 
+    clear_terminal} from './utility_functions';
 
 
 // Variables
@@ -140,12 +141,16 @@ export function create_player(name: string, node: number): Player {
  */
 function choose_players(): number{
     let loop = true;
+    empty_line();
+    empty_line();
+    empty_line();
+    print_to_game("This map has room for up to\u001b[33m 5\u001b[m players...")
     while(loop){       // Checks if amount of players is a valid number
-        const num = prompt("Choose number of players: ") as number;
+        const num = prompt(`Choose a\u001b[33m number\u001b[m of players: `) as number;
         if(num > 0 && num <= 5){
             return num;
         } else{
-            print_to_game("Invalid input, please try again");
+            print_to_game("\u001b[31mInvalid\u001b[m number. Try again!");
             empty_line();
         }
     }
@@ -159,9 +164,17 @@ function choose_players(): number{
  * @returns {string} - The name of a player
  */
 function choose_name(): string{
+    let bool = true
     empty_line();
-    let name: string = prompt("Choose your name: ") as string;
-    return name;
+    while(bool){
+        let name: string = prompt("Choose your \u001b[33mname:\u001b[m ") as string;
+        if(name.length > 0){
+            return name;
+        } else{
+            print_to_game("\u001b[31mInvalid\u001b[m input. Try again!")
+        }
+    }
+    return "";
 }
 
 
@@ -191,7 +204,7 @@ export function game_setup(): Array<Player> {
         let player_name = choose_name(); // gets their name 
         arr_names[n] = player_name; 
     }
-
+    clear_terminal();
     function create_players(names: Array<string>): Array<Player>{
         const arr_pos: Array<number> = [1, 5, 2, 4, 3]; // Array of positions  
         const arr: Array<Player> = [];

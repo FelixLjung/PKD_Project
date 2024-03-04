@@ -155,7 +155,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
             return false;
         }
         
-        console.log(defender.name, 'is defending castle', castle_army.position ,'against', attacker.name, '!');
+        console.log(`\u001b[32m`, defender.name,`\u001b[m` ,`is defending castle`, castle_army.position ,'against', `\u001b[31m`,attacker.name, `\u001b[m!`);
         while (true) {
             attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {

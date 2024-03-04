@@ -1,23 +1,24 @@
 "use strict";
+// Imports
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = exports.get_testing_bool = void 0;
+exports.get_random_int = exports.clear_terminal = exports.press_to_continue = exports.format_array = exports.print_line = exports.cursive_line = exports.empty_line = exports.print_to_game = exports.debug_log = exports.get_testing_bool = void 0;
 //Variables
-var prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+var prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inputs
 var testing = false; // set this to true if testing with jest, disables all empty promopts 
-var debugging = false; // set this to false to quickly remove all debug console logs
+var debugging = true; // set this to false to quickly remove all debug console logs
+//Functions
 /**
  * Used to export the testing variable. When the testing variable is true we enter testing state,
- * which disabels some prompts in tested functions.
- * @returns Boolean - descides if we go into testing mode or not
+ * Which disabels some prompts in tested functions.
+ * @returns {Boolean} - Descides if we go into testing mode or not
  */
 function get_testing_bool() {
     return testing;
 }
 exports.get_testing_bool = get_testing_bool;
-//Functions
 /**
- * prints a non gameplay related message to the console
- * @param text - what is being logged
+ * Prints a non gameplay related message to the console
+ * @param {String | Array<T> | Number | Warrior | Castle | Player | undefined} text - What is being logged
  */
 function debug_log(text) {
     if (debugging) {
@@ -26,22 +27,22 @@ function debug_log(text) {
 }
 exports.debug_log = debug_log;
 /**
- * Print a gameplay related message or graphic
- * @param text - what is being printed
+ * Prints a gameplay related message or graphic
+ * @param {String | Array<T> | Number | Warrior | Castle | Player | undefine} text - What is being printed
  */
 function print_to_game(text) {
     console.log(text);
 }
 exports.print_to_game = print_to_game;
 /**
- * prints an empty line
+ * Prints an empty line
  */
 function empty_line() {
     console.log();
 }
 exports.empty_line = empty_line;
 /**
- * Prints a cursive line
+ * Prints a cursive line, in order to divide messages
  */
 function cursive_line() {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -56,8 +57,8 @@ function print_line() {
 exports.print_line = print_line;
 /**
  * Changes an array into a string in order to change its appearance.
- * @param a - an array that is supposed to be changed into a string
- * @returns string - the array turned into a string
+ * @param {Array<T>} a - An array that is supposed to be changed into a string
+ * @returns {string} - The array turned into a string
  */
 function format_array(a) {
     var str = "";
@@ -82,9 +83,19 @@ function press_to_continue() {
 }
 exports.press_to_continue = press_to_continue;
 /**
- * prints empty lines, to clear the previous player's action.
+ * Prints empty lines, to clear the previous player's action.
  */
 function clear_terminal() {
-    console.log("\n    \n    \n    \n    \n    \n    \n    \n    \n\n\n\n\n\n\n\n\n    ");
+    console.log("\n    \n    \n    \n    \n    \n    \n    \n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n    \n    ");
 }
 exports.clear_terminal = clear_terminal;
+/**
+ * Returns a random number between [min] and [max]
+ * @param {number} min - Represents the lowest number on the die
+ * @param {number} max - Represents the hightes number on the die
+ * @returns {number} - A random number
+ */
+function get_random_int(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+exports.get_random_int = get_random_int;
