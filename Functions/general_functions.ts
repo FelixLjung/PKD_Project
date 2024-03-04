@@ -367,8 +367,12 @@ export function castle_turn(player: Player, castle: Castle) {
         console.log(`Your wounded warriors regained some of their health!`);
     }
 
-    print_board();
+    //print_board();
     while (bool) {
+        if(player[0] != undefined){
+            console.log(`\u001b[3m ${player[0]}'s Turn \u001b[m`);
+        }
+        print_board();
         console.log('\u001b[3m', "Currently Residing in Castle ", castle.position, '\u001b[m'); // Displays the current castle in cursive text
         print_army(castle); // Displays the army currently station in the active castle
         console.log(`What is your command, king ${player[0]} ..?`); 
@@ -390,9 +394,8 @@ export function castle_turn(player: Player, castle: Castle) {
                     bool = false;             
                     
                 } else{                  //Fail safe
+                    
                     print_to_game("\u001b[31mInvalid\u001b[m move. Try again!");
-                    //prompt("press Enter:"); // Better without a prompt here
-                    //clear_terminal();
                 }
             }
 

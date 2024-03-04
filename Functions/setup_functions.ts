@@ -142,8 +142,12 @@ export function create_player(name: string, node: number): Player {
  */
 function choose_players(): number{
     let loop = true;
+    empty_line();
+    empty_line();
+    empty_line();
+    print_to_game("This map has room for up to\u001b[33m 5\u001b[m players...")
     while(loop){       // Checks if amount of players is a valid number
-        const num = prompt(`Choose \u001b[33mnumber\u001b[m of players: `) as number;
+        const num = prompt(`Choose a\u001b[33m number\u001b[m of players: `) as number;
         if(num > 0 && num <= 5){
             return num;
         } else{
