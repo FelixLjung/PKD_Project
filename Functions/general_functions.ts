@@ -100,10 +100,9 @@ export function count_castles(castle_arr: Array<Castle | undefined>): number {
 /**
  * Removes lost castles from a player 
  * @param {Array<Castle>} castles - the players castle array
- * @param {Player} player - is a player
+ * @param {Player} player - is a pair, whose head is a string and the tail is a list of castles
  * @returns {Array<Castle>} - a new castle array 
  */
-
 function remove_dead_castles(castles : Array<Castle | undefined>, player: Player ) : Array<Castle | undefined> {
     let new_castles : Array<Castle| undefined> = []; 
     let j = 0; // inner count variable
@@ -114,13 +113,13 @@ function remove_dead_castles(castles : Array<Castle | undefined>, player: Player
         if (castles[i] != undefined && name == castles[i]!.owner){  // Checks if the castle is undefined or has another owner
             new_castles[j] = castles[i]; // adds the castles to the new array
             j++;
-        }
-        
+        } 
     }
     
     return new_castles;
-
 } 
+
+
 /**
  * Retrieves a castle from an index, returns false if the castle doesn not exist or is undefined
  * @param {Array<Castle>} castles - is an array of castles
@@ -137,14 +136,16 @@ function get_position(castles: Array<Castle | undefined>, index: number): Castle
     }
 
     return undefined;
-
 }
+
+
 /**
- *  vad gör denna??
- * @param Castles 
- * @param index 
- * @param player 
- * @returns 
+ *  Checks if a castle's position matches the recieved right index and if the current player owns the castle
+ * @param {Array<Castle>} castles - is an array of castles
+ * @param {number} index - is a number
+ * @param {Player} player - is a pair, whose head is a string and the tail is a list of castles
+ * @returns {Boolean} true if a castle's position matches the index parameter and owner of the castle
+ * matches the current player.
  */
 function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
     for (let i = 0; i < Castles.length; i = i + 1) {
@@ -155,11 +156,12 @@ function includes(Castles: Array<Castle | undefined>, index: number, player: Pla
     return false;
 }
 
+
 /**
- * 
- * @param castle_queue 
- * @param castle 
- * @returns 
+ * Checks if a castle exists in a queue or not
+ * @param {Queue<Castle>} castle_queue - is a queue of castles
+ * @param {Castle} castle - is a castle
+ * @returns {Boolean} returns true if the castle is found in the queue
  */
 function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
     for (let i = 0; i < castle_queue[2].length; i = i + 1) {
@@ -174,8 +176,8 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
 
 /**
  * The player determines the order in which they want to make their moves from their castles.
- * @param player the player in question.
- * @returns Array<string> of the castles
+ * @param {Player} player - is a pair, whose head is a string and the tail is a list of castles
+ * @returns {Queue<Castle>}  the chosen order of the castles
  */
 export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty(); // Inits a empty Queue of Castles
@@ -213,11 +215,10 @@ export function get_order_castles(player: Player): Queue<Castle> {
 
 /**
  * Finds all possible paths from a castle
- * @param castle - the castle the player wants to move from
- * @param map - the map currently in playgit
- * @returns paths - and array of all castles a player can move to
+ * @param {Castle} castle - the castle the player wants to move from
+ * @param {MatrixGraph} map - the map currently in playgit
+ * @returns {Array<number>} -  an array of all castles a player can move to.
  */
-
 export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
     let position = castle.position - 1; // The castles position start from 1
     let paths: Array<number> = []; // Init poossible paths array
@@ -233,9 +234,9 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 }
 
 /**
- * 
- * @param player_name 
- * @returns 
+ * Retrieves a player from the list of players
+ * @param {string} player_name 
+ * @returns {Player} player is a pair, whose head is a string and the tail is a list of castles
  */
 function get_player(player_name : String ) : Player | undefined {
     const player_array: Array<Player> = get_player_list();
@@ -251,16 +252,16 @@ function get_player(player_name : String ) : Player | undefined {
 
 
 /**
- * Moves an army from one castle to another, attacking if it is an enemy castle
- * @param Movd from
- * @param Move_to - The castle the army is being moved toe_from - The castle the army is being move
- * @param Soldiers - The army being moved from one castle to another // tror inte denna behövs
- * @returns void
+ * Moves an army from one castle to another, checks if the castle you're moving to is the same owner as 
+ * the owner you're moving from. If the owner is not the same it will result in an attack.
+ * @param {Castle} move_from - is a castle, the castle the 
+ * @param {Castle} Move_to - The castle the army is being moved to.
+ * @modifies {Army} the armies that move to and from each castle.
+ * @returns {void} - returns nothing
  */
 function move(move_from: Castle, move_to: Castle): void {
     const player_from: string = move_from.owner;
     const player_to: string = move_to.owner;
-    const army: Army = move_from.hp
     let survivors : Army = [];  //When attacking, surviving warriors are saved here
 
     let attacking_player: Player | undefined = get_player(move_from.owner);  
@@ -296,7 +297,7 @@ function move(move_from: Castle, move_to: Castle): void {
 
 /**
  * Processes the individual turn for a player
- * @param player the player who will play a turn
+ * @param {Player} player player is a pair, whose head is a string and the tail is a list of castles
  */
 
 export function turn(player: Player) {
@@ -314,8 +315,8 @@ export function turn(player: Player) {
 }
 /**
  *  checks if a player is non human
- * @param player either a Player or a name of a player
- * @returns true if the player has a name that starts with CPU
+ * @param {Player} player player is a pair, whose head is a string and the tail is a list of castles
+ * @returns {Boolean} true if the player has a name that starts with CPU
  */
 
 export function check_if_cpu(player: Player | string): boolean {
@@ -339,8 +340,7 @@ export function check_if_cpu(player: Player | string): boolean {
 /**
  * A players turn in game. Should be able to call multiple actions
  * Move and Attack.
- * Should Call other functions.
- * @param player is a pair(string, List)
+ * @param {Player} player is a pair, whose head is a string and the tail is a list of castles
  */
 export function castle_turn(player: Player, castle: Castle) {
     let bool = true; 
@@ -418,8 +418,8 @@ export function castle_turn(player: Player, castle: Castle) {
 
 /**
  * Checks if choice exists in the paths array.
- * @param paths an array of numbers (nodes)
- * @returns a boolean (true if choice is in paths)
+ * @param {Array<number>} paths an array of numbers (nodes)
+ * @returns {Boolean} a boolean (true if choice is in paths)
  */
 export function is_choice_in_paths(paths: Array<number>, choice: number): boolean{
     for(let i = 0; i < paths.length; i++){
@@ -434,7 +434,8 @@ export function is_choice_in_paths(paths: Array<number>, choice: number): boolea
 
 /**
  * After every player has ended their turn, all castle recruits a new warrior.
- * @param castle - the castle which is recruiting the new warrior
+ * @param {Castle} castle - the castle which is recruiting the new warrior
+ * @param {number} index - is a number
  */
 export function recruit_warrior(castle: Castle, index: number) {
     let num = get_random_int(0, 2);
@@ -456,7 +457,8 @@ export function recruit_warrior(castle: Castle, index: number) {
 
 /**
  * After a battle, when their next turn starts, all surviving warriors in army gets healed to 50 hp
- * @param warrior 
+ * @param {Warrior} warrior - is a warrior
+ * @modifies {Warrior} all warriors with equal or lower health than 40.
  */ 
 export function heal_warrior(warrior: Warrior): string{
     warrior.health = 50;
@@ -465,7 +467,8 @@ export function heal_warrior(warrior: Warrior): string{
 
 /**
  * When a warrior dies, it's child gets sent to the possible Warrior names.
- * @param army 
+ * @param {Army} army - is an Array of warriors
+ * @modifies {Queue<string>} the queue of available warrior names.
  */
 export function remake_warrior(army: Army) {
     for(let x = 0; x < army.length; x++){
@@ -480,7 +483,7 @@ export function remake_warrior(army: Army) {
 
 /**
  * Warrior gets a name from queue
- * @returns string
+ * @returns {string} string
  */
 export function get_first_warrior_name(): string {
     let name = q_head(w_names);
@@ -491,8 +494,8 @@ export function get_first_warrior_name(): string {
 /**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
  * to then next.
- * @param castle 
- * @returns 
+ * @param {Castle} castle
+ * @returns {Array<Army>} 
  */
 function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
@@ -525,9 +528,9 @@ function split_army(castle: Castle): Array<Army> {
 
 /**
  * Takes in two armies When moving, merge the two armies into one.
- * @param a1 is the army that is MOVING TO
- * @param a2 is an Army that is in the Army when merging
- * @returns a merged Army
+ * @param {Army} a1 is the army that is MOVING TO
+ * @param {Army} a2 is an Army that is in the Army when merging
+ * @returns {Army} a merged Army
  */
 export function merge_army(a1: Army, a2: Army): Army{
     if(a2 == undefined){ // if the other army doesnt exist 
@@ -543,7 +546,8 @@ export function merge_army(a1: Army, a2: Army): Army{
 
 /**
  * Removes all dead warriors in a castle
- * @param army 
+ * @param {Army} army 
+ * @returns {Army} the updated array of warriors in the castle
  */
 export function remove_dead_warriors(army: Army): Army {
     const alive_in_army: Army = [];                   //temporary array of warriors (all alive warriors)
@@ -568,8 +572,8 @@ export function remove_dead_warriors(army: Army): Army {
 
 /**
  * Checks if a player is controlling all the castles on the board
- * @param player the current player 
- * @returns true if the player controlls all the castles, otherwise false
+ * @param {Player} player the current player 
+ * @returns {Boolean} true if the player controlls all the castles, otherwise false
  */
 function check_win_condition(player : Player) : Boolean {
     const player_castles_count : number = count_castles(player[1]); 
