@@ -1,9 +1,20 @@
 import{
-    type Player, type Castle
+    type Player, 
+    type Castle
 } from '../types';
 
-import { get_castle_array, get_nodes } from './setup_functions';
-import { cursive_line, empty_line, print_line, print_to_game, debug_log } from './utility_functions';
+import { 
+    get_castle_array,
+    get_nodes 
+} from './setup_functions';
+
+import { 
+    cursive_line,
+    empty_line,
+    print_line,
+    print_to_game,
+    debug_log 
+} from './utility_functions';
 
 
 // Print functions 

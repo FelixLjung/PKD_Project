@@ -39,7 +39,7 @@ import {
     mormors_kudde
 } from './setup_functions'
 import { 
-    cursive_line, debug_log, format_array, press_to_continue 
+    cursive_line, debug_log, format_array, press_to_continue, get_random_int 
 } from './utility_functions';
 
 
@@ -57,16 +57,6 @@ const total_amount_of_castles  : number = 5; // The sum of all the castles, this
 const testing : Boolean = get_testing_bool(); // Disables prompts for testing with jest
 
 // General Functions
-
-/**
- * Chooses a random number between [min] and [max].
- * @param min is a number. Represents the lowest number on the die
- * @param max is a {number}. Represents the hightes number on the die
- * @returns a random number / integer.
- */
-export function get_random_int(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min); 
-}
 
 
 /**

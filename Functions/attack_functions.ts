@@ -11,7 +11,7 @@ import {
 } from "../lib/queue_array";
 
 import { 
-    get_random_int, remove_dead_warriors, count_castles
+     remove_dead_warriors, count_castles
 } from "./general_functions";
 
 import { 
@@ -25,7 +25,10 @@ import {
 import { 
     cursive_line,
     debug_log,
-    empty_line, press_to_continue, print_to_game 
+    empty_line,
+    press_to_continue,
+    print_to_game,
+    get_random_int 
 } from "./utility_functions";
 
 import { 

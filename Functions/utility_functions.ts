@@ -1,5 +1,8 @@
 // Imports
-import { Castle, Player, Warrior } from "../types";
+import { 
+    Castle,
+    Player,
+    Warrior } from "../types";
 
 //Variables
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
@@ -33,7 +36,7 @@ export function debug_log<T>(text : String | Array<T> | Number | Warrior | Castl
 }
 
 /**
- * Print a gameplay related message or graphic 
+ * Prints a gameplay related message or graphic 
  * @param text - what is being printed
  */
 export function print_to_game<T>(text : String | Array<T> | Number | Warrior | Castle | Player | undefined) {
@@ -48,7 +51,7 @@ export function empty_line(){
 }
 
 /**
- * Prints a cursive line
+ * Prints a cursive line, in order to divide messages
  */
 export function cursive_line() {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -111,5 +114,18 @@ export function clear_terminal(){
 
 
 
+
+
     `);
+}
+
+
+/**
+ * Returns a random number between [min] and [max].
+ * @param min is a number. Represents the lowest number on the die
+ * @param max is a {number}. Represents the hightes number on the die
+ * @returns a random number / integer.
+ */
+export function get_random_int(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min) + min); 
 }
