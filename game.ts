@@ -76,11 +76,17 @@ export function a_player_list(player_array : Array<Player>) : Array<Player> {
     player_array = game_setup();
     function helper() {
 
+        /*
         node1 += player_array[0][0][0];
         node2 += player_array[1][0][0];
         node3 += player_array[3][0][0];
+        */
+
         //node4 += player_array[4][0][0];
         //node5 += player_array[2][0][0];
+
+        // FIXME: denna funktion är väl onödigt ändå, vi fixar detta i setup tror jag?
+
         return player_array;
     }
     return helper();
@@ -136,7 +142,7 @@ game_running = true;
  * The function running the game.
  */
 function game(){
-    console.clear();
+    //console.clear();
     player_list = a_player_list(player_list);
 
     splash();

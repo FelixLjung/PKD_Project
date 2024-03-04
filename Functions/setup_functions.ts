@@ -20,7 +20,7 @@ import {
 
 import { 
     empty_line,
-    get_testing_bool, print_to_game 
+    get_testing_bool, print_to_game, debug_log
 } from './utility_functions';
 import { platform } from 'os';
 import { stringify } from 'querystring';
@@ -113,6 +113,10 @@ export function get_castle_array(): Array<Castle> {
     return castles;
 }
 
+export function get_nodes(): Array<string> {
+    return nodes;
+}
+
 
 
 /**
@@ -203,7 +207,7 @@ export function game_setup(): Array<Player> {
     function create_players(names: Array<string>): Array<Player>{
         const arr_pos: Array<number> = [1, 5, 2, 4, 3]; // Array of positions  
         const arr: Array<Player> = [];
-        for(let n = 0; arr_pos.length < 5; n++){  // All players get a position
+        for(let n = 0; n < arr_pos.length; n++){  // All players get a position   
             if(n - names.length < 0){
                 const player: Player = create_player(names[n], arr_pos[n]);
                 arr[n] = player;
@@ -216,9 +220,6 @@ export function game_setup(): Array<Player> {
     }
 
     let arr_players = create_players(arr_names); 
-
-    
-
 
     /*
     const name_player1: string = pick_player_name(p1);
@@ -243,7 +244,9 @@ export function game_setup(): Array<Player> {
 
     create_castles(arr_players, false); // Creates one castle for every participant. 
 
-    return [player1, player2, player3, AI1, AI2];
+    //return [player1, player2, player3, AI1, AI2];
+    debug_log(arr_players);
+    return arr_players;
 }
 
 /**
@@ -262,8 +265,11 @@ function create_nodes(arr_players: Array<Player>){
         let castle_pos = curr_player[1][0]!.position - 1; // gets the correct index of the players starting castle  
 
         nodes[castle_pos] += curr_player[0][0]; // Adds the first character of the current player's name to the node
-        castles[castle_pos] = curr_player[1][0]!; // Adds the Castle the castle array 
+        castles[castle_pos] = curr_player[1][0]!; // Adds the Castle the castle array FIXME: mhmmm
+        debug_log(curr_player[1][0])
     }
+
+    //console.log(castles);
 
 
 }
@@ -279,16 +285,18 @@ function create_nodes(arr_players: Array<Player>){
  */
 export function create_castles(player_list : Array<Player>, start_with_two_castles : Boolean) {
     // Player Castles
+    
+
+    
+
     /*
-
-
-    castles[0] = player1[1][0]!; 
-    castles[1] = player2[1][0]!;
-    castles[4] = player3[1][0]!;
+    castles[0] = player_list[0][1][0]!; 
+    castles[1] = player_list[1][1][0]!;
+    castles[4] = player_list[2][1][0]!;
 
     // AI Castles
-    castles[3] = AI1[1][0]!;
-    castles[2] = AI2[1][0]!;
+    castles[3] = player_list[3][1][0]!;
+    castles[2] = player_list[4][1][0]!;
     */
 
     /*

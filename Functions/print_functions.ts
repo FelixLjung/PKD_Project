@@ -2,8 +2,8 @@ import{
     type Player, type Castle
 } from '../types';
 
-import { get_castle_array } from './setup_functions';
-import { cursive_line, empty_line, print_line, print_to_game } from './utility_functions';
+import { get_castle_array, get_nodes } from './setup_functions';
+import { cursive_line, empty_line, print_line, print_to_game, debug_log } from './utility_functions';
 
 
 // Print functions 
@@ -17,7 +17,9 @@ let node5 = "5";
 let node3 = "3x";
 let node4 = "4x";
 
-let nodes = [node1, node2, node3, node4, node5];
+//let nodes = [node1, node2, node3, node4, node5];
+
+let nodes = get_nodes();
 
 let map1 = [
     [" ", " ", " ", " ", nodes[0], " ", " ", " ", " "],
@@ -29,32 +31,6 @@ let map1 = [
     [" ", " ", " ", " ", nodes[4], " ", " ", " ", " "]
 ];
 
-
-
-let map_player_3 = [
-    [" ", " ", " ", " ", " "," "," ", " ", node3, " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", node4, " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", node4, " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", "/", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," ","/", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-    [" ", " ", " ", node4, "-","-",node4, "-", node4,"-",node4, "-", , "-", node4, " ", " "," "],
-    [" ", " ", "/", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", "\\", " "," "],
-    [" ", "/", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", "\\"," "],
-    [node1, " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " ",node2],
-
-
-
-];
 
 let map = map1;
 
@@ -97,9 +73,12 @@ export function splash_end(winner: Player){
 }
 
 export function refresh_board() {
-    
+    nodes = get_nodes();
     function get_castle_owners(){
-        let castles = get_castle_array();
+        let castles = get_castle_array(); // FIXME: denna är tom
+        console.log(castles);
+        debug_log("castles: " + castles);
+
         for (let i = 0; i < nodes.length; i++ ){
 
             nodes[i] = castles[i].position + castles[i].owner[0];
