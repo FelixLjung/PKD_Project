@@ -49,6 +49,8 @@ import {
 import { get_testing_bool } from './utility_functions';
 
 
+// Variables
+
 const prompt = require('prompt-sync')({ sigint: true }); // To handle inputs via the terminal 
 
 const total_amount_of_castles  : number = 5; // The sum of all the castles, this controls the wincondition 
@@ -60,8 +62,9 @@ const testing : Boolean = get_testing_bool(); // Disables prompts for testing wi
 
 /**
  * Improves every warrior in an armys stats 
- * @param army The army that gets trained
- * @returns the trained Army.
+ * @param {Army} army - The army that gets trained
+ * @modifies {Army} the warriors in army
+ * @returns {Army} - The modified Army.
  */
 export function train_warrior(army: Army): Army {
     const temp_arr: Army = [];
@@ -81,10 +84,10 @@ export function train_warrior(army: Army): Army {
 }
 /**
  * counts the total amount of castles in an castle array, that are not undefined
- * @param castle_arr 
- * @returns 
+ * @param {Array<Castle | undefined>} castle_arr - is an array of castles
+ * @returns {number} - the amount of castles a player owns.
  */
-export function count_castles(castle_arr: Array<Castle | undefined>) {
+export function count_castles(castle_arr: Array<Castle | undefined>): number {
     let count = 0;
     for (let i = 0; i < castle_arr.length; i++) { // loops over the lenght of the array
         if (castle_arr[i] != undefined) {
@@ -96,9 +99,9 @@ export function count_castles(castle_arr: Array<Castle | undefined>) {
 
 /**
  * Removes lost castles from a player 
- * @param castles the players castle array
- * @param player the player 
- * @returns a new castle array 
+ * @param {Array<Castle>} castles - the players castle array
+ * @param {Player} player - is a player
+ * @returns {Array<Castle>} - a new castle array 
  */
 
 function remove_dead_castles(castles : Array<Castle | undefined>, player: Player ) : Array<Castle | undefined> {
@@ -120,9 +123,9 @@ function remove_dead_castles(castles : Array<Castle | undefined>, player: Player
 } 
 /**
  * Retrieves a castle from an index, returns false if the castle doesn not exist or is undefined
- * @param castles array of castles
- * @param index 
- * @returns 
+ * @param {Array<Castle>} castles - is an array of castles
+ * @param {number} index - is a number
+ * @returns {Array<Castle>} a
 */
 function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
     for (let i = 0; i < castles.length; i = i + 1) {
