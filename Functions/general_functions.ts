@@ -38,8 +38,9 @@ import {
     get_castle_array,
     mormors_kudde
 } from './setup_functions'
+
 import { 
-    cursive_line, debug_log, format_array, press_to_continue 
+    cursive_line, debug_log, format_array, press_to_continue, get_random_int 
 } from './utility_functions';
 
 
@@ -58,16 +59,6 @@ const testing : Boolean = get_testing_bool(); // Disables prompts for testing wi
 
 // General Functions
 
-/**
- * Chooses a random number between [min] and [max].
- * @param min is a number. Represents the lowest number on the die
- * @param max is a {number}. Represents the hightes number on the die
- * @returns a random number / integer.
- */
-export function get_random_int(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min); 
-}
-
 
 /**
  * Improves every warrior in an armys stats 
@@ -75,7 +66,7 @@ export function get_random_int(min: number, max: number): number {
  * @returns the trained Army.
  */
 export function train_warrior(army: Army): Army {
-    const temp_arr: Army = []
+    const temp_arr: Army = [];
     let j = 0; // count variable
     for (let w = 0; w < army.length; w = w + 1) { // loops over every warrior in the army, all the dead warriors have already been removed
         let cur_war = army[w];
@@ -149,7 +140,7 @@ function get_position(castles: Array<Castle | undefined>, index: number): Castle
 
 }
 /**
- * 
+ *  vad gör denna??
  * @param Castles 
  * @param index 
  * @param player 
@@ -164,6 +155,12 @@ function includes(Castles: Array<Castle | undefined>, index: number, player: Pla
     return false;
 }
 
+/**
+ * 
+ * @param castle_queue 
+ * @param castle 
+ * @returns 
+ */
 function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
     for (let i = 0; i < castle_queue[2].length; i = i + 1) {
         if (castle_queue[2][i] == castle) {
@@ -174,6 +171,7 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
     }
     return false;
 }
+
 /**
  * The player determines the order in which they want to make their moves from their castles.
  * @param player the player in question.

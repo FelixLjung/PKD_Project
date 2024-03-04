@@ -1,7 +1,6 @@
 import { MatrixGraph } from "../lib/graphs";
 
 import { finds_paths, 
-    get_random_int,
     check_if_cpu,
     remove_dead_warriors,
     train_warrior,
@@ -9,7 +8,10 @@ import { finds_paths,
     get_first_warrior_name,
     merge_army,
     heal_warrior,
-    get_order_castles} from "../Functions/general_functions";
+    get_order_castles } from "../Functions/general_functions";
+
+import {
+    get_random_int } from "../Functions/utility_functions";
 
 import { type Army,
     type Castle,

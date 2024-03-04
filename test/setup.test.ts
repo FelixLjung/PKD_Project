@@ -10,7 +10,7 @@ import { create_castle,
     create_army,
     get_castle_array} from "../Functions/setup_functions";
 
-import { get_random_int } from '../Functions/general_functions';
+import { get_random_int } from '../Functions/utility_functions';
 
 
 describe('create_castle', () => {

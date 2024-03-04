@@ -7,7 +7,7 @@ import {
 } from '../lib/graphs';
 
 import {
-    get_random_int, get_first_warrior_name
+    get_first_warrior_name
 } from './general_functions'
 
 import {
@@ -20,7 +20,10 @@ import {
 
 import { 
     empty_line,
-    get_testing_bool, print_to_game, debug_log
+    get_testing_bool,
+    print_to_game,
+    debug_log,
+    get_random_int
 } from './utility_functions';
 import { platform } from 'os';
 import { stringify } from 'querystring';
