@@ -1,52 +1,46 @@
 //Imports
 import {
-    type Queue, dequeue, head as q_head, enqueue, empty
-} from '../lib/queue_array'
+    type Queue, dequeue, head as q_head, enqueue, empty } from '../lib/queue_array'
 
 import {
-     type MatrixGraph 
-} from '../lib/graphs';
+     type MatrixGraph } from '../lib/graphs';
 
 import {
-    tail, head as l_head, Pair
-} from '../lib/list'
+    type Warrior,
+    type Army,
+    type Player, 
+    type Castle } from '../types'
 
 import {
-    type Warrior, type Army, type Player, type Castle
-} from '../types'
+    get_player_list } from '../game';
 
 import {
-    get_player_list
-} from '../game';
-
-import {
-    attack, castle_owner
-} from './attack_functions'
+    attack,
+    castle_owner } from './attack_functions'
 
 import { 
-    w_names 
-} from './resources';
+    w_names } from './resources';
 
 import {
     print_board,
     print_castle,
-    print_army
-} from './print_functions'
+    print_army } from './print_functions'
 
 import {
     create_warrior,
     get_castle_array,
-    mormors_kudde
-} from './setup_functions'
+    mormors_kudde } from './setup_functions'
 
 import { 
-    cursive_line, debug_log, format_array, press_to_continue, get_random_int 
-} from './utility_functions';
+    cursive_line,
+    format_array, 
+    press_to_continue, 
+    get_random_int } from './utility_functions';
 
 
-import { 
-    clear_terminal, empty_line, print_line, print_to_game 
-} from './utility_functions';
+import {  
+    empty_line, 
+    print_to_game } from './utility_functions';
 
 import { get_testing_bool } from './utility_functions';
 
@@ -126,7 +120,6 @@ function remove_dead_castles(castles : Array<Castle | undefined>, player: Player
  * @param index 
  * @returns 
 */
-
 function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
     for (let i = 0; i < castles.length; i = i + 1) {
         if (castles[i] != undefined) {
@@ -186,13 +179,12 @@ export function get_order_castles(player: Player): Queue<Castle> {
             enqueue(player_castles[0], castle_queue); // we skip prompts if we are running testcases
             enqueue(player_castles[1], castle_queue);
         } else {
-            while (castle_queue[1] != count_castles(tail(player))) { // Loops as long as the queue is not full of all the castles, also works as input check
+            while (castle_queue[1] != count_castles(player_castles)) { // Loops as long as the queue is not full of all the castles, also works as input check
             
-                print_castle(player);
+                print_castle(player); 
                
                 const cstl: number = prompt("Which castle would you like to operate from? ") as number 
                 
-
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     print_to_game("You can't choose the same castle twice!");
                 } else if (includes(player_castles, cstl, player)) {
@@ -232,6 +224,12 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 
     return paths;
 }
+
+/**
+ * 
+ * @param player_name 
+ * @returns 
+ */
 function get_player(player_name : String ) : Player | undefined {
     const player_array: Array<Player> = get_player_list();
 
@@ -243,6 +241,7 @@ function get_player(player_name : String ) : Player | undefined {
 
     return undefined
 }
+
 
 /**
  * Moves an army from one castle to another, attacking if it is an enemy castle
@@ -289,7 +288,7 @@ function move(move_from: Castle, move_to: Castle): void {
 }
 
 /**
- * Procecces the individual turn for a player
+ * Processes the individual turn for a player
  * @param player the player who will play a turn
  */
 
@@ -427,7 +426,7 @@ export function is_choice_in_paths(paths: Array<number>, choice: number): boolea
     }
 
 /**
- * Recruits a new warrior to a castle
+ * After every player has ended their turn, all castle recruits a new warrior.
  * @param castle - the castle which is recruiting the new warrior
  */
 export function recruit_warrior(castle: Castle, index: number) {

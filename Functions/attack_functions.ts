@@ -243,10 +243,6 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     return [];
 
-    function delay(ms: number) {
-        // denna kommer nog inte användas alls 
-        return new Promise( resolve => setTimeout(resolve, ms) );
-    }
 
 function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
         return q[2];

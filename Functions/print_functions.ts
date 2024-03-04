@@ -5,30 +5,26 @@ import{
 
 import { 
     get_castle_array,
-    get_nodes 
+    get_nodes,
+    get_player_names
 } from './setup_functions';
 
 import { 
     cursive_line,
     empty_line,
     print_line,
-    print_to_game,
-    debug_log 
+    print_to_game
 } from './utility_functions';
 
 
-// Print functions 
 
-// start nodes
+
+// Nodes
 let node1 = "1";
 let node2 = "2";
+let node4 = "4";
+let node3 = "3";
 let node5 = "5";
-
-//unclaimed nodes
-let node3 = "3x";
-let node4 = "4x";
-
-//let nodes = [node1, node2, node3, node4, node5];
 
 let nodes = get_nodes();
 
@@ -43,8 +39,13 @@ let map1 = [
 ];
 
 
-let map = map1;
+let map = map1; // if their are other maps
 
+// Print functions 
+
+/**
+ * Prints intro splash screen
+ */
 export function splash(){
     console.log(`
                                                        By
@@ -65,6 +66,10 @@ export function splash(){
     `)
 }
 
+/**
+ * Prints a win splash screen with the winners name.
+ * @param winner the player won
+ */
 export function splash_end(winner: Player){
     console.log(
 `
@@ -85,27 +90,19 @@ export function splash_end(winner: Player){
 
 export function refresh_board() {
     nodes = get_nodes();
+    let fist_letters = get_player_names();
+    /**
+     * Helper function for changing the nodes to their corresponding owner
+     * 
+     */
     function get_castle_owners(){
-        let castles = get_castle_array(); // FIXME: denna är tom
-        console.log(castles);
-        debug_log("castles: " + castles);
-
+        let castles = get_castle_array(); 
         for (let i = 0; i < nodes.length; i++ ){
-
-            nodes[i] = castles[i].position + castles[i].owner[0];
+            nodes[i] = castles[i].position + castles[i].owner[0]; // change
         }
 
         
     }
-
-
-    /*
-    node1 = ((castles[0].position) as number) + castles[0].owner[0];
-    node1 = ((castles[0].position) as number) + castles[0].owner[0];
-    node1 = ((castles[0].position) as number) + castles[0].owner[0];
-    node1 = ((castles[0].position) as number) + castles[0].owner[0];
-    node1 = ((castles[0].position) as number) + castles[0].owner[0];
-    */
 
     get_castle_owners();
         
@@ -121,35 +118,9 @@ export function refresh_board() {
     ];
     
 
-    /*
-    map = [
-        [" ", " ", " ", " ", " "," "," ", " ", node3, " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", node4, " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", node4, " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", "/", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," ","/", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", node4, "-","-",node4, "-", node4,"-",node4, "-", , "-", node4, " ", " "," "],
-        [" ", " ", "/", " ", " ","         "," ", " ", " ", " ", " "," "," ", " ", "          ", "\\", " "," "],
-        [" ", "/", " ", "         ", " "," "," ", " ", " ", " ", " "," "," ", " ", "           ", " ", "\\"," "],
-        [node1, "  ", "  ", "  ", "  ","  ","  ", "  ", "  ", "  ", " "," "," ", " ", "         ", " ", " ",node2],
-    
-    
-       
-    ];
- */
-
-
 }
+
+
 
 /**
  * Prints the board to the console
@@ -157,29 +128,37 @@ export function refresh_board() {
  * @return Does not return
  */
 export function print_board() {
-    refresh_board();
+    refresh_board(); // refreshes the board before displaying
     print_line();
+
+    let first_letters = get_player_names(); // gets the first letters 
+
     for (let i = 0; i < map.length; i++) {
-        console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic, Cyan Color
+        console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // prints the map with ANSI colour
     }
 
+    /**
+     * helper function for processing one line of the board
+     * @param line 
+     * @returns 
+     */
     function helper(line: Array<string>) {
         let str = "";
 
-        for (let j = 0; j < line.length; j++) {     // Color the Players differently on the MAP
+        for (let j = 0; j < line.length; j++) {     // Colour the Players differently on the MAP
             if(is_string_arr(line[j])){
-                if(line[j][1] == "D"){
-                    str += "\u001b[31m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "F"){
-                    str += "\u001b[32m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "A"){
+                if(line[j][1] == "C"){ // The CPU colour. 
+                    str += "\u001b[37m" + line[j] + "\u001b[36m"; 
+                } else if(line[j][1] == first_letters[0] ){ //  Depending on the first letter of the player
+                    str += "\u001b[32m" + line[j] + "\u001b[36m"; // we change the colour of the text   
+                } else if(line[j][1] == first_letters[2]){
                     str += "\u001b[33m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "C"){
-                    str += "\u001b[37m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "E"){
+                } else if(line[j][1] == first_letters[1]){
                     str += "\u001b[35m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "J"){
+                } else if(line[j][1] == first_letters[3]){
                     str += "\u001b[34m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == first_letters[4]){
+                    str += "\u001b[31m" + line[j] + "\u001b[36m";
                 }
             }else{
                 str += line[j];
@@ -209,20 +188,18 @@ function is_string_arr(map: string): boolean{
  */
 export function print_castle(player: Player) {
 
-    let castles = player[1];
-    let print = "";
+    let castles = player[1]; // gets the casle array   
+    let print = ""; // the print string
 
-    //console.log(castles);
-
-    for(let i = 0; i < castles.length; i = i + 1 ){
+    for(let i = 0; i < castles.length; i = i + 1 ){ // loops over the players castles 
         if (castles[i] != undefined) {
-            print += castles[i]?.position;
+            print += castles[i]?.position; // adds the castles to the print string
             print += " "
         }
         
     }
-    console.log(print);
-    console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b');
+    
+    console.log('\x1b[36m%s\x1b[0m',"You rule over the following castles: ", print, '\x1b[37m\x1b'); // Fancy print
     print_board();
 }
 
@@ -234,9 +211,9 @@ export function print_army(castle : Castle) {
     empty_line();
     print_to_game('This is the army in this castle, my liege');
     cursive_line();
-    for (let i = 0; i < castle.hp.length; i++) {
-        if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {
-        console.log('Soldier name:', castle.hp[i]!.name,
+    for (let i = 0; i < castle.hp.length; i++) { // loops over all the warriors in the castle
+        if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {  // only print alivewarriors and non undefined
+        console.log('Soldier name:', castle.hp[i]!.name, // fancy print 
                     '| Attack strength:', castle.hp[i]!.attack,
                     '| Health:', castle.hp[i]!.health);
         }
