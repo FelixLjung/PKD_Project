@@ -113,6 +113,11 @@ export function get_castle_array(): Array<Castle> {
     return castles;
 }
 
+
+/**
+ * Returns all nodes
+ * @returns {Array<string>} - An array of all nodes
+ */
 export function get_nodes(): Array<string> {
     return nodes;
 }
