@@ -82,8 +82,8 @@ export function train_warrior(army: Army): Army {
         if (cur_war == undefined || cur_war.alive == false) {
             continue;
         } else {
-            cur_war.attack = cur_war.attack + get_random_int(1, 4); // increases attack points
-            cur_war.health = cur_war.health + get_random_int(5, 16); // increases health points
+            cur_war.attack = cur_war.attack + get_random_int(1, 6); // increases attack points
+            cur_war.health = cur_war.health + get_random_int(2, 12); // increases health points
             temp_arr[j] = cur_war;
             j++
         }
