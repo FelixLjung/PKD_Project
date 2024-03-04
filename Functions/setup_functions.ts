@@ -20,12 +20,11 @@ import {
 
 import { 
     empty_line,
-    get_testing_bool,
     print_to_game,
-    debug_log,
-    get_random_int
-} from './utility_functions';
+    get_random_int } from './utility_functions';
+
 import { platform } from 'os';
+
 import { stringify } from 'querystring';
 
 

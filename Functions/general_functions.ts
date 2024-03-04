@@ -1,52 +1,46 @@
 //Imports
 import {
-    type Queue, dequeue, head as q_head, enqueue, empty
-} from '../lib/queue_array'
+    type Queue, dequeue, head as q_head, enqueue, empty } from '../lib/queue_array'
 
 import {
-     type MatrixGraph 
-} from '../lib/graphs';
+     type MatrixGraph } from '../lib/graphs';
 
 import {
-    tail, head as l_head, Pair
-} from '../lib/list'
+    type Warrior,
+    type Army,
+    type Player, 
+    type Castle } from '../types'
 
 import {
-    type Warrior, type Army, type Player, type Castle
-} from '../types'
+    get_player_list } from '../game';
 
 import {
-    get_player_list
-} from '../game';
-
-import {
-    attack, castle_owner
-} from './attack_functions'
+    attack,
+    castle_owner } from './attack_functions'
 
 import { 
-    w_names 
-} from './resources';
+    w_names } from './resources';
 
 import {
     print_board,
     print_castle,
-    print_army
-} from './print_functions'
+    print_army } from './print_functions'
 
 import {
     create_warrior,
     get_castle_array,
-    mormors_kudde
-} from './setup_functions'
+    mormors_kudde } from './setup_functions'
 
 import { 
-    cursive_line, debug_log, format_array, press_to_continue, get_random_int 
-} from './utility_functions';
+    cursive_line,
+    format_array, 
+    press_to_continue, 
+    get_random_int } from './utility_functions';
 
 
-import { 
-    clear_terminal, empty_line, print_line, print_to_game 
-} from './utility_functions';
+import {  
+    empty_line, 
+    print_to_game } from './utility_functions';
 
 import { get_testing_bool } from './utility_functions';
 

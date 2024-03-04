@@ -1,8 +1,14 @@
 // Resources
 
-import {type Queue } from "../lib/queue_array";
-import { empty_line, cursive_line, get_random_int } from "./utility_functions";
+import { type Queue } from "../lib/queue_array";
 
+import { 
+    empty_line, 
+    cursive_line, 
+    get_random_int } from "./utility_functions";
+
+
+// Variables
 export let w_names: Queue<string> = [0,
     2,
     [   // Current: 66 warrrior-names
@@ -79,7 +85,7 @@ export let w_names: Queue<string> = [0,
 
 
 
-        /**
+/**
  * displays the death message when a soldier dies
  * @param dead - the warrior who has been killed
  * @param killer - the warrior who killed the other warrior
