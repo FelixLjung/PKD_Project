@@ -138,16 +138,12 @@ function game(){
             if (check_if_cpu(player_list[i])){  // if it's CPU's turn, do nothing
                 
             } else {                            // If it's a player's turn
-                if(player_list[i][0] == "David"){
-                    console.log(`\u001b[31m`, player_list[i][0],`\u001b[37m`, "turn" , count_castles(player_list[i][1]) );
-                } else if(player_list[i][0] == "Felix"){
-                    console.log(`\u001b[32m`, player_list[i][0],`\u001b[37m`, "turn" , count_castles(player_list[i][1]) );
-                } else if(player_list[i][0] == "Alfred"){
-                    console.log(`\u001b[33m`, player_list[i][0],`\u001b[37m`, "turn" , count_castles(player_list[i][1]) );
+                if(player_list[i][0] != undefined){
+                    console.log(`\u001b[3m ${player_list[i][0]}'s Turn \u001b[m`);
                 }
                 
                 turn(player_list[i]);
-                print_to_game(" Your turn is finished.");
+                print_to_game(`\u001b[3m  Your turn is finished.\u001b[m`);
                 press_to_continue();
                 empty_line();
                 empty_line();

@@ -374,8 +374,8 @@ export function castle_turn(player: Player, castle: Castle) {
         console.log(`What is your command, king ${player[0]} ..?`); 
         empty_line();
         
-        console.log(`\u001b[33m`,`1:`,`\u001b[37m`, `Move Army`);   // Input option 1, move army red
-        console.log(`\u001b[33m`, `2:`, `\u001b[37m`, `Train Army`);// Input option 2, train army green
+        console.log(`\u001b[33m`,`1:`, `\u001b[37m`, `Move Army`);   // Input option 1, move army red
+        console.log(`\u001b[33m`,`2:`, `\u001b[37m`, `Train Army`);  // Input option 2, train army green
         const choice : string = prompt("  :  ").trim(); // Reads the player input 
 
         if (choice === "1") {   // MOVE
@@ -390,7 +390,7 @@ export function castle_turn(player: Player, castle: Castle) {
                     bool = false;             
                     
                 } else{                  //Fail safe
-                    print_to_game("Invalid move, try again!");
+                    print_to_game("\u001b[31mInvalid\u001b[m move. Try again!");
                     //prompt("press Enter:"); // Better without a prompt here
                     //clear_terminal();
                 }
@@ -401,10 +401,12 @@ export function castle_turn(player: Player, castle: Castle) {
             castle.hp = remove_dead_warriors(castle.hp);
             castle.hp = train_warrior(castle.hp);
             cursive_line();
-            for (let i = 0; i < castle.hp.length; i++) { //Prints your army after training
-                console.log(` | Name: ` , castle.hp[i].name,
-                            ` | Attack: `, castle.hp[i].attack,
-                            ` | Health: `, castle.hp[i].health,`| `);
+            for (let i = 0; i < castle.hp.length; i++) { // loops over all the warriors in the castle
+                if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {  // only print alive_warriors and non undefined
+                console.log('| Soldier Name:', castle.hp[i]!.name, // fancy print 
+                            '| \u001b[31m Attack: \u001b[m', castle.hp[i]!.attack,
+                            '|\u001b[32m Health: \u001b[m', castle.hp[i]!.health, '|');
+                }
             }
             
             //print_to_game(trained_army);
@@ -415,12 +417,14 @@ export function castle_turn(player: Player, castle: Castle) {
             bool = false;
             
         } else {
-            print_to_game("Input is not valid, try again!");
+            print_to_game(" \u001b[31m Invalid\u001b[m number. Try again!");
             press_to_continue();
+            empty_line();
+            empty_line();
+            empty_line();
             
         }
     }
-
 }
 
 
@@ -448,9 +452,8 @@ export function is_choice_in_paths(paths: Array<number>, choice: number): boolea
  */
 export function recruit_warrior(castle: Castle, index: number) {
     let num = get_random_int(0, 2);
-    let len = castle.hp.length; //current players castle
-    //console.log("length of castle.hp.length", len);
-    //castle.hp[index] = create_warrior(5, 100);
+    //let len = castle.hp.length; //current players castle
+    
     
     if (num == 0) {
         castle.hp[index] = create_warrior(5, 94);
@@ -532,7 +535,7 @@ function split_army(castle: Castle): Array<Army> {
             pair_army[1] = stay_a;
             bool = false;
         } else {
-            print_to_game("Not valid number, try again.");
+            print_to_game("\u001b[31mInvalid\u001b[m: number, try again.");
         }
     }
     return pair_army; //The amount of warriors we want to move
