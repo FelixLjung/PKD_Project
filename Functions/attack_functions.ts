@@ -1,49 +1,42 @@
-import {
-    type Warrior, type Army, type Castle, type Player
-} from "../types";
+import { type Warrior,
+    type Army,
+    type Castle,
+    type Player } from "../types";
 
-import {
-     type Pair, tail, pair 
-} from "../lib/list";
+import { type Pair,
+     tail,
+     pair } from "../lib/list";
 
-import { 
-    type Queue, head as q_head, dequeue, enqueue, empty 
-} from "../lib/queue_array";
+import { type Queue,
+    head as q_head,
+    dequeue,
+    enqueue,
+    empty } from "../lib/queue_array";
 
-import { 
-     remove_dead_warriors, count_castles
-} from "./general_functions";
+import { remove_dead_warriors,
+     count_castles } from "./general_functions";
 
-import { 
-    kill_player 
-} from "../game";
+import { kill_player } from "../game";
 
-import { 
-    w_names 
-} from "./resources";
+import { w_names } from "./resources";
 
-import { 
-    cursive_line,
+import { cursive_line,
     debug_log,
     empty_line,
     press_to_continue,
     print_to_game,
-    get_random_int 
-} from "./utility_functions";
+    get_random_int } from "./utility_functions";
 
-import { 
-    death_text 
-} from "./resources";
-
-import { get_testing_bool } from './utility_functions';
+import { death_text } from "./resources";
 
 const prompt = require('prompt-sync')({ sigint: true }); // Krävs för att hantera inputs
+
 
 //Attack functions
 
 /**
  * Changes an army from an array to a queue
- * @param army 
+ * @param army - the army that is changed into a queue
  * @returns A queue of warriors (used to attack / defend)
  */
 export function enqueue_army(army: Army): Queue<Warrior> {
@@ -60,10 +53,9 @@ export function enqueue_army(army: Army): Queue<Warrior> {
 
 /**
  * A helper function that kills warriors from the army array, changing their alive status to false.
- * @param dead is a @Warrior , a record that describes a piece.
- * @param army is an @Army , an array of Warriors
+ * @param dead - is a @Warrior , a record that describes a piece.
+ * @param army - is an @Army , an array of Warriors
  * @modifies the existing @Army
- * @returns Void
  */
 export function unalive_warrior(dead: Warrior, army: Army){
     
@@ -94,14 +86,6 @@ export function remake_warrior(dead: Warrior, army: Army) {
  * @param old_player - the player who previously owned the castle
  * @param army - the army that now is in the castle
  */
-
-//console.log(old_player[0]);
-
-    // ändra castles owner 
-    // ändra castles army
-    // lägg till castle i nya spelarens array av castles
-    // ta bort castle från gamla spelarens array av castles
-
 export function castle_owner(castle : Castle, new_player : Player, old_player : Player, army : Army) {
     debug_log("gamla castle owner:   " + castle.owner);
     castle.owner = new_player[0]; // Changes the owner name of the castle
