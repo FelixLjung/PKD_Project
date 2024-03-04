@@ -82,6 +82,8 @@ export function train_warrior(army: Army): Army {
     }
     return temp_arr;
 }
+
+
 /**
  * counts the total amount of castles in an castle array, that are not undefined
  * @param {Array<Castle | undefined>} castle_arr - is an array of castles
@@ -96,6 +98,7 @@ export function count_castles(castle_arr: Array<Castle | undefined>): number {
     }
     return count;
 }
+
 
 /**
  * Removes lost castles from a player 
@@ -174,6 +177,7 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
     return false;
 }
 
+
 /**
  * The player determines the order in which they want to make their moves from their castles.
  * @param {Player} player - is a pair, whose head is a string and the tail is a list of castles
@@ -232,6 +236,7 @@ export function finds_paths(castle: Castle, map: MatrixGraph): Array<number> {
 
     return paths;
 }
+
 
 /**
  * Retrieves a player from the list of players
@@ -295,6 +300,7 @@ function move(move_from: Castle, move_to: Castle): void {
     }
 }
 
+
 /**
  * Processes the individual turn for a player
  * @param {Player} player player is a pair, whose head is a string and the tail is a list of castles
@@ -311,14 +317,14 @@ export function turn(player: Player) {
         castle_turn(player, q_head(castle_queue)); // Procecces the individual turn for a castle
         dequeue(castle_queue); // dequeues the castle 
     }
-
 }
+
+
 /**
  *  checks if a player is non human
  * @param {Player} player player is a pair, whose head is a string and the tail is a list of castles
  * @returns {Boolean} true if the player has a name that starts with CPU
  */
-
 export function check_if_cpu(player: Player | string): boolean {
     let name: string = "";
     if (typeof (player) == "string") { // if input was a string
@@ -416,6 +422,7 @@ export function castle_turn(player: Player, castle: Castle) {
 
 }
 
+
 /**
  * Checks if choice exists in the paths array.
  * @param {Array<number>} paths an array of numbers (nodes)
@@ -431,6 +438,7 @@ export function is_choice_in_paths(paths: Array<number>, choice: number): boolea
     }
     return false;   // if choice is not a possible path
     }
+
 
 /**
  * After every player has ended their turn, all castle recruits a new warrior.
@@ -455,6 +463,7 @@ export function recruit_warrior(castle: Castle, index: number) {
     
 }
 
+
 /**
  * After a battle, when their next turn starts, all surviving warriors in army gets healed to 50 hp
  * @param {Warrior} warrior - is a warrior
@@ -464,6 +473,7 @@ export function heal_warrior(warrior: Warrior): string{
     warrior.health = 50;
     return warrior.name;
 }
+
 
 /**
  * When a warrior dies, it's child gets sent to the possible Warrior names.
@@ -481,6 +491,7 @@ export function remake_warrior(army: Army) {
     }
 }
 
+
 /**
  * Warrior gets a name from queue
  * @returns {string} string
@@ -490,6 +501,7 @@ export function get_first_warrior_name(): string {
     dequeue(w_names);
     return name;
 }
+
 
 /**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
@@ -502,7 +514,6 @@ function split_army(castle: Castle): Array<Army> {
     const pair_army: Array<Army> = []       // Returning
     let alive_army = remove_dead_warriors(castle.hp);
     const army: Army = castle.hp;
-    
     
     while (bool) {              //This loop is for dividing the army into two.
 
@@ -526,6 +537,7 @@ function split_army(castle: Castle): Array<Army> {
     return pair_army; //The amount of warriors we want to move
 }
 
+
 /**
  * Takes in two armies When moving, merge the two armies into one.
  * @param {Army} a1 is the army that is MOVING TO
@@ -543,6 +555,7 @@ export function merge_army(a1: Army, a2: Army): Army{
     }
     return new_army;
 }
+
 
 /**
  * Removes all dead warriors in a castle
@@ -565,10 +578,8 @@ export function remove_dead_warriors(army: Army): Army {
         
     }
     return alive_in_army;
-
-
-
 }
+
 
 /**
  * Checks if a player is controlling all the castles on the board
