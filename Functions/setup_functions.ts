@@ -19,9 +19,11 @@ import {
 } from '../lib/list';
 
 import { 
-    get_testing_bool 
+    empty_line,
+    get_testing_bool, print_to_game, debug_log
 } from './utility_functions';
 import { platform } from 'os';
+import { stringify } from 'querystring';
 
 
 // Variables
@@ -102,6 +104,7 @@ export function create_army(): Army {
 
     return army;
 }
+
 /**
  * exported function to retrieve the castles created in this ts script 
  * @returns an array of all the castlees
@@ -110,21 +113,10 @@ export function get_castle_array(): Array<Castle> {
     return castles;
 }
 
-
-
-/**
- * Reads the name of all the particiants 
- * @param num amount of players
- */
-function read_player_names(num: number){
-    const player_lst = list();
-    if(1 <= num && num <= 3){
-        for(let n = 1; n < num; n++){
-            const name_player = prompt("Name: ");
-            
-        }
-    }
+export function get_nodes(): Array<string> {
+    return nodes;
 }
+
 
 /**
  * Creates a player, a pair whose head is a string and tail is an array of Castles.
@@ -136,15 +128,34 @@ export function create_player(name: string, node: number): Player{
     return player;
 }
 
-export function pick_player_name(name: string): string{
-    return name; // FIXME: 
-}
 
-const p1: string = "David";
-const p2: string = "Felix";
-const p3: string = "Alfred";
-const ai_name_1: string = "CPU1";
-const ai_name_2: string = "CPU2";
+/**
+ * Pick amount of players
+ * @returns a number
+ */
+function choose_players(): number{
+    let loop = true;
+    while(loop){       // Checks if amount of players is a valid number
+        const num = prompt("Choose number of players: ") as number;
+        if(num > 0 && num <= 5){
+            return num;
+        } else{
+            print_to_game("Invalid input, please try again");
+            empty_line();
+        }
+    }
+    return 0;
+
+}
+/**
+ * Reads player input to get name
+ * @returns a name.
+ */
+function choose_name(): string{
+    empty_line();
+    let name: string = prompt("Choose your name: ") as string;
+    return name;
+}
 
 /**
  * initialiases the game,
@@ -152,64 +163,53 @@ const ai_name_2: string = "CPU2";
  * 
  * @returns A complete setup of the game
  */
-
-
 export function game_setup(): Array<Player> {
+    const num_players = choose_players();
+    const arr_names: Array<string> = [];     // Array of player names
+        
+    for(let n = 0; n < num_players; n++){   // loop over the number of human players
+        let player_name = choose_name(); // gets their name 
+        arr_names[n] = player_name; 
+    }
 
-    const name_player1: string = pick_player_name(p1);
-    const name_player2: string = pick_player_name(p2);
-    const name_player3: string = pick_player_name(p3); // FIXME: 
+    /**
+     * Creates all players
+     * @param names 
+     * @returns an array of players
+     */
+    function create_players(names: Array<string>): Array<Player>{
+        const arr_pos: Array<number> = [1, 5, 2, 4, 3]; // Array of positions  
+        const arr: Array<Player> = [];
+        for(let n = 0; n < arr_pos.length; n++){  // All players get a position   
+            if(n - names.length < 0){
+                const player: Player = create_player(names[n], arr_pos[n]); // creates a player with corresponding name and position
+                arr[n] = player;
+            } else{
+                const ai: Player = create_player("CPU" + arr_pos[n] as string, arr_pos[n]) // createsa an ai with correspongding position
+                arr[n] = ai;
+            }
+        }
+        return arr;
+    }
 
-    const cpu_name : string = pick_player_name(ai_name_1); 
-    const cpu_name2 : string = pick_player_name(ai_name_2);
-    
-    // Create Players
-    const player1: Player = create_player(name_player1, 1);
-    const player2: Player = create_player(name_player2, 2);
-    const player3: Player = create_player(name_player3, 5);
+    let arr_players = create_players(arr_names); // fills the array of players with the players
 
-    // Create AI
-    const AI1 : Player = create_player(cpu_name, 4);
-    const AI2 : Player = create_player(cpu_name2, 3);
-  
-    create_nodes(name_player1,name_player2, name_player3); // Creates nodes with the first letter of every name
-
-    create_castles(player1,player2,player3, AI1, AI2, false); // Creates one castle for every participant. 
-
-    return [player1, player2, player3,AI1,AI2];
-}
-
-
-function create_nodes(name_player1 : string ,name_player2 : string , name_player3 : string){
-    nodes[0] += name_player1[0];
-    nodes[1] += name_player2[0];
-    nodes[4] += name_player3[0];
+    create_nodes(arr_players); // Creates nodes with the first letter of every name
+    return arr_players;
 }
 
 /**
- * Creates castles for all the participants.
- * @param player1 the first playar
- * @param player2  the second player
- * @param player3  the third player
- * @param AI1 AI
- * @param AI2 AI
- * @param start_with_two_castles set this to if first player should start with 2 castles 
+ * 
+ * @param arr_players 
  */
-export function create_castles(player1 : Player, player2 : Player, player3 : Player, AI1 : Player, AI2 : Player, start_with_two_castles : Boolean) {
-    // Player Castles
-    castles[0] = player1[1][0]!;
-    castles[1] = player2[1][0]!;
-    castles[4] = player3[1][0]!;
+function create_nodes(arr_players: Array<Player>){
+    for (let i = 0 ; i < arr_players.length; i++) { // loops over the all participants
+        let curr_player = arr_players[i]; // the current player
+        let castle_pos = curr_player[1][0]!.position - 1; // gets the correct index of the players starting castle  
 
-    // AI Castles
-    castles[3] = AI1[1][0]!;
-    // If we want the first player to start with two castles, used for testing
-    if (start_with_two_castles){
-        castles[2] = player1[1][1]!; // byt dessa ifall player1 har två castles
-    } else {
-        castles[2] = AI2[1][0]!;
+        nodes[castle_pos] += curr_player[0][0]; // Adds the first character of the current player's name to the node
+        castles[castle_pos] = curr_player[1][0]!; // Adds the Castle the castle array
+
     }
-
 }
-
 

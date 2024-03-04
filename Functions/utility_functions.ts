@@ -8,7 +8,7 @@ const testing : Boolean = false; // set this to true if testing with jest, disab
 
 
 
-const debugging = false; // set this to false to quickly remove all debug console logs
+const debugging = true; // set this to false to quickly remove all debug console logs
 
 /**
  * Used to export the testing variable. When the testing variable is true we enter testing state,
