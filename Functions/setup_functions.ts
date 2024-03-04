@@ -68,7 +68,6 @@ let nodes = [node1,node2,node3,node4,node5];
      */
 export function create_castle(army: Army, owner: string, position: number): Castle {
     let castle = { hp: army, owner: owner, position: position };
-
     return castle;
 }
 

@@ -569,8 +569,8 @@ export function remove_dead_warriors(army: Army): Army {
     if(army.length == 0){
         return army = alive_in_army;
     }
-    for (let i = 0; i < army.length; i++) {      // Loop that takes out all alive warriors in Army
-        if (army[i].alive && army[i] != undefined) {
+    for (let i = 0; i < army.length; i++) {      // Loop over the army t
+        if (army[i].alive && army[i] != undefined) { // only add alive warriors 
             alive_in_army[j] = army[i];
             j++;
         } else {
