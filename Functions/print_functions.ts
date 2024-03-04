@@ -166,7 +166,6 @@ export function refresh_board() {
  * @param Array 2d array of the map
  * @return Does not return
  */
-
 export function print_board() {
     refresh_board();
     print_line();
@@ -208,6 +207,7 @@ function is_string_arr(map: string): boolean{
     }
     return false;
 }
+
 /**
  * Gets an array of all the castles the player currently control.
  * @param player the player in question.
@@ -232,7 +232,10 @@ export function print_castle(player: Player) {
     print_board();
 }
 
-
+/**
+ * Prints the army currently in a castle
+ * @param castle - the castle which army we want to see
+ */
 export function print_army(castle : Castle) {
     empty_line();
     print_to_game('This is the army in this castle, my liege');
