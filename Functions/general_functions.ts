@@ -185,13 +185,12 @@ export function get_order_castles(player: Player): Queue<Castle> {
             enqueue(player_castles[0], castle_queue); // we skip prompts if we are running testcases
             enqueue(player_castles[1], castle_queue);
         } else {
-            while (castle_queue[1] != count_castles(tail(player))) { // Loops as long as the queue is not full of all the castles, also works as input check
+            while (castle_queue[1] != count_castles(player_castles)) { // Loops as long as the queue is not full of all the castles, also works as input check
             
-                print_castle(player);
+                print_castle(player); 
                
                 const cstl: number = prompt("Which castle would you like to operate from? ") as number 
                 
-
                 if (in_q(castle_queue, get_position(player_castles, cstl))) {
                     print_to_game("You can't choose the same castle twice!");
                 } else if (includes(player_castles, cstl, player)) {

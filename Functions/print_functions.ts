@@ -85,11 +85,9 @@ export function splash_end(winner: Player){
 
 export function refresh_board() {
     nodes = get_nodes();
+    let fist_letters = get_player_names();
     function get_castle_owners(){
-        let castles = get_castle_array(); // FIXME: denna är tom
-        console.log(castles);
-        debug_log("castles: " + castles);
-
+        let castles = get_castle_array(); 
         for (let i = 0; i < nodes.length; i++ ){
 
             nodes[i] = castles[i].position + castles[i].owner[0];
@@ -121,35 +119,9 @@ export function refresh_board() {
     ];
     
 
-    /*
-    map = [
-        [" ", " ", " ", " ", " "," "," ", " ", node3, " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", node4, " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", "|", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", node4, " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", "/", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," ","/", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "," ", " ", " ", " ", " "," "],
-        [" ", " ", " ", node4, "-","-",node4, "-", node4,"-",node4, "-", , "-", node4, " ", " "," "],
-        [" ", " ", "/", " ", " ","         "," ", " ", " ", " ", " "," "," ", " ", "          ", "\\", " "," "],
-        [" ", "/", " ", "         ", " "," "," ", " ", " ", " ", " "," "," ", " ", "           ", " ", "\\"," "],
-        [node1, "  ", "  ", "  ", "  ","  ","  ", "  ", "  ", "  ", " "," "," ", " ", "         ", " ", " ",node2],
-    
-    
-       
-    ];
- */
-
-
 }
+
+
 
 /**
  * Prints the board to the console
@@ -159,6 +131,11 @@ export function refresh_board() {
 export function print_board() {
     refresh_board();
     print_line();
+
+    let first_letters = get_player_names();
+
+
+
     for (let i = 0; i < map.length; i++) {
         console.log('\x1b[36m%s\x1b[0m', helper(map[i])); // black magic, Cyan Color
     }
@@ -168,18 +145,18 @@ export function print_board() {
 
         for (let j = 0; j < line.length; j++) {     // Color the Players differently on the MAP
             if(is_string_arr(line[j])){
-                if(line[j][1] == "D"){
-                    str += "\u001b[31m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "F"){
-                    str += "\u001b[32m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "A"){
-                    str += "\u001b[33m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "C"){
+                if(line[j][1] == "C"){
                     str += "\u001b[37m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "E"){
+                } else if(line[j][1] == first_letters[0] ){
+                    str += "\u001b[32m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == first_letters[2]){
+                    str += "\u001b[33m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == first_letters[1]){
                     str += "\u001b[35m" + line[j] + "\u001b[36m";
-                } else if(line[j][1] == "J"){
+                } else if(line[j][1] == first_letters[3]){
                     str += "\u001b[34m" + line[j] + "\u001b[36m";
+                } else if(line[j][1] == first_letters[4]){
+                    str += "\u001b[31m" + line[j] + "\u001b[36m";
                 }
             }else{
                 str += line[j];
