@@ -1,29 +1,31 @@
 // Imports
 
 import { 
-    type MatrixGraph 
-} from './lib/graphs';
+    type MatrixGraph } from './lib/graphs';
 
 import {
-     turn, count_castles, recruit_warrior, check_if_cpu 
-} from './Functions/general_functions';
+     turn, count_castles,
+     recruit_warrior,
+     check_if_cpu } from './Functions/general_functions';
 
 import {
-    game_setup, get_castle_array 
-} from './Functions/setup_functions'
+    game_setup,
+    get_castle_array } from './Functions/setup_functions'
 
 import {
-     refresh_board, splash, splash_end 
-} from './Functions/print_functions';
+     refresh_board,
+     splash,
+     splash_end } from './Functions/print_functions';
 
 import { 
     empty_line,
-    press_to_continue, print_line, print_to_game 
-} from './Functions/utility_functions';
+    press_to_continue,
+    print_line,
+    print_to_game,
+    get_testing_bool } from './Functions/utility_functions';
 
 import { 
-    type Player 
-} from './types';
+    type Player } from './types';
 
 
 // Variables
@@ -173,4 +175,15 @@ function game(){
             }
 }}
 
-game();
+
+/**
+ * If we are testing, the game wont run
+ */
+function game_if_not_test() {
+    if (!get_testing_bool()) {
+        game();
+    } else {
+    }
+}
+
+game_if_not_test();
