@@ -594,4 +594,3 @@ function check_win_condition(player : Player) : Boolean {
         return false;
     }
 }
-

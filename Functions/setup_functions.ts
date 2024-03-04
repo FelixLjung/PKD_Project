@@ -213,4 +213,3 @@ function create_nodes(arr_players: Array<Player>){
 
     }
 }
-

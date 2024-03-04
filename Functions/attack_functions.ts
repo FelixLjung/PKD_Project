@@ -248,4 +248,4 @@ function queue_to_array(q : Queue<Warrior> ) : Array<Warrior> {
         return q[2];
     }
 
-} 
+}
