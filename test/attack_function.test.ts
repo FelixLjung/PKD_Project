@@ -4,15 +4,20 @@ import {
     is_army_empty,
     enqueue_army,
     fight, 
-    attack } from '../Functions/attack_functions'
+    attack,
+    queue_to_array } from '../Functions/attack_functions'
 
-import { empty } from '../lib/queue_array'
+import { 
+    empty,
+    enqueue,
+    } from '../lib/queue_array'
 
 import {
     type Army,
     type Warrior,
     type Castle,
-    type Player } from '../types'
+    type Player,
+    type AttackArmy } from '../types'
 
 
 // Tests
@@ -94,6 +99,21 @@ describe('attack', () => {
 
     it('Returns ex_army2', () => {
         expect(attack(ex_castle1, ex_player2, ex_player1, ex_army2)).toEqual(ex_army2);
+    });
+
+});
+
+
+describe('queue_to_array', () => {
+    
+    const wrr1 : Warrior = {attack : 0, health : 10, name : 'Alfred', alive : true};
+    const wrr2 : Warrior = {attack : 3, health : 15, name : 'David', alive : true};
+    let mpt_q : AttackArmy = empty();
+    enqueue(wrr1, mpt_q);
+    enqueue(wrr2, mpt_q);
+
+    it('Returns a queue from an array', () => {
+        expect(queue_to_array(mpt_q)).toEqual([wrr1, wrr2]);
     });
 
 });

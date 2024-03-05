@@ -10,9 +10,9 @@ import {
 
 const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inputs
 
-const testing : Boolean = false; // set this to true if testing with jest, disables all empty promopts 
+const testing : Boolean = true; // set this to true if testing with jest, disables all empty promopts 
 
-const debugging = true; // set this to false to quickly remove all debug console logs
+const debugging = false; // set this to false to quickly remove all debug console logs
 
 
 //Functions
@@ -98,6 +98,9 @@ export function format_array<T>(a : Array<T>) : String {
 export function press_to_continue(){
     if (!testing){
         prompt("\u001b[3m press ENTER to continue... \u001b[m ");
+        empty_line();
+        empty_line();
+        empty_line();
         empty_line();
     }
 }

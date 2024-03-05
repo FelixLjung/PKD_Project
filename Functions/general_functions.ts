@@ -110,19 +110,19 @@ export function count_castles(castle_arr: Array<Castle | undefined>): number {
  * @returns {Array<Castle>} - a new castle array 
  */
 function remove_dead_castles(castles : Array<Castle | undefined>, player: Player ) : Array<Castle | undefined> {
-    let new_castles : Array<Castle| undefined> = []; 
+    const new_castles : Array<Castle| undefined> = []; 
     let j = 0; // inner count variable
     let name = player[0] // The name of the player
     
     for (let i = 0; i < castles.length; i++ ){ // loops over the castles
-
+        
         if (castles[i] != undefined && name == castles[i]!.owner){  // Checks if the castle is undefined or has another owner
             new_castles[j] = castles[i]; // adds the castles to the new array
             j++;
         } 
     }
     
-    return new_castles;
+    return remove_duplicate_castles(player, new_castles!);
 } 
 
 
@@ -132,7 +132,7 @@ function remove_dead_castles(castles : Array<Castle | undefined>, player: Player
  * @param {number} index - is a number
  * @returns {Array<Castle>} a
 */
-function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
+export function get_position(castles: Array<Castle | undefined>, index: number): Castle | undefined {
     for (let i = 0; i < castles.length; i = i + 1) {
         if (castles[i] != undefined) {
             if (castles[i]!.position == index) {
@@ -153,7 +153,7 @@ function get_position(castles: Array<Castle | undefined>, index: number): Castle
  * @returns {Boolean} true if a castle's position matches the index parameter and owner of the castle
  * matches the current player.
  */
-function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
+export function includes(Castles: Array<Castle | undefined>, index: number, player: Player): Boolean {
     for (let i = 0; i < Castles.length; i = i + 1) {
         if (Castles[i]!.position == index && Castles[i]!.owner == player[0]) {
             return true;
@@ -169,7 +169,7 @@ function includes(Castles: Array<Castle | undefined>, index: number, player: Pla
  * @param {Castle} castle - is a castle
  * @returns {Boolean} returns true if the castle is found in the queue
  */
-function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
+export function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean {
     for (let i = 0; i < castle_queue[2].length; i = i + 1) {
         if (castle_queue[2][i] == castle) {
             return true;
@@ -180,6 +180,29 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
     return false;
 }
 
+/**
+ * Checks if a player has duplicated castles in their array of castles.
+ * @param {Player} player - is the player that we're checking
+ * @modifies 
+ */
+function remove_duplicate_castles(player: Player, castles: Array<Castle | undefined>): Array<Castle | undefined> {
+    const castle_arr: Array<Castle | undefined> = castles;
+    const new_castle_arr: Array<Castle | undefined> = []; // Returns the new array of castles to player
+    const pos_arr: Array<number> = [];
+    let j: number = 0;
+    for(let i = 0; i < castle_arr.length; i++){ //Loops over all castles and saves their position
+        let castle_pos = castle_arr[i]?.position;   // Curr castle position
+                          
+        if(pos_arr.includes(castle_arr[i]!.position) ){ 
+            continue;   // If pos already exists in array. (Removes Duplicates!)
+        } else{
+            new_castle_arr[j] = castle_arr[i]; // Adds the unique castles.
+            pos_arr[i] = castle_pos!; // Saves it in pos_arr.
+            j++
+        }
+    }
+    return new_castle_arr; 
+}
 
 /**
  * The player determines the order in which they want to make their moves from their castles.
@@ -189,7 +212,6 @@ function in_q(castle_queue: Queue<Castle>, castle: Castle | undefined): Boolean 
 export function get_order_castles(player: Player): Queue<Castle> {
     let castle_queue: Queue<Castle> = empty(); // Inits a empty Queue of Castles
     const player_castles: Array<Castle | undefined> = remove_dead_castles(player[1], player);  // Removes dead castles 
-
     if (count_castles(player_castles) > 1) {
         if (testing == true) {      //Checking if we are testing currently or not
             enqueue(player_castles[0], castle_queue); // we skip prompts if we are running testcases
@@ -308,7 +330,6 @@ function move(move_from: Castle, move_to: Castle): void {
  * Processes the individual turn for a player
  * @param {Player} player player is a pair, whose head is a string and the tail is a list of castles
  */
-
 export function turn(player: Player) {
 
     let castle_queue = get_order_castles(player); // Gets the queue of castle to be played from
@@ -341,8 +362,6 @@ export function check_if_cpu(player: Player | string): boolean {
     } else {
         return false;
     }
-
-
 }
 
 
@@ -515,10 +534,10 @@ export function get_first_warrior_name(): string {
 /**
  * Takes the army of castle and SHOULD split the army in 2 when we want to move from one place
  * to then next.
- * @param {Castle} castle
- * @returns {Array<Army>} 
+ * @param {Castle} castle - The castle which the army is in
+ * @returns {Array<Army>} - The split army, which is in two sections
  */
-function split_army(castle: Castle): Array<Army> {
+export function split_army(castle: Castle): Array<Army> {
     let bool = true                         //For the while loop
     const pair_army: Array<Army> = []       // Returning
     let alive_army = remove_dead_warriors(castle.hp);
@@ -528,7 +547,12 @@ function split_army(castle: Castle): Array<Army> {
 
         empty_line();
         print_to_game("Your army has " + alive_army.length + " warriors...");
-        const choice: string = prompt("How many warriors would you like to move?: ");
+        let choice : string = '';
+        if (get_testing_bool()) {
+            choice = '2';
+        } else {
+            choice = prompt("How many warriors would you like to move?: ");
+        }
         empty_line();
         empty_line();
 

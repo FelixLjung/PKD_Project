@@ -45,9 +45,9 @@ const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inp
 /**
  * Changes an army from an array to a queue
  * @param {Army} army - the army that is changed into a queue
- * @returns {Queue<Warrior>} - A queue of warriors (used to attack / defend)
+ * @returns {AttackArmy} - A queue of warriors (used to attack / defend)
  */
-export function enqueue_army(army: Army): Queue<Warrior> {
+export function enqueue_army(army: Army): AttackArmy {
     const queue_army = empty<Warrior>();
     if(army.length == 0){
         return queue_army;
@@ -156,6 +156,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         }
         
         console.log(`\u001b[32m`, defender.name,`\u001b[m` ,`is defending castle`, castle_army.position ,'against', `\u001b[31m`,attacker.name, `\u001b[m!`);
+        
         while (true) {
             attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
@@ -227,7 +228,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     const winner : Pair<Boolean, Army> = helper(army, castle);
     if (!winner[0]) {   //defender wins
-        console.log("You have won the battle my liege! Congratulations, the castle is yours!");
+        console.log("You have\u001b[31m won\u001b[31m the battle my liege! Congratulations, the castle is yours!");
 
         press_to_continue();
         empty_line()
@@ -259,6 +260,6 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
  * @param {AttackArmy} q - A queue of warriors
  * @returns {Army} - The army, turned into an array
  */
-function queue_to_array(q : AttackArmy ) : Army {
+export function queue_to_array(q : AttackArmy ) : Army {
         return q[2];
 }

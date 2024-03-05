@@ -1,18 +1,36 @@
-import { Queue } from "./lib/queue_array";
+// Imports
+
+import { type Queue } from './lib/queue_array';
+
+
+// Types
 
 /**
- * A @Army is an array of warriors.
+ * An array of warriors.
  */
 export type Army = Array<Warrior>;
 
-export type AttackArmy = Queue<Warrior>;
-
-export type Player = [string, Array<Castle | undefined> ];
-
-export type Board = Array<Array<string>>;
 
 /**
- * A @Warrior is a piece, that is a record
+ * 
+ */
+export type AttackArmy = Queue<Warrior>;
+
+
+/**
+ * A pair of a player name and an array of castles
+ */
+export type Player = [string, Array<Castle | undefined> ];
+
+
+/**
+ * An array of arrays of strings
+ */
+export type Board = Array<Array<string>>;
+
+
+/**
+ * A piece, which is a record
  */
 export type Warrior = {
     attack: number
@@ -21,8 +39,9 @@ export type Warrior = {
     alive : boolean
 };
 
+
 /**
- * a @Castle is a record that keeps track of who owns the Castle, it's army and it's position on the map.
+ * A record that keeps track of who owns the Castle, it's army and it's position on the map.
  */
 export type Castle = {
     hp: Army,
@@ -30,4 +49,8 @@ export type Castle = {
     position: number
 }
 
+
+/**
+ * An array of castles
+ */
 export type Kingdom = Array<Castle>;
