@@ -1,9 +1,20 @@
+// Imports
+
+import { type Queue } from './lib/queue_array';
+
+
 // Types
 
 /**
  * An array of warriors.
  */
 export type Army = Array<Warrior>;
+
+
+/**
+ * 
+ */
+export type AttackArmy = Queue<Warrior>;
 
 
 /**
