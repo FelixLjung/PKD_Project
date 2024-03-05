@@ -40,6 +40,7 @@ let map1 = [
 
 let map = map1; // if their are other maps
 
+
 // Print functions 
 
 /**
@@ -72,9 +73,10 @@ export function splash(){
     `)
 }
 
+
 /**
  * Prints a win splash screen with the winners name.
- * @param winner the player won
+ * @param {Player} winner - The player that won
  */
 export function splash_end(winner: Player){
     console.log(
@@ -94,6 +96,10 @@ export function splash_end(winner: Player){
   
 }
 
+
+/**
+ * Refreshes the board, making sure it's up to date
+ */
 export function refresh_board() {
     nodes = get_nodes();
     let fist_letters = get_player_names();
@@ -127,11 +133,8 @@ export function refresh_board() {
 }
 
 
-
 /**
  * Prints the board to the console
- * @param Array 2d array of the map
- * @return Does not return
  */
 export function print_board() {
     refresh_board(); // refreshes the board before displaying
@@ -175,22 +178,23 @@ export function print_board() {
     print_line();
 }
 
+
 /**
  * When printing the map, checks if we find an array, (if length of string is > 1)
- * @param map 
- * @returns 
+ * @param {string} map - A part of the map
+ * @returns {Boolean} - If the part of the map is a node
  */
-function is_string_arr(map: string): boolean{
+function is_string_arr(map: string): Boolean {
     if(map.length == 2){
         return true;
     }
     return false;
 }
 
+
 /**
  * Gets an array of all the castles the player currently control.
- * @param player the player in question.
- * @returns Array<castle | undefined> of the castles
+ * @param {Player} player - The player in question.
  */
 export function print_castle(player: Player) {
 
@@ -209,9 +213,10 @@ export function print_castle(player: Player) {
     print_board();
 }
 
+
 /**
  * Prints the army currently in a castle
- * @param castle - the castle which army we want to see
+ * @param {Castle} castle - The castle which army we want to see
  */
 export function print_army(castle : Castle) {
     empty_line();

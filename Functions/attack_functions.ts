@@ -45,9 +45,9 @@ const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inp
 /**
  * Changes an army from an array to a queue
  * @param {Army} army - the army that is changed into a queue
- * @returns {Queue<Warrior>} - A queue of warriors (used to attack / defend)
+ * @returns {AttackArmy} - A queue of warriors (used to attack / defend)
  */
-export function enqueue_army(army: Army): Queue<Warrior> {
+export function enqueue_army(army: Army): AttackArmy {
     const queue_army = empty<Warrior>();
     if(army.length == 0){
         return queue_army;
@@ -260,6 +260,6 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
  * @param {AttackArmy} q - A queue of warriors
  * @returns {Army} - The army, turned into an array
  */
-function queue_to_array(q : AttackArmy ) : Army {
+export function queue_to_array(q : AttackArmy ) : Army {
         return q[2];
 }
