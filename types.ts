@@ -28,6 +28,7 @@ export type Player = [string, Array<Castle | undefined> ];
  */
 export type Board = Array<Array<string>>;
 
+
 /**
  * A piece, which is a record
  */
