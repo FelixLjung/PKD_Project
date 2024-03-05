@@ -156,6 +156,7 @@ export function fight(attacker: Warrior, defender: Warrior, army: Army, castle_a
         }
         
         console.log(`\u001b[32m`, defender.name,`\u001b[m` ,`is defending castle`, castle_army.position ,'against', `\u001b[31m`,attacker.name, `\u001b[m!`);
+        
         while (true) {
             attacker.health -= defender.attack * get_random_int(0, 2);
             if (attacker.health <= 0) {
@@ -227,7 +228,7 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
 
     const winner : Pair<Boolean, Army> = helper(army, castle);
     if (!winner[0]) {   //defender wins
-        console.log("You have won the battle my liege! Congratulations, the castle is yours!");
+        console.log("You have\u001b[31m won\u001b[31m the battle my liege! Congratulations, the castle is yours!");
 
         press_to_continue();
         empty_line()
