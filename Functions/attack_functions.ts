@@ -259,6 +259,6 @@ export function attack(castle : Castle, attacking_player : Player, defending_pla
  * @param {AttackArmy} q - A queue of warriors
  * @returns {Army} - The army, turned into an array
  */
-function queue_to_array(q : AttackArmy ) : Army {
+export function queue_to_array(q : AttackArmy ) : Army {
         return q[2];
 }

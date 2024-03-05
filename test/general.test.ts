@@ -11,7 +11,12 @@ import {
     get_first_warrior_name,
     merge_army,
     heal_warrior,
-    get_order_castles } from "../Functions/general_functions";
+    get_order_castles,
+    count_castles,
+    get_position,
+    includes,
+    in_q,
+    split_army } from "../Functions/general_functions";
 
 import {
     get_random_int } from "../Functions/utility_functions";
@@ -24,7 +29,8 @@ import {
 
 import {
     type Queue,
-        empty} from "../lib/queue_array";
+    empty,
+    enqueue } from "../lib/queue_array";
 
 
 // Tests
@@ -211,4 +217,88 @@ describe('get_order_castles', () => {
         expect((get_order_castles(test_player2))[2][1]).toBe(test_castle3);
     });
     
+});
+
+
+describe('count_castles', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
+    const wrr2 : Warrior = {attack : 5, health : 10, name : 'Felix', alive : true};
+    const test_castle1 : Castle = {hp : [wrr1], owner : 'Alfred', position : 3};
+    const test_castle2 : Castle = {hp : [wrr2], owner : 'Felix', position : 3};
+    const test_castle3 : Castle = {hp : [wrr1, wrr2], owner : 'Felix', position : 2};
+
+    it('Counts a list of castles', () => {
+        expect(count_castles([test_castle1, test_castle2])).toBe(2);
+    });
+
+    it('Removes undefined', () => {
+        expect(count_castles([test_castle3, undefined])).toBe(1);
+    });
+
+});
+
+
+describe('get_position', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
+    const wrr2 : Warrior = {attack : 5, health : 10, name : 'Felix', alive : true};
+    const test_castle1 : Castle = {hp : [wrr1], owner : 'Alfred', position : 3};
+    const test_castle2 : Castle = {hp : [wrr2], owner : 'Felix', position : 2};
+
+    it('Returns position of castle', () => {
+        expect(get_position([test_castle1, test_castle2], 3)).toBe(test_castle1);
+    });
+
+});
+
+
+describe('includes', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
+    const wrr2 : Warrior = {attack : 5, health : 10, name : 'Felix', alive : true};
+    const test_castle1 : Castle = {hp : [wrr1], owner : 'Felix', position : 3};
+    const test_castle2 : Castle = {hp : [wrr1, wrr2], owner : 'Felix', position : 2};
+    const test_player1 : Player = ['Felix', [test_castle1, test_castle2 ]];
+
+    it('', () => {
+        expect(includes(test_player1[1], 3, test_player1)).toBe(true);
+    });
+
+});
+
+
+describe('in_q', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
+    const wrr2 : Warrior = {attack : 5, health : 10, name : 'Felix', alive : true};
+    const test_castle1 : Castle = {hp : [wrr1], owner : 'Felix', position : 3};
+    const test_castle2 : Castle = {hp : [wrr1, wrr2], owner : 'Felix', position : 2};
+    const test_castle3 : Castle = {hp : [wrr2], owner : 'Alfred', position : 4};
+    let cstl_q : Queue<Castle> = empty();
+    enqueue(test_castle1, cstl_q);
+    enqueue(test_castle2, cstl_q);
+
+    it('The castle is in the queue', () => {
+        expect(in_q(cstl_q, test_castle1)).toBe(true);
+    });
+
+    it('The castle is not in the queue', () => {
+        expect(in_q(cstl_q, test_castle3)).toBe(false);
+    });
+
+});
+
+
+describe('split_army', () => {
+    
+    const wrr1 : Warrior = {attack : 5, health : 5, name : 'David', alive : true};
+    const wrr2 : Warrior = {attack : 5, health : 10, name : 'Felix', alive : true};
+    const wrr3 : Warrior = {attack : 2, health : 39, name : 'Alfred', alive : true};
+    const test_castle1 : Castle = {hp : [wrr1, wrr2, wrr3], owner : 'Felix', position : 3};
+
+    it('Splits an army', () => {
+        expect(split_army(test_castle1)).toEqual([[wrr1, wrr2], [wrr3]]);
+    });
+
 });

@@ -10,9 +10,9 @@ import {
 
 const prompt = require('prompt-sync')({ sigint: true }); // Needed to handle inputs
 
-const testing : Boolean = false; // set this to true if testing with jest, disables all empty promopts 
+const testing : Boolean = true; // set this to true if testing with jest, disables all empty promopts 
 
-const debugging = true; // set this to false to quickly remove all debug console logs
+const debugging = false; // set this to false to quickly remove all debug console logs
 
 
 //Functions
