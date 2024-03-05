@@ -403,51 +403,51 @@ export function castle_turn(player: Player, castle: Castle) {
         console.log(`\u001b[33m`,`2:`, `\u001b[37m`, `Train Army`);  // Input option 2, train army green
         const choice : string = prompt("  :  ").trim(); // Reads the player input 
 
-        if (choice === "1") {   // MOVE
-            let paths = finds_paths(castle, mormors_kudde); // Finds all the neighbouring castles
-            while(bool){ // Wrapping the input in a While loop to handle invalid inputs 
-                print_to_game("You can move to the following castles: " + "\u001b[33m"+ format_array(paths) + "\u001b[0m"); // Displays the neighbouring castles
-                let choice = prompt("Choose your destination: ") as number; // Invariant must be number
+            if (choice === "1") {   // MOVE
+                let paths = finds_paths(castle, mormors_kudde); // Finds all the neighbouring castles
+                while(bool){ // Wrapping the input in a While loop to handle invalid inputs 
+                    print_to_game("You can move to the following castles: " + "\u001b[33m"+ format_array(paths) + "\u001b[0m"); // Displays the neighbouring castles
+                    let choice = prompt("Choose your destination: ") as number; // Invariant must be number
 
-                if(is_choice_in_paths(paths, choice)){ //  checks if the input is a valid path
-                    let castle_to: Castle = get_castle_array()[choice - 1];
-                    move(castle!, castle_to);
-                    bool = false;             
-                    
-                } else{                  //Fail safe
-                    
-                    print_to_game("\u001b[31mInvalid\u001b[m move. Try again!");
+                    if(is_choice_in_paths(paths, choice)){ //  checks if the input is a valid path
+                        let castle_to: Castle = get_castle_array()[choice - 1];
+                        move(castle!, castle_to);
+                        bool = false;             
+                        
+                    } else{                  //Fail safe
+                        
+                        print_to_game("\u001b[31mInvalid\u001b[m move. Try again!");
+                    }
                 }
-            }
 
-        } else if (choice === "2") {    // TRAIN
-            console.log('Your new and improved army:')
-            castle.hp = remove_dead_warriors(castle.hp);
-            castle.hp = train_warrior(castle.hp);
-            cursive_line();
-            for (let i = 0; i < castle.hp.length; i++) { // loops over all the warriors in the castle
-                if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {  // only print alive_warriors and non undefined
-                console.log('| Soldier Name:', castle.hp[i]!.name, // fancy print 
-                            '| \u001b[31m Attack: \u001b[m', castle.hp[i]!.attack,
-                            '|\u001b[32m Health: \u001b[m', castle.hp[i]!.health, '|');
+            } else if (choice === "2") {    // TRAIN
+                console.log('Your new and improved army:')
+                castle.hp = remove_dead_warriors(castle.hp);
+                castle.hp = train_warrior(castle.hp);
+                cursive_line();
+                for (let i = 0; i < castle.hp.length; i++) { // loops over all the warriors in the castle
+                    if (castle.hp[i] != undefined && castle.hp[i]!.alive == true) {  // only print alive_warriors and non undefined
+                    console.log('| Soldier Name:', castle.hp[i]!.name, // fancy print 
+                                '| \u001b[31m Attack: \u001b[m', castle.hp[i]!.attack,
+                                '|\u001b[32m Health: \u001b[m', castle.hp[i]!.health, '|');
+                    }
                 }
-            }
-            
-            //print_to_game(trained_army);
+                
+                //print_to_game(trained_army);
 
-            cursive_line();
-            empty_line();
-    
-            bool = false;
-            
-        } else {
-            print_to_game(" \u001b[31m Invalid\u001b[m number. Try again!");
-            press_to_continue();
-            empty_line();
-            empty_line();
-            empty_line();
-            
-        }
+                cursive_line();
+                empty_line();
+        
+                bool = false;
+                
+            } else {
+                print_to_game(" \u001b[31m Invalid\u001b[m number. Try again!");
+                press_to_continue();
+                empty_line();
+                empty_line();
+                empty_line();
+                
+            }
     }
 }
 
