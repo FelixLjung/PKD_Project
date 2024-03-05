@@ -101,6 +101,8 @@ export function count_castles(castle_arr: Array<Castle | undefined>): number {
 }
 
 
+
+
 /**
  * Removes lost castles from a player 
  * @param {Array<Castle>} castles - the players castle array
